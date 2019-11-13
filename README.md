@@ -1,47 +1,25 @@
-# vertigo-university
-=================
+# Mars is the Vertigo demo app powered by Vertigo-ui.
 
-Vertigo university is an up to date source of knowledge about vertigo.
-It's composed of demo apps and code samples.
+Vertigo-UI is builder over Vue.js, Quasar and SpringMVC.
 
-## vertigo-demo-vega
-A demo application that uses vertigo-vega and an SPA as UI
+In order to test it on your side, you might deploy all the used parts (ElasticSearch, Redis, PostgreSQL, ...) 
+but the simplest way is to change its activeFlags from configuration.
 
-## vertigo-demo-struts2
-A demo application that uses vertigo-struts2 to build the UI
+1- Edit web.xml
+```XML
+<context-param>
+  <param-name>boot.activeFlags</param-name>
+  <param-value>klee</param-value>
+</context-param>
+```
 
-## vertigo-demo-orchestra
-A simple application to use the vertigo-orchestra extensions as a standalone app
+2- change param-value to `home;initDb`. With this flags all components switch to an local hostable version (base H2, memory cache, embedded ES, ...)
 
-## vertigo-samples
-Samples are a bunch of code snippets (and more) to help you understand and use vertigo to build your app.
-Each sample targets a specific topic and is composed of several exercices with solutions.
+3- boot your app server
 
-Use the PowerPoint and walkthrough documentation provided in each sample for more details.
+4- Login with JTKirk / Enterprise
 
-* __sample-aop__ : learn how aspects work in a vertigo app
-* __sample-component__ : learn how to build components and use the dependency injection mechanism
-* __sample-dao__ : learn how to master access to your app data (SQL oriented)
-* __sample-stream__ : learn how to efficiently use java 8 streams in your source code
-* __sameple-vega__ : learn how to create and publish REST webservices in your app
-* __sample-notifications__ : learn how to send notifications to users
+5- Enjoy !!
 
-## Additional note for [Eclipse](https://www.eclipse.org/) users
-A plugin named [KSP Plugin](https://github.com/sebez/vertigo-chroma-kspplugin) developped by [sebez](https://github.com/sebez/) enhances Developer Experience.
 
------
-#License
-                Copyright (C) 2017, KleeGroup, direction.technique@kleegroup.com (http://www.kleegroup.com)
-                KleeGroup, Centre d'affaire la Boursidiere - BP 159 - 92357 Le Plessis Robinson Cedex - France
-                
-                Licensed under the Apache License, Version 2.0 (the "License");
-                you may not use this file except in compliance with the License.
-                You may obtain a copy of the License at
-                
-                http://www.apache.org/licenses/LICENSE-2.0
-                
-                Unless required by applicable law or agreed to in writing, software
-                distributed under the License is distributed on an "AS IS" BASIS,
-                WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-                See the License for the specific language governing permissions and
-                limitations under the License.
+> If you want to restart multiple times your server, think to remove the `initDb` flags :-)
