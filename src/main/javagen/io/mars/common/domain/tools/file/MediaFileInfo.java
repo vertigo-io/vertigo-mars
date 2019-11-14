@@ -1,10 +1,10 @@
 package io.mars.common.domain.tools.file;
 
+import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
 import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
 
 /**
  * This class is automatically generated.
@@ -20,7 +20,7 @@ public final class MediaFileInfo implements Entity {
 	private Long length;
 	private java.time.Instant lastModified;
 	private String filePath;
-	private io.vertigo.lang.DataStream fileData;
+	private io.vertigo.core.lang.DataStream fileData;
 
 	/** {@inheritDoc} */
 	@Override
@@ -148,7 +148,7 @@ public final class MediaFileInfo implements Entity {
 	 * @return DataStream fileData
 	 */
 	@Field(domain = "DoFileData", label = "data")
-	public io.vertigo.lang.DataStream getFileData() {
+	public io.vertigo.core.lang.DataStream getFileData() {
 		return fileData;
 	}
 
@@ -157,7 +157,7 @@ public final class MediaFileInfo implements Entity {
 	 * Définit la valeur de la propriété 'data'.
 	 * @param fileData DataStream
 	 */
-	public void setFileData(final io.vertigo.lang.DataStream fileData) {
+	public void setFileData(final io.vertigo.core.lang.DataStream fileData) {
 		this.fileData = fileData;
 	}
 	

@@ -18,7 +18,7 @@
  */
 package io.mars.command;
 
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
 public class CommandFeatures extends ModuleDiscoveryFeatures<CommandFeatures> {
 

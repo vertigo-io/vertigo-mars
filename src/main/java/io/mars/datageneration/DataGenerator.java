@@ -18,9 +18,9 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.hr.datageneration.PersonGenerator;
 import io.mars.maintenance.datageneration.TicketGenerator;
 import io.mars.opendata.datageneration.OpendataSetGenerator;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.core.param.ParamValue;
-import io.vertigo.lang.Assertion;
 
 public class DataGenerator implements Component {
 

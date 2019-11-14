@@ -2,7 +2,7 @@ package io.mars.hr.services.mission;
 
 import io.mars.hr.domain.Mission;
 import io.vertigo.commons.eventbus.Event;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
 
 /**
  * This class defines the event that is emitted when a mission is created

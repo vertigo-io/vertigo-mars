@@ -34,13 +34,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.AbstractTestCaseJU5;
-import io.vertigo.app.config.NodeConfig;
+import io.vertigo.core.AbstractTestCaseJU5;
+import io.vertigo.core.lang.WrappedException;
+import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.TabularDatas;
 import io.vertigo.database.timeseries.TimeFilter;
 import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
-import io.vertigo.lang.WrappedException;
 
 /**
  * Test of the IoT services for mars.

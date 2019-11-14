@@ -2,12 +2,12 @@ package io.mars.opendata.dao;
 
 import javax.inject.Inject;
 
+import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.impl.store.util.DAO;
 import io.vertigo.dynamo.store.StoreManager;
 import io.vertigo.dynamo.store.StoreServices;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.opendata.domain.OpendataSet;
-import io.vertigo.lang.Generated;
 
 /**
  * This class is automatically generated.

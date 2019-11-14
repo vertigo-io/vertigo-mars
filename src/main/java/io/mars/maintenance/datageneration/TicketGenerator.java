@@ -19,7 +19,7 @@ import io.mars.maintenance.domain.Ticket;
 import io.mars.maintenance.domain.TicketStatusEnum;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.dynamo.domain.model.DtList;
 
 public class TicketGenerator implements Component {

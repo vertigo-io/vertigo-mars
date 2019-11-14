@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VSystemException;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.VSystemException;
 import io.vertigo.social.services.handle.HandleServices;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 

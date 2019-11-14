@@ -6,7 +6,7 @@ import io.mars.basemanagement.services.equipment.EquipmentEnvironmentServices;
 import io.vertigo.commons.command.Command;
 import io.vertigo.commons.command.CommandResponse;
 import io.vertigo.commons.command.CommandResponseStatus;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 
 public class BaseManagementCommands implements Component {
 

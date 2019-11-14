@@ -29,13 +29,13 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 
 import io.mars.datageneration.DataGenerator;
-import io.vertigo.app.Home;
-import io.vertigo.core.component.ComponentInitializer;
+import io.vertigo.core.lang.WrappedException;
+import io.vertigo.core.node.Home;
+import io.vertigo.core.node.component.ComponentInitializer;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.database.sql.SqlDataBaseManager;
 import io.vertigo.database.sql.connection.SqlConnection;
 import io.vertigo.database.sql.statement.SqlStatement;
-import io.vertigo.lang.WrappedException;
 
 /**
  * Init sample data for the app.

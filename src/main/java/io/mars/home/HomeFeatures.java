@@ -18,7 +18,7 @@
  */
 package io.mars.home;
 
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
 public class HomeFeatures extends ModuleDiscoveryFeatures<HomeFeatures> {
 

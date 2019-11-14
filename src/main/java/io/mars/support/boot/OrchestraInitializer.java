@@ -7,7 +7,7 @@ import io.mars.basemanagement.jobs.DecommissioningReportActivityEngine;
 import io.mars.catalog.jobs.supplier.CleanAllSuppliers;
 import io.mars.catalog.jobs.supplier.DownloadAndUnizpSuppliersActivityEngine;
 import io.mars.catalog.jobs.supplier.ParseCSVSuppliersActivityEngine;
-import io.vertigo.core.component.ComponentInitializer;
+import io.vertigo.core.node.component.ComponentInitializer;
 import io.vertigo.orchestra.definitions.OrchestraDefinitionManager;
 import io.vertigo.orchestra.definitions.ProcessDefinition;
 

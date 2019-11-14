@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.bouncycastle.crypto.RuntimeCryptoException;
 
 import io.vertigo.commons.eventbus.Event;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
 
 /**
  * This class defines the event that is emitted when an actuator is triggered.

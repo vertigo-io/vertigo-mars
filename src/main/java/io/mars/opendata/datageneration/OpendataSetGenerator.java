@@ -7,9 +7,9 @@ import io.mars.opendata.domain.OpendataSet;
 import io.mars.opendata.domain.OpendataSetStatusEnum;
 import io.mars.support.util.CSVReaderUtil;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.lang.Assertion;
 
 @Transactional
 public class OpendataSetGenerator implements Component {

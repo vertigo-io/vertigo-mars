@@ -26,13 +26,13 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.mars.command.services.bot.generation.model.CommandModel;
 import io.mars.command.services.bot.generation.model.CommandTrainingModel;
-import io.vertigo.app.Home;
 import io.vertigo.commons.command.CommandDefinition;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.node.Home;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.dashboard.ui.DashboardRouter;
-import io.vertigo.lang.WrappedException;
 
 public class BotCommandGenerationServices implements Component {
 

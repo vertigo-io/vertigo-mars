@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.commons.command.CommandDefinition;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
 
 public class CommandModel {
 

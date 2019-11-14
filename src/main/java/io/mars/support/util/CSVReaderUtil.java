@@ -10,9 +10,9 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.WrappedException;
 
 public final class CSVReaderUtil {
 	public static void parseCSV(final ResourceManager resourceManager, final String csvFilePath, BiConsumer<String, String[]> recordConsumer) {

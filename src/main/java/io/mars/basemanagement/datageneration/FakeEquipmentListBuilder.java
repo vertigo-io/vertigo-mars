@@ -10,9 +10,9 @@ import io.mars.basemanagement.domain.Business;
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.catalog.domain.EquipmentType;
 import io.mars.datageneration.DataGenerator;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
 import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.Builder;
 
 @SuppressWarnings("rawtypes")
 public class FakeEquipmentListBuilder implements Builder {

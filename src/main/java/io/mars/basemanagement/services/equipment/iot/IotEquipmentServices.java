@@ -7,9 +7,9 @@ import org.apache.logging.log4j.Logger;
 
 import io.vertigo.commons.eventbus.EventBusManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
-import io.vertigo.lang.Assertion;
 
 public class IotEquipmentServices implements Component {
 	private static final Logger LOGGER = LogManager.getLogger(IotEquipmentServices.class);

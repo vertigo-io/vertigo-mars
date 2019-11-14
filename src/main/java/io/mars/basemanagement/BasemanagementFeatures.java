@@ -19,8 +19,8 @@
 package io.mars.basemanagement;
 
 import io.mars.basemanagement.services.equipment.iot.MqttShield;
-import io.vertigo.app.config.Feature;
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.node.config.Feature;
+import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 import io.vertigo.core.param.Param;
 
 public class BasemanagementFeatures extends ModuleDiscoveryFeatures<BasemanagementFeatures> {

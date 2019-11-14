@@ -2,12 +2,12 @@ package io.mars.common.dao.tools.file;
 
 import javax.inject.Inject;
 
+import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.impl.store.util.DAO;
 import io.vertigo.dynamo.store.StoreManager;
 import io.vertigo.dynamo.store.StoreServices;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.common.domain.tools.file.MediaFileInfo;
-import io.vertigo.lang.Generated;
 
 /**
  * This class is automatically generated.

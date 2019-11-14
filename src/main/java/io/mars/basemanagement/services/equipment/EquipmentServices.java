@@ -16,8 +16,9 @@ import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.dynamo.collections.model.FacetedQueryResult;
 import io.vertigo.dynamo.collections.model.SelectedFacetValues;
 import io.vertigo.dynamo.criteria.Criterions;
@@ -25,7 +26,6 @@ import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.DtListState;
 import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.dynamo.search.model.SearchQuery;
-import io.vertigo.lang.Assertion;
 import io.vertigo.social.services.comment.Comment;
 import io.vertigo.social.services.comment.CommentServices;
 

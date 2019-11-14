@@ -20,10 +20,10 @@ package io.mars.iot;
 
 import io.mars.basemanagement.services.equipment.iot.IotEquipmentServices;
 import io.mars.basemanagement.services.equipment.iot.MqttShield;
-import io.vertigo.app.config.NodeConfig;
-import io.vertigo.app.config.NodeConfigBuilder;
-import io.vertigo.app.config.ModuleConfig;
 import io.vertigo.commons.CommonsFeatures;
+import io.vertigo.core.node.config.ModuleConfig;
+import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.config.NodeConfigBuilder;
 import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;

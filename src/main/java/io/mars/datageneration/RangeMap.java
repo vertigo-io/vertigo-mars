@@ -3,8 +3,8 @@ package io.mars.datageneration;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.VSystemException;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VSystemException;
 
 final class RangeMap<T extends Comparable<T>, V> {
 

@@ -10,7 +10,7 @@ import io.mars.maintenance.dao.WorkOrderDAO;
 import io.mars.maintenance.domain.Ticket;
 import io.mars.maintenance.domain.WorkOrder;
 import io.mars.maintenance.domain.WorkOrderStatusEnum;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 
 public class WorkOrderGenerator implements Component {
 

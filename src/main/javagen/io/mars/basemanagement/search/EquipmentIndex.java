@@ -1,9 +1,9 @@
 package io.mars.basemanagement.search;
 
+import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.DtObject;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
 
 /**
  * This class is automatically generated.
@@ -181,7 +181,7 @@ public final class EquipmentIndex implements DtObject {
 	 */
 	@Field(domain = "DoDescription", type = "COMPUTED", persistent = false, label = "ALL_TEXT")
 	public String getAllText() {
-		throw new io.vertigo.lang.VSystemException("Can't use index copyTo field");
+		throw new io.vertigo.core.lang.VSystemException("Can't use index copyTo field");
 	}
 	
 	/** {@inheritDoc} */

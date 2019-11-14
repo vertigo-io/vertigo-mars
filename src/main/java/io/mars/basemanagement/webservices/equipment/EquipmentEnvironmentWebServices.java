@@ -23,12 +23,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.mars.basemanagement.services.equipment.EquipmentEnvironmentServices;
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.database.timeseries.ClusteredMeasure;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.TabularDatas;
 import io.vertigo.database.timeseries.TimeFilter;
 import io.vertigo.database.timeseries.TimedDatas;
-import io.vertigo.lang.Assertion;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.InnerBodyParam;
 import io.vertigo.vega.webservice.stereotype.POST;

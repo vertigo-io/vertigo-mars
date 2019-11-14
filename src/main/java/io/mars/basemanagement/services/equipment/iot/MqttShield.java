@@ -19,15 +19,15 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-import io.vertigo.app.config.discovery.NotDiscoverable;
 import io.vertigo.commons.eventbus.EventBusManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
-import io.vertigo.core.component.Activeable;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.WrappedException;
+import io.vertigo.core.node.component.Activeable;
+import io.vertigo.core.node.component.Component;
+import io.vertigo.core.node.config.discovery.NotDiscoverable;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.database.timeseries.Measure;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.WrappedException;
 
 @NotDiscoverable
 public class MqttShield implements Component, Activeable {

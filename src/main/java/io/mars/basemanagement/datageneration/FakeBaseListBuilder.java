@@ -11,8 +11,8 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseTypeEnum;
 import io.mars.datageneration.DataGenerator;
 import io.mars.datageneration.FakeDataUtil;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.Builder;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
 
 @SuppressWarnings("rawtypes")
 public final class FakeBaseListBuilder implements Builder {

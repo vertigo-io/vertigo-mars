@@ -9,7 +9,7 @@ import io.mars.maintenance.domain.Ticket;
 import io.vertigo.adapters.ifttt.IftttAdapter;
 import io.vertigo.adapters.ifttt.MakerEvent;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.core.param.ParamManager;
 
 public class SlackTicketEventSubscriber implements Component {

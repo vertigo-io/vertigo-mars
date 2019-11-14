@@ -8,14 +8,14 @@ import javax.inject.Inject;
 
 import io.mars.basemanagement.services.equipment.iot.InputEvent;
 import io.vertigo.commons.eventbus.EventBusManager;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.database.timeseries.ClusteredMeasure;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.TabularDatas;
 import io.vertigo.database.timeseries.TimeFilter;
 import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
 import io.vertigo.database.timeseries.TimedDatas;
-import io.vertigo.lang.Assertion;
 
 public class EquipmentEnvironmentServices implements Component {
 	private static final String APP_NAME = "mars-test"; // TODO: add a param

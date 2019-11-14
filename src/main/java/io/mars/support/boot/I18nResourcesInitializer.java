@@ -8,9 +8,9 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import io.vertigo.core.component.ComponentInitializer;
 import io.vertigo.core.locale.LocaleManager;
 import io.vertigo.core.locale.MessageKey;
+import io.vertigo.core.node.component.ComponentInitializer;
 
 /**
  * Init ressources.

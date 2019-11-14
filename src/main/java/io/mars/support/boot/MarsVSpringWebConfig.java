@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.context.annotation.ComponentScan;
 
-import io.vertigo.app.Home;
+import io.vertigo.core.node.Home;
 import io.vertigo.core.param.Param;
 import io.vertigo.core.param.ParamManager;
 import io.vertigo.ui.impl.springmvc.config.VSpringWebConfig;

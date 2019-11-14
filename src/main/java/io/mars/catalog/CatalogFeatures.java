@@ -18,7 +18,7 @@
  */
 package io.mars.catalog;
 
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
 public class CatalogFeatures extends ModuleDiscoveryFeatures {
 

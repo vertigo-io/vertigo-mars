@@ -18,7 +18,7 @@
  */
 package io.mars.job;
 
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
 public class JobFeatures extends ModuleDiscoveryFeatures<JobFeatures> {
 

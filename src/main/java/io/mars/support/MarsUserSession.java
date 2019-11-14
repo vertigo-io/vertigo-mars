@@ -25,8 +25,8 @@ import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.account.security.UserSession;
-import io.vertigo.app.Home;
 import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.node.Home;
 
 /**
  * UserSession.

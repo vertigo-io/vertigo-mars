@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import io.mars.command.services.bot.generation.TrainingConfiguration.CommandParamTrainingConfiguration;
-import io.vertigo.app.Home;
 import io.vertigo.commons.command.CommandDefinition;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VSystemException;
+import io.vertigo.core.node.Home;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.metamodel.DataAccessor;
 import io.vertigo.dynamo.domain.metamodel.DtDefinition;
 import io.vertigo.dynamo.domain.model.DtListState;
 import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.VSystemException;
 
 public class TrainSetProvider implements Component {
 

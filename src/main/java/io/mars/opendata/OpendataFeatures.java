@@ -18,7 +18,7 @@
  */
 package io.mars.opendata;
 
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
 public class OpendataFeatures extends ModuleDiscoveryFeatures {
 

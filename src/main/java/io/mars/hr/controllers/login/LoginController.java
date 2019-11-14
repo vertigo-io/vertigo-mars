@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.mars.hr.services.login.LoginServices;
-import io.vertigo.lang.VUserException;
+import io.vertigo.core.lang.VUserException;
+import io.vertigo.core.util.StringUtil;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
-import io.vertigo.util.StringUtil;
 import io.vertigo.vega.webservice.validation.UiMessageStack;
 
 @Controller

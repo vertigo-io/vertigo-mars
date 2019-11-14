@@ -20,8 +20,8 @@ package io.mars.support;
 
 import io.mars.support.boot.MarsMasterDataDefinitionProvider;
 import io.mars.support.services.MarsFileServices;
-import io.vertigo.app.config.DefinitionProviderConfig;
-import io.vertigo.app.config.Features;
+import io.vertigo.core.node.config.DefinitionProviderConfig;
+import io.vertigo.core.node.config.Features;
 import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
 
 public class SupportFeatures extends Features<SupportFeatures> {

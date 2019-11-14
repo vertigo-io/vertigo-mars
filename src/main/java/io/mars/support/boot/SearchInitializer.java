@@ -23,8 +23,8 @@ package io.mars.support.boot;
 
 import javax.inject.Inject;
 
-import io.vertigo.app.Home;
-import io.vertigo.core.component.ComponentInitializer;
+import io.vertigo.core.node.Home;
+import io.vertigo.core.node.component.ComponentInitializer;
 import io.vertigo.dynamo.search.SearchManager;
 import io.vertigo.dynamo.search.metamodel.SearchIndexDefinition;
 

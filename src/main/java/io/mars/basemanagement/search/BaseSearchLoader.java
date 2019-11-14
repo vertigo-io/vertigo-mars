@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.vertigo.commons.transaction.VTransactionManager;
-import io.vertigo.core.component.Activeable;
+import io.vertigo.core.node.component.Activeable;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.dynamo.search.SearchManager;

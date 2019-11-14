@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import io.mars.catalog.dao.EquipmentTypeDAO;
 import io.mars.catalog.domain.EquipmentType;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.DtListState;

@@ -16,11 +16,11 @@ import io.mars.catalog.domain.EquipmentType;
 import io.mars.domain.DtDefinitions.EquipmentCategoryFields;
 import io.mars.support.util.CSVReaderUtil;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.lang.Assertion;
 
 @Transactional
 public class EquipmentGenerator implements Component {

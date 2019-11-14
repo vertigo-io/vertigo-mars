@@ -13,7 +13,7 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.Picture;
 import io.mars.fileinfo.FileInfoStd;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 import io.vertigo.dynamo.file.FileManager;
 import io.vertigo.dynamo.file.model.FileInfo;
 import io.vertigo.dynamo.file.model.VFile;

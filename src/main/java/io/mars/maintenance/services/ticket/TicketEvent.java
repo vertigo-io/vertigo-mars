@@ -2,7 +2,7 @@ package io.mars.maintenance.services.ticket;
 
 import io.mars.maintenance.domain.Ticket;
 import io.vertigo.commons.eventbus.Event;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
 
 /**
  * This class defines the event that is emitted when the store deals with an object identified by an uri.

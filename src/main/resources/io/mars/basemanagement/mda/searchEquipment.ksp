@@ -18,5 +18,5 @@ create DtDefinition DtEquipmentIndex {
 
 
 alter DtDefinition DtEquipmentIndex {
-    computed allText {	domain : DoDescription, label:"ALL_TEXT", expression:"throw new io.vertigo.lang.VSystemException(\"Can't use index copyTo field\");"    }
+    computed allText {	domain : DoDescription, label:"ALL_TEXT", expression:"throw new io.vertigo.core.lang.VSystemException(\"Can't use index copyTo field\");"    }
 }
