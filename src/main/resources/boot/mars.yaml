@@ -18,24 +18,35 @@ boot:
     - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin: {}
     - io.vertigo.core.plugins.param.xml.XmlParamPlugin:
         url : "/boot/config/application-config.xml" 
+    - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
+        __flags__: ["klee"]
+        appName: mars-analytics
+        hostName: ${boot.analyticsHost}
 modules:
-  io.vertigo.commons.CommonsFeatures:
+  io.vertigo.connectors.redis.RedisFeatures:
     features:
-      - script:
-      - cache:
-      - redis:
+      - jedis:
           __flags__: ["klee"]
           host: ${redisHost}
           port: 6379
           database: 0
+  io.vertigo.connectors.mqtt.MqttFeatures:
+    __flags__: ["klee"]
+    features:
+      - mosquitto:
+          name: Subscriber
+          host: ${mosquittoHost}
+      - mosquitto:
+          name: Publisher
+          host: ${mosquittoHost}
+  io.vertigo.commons.CommonsFeatures:
+    features:
+      - script:
+      - cache:
       - command:
     featuresConfig:
       - script.janino:
       - cache.memory:
-      - analytics.socketLoggerConnector:
-          __flags__: ["klee"]
-          appName: mars-analytics
-          hostName: ${analyticsHost}
   io.vertigo.database.DatabaseFeatures:
     features:
       - sql:
@@ -176,7 +187,6 @@ modules:
     features:
       - mqtt:
           __flags__: ["klee"]
-          host: ${mosquittoHost}
   io.mars.maintenance.MaintenanceFeatures:
   io.mars.opendata.OpendataFeatures:
   io.mars.job.JobFeatures:

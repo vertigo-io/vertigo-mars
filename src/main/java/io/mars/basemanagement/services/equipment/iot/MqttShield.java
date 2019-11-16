@@ -1,10 +1,11 @@
 package io.mars.basemanagement.services.equipment.iot;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -21,12 +22,12 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import io.vertigo.commons.eventbus.EventBusManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
+import io.vertigo.connectors.mqtt.MqttConnector;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.node.config.discovery.NotDiscoverable;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.database.timeseries.Measure;
 
 @NotDiscoverable
@@ -37,17 +38,23 @@ public class MqttShield implements Component, Activeable {
 	@Inject
 	private EventBusManager eventBusManager;
 
+	private final Map<String, MqttConnector> connectorsByName = new HashMap<>();
+
 	private MqttClient mqttClient;
 	private MqttClient mqttClientPub;
 
 	@Inject
-	public MqttShield(
-			@ParamValue("host") final String brokerHost) {
-		Assertion.checkArgNotEmpty(brokerHost);
-		//---
-		final String myHostName = retrieveHostName();
+	public MqttShield(final List<MqttConnector> mqttConnectors) {
+		for (final MqttConnector mqttConnector : mqttConnectors) {
+			final String name = mqttConnector.getName();
+			final MqttConnector previous = connectorsByName.put(name, mqttConnector);
+			Assertion.checkState(previous == null, "MqttConnector {0}, was already registered", name);
+		}
+
 		try {
-			connect(brokerHost, myHostName + "Subscriber", myHostName + "Publisher");
+			mqttClient = connectorsByName.get("Subscriber").getClient();
+			mqttClient.setCallback(callback);
+			mqttClientPub = connectorsByName.get("Publisher").getClient();
 			subscribe();
 		} catch (final MqttException me) {
 			throw WrappedException.wrap(me);
@@ -66,15 +73,6 @@ public class MqttShield implements Component, Activeable {
 			disconnect();
 		} catch (final MqttException me) {
 			throw WrappedException.wrap(me);
-		}
-	}
-
-	private static String retrieveHostName() {
-		try {
-			return InetAddress.getLocalHost().getHostName();
-		} catch (final UnknownHostException e) {
-			LogManager.getRootLogger().info("Cannot retrieve hostname", e);
-			return "UnknownHost";
 		}
 	}
 

@@ -64,6 +64,11 @@
 			<artifactId>vertigo-social</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-mqtt-connector</artifactId>
+			<version>${vertigo.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.opencsv</groupId>
@@ -82,11 +87,7 @@
 			<artifactId>influxdb-java</artifactId>
 			<version>2.16</version>  <!-- InfluxDbTimeSeriesPlugin -->
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.paho</groupId>
-			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-			<version>1.2.1</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

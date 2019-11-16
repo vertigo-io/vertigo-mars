@@ -24,8 +24,8 @@
 		
 	<Parameter name="boot.apiKeysUrl" value="w:\\Digital Factory\\02 - Solutions\\Vertigo\\apiKeys\\marsApiKeys.properties" override="false"/>
 	<Parameter name="boot.walletParamsUrl" value="W:\\Digital Factory\\02 - Solutions\\Vertigo\\Blockchain\\accounts\\marsWalletAccount.properties" override="false"/>
+	<Parameter name="boot.analyticsHost" value="mars.dev.klee.lan.net" override="false"/>
 	<Parameter name="redisHost" value="mars.dev.klee.lan.net" override="false"/>
-	<Parameter name="analyticsHost" value="mars.dev.klee.lan.net" override="false"/>
 	<Parameter name="influxdbHost" value="http://mars.dev.klee.lan.net:8086" override="false"/>
 	<Parameter name="esHost" value="mars.dev.klee.lan.net:9300" override="false"/>
 	<Parameter name="ledgerHost" value="http://mars.dev.klee.lan.net:8545" override="false"/>
