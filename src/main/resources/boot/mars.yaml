@@ -7,7 +7,7 @@ boot:
     - io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin: {}
     - io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin: {}
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
-        __flags__: ["klee"]
+        __flags__: ["ethereum"]
         url: "${boot.walletParamsUrl}"
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
         __flags__: ["klee"]
