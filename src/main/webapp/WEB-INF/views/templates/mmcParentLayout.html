@@ -47,7 +47,7 @@
 					</div>
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="col q-mx-xl">
-						 <v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands> 
+						<!--  <v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands> --> 
 					</div>
 					<div>
 						<v-notifications th:base-url="@{/api/}" :type-icon-map="notificationTypes()" ></v-notifications>
@@ -313,6 +313,7 @@
 	  				<v-chatbot v-if="componentStates.botDrawer.open" class="column chatbot-container" th:bot-avatar="@{/static/chatbot/images/avatar/avatar_chat.png}" bot-name="mars-bot" th:bot-url="${model.chatbotUrl}"></v-chatbot>
 	  			</q-drawer>
   			</th:block>
+  			<!-- 
   			<div v-if="$q.platform.is.desktop" v-shortkey.once="['alt', 'q']" @shortkey="$refs.quicknav.show()">
   				<q-dialog ref="quicknav" >
   					<q-card style="width: 66%; max-width: 66%; height:50%;">
@@ -322,6 +323,7 @@
 					</q-card>
   				</q-dialog>
   			</div>
+  			 -->
 		</q-layout>
 		
 	</vu:page>
