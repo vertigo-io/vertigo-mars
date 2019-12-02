@@ -22,7 +22,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import io.vertigo.commons.eventbus.EventBusManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
-import io.vertigo.connectors.mqtt.MqttConnector;
+import io.vertigo.connectors.mqtt.MosquittoConnector;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.component.Activeable;
@@ -38,16 +38,16 @@ public class MqttShield implements Component, Activeable {
 	@Inject
 	private EventBusManager eventBusManager;
 
-	private final Map<String, MqttConnector> connectorsByName = new HashMap<>();
+	private final Map<String, MosquittoConnector> connectorsByName = new HashMap<>();
 
 	private MqttClient mqttClient;
 	private MqttClient mqttClientPub;
 
 	@Inject
-	public MqttShield(final List<MqttConnector> mqttConnectors) {
-		for (final MqttConnector mqttConnector : mqttConnectors) {
+	public MqttShield(final List<MosquittoConnector> mqttConnectors) {
+		for (final MosquittoConnector mqttConnector : mqttConnectors) {
 			final String name = mqttConnector.getName();
-			final MqttConnector previous = connectorsByName.put(name, mqttConnector);
+			final MosquittoConnector previous = connectorsByName.put(name, mqttConnector);
 			Assertion.checkState(previous == null, "MqttConnector {0}, was already registered", name);
 		}
 

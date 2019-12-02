@@ -24,7 +24,7 @@ create Task TkGetEquipmentsByBaseCode {
 			where bas.code = #code#
              "
     attribute code     	 	{domain : DoCode         		required:"true"  inOut :"in"}
-    attribute equipments    {domain : DoDtEquipmentDtc   required:"true"  inOut :"out"}
+    attribute equipments    {domain : DoDtEquipmentDtc   required:"true"  inOut :"out"} 
 }
 
 
@@ -61,12 +61,12 @@ create Task TkInsertEquipmentsBatch {
         														#equipmentsList.equipmentTypeId#)
 			"
 	attribute equipmentsList	 	{domain : DoDtEquipmentDtc		required:"true" 	inOut :"in"}
-}
+} 
 
 create Task TkLoadEquipmentsByChunk {
     className : "io.vertigo.dynamox.task.TaskEngineSelect"
         request : "
-        	select * from EQUIPMENT
+        	select * from EQUIPMENT 
 			where EQUIPMENT_ID > #offset#
 			and PURCHASE_DATE <= #dateExist#
         	order by EQUIPMENT_ID asc

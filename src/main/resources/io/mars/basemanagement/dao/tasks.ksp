@@ -13,7 +13,7 @@ create Task TkSelectBusiness {
     request : "
             select BUSINESS_ID, NAME from BUSINESS
              "
-    attribute dtcBusiness     {domain : DoDtBusinessDtc required:"true"  inOut :"out"}
+    attribute dtcBusiness     {domain : DoDtBusinessDtc required:"true"  inOut :"out"} 
 }
 
 
