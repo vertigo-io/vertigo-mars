@@ -69,6 +69,11 @@
 			<artifactId>vertigo-mqtt-connector</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-elasticsearch-connector</artifactId>
+			<version>${vertigo.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.opencsv</groupId>
@@ -135,17 +140,6 @@
 		</dependency>
 
 		<!-- Search -->
-		<dependency>
-			<groupId>org.elasticsearch</groupId>
-			<artifactId>elasticsearch</artifactId>
-			<version>7.4.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.logging.log4j</groupId>
-					<artifactId>log4j-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 		    <groupId>org.elasticsearch.client</groupId>
 		    <artifactId>transport</artifactId>

@@ -24,12 +24,28 @@ boot:
         hostName: ${boot.analyticsHost}
 modules:
   io.vertigo.connectors.redis.RedisFeatures:
+    __flags__: ["klee"]
     features:
       - jedis:
-          __flags__: ["klee"]
           host: ${redisHost}
           port: 6379
           database: 0
+  io.vertigo.connectors.influxdb.InfluxDbFeatures:
+    __flags__: ["klee"]
+    features:
+      - influxdb:
+          host: ${influxdbHost}
+          user: user
+          password: password
+  io.vertigo.connectors.elasticsearch.ElasticSearchFeatures:
+    features:
+      - embedded:
+          __flags__: ["home"]
+          home: search/
+      - transport:
+          __flags__: ["klee"]
+          servers.names: ${esHost}
+          cluster.name: mars
   io.vertigo.connectors.mqtt.MqttFeatures:
     __flags__: ["klee"]
     features:
@@ -54,9 +70,6 @@ modules:
     featuresConfig:
       - timeseries.influxdb: 
           __flags__: ["klee"]
-          host: ${influxdbHost}
-          user: user
-          password: password
           dbNames: mars-test;*
       - timeseries.fake:
           __flags__: ["home"]
@@ -79,17 +92,8 @@ modules:
       - store.data.sql:
           dataSpace: orchestra
       - collections.luceneIndex:
-      - search.elasticsearchEmbedded:
-          __flags__: ["home"]
-          home: search/
+      - search.elasticsearch:
           envIndex: mars
-          rowsPerQuery: 50
-          config.file: search/elasticsearch.yml
-      - search.elasticsearchTransport:
-          __flags__: ["klee"]
-          servers.names: ${esHost}
-          envIndex: mars
-          cluster.name: mars
           rowsPerQuery: 50
           config.file: search/elasticsearch.yml
       - store.file.db:
