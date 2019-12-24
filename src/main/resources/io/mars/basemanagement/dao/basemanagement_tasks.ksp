@@ -10,8 +10,8 @@ create Task TkGetLastPurchasedEquipmentsByBaseId {
 			order by equ.purchase_date desc
 			limit 50
              "
-    attribute baseId     	 {domain : DoId         		required:"true"  inOut :"in"}
-    attribute equipments     {domain : DoDtEquipmentDtc    required:"true"  inOut :"out"}
+    attribute baseId     	 {domain : DoId         		cardinality: "1"  inOut :"in"}
+    attribute equipments     {domain : DoDtEquipmentDtc    cardinality: "*"  inOut :"out"}
 }
 
 create Task TkGetEquipmentsByBaseCode {  
@@ -23,8 +23,8 @@ create Task TkGetEquipmentsByBaseCode {
 				join base bas on bas.base_id = equ.base_id
 			where bas.code = #code#
              "
-    attribute code     	 	{domain : DoCode         		required:"true"  inOut :"in"}
-    attribute equipments    {domain : DoDtEquipmentDtc   required:"true"  inOut :"out"} 
+    attribute code     	 	{domain : DoCode         		cardinality: "1"  inOut :"in"}
+    attribute equipments    {domain : DoDtEquipmentDtc   cardinality: "*"  inOut :"out"} 
 }
 
 
@@ -60,7 +60,7 @@ create Task TkInsertEquipmentsBatch {
         														#equipmentsList.businessId#,
         														#equipmentsList.equipmentTypeId#)
 			"
-	attribute equipmentsList	 	{domain : DoDtEquipmentDtc		required:"true" 	inOut :"in"}
+	attribute equipmentsList	 	{domain : DoDtEquipmentDtc		cardinality: "*" 	inOut :"in"}
 } 
 
 create Task TkLoadEquipmentsByChunk {
@@ -72,8 +72,8 @@ create Task TkLoadEquipmentsByChunk {
         	order by EQUIPMENT_ID asc
 			limit #limit#
 			"
-	attribute limit	 	{domain : DoId		required:"true" 	inOut :"in"}
-	attribute offset	 	{domain : DoId		required:"true" 	inOut :"in"}
-	attribute dateExist {domain : DoInstant required:"true" inOut:"in"}
-	attribute equipmentList	 	{domain : DoDtEquipmentDtc		required:"true" 	inOut :"out"}
+	attribute limit	 	{domain : DoId		cardinality: "1" 	inOut :"in"}
+	attribute offset	 	{domain : DoId		cardinality: "1" 	inOut :"in"}
+	attribute dateExist {domain : DoInstant cardinality: "1" inOut:"in"}
+	attribute equipmentList	 	{domain : DoDtEquipmentDtc		cardinality: "*" 	inOut :"out"}
 }

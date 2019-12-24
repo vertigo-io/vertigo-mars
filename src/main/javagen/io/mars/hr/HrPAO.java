@@ -42,7 +42,7 @@ public final class HrPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkGetMissionsDisplayByPersonId.
-	 * @param personId Long 
+	 * @param personId Long
 	 * @return DtList de MissionDisplay missions
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(final Long personId) {

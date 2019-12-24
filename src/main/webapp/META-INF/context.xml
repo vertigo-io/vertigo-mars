@@ -27,7 +27,7 @@
 	<Parameter name="boot.analyticsHost" value="mars.dev.klee.lan.net" override="false"/>
 	<Parameter name="redisHost" value="mars.dev.klee.lan.net" override="false"/>
 	<Parameter name="influxdbHost" value="http://mars.dev.klee.lan.net:8086" override="false"/>
-	<Parameter name="esHost" value="mars.dev.klee.lan.net:9300" override="false"/>
+	<Parameter name="esHost" value="mars.dev.klee.lan.net:9200" override="false"/>
 	<Parameter name="ledgerHost" value="http://mars.dev.klee.lan.net:8545" override="false"/>
 	<Parameter name="mosquittoHost" value="tcp://mars.dev.klee.lan.net:1883" override="false"/>
 	<Parameter name="orchestra.root.directory" value="d:/data/"/>	

@@ -39,13 +39,15 @@ modules:
           password: password
   io.vertigo.connectors.elasticsearch.ElasticSearchFeatures:
     features:
-      - embedded:
+      - embeddedServer:
           __flags__: ["home"]
           home: search/
-      - transport:
+      - restHL:
+          __flags__: ["home"]
+          servers.names: "localhost:9200"
+      - restHL:
           __flags__: ["klee"]
           servers.names: ${esHost}
-          cluster.name: mars
   io.vertigo.connectors.mqtt.MqttFeatures:
     __flags__: ["klee"]
     features:
@@ -92,8 +94,8 @@ modules:
       - store.data.sql:
           dataSpace: orchestra
       - collections.luceneIndex:
-      - search.elasticsearch:
-          envIndex: mars
+      - search.elasticsearch.restHL:
+          envIndexPrefix: mars
           rowsPerQuery: 50
           config.file: search/elasticsearch.yml
       - store.file.db:

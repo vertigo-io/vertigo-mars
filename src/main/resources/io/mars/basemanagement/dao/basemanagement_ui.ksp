@@ -17,8 +17,8 @@ create Task TkGetEquipmentsOverview {
 			where equ.base_id = #baseId#
 			group by business_name, bus.business_id
              "
-    attribute baseId     {domain : DoId         		required:"true"  inOut :"in"}
-    attribute overview     {domain : DoDtEquipmentOverviewDtc    required:"true"  inOut :"out"}
+    attribute baseId     {domain : DoId         		cardinality: "1"  inOut :"in"}
+    attribute overview     {domain : DoDtEquipmentOverviewDtc    cardinality: "*"  inOut :"out"}
 }
 
 create Task TkGetBasesSummary {  
@@ -30,7 +30,7 @@ create Task TkGetBasesSummary {
 				(select count(*) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,
 				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from equipment) as online_equipment_percent;
              "
-    attribute basesSummary     {domain : DoDtBasesSummaryDto    required:"true"  inOut :"out"}
+    attribute basesSummary     {domain : DoDtBasesSummaryDto    cardinality: "1"  inOut :"out"}
 }
 
 create Task TkGetBaseOverview {  
@@ -41,8 +41,8 @@ create Task TkGetBaseOverview {
 				(select count(*) from ticket tic join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,
 				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress
              "
-    attribute baseId     		{domain : DoId    						required:"true"  inOut :"in"}
-    attribute baseOverview     {domain : DoDtBaseOverviewDto    	required:"true"  inOut :"out"}
+    attribute baseId     		{domain : DoId    					cardinality: "1"  inOut :"in"}
+    attribute baseOverview     {domain : DoDtBaseOverviewDto    	cardinality: "1"  inOut :"out"}
 }
 
 
@@ -53,6 +53,6 @@ create Task TkGetEquipmentMaintenanceOverview {
 				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,
 				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = #equipmentId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress
              "
-    attribute equipmentId     		{domain : DoId    						required:"true"  inOut :"in"}
-    attribute equipmentMaintenanceOverview     {domain : DoDtEquipmentMaintenanceOverviewDto    	required:"true"  inOut :"out"}
+    attribute equipmentId     		{domain : DoId    						cardinality: "1"  inOut :"in"}
+    attribute equipmentMaintenanceOverview     {domain : DoDtEquipmentMaintenanceOverviewDto    	cardinality: "1"  inOut :"out"}
 }

@@ -42,7 +42,7 @@ public final class BasemanagementPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkGetBaseOverview.
-	 * @param baseId Long 
+	 * @param baseId Long
 	 * @return BaseOverview baseOverview
 	*/
 	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(final Long baseId) {
@@ -68,7 +68,7 @@ public final class BasemanagementPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkGetEquipmentMaintenanceOverview.
-	 * @param equipmentId Long 
+	 * @param equipmentId Long
 	 * @return EquipmentMaintenanceOverview equipmentMaintenanceOverview
 	*/
 	public io.mars.basemanagement.domain.EquipmentMaintenanceOverview getEquipmentMaintenanceOverview(final Long equipmentId) {
@@ -82,7 +82,7 @@ public final class BasemanagementPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkGetEquipmentsOverview.
-	 * @param baseId Long 
+	 * @param baseId Long
 	 * @return DtList de EquipmentOverview overview
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(final Long baseId) {
@@ -96,7 +96,7 @@ public final class BasemanagementPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkLoadBaseIndex.
-	 * @param baseIds List de Long 
+	 * @param baseIds List de Long
 	 * @return DtList de BaseIndex dtcIndex
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.search.BaseIndex> loadBaseIndex(final java.util.List<Long> baseIds) {
@@ -110,7 +110,7 @@ public final class BasemanagementPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkLoadEquipmentIndex.
-	 * @param equipmentIds List de Long 
+	 * @param equipmentIds List de Long
 	 * @return DtList de EquipmentIndex dtcIndex
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.search.EquipmentIndex> loadEquipmentIndex(final java.util.List<Long> equipmentIds) {

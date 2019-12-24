@@ -143,7 +143,12 @@
 		<dependency>
 		    <groupId>org.elasticsearch.client</groupId>
 		    <artifactId>transport</artifactId>
-		    <version>7.4.1</version>
+		    <version>7.4.1</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+		</dependency>
+		<dependency>
+		    <groupId>org.elasticsearch.client</groupId>
+		    <artifactId>elasticsearch-rest-high-level-client</artifactId>
+		    <version>7.4.1</version> <!-- REstHighLevelElasticSearchConnector -->
 		</dependency>
 		<dependency>
 	        <groupId>org.codelibs.elasticsearch.module</groupId>

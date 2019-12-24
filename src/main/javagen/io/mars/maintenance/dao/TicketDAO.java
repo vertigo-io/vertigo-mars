@@ -55,7 +55,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 
 	/**
 	 * Execute la tache TkGetLastTicketsByBaseId.
-	 * @param baseId Long 
+	 * @param baseId Long
 	 * @return DtList de Ticket tickets
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(final Long baseId) {

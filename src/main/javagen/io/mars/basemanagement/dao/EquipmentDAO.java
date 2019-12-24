@@ -65,7 +65,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 
 	/**
 	 * Execute la tache TkGetEquipmentsByBaseCode.
-	 * @param code String 
+	 * @param code String
 	 * @return DtList de Equipment equipments
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(final String code) {
@@ -79,7 +79,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 
 	/**
 	 * Execute la tache TkGetLastPurchasedEquipmentsByBaseId.
-	 * @param baseId Long 
+	 * @param baseId Long
 	 * @return DtList de Equipment equipments
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(final Long baseId) {
@@ -93,7 +93,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 
 	/**
 	 * Execute la tache TkInsertEquipmentsBatch.
-	 * @param equipmentsList DtList de Equipment 
+	 * @param equipmentsList DtList de Equipment
 	*/
 	public void insertEquipmentsBatch(final io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> equipmentsList) {
 		final Task task = createTaskBuilder("TkInsertEquipmentsBatch")
@@ -104,9 +104,9 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 
 	/**
 	 * Execute la tache TkLoadEquipmentsByChunk.
-	 * @param limit Long 
-	 * @param offset Long 
-	 * @param dateExist Instant 
+	 * @param limit Long
+	 * @param offset Long
+	 * @param dateExist Instant
 	 * @return DtList de Equipment equipmentList
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(final Long limit, final Long offset, final java.time.Instant dateExist) {
