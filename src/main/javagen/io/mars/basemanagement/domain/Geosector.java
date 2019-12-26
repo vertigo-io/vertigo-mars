@@ -28,7 +28,7 @@ public final class Geosector implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long geosectorId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getGeosectorId() {
 		return geosectorId;
 	}
@@ -47,7 +47,7 @@ public final class Geosector implements Entity {
 	 * Récupère la valeur de la propriété 'Sector Label'.
 	 * @return String sectorLabel
 	 */
-	@Field(domain = "DoLabel", label = "Sector Label")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Sector Label")
 	public String getSectorLabel() {
 		return sectorLabel;
 	}

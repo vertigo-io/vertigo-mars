@@ -21,7 +21,7 @@ public final class EquipmentMaintenanceOverview implements DtObject {
 	 * Récupère la valeur de la propriété 'Open tickets'.
 	 * @return Long openedTickets <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoCount", required = true, label = "Open tickets")
+	@Field(domain = "DoCount", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Open tickets")
 	public Long getOpenedTickets() {
 		return openedTickets;
 	}
@@ -40,7 +40,7 @@ public final class EquipmentMaintenanceOverview implements DtObject {
 	 * Récupère la valeur de la propriété 'Work Orders in progress'.
 	 * @return Long workOrdersInprogress <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoCount", required = true, label = "Work Orders in progress")
+	@Field(domain = "DoCount", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Work Orders in progress")
 	public Long getWorkOrdersInprogress() {
 		return workOrdersInprogress;
 	}

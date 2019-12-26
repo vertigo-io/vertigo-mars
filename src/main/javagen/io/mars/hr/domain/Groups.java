@@ -28,7 +28,7 @@ public final class Groups implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long groupId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getGroupId() {
 		return groupId;
 	}
@@ -47,7 +47,7 @@ public final class Groups implements Entity {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", label = "Name")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
 	public String getName() {
 		return name;
 	}

@@ -45,7 +45,7 @@ public final class EquipmentType implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long equipmentTypeId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getEquipmentTypeId() {
 		return equipmentTypeId;
 	}
@@ -64,7 +64,7 @@ public final class EquipmentType implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment Type Label'.
 	 * @return String label
 	 */
-	@Field(domain = "DoLabel", label = "Equipment Type Label")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment Type Label")
 	public String getLabel() {
 		return label;
 	}
@@ -83,7 +83,7 @@ public final class EquipmentType implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment type is active'.
 	 * @return Boolean active
 	 */
-	@Field(domain = "DoYesNo", label = "Equipment type is active")
+	@Field(domain = "DoYesNo", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment type is active")
 	public Boolean getActive() {
 		return active;
 	}
@@ -102,7 +102,7 @@ public final class EquipmentType implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment Category'.
 	 * @return Long equipmentCategoryId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Equipment Category")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment Category")
 	public Long getEquipmentCategoryId() {
 		return (Long) equipmentCategoryIdAccessor.getId();
 	}

@@ -3,33 +3,33 @@ package io.mars.hr.domain
 
 create DtDefinition DtPerson {
 	id personId {domain: DoId label:"Id"}
-	field firstName {domain: DoLabel label: "First Name" required:"false"}
-	field lastName {domain: DoLabel label: "Last Name" required:"false"}
-	field email {domain: DoEmail label:"E-mail" required: "false"}
-	field picturefileId {domain: DoId label:"Picture" required:"false"}
-	field picturefileIdTmp {domain: DoLabel label:"Picture" required:"false" persistent:"false"}
-	field tags {domain: DoMultipleIds label: "Tags" required:"false"}
-	field dateHired {domain: DoLocaldate label: "Date hired" required:"false"}
-	computed fullName {domain : DoLabel, label:"Full name"
+	field firstName {domain: DoLabel label: "First Name" cardinality: "?"}
+	field lastName {domain: DoLabel label: "Last Name" cardinality: "?"}
+	field email {domain: DoEmail label:"E-mail" cardinality: "?"}
+	field picturefileId {domain: DoId label:"Picture" cardinality: "?"}
+	field picturefileIdTmp {domain: DoLabel label:"Picture" cardinality: "?" persistent:"false"}
+	field tags {domain: DoMultipleIds label: "Tags" cardinality: "?"}
+	field dateHired {domain: DoLocaldate label: "Date hired" cardinality: "?"}
+	computed fullName {domain : DoLabel, label:"Full name" cardinality: "1"
         expression:"return getFirstName() + \" \" + getLastName();"
     }
 }
 
 create DtDefinition DtGroups {
 	id groupId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" required:"false"}
+	field name {domain: DoLabel label: "Name" cardinality: "?"}
 }
 
 create DtDefinition DtMission {
 	id missionId {domain: DoId label:"Id"}
-	field role {domain: DoCode label:"Role" required:"false"}
+	field role {domain: DoCode label:"Role" cardinality: "?"}
 }
 
 create DtDefinition DtMissionDisplay {
-	field missionId {domain: DoId label:"Id" required:"false"}
-	field role {domain: DoCode label:"Role" required:"false"}
-	field baseName {domain: DoLabel label:"Base" required:"false"}
-	field businessName {domain: DoLabel label:"Business" required:"false"}
+	field missionId {domain: DoId label:"Id" cardinality: "?"}
+	field role {domain: DoCode label:"Role" cardinality: "?"}
+	field baseName {domain: DoLabel label:"Base" cardinality: "?"}
+	field businessName {domain: DoLabel label:"Business" cardinality: "?"}
 }
 
 

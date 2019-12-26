@@ -10,7 +10,7 @@ create Task TkGetBaseManager {
             	limit 1;
              "
     attribute baseId     {domain : DoId         	 cardinality: "1"  inOut :"in"}
-    attribute manager     {domain : DoDtPersonDto    cardinality: "?"  inOut :"out"}
+    attribute manager     {domain : DoDtPerson    cardinality: "?"  inOut :"out"}
 }
 
 
@@ -28,5 +28,5 @@ create Task TkGetMissionsDisplayByPersonId {
             	where mis.person_id = #personId#;
              "
     attribute personId     {domain : DoId         		cardinality: "1"  inOut :"in"}
-    attribute missions     {domain : DoDtMissionDisplayDtc    cardinality: "*"  inOut :"out"}
+    attribute missions     {domain : DoDtMissionDisplay    cardinality: "*"  inOut :"out"}
 }

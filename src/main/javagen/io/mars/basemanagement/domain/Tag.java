@@ -28,7 +28,7 @@ public final class Tag implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long tagId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getTagId() {
 		return tagId;
 	}
@@ -47,7 +47,7 @@ public final class Tag implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Label'.
 	 * @return String label
 	 */
-	@Field(domain = "DoLabel", label = "Label")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Label")
 	public String getLabel() {
 		return label;
 	}

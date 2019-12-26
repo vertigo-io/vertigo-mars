@@ -74,7 +74,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long missionId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getMissionId() {
 		return missionId;
 	}
@@ -93,7 +93,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Role'.
 	 * @return String role
 	 */
-	@Field(domain = "DoCode", label = "Role")
+	@Field(domain = "DoCode", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Role")
 	public String getRole() {
 		return role;
 	}
@@ -112,7 +112,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Person'.
 	 * @return Long personId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Person")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Person")
 	public Long getPersonId() {
 		return (Long) personIdAccessor.getId();
 	}
@@ -131,7 +131,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return Long baseId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Base")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Base")
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}
@@ -150,7 +150,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Business'.
 	 * @return Long businessId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Business")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Business")
 	public Long getBusinessId() {
 		return (Long) businessIdAccessor.getId();
 	}

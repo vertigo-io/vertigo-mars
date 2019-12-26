@@ -28,7 +28,7 @@ public final class BaseType implements DtStaticMasterData {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return String baseTypeId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoCode", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoCode", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public String getBaseTypeId() {
 		return baseTypeId;
 	}
@@ -47,7 +47,7 @@ public final class BaseType implements DtStaticMasterData {
 	 * Récupère la valeur de la propriété 'Base Type Label'.
 	 * @return String label
 	 */
-	@Field(domain = "DoLabel", label = "Base Type Label")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Base Type Label")
 	public String getLabel() {
 		return label;
 	}

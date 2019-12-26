@@ -66,7 +66,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long woId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getWoId() {
 		return woId;
 	}
@@ -85,7 +85,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Code'.
 	 * @return String code
 	 */
-	@Field(domain = "DoLabel", label = "Code")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Code")
 	public String getCode() {
 		return code;
 	}
@@ -104,7 +104,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Number'.
 	 * @return String ticketCode
 	 */
-	@Field(domain = "DoLabel", label = "Number")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Number")
 	public String getTicketCode() {
 		return ticketCode;
 	}
@@ -123,7 +123,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", label = "Name")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -142,7 +142,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Description'.
 	 * @return String description
 	 */
-	@Field(domain = "DoDescription", label = "Description")
+	@Field(domain = "DoDescription", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Description")
 	public String getDescription() {
 		return description;
 	}
@@ -161,7 +161,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Creation Date'.
 	 * @return LocalDate dateCreated
 	 */
-	@Field(domain = "DoLocaldate", label = "Creation Date")
+	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Creation Date")
 	public java.time.LocalDate getDateCreated() {
 		return dateCreated;
 	}
@@ -180,7 +180,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Closing Date'.
 	 * @return LocalDate dateClosed
 	 */
-	@Field(domain = "DoLocaldate", label = "Closing Date")
+	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Closing Date")
 	public java.time.LocalDate getDateClosed() {
 		return dateClosed;
 	}
@@ -199,7 +199,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Due Date'.
 	 * @return LocalDate dueDate
 	 */
-	@Field(domain = "DoLocaldate", label = "Due Date")
+	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Due Date")
 	public java.time.LocalDate getDueDate() {
 		return dueDate;
 	}
@@ -218,7 +218,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Ticket'.
 	 * @return Long ticketId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Ticket")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Ticket")
 	public Long getTicketId() {
 		return (Long) ticketIdAccessor.getId();
 	}
@@ -237,7 +237,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Work Order Status'.
 	 * @return String workOrderStatusId
 	 */
-	@Field(domain = "DoCode", type = "FOREIGN_KEY", label = "Work Order Status")
+	@Field(domain = "DoCode", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Work Order Status")
 	public String getWorkOrderStatusId() {
 		return (String) workOrderStatusIdAccessor.getId();
 	}

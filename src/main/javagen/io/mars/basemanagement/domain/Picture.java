@@ -44,7 +44,7 @@ public final class Picture implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long pictureId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getPictureId() {
 		return pictureId;
 	}
@@ -63,7 +63,7 @@ public final class Picture implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long picturefileId
 	 */
-	@Field(domain = "DoId", label = "Id")
+	@Field(domain = "DoId", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Id")
 	public Long getPicturefileId() {
 		return picturefileId;
 	}
@@ -82,7 +82,7 @@ public final class Picture implements Entity {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return Long baseId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", required = true, label = "Base")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Base")
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}

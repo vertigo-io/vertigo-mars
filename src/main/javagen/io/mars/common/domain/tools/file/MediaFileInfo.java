@@ -33,7 +33,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long filId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getFilId() {
 		return filId;
 	}
@@ -52,7 +52,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String fileName <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabel", required = true, label = "Name")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Name")
 	public String getFileName() {
 		return fileName;
 	}
@@ -71,7 +71,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'MimeType'.
 	 * @return String mimeType <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabel", required = true, label = "MimeType")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "MimeType")
 	public String getMimeType() {
 		return mimeType;
 	}
@@ -90,7 +90,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'Size'.
 	 * @return Long length <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoSize", required = true, label = "Size")
+	@Field(domain = "DoSize", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Size")
 	public Long getLength() {
 		return length;
 	}
@@ -109,7 +109,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'Modification Date'.
 	 * @return Instant lastModified <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoInstant", required = true, label = "Modification Date")
+	@Field(domain = "DoInstant", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Modification Date")
 	public java.time.Instant getLastModified() {
 		return lastModified;
 	}
@@ -128,7 +128,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'path'.
 	 * @return String filePath
 	 */
-	@Field(domain = "DoFilePath", label = "path")
+	@Field(domain = "DoFilePath", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "path")
 	public String getFilePath() {
 		return filePath;
 	}
@@ -147,7 +147,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'data'.
 	 * @return DataStream fileData
 	 */
-	@Field(domain = "DoFileData", label = "data")
+	@Field(domain = "DoFileData", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "data")
 	public io.vertigo.core.lang.DataStream getFileData() {
 		return fileData;
 	}

@@ -23,7 +23,7 @@ public final class MissionDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long missionId
 	 */
-	@Field(domain = "DoId", label = "Id")
+	@Field(domain = "DoId", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Id")
 	public Long getMissionId() {
 		return missionId;
 	}
@@ -42,7 +42,7 @@ public final class MissionDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Role'.
 	 * @return String role
 	 */
-	@Field(domain = "DoCode", label = "Role")
+	@Field(domain = "DoCode", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Role")
 	public String getRole() {
 		return role;
 	}
@@ -61,7 +61,7 @@ public final class MissionDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return String baseName
 	 */
-	@Field(domain = "DoLabel", label = "Base")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Base")
 	public String getBaseName() {
 		return baseName;
 	}
@@ -80,7 +80,7 @@ public final class MissionDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Business'.
 	 * @return String businessName
 	 */
-	@Field(domain = "DoLabel", label = "Business")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Business")
 	public String getBusinessName() {
 		return businessName;
 	}

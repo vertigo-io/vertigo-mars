@@ -64,7 +64,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long ticketId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getTicketId() {
 		return ticketId;
 	}
@@ -83,7 +83,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Number'.
 	 * @return String code
 	 */
-	@Field(domain = "DoLabel", label = "Number")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Number")
 	public String getCode() {
 		return code;
 	}
@@ -102,7 +102,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Title'.
 	 * @return String title
 	 */
-	@Field(domain = "DoLabel", label = "Title")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Title")
 	public String getTitle() {
 		return title;
 	}
@@ -121,7 +121,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Description'.
 	 * @return String description
 	 */
-	@Field(domain = "DoDescription", label = "Description")
+	@Field(domain = "DoDescription", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Description")
 	public String getDescription() {
 		return description;
 	}
@@ -140,7 +140,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Creation Date'.
 	 * @return LocalDate dateCreated
 	 */
-	@Field(domain = "DoLocaldate", label = "Creation Date")
+	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Creation Date")
 	public java.time.LocalDate getDateCreated() {
 		return dateCreated;
 	}
@@ -159,7 +159,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Closing Date'.
 	 * @return LocalDate dateClosed
 	 */
-	@Field(domain = "DoLocaldate", label = "Closing Date")
+	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Closing Date")
 	public java.time.LocalDate getDateClosed() {
 		return dateClosed;
 	}
@@ -178,7 +178,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Ticket Status'.
 	 * @return String ticketStatusId
 	 */
-	@Field(domain = "DoCode", type = "FOREIGN_KEY", label = "Ticket Status")
+	@Field(domain = "DoCode", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Ticket Status")
 	public String getTicketStatusId() {
 		return (String) ticketStatusIdAccessor.getId();
 	}
@@ -197,7 +197,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment'.
 	 * @return Long equipmentId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Equipment")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment")
 	public Long getEquipmentId() {
 		return (Long) equipmentIdAccessor.getId();
 	}

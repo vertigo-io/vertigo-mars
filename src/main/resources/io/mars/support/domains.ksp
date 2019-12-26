@@ -107,12 +107,6 @@ create Constraint CkMaxHealthValue100 {
 /********************************* Domains ********************************************************/
 /**************************************************************************************************/
 
-create Domain DoLongs {  
-    dataType : Long
-    multiple : "true"
-    formatter : FmtDefault
-}
-
 create Domain DoId {
 	dataType : Long
 	formatter : FmtId

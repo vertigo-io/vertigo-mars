@@ -5,7 +5,7 @@ create Task TkSelectEquipmentType {
     request : "
             select EQUIPMENT_TYPE_ID, LABEL from EQUIPMENT_TYPE
              "
-    attribute dtcEquipmentType     {domain : DoDtEquipmentTypeDtc cardinality: "*"  inOut :"out"}
+    attribute dtcEquipmentType     {domain : DoDtEquipmentType cardinality: "*"  inOut :"out"}
 }
 
 

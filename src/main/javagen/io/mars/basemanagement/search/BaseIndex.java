@@ -25,7 +25,7 @@ public final class BaseIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'id'.
 	 * @return Long baseId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", required = true, label = "id")
+	@Field(domain = "DoId", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "id")
 	public Long getBaseId() {
 		return baseId;
 	}
@@ -44,7 +44,7 @@ public final class BaseIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", label = "Name")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -63,7 +63,7 @@ public final class BaseIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Code'.
 	 * @return String code
 	 */
-	@Field(domain = "DoCode", label = "Code")
+	@Field(domain = "DoCode", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Code")
 	public String getCode() {
 		return code;
 	}
@@ -82,7 +82,7 @@ public final class BaseIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Creation Date'.
 	 * @return LocalDate creationDate
 	 */
-	@Field(domain = "DoLocaldate", label = "Creation Date")
+	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Creation Date")
 	public java.time.LocalDate getCreationDate() {
 		return creationDate;
 	}
@@ -101,7 +101,7 @@ public final class BaseIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Tags'.
 	 * @return String tags
 	 */
-	@Field(domain = "DoTags", label = "Tags")
+	@Field(domain = "DoTags", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Tags")
 	public String getTags() {
 		return tags;
 	}
@@ -120,7 +120,7 @@ public final class BaseIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Type'.
 	 * @return String baseTypeLabel
 	 */
-	@Field(domain = "DoLabel", label = "Type")
+	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Type")
 	public String getBaseTypeLabel() {
 		return baseTypeLabel;
 	}
