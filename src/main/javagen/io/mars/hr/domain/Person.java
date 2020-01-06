@@ -69,7 +69,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'First Name'.
 	 * @return String firstName
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "First Name")
+	@Field(domain = "DoLabel", label = "First Name")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -88,7 +88,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'Last Name'.
 	 * @return String lastName
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Last Name")
+	@Field(domain = "DoLabel", label = "Last Name")
 	public String getLastName() {
 		return lastName;
 	}
@@ -107,7 +107,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'E-mail'.
 	 * @return String email
 	 */
-	@Field(domain = "DoEmail", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "E-mail")
+	@Field(domain = "DoEmail", label = "E-mail")
 	public String getEmail() {
 		return email;
 	}
@@ -126,7 +126,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'Picture'.
 	 * @return Long picturefileId
 	 */
-	@Field(domain = "DoId", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Picture")
+	@Field(domain = "DoId", label = "Picture")
 	public Long getPicturefileId() {
 		return picturefileId;
 	}
@@ -145,7 +145,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'Picture'.
 	 * @return String picturefileIdTmp
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, persistent = false, label = "Picture")
+	@Field(domain = "DoLabel", persistent = false, label = "Picture")
 	public String getPicturefileIdTmp() {
 		return picturefileIdTmp;
 	}
@@ -164,7 +164,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'Tags'.
 	 * @return String tags
 	 */
-	@Field(domain = "DoMultipleIds", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Tags")
+	@Field(domain = "DoMultipleIds", label = "Tags")
 	public String getTags() {
 		return tags;
 	}
@@ -183,7 +183,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'Date hired'.
 	 * @return LocalDate dateHired
 	 */
-	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Date hired")
+	@Field(domain = "DoLocaldate", label = "Date hired")
 	public java.time.LocalDate getDateHired() {
 		return dateHired;
 	}
@@ -202,7 +202,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'Group'.
 	 * @return Long groupId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Group")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Group")
 	public Long getGroupId() {
 		return (Long) groupIdAccessor.getId();
 	}

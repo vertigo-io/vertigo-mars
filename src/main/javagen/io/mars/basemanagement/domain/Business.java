@@ -48,7 +48,7 @@ public final class Business implements Entity {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
+	@Field(domain = "DoLabel", label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -67,7 +67,7 @@ public final class Business implements Entity {
 	 * Récupère la valeur de la propriété 'Icon'.
 	 * @return String icon
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Icon")
+	@Field(domain = "DoLabel", label = "Icon")
 	public String getIcon() {
 		return icon;
 	}

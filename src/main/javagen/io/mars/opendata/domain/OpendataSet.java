@@ -68,7 +68,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Code'.
 	 * @return String code
 	 */
-	@Field(domain = "DoCode", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Code")
+	@Field(domain = "DoCode", label = "Code")
 	public String getCode() {
 		return code;
 	}
@@ -87,7 +87,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Title'.
 	 * @return String title
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Title")
+	@Field(domain = "DoLabel", label = "Title")
 	public String getTitle() {
 		return title;
 	}
@@ -106,7 +106,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Description'.
 	 * @return String description
 	 */
-	@Field(domain = "DoDescription", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Description")
+	@Field(domain = "DoDescription", label = "Description")
 	public String getDescription() {
 		return description;
 	}
@@ -125,7 +125,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Service Endpoint URL'.
 	 * @return String endPointUrl
 	 */
-	@Field(domain = "DoUrl", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Service Endpoint URL")
+	@Field(domain = "DoUrl", label = "Service Endpoint URL")
 	public String getEndPointUrl() {
 		return endPointUrl;
 	}
@@ -144,7 +144,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Picture'.
 	 * @return Long picturefileId
 	 */
-	@Field(domain = "DoId", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Picture")
+	@Field(domain = "DoId", label = "Picture")
 	public Long getPicturefileId() {
 		return picturefileId;
 	}
@@ -163,7 +163,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Tags'.
 	 * @return String tags
 	 */
-	@Field(domain = "DoMultipleIds", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Tags")
+	@Field(domain = "DoMultipleIds", label = "Tags")
 	public String getTags() {
 		return tags;
 	}
@@ -182,7 +182,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Opendata Set Status'.
 	 * @return String opendataSetStatusId
 	 */
-	@Field(domain = "DoCode", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Opendata Set Status")
+	@Field(domain = "DoCode", type = "FOREIGN_KEY", label = "Opendata Set Status")
 	public String getOpendataSetStatusId() {
 		return (String) opendataSetStatusIdAccessor.getId();
 	}

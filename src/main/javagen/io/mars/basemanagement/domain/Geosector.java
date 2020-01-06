@@ -47,7 +47,7 @@ public final class Geosector implements Entity {
 	 * Récupère la valeur de la propriété 'Sector Label'.
 	 * @return String sectorLabel
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Sector Label")
+	@Field(domain = "DoLabel", label = "Sector Label")
 	public String getSectorLabel() {
 		return sectorLabel;
 	}

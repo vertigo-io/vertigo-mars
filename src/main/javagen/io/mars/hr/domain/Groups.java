@@ -47,7 +47,7 @@ public final class Groups implements Entity {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
+	@Field(domain = "DoLabel", label = "Name")
 	public String getName() {
 		return name;
 	}

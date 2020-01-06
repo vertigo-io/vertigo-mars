@@ -106,7 +106,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
+	@Field(domain = "DoLabel", label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -125,7 +125,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Health Level'.
 	 * @return Integer healthLevel
 	 */
-	@Field(domain = "DoHealth", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Health Level")
+	@Field(domain = "DoHealth", label = "Health Level")
 	public Integer getHealthLevel() {
 		return healthLevel;
 	}
@@ -144,7 +144,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Creation Date'.
 	 * @return LocalDate creationDate
 	 */
-	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Creation Date")
+	@Field(domain = "DoLocaldate", label = "Creation Date")
 	public java.time.LocalDate getCreationDate() {
 		return creationDate;
 	}
@@ -163,7 +163,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Description'.
 	 * @return String description
 	 */
-	@Field(domain = "DoDescription", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Description")
+	@Field(domain = "DoDescription", label = "Description")
 	public String getDescription() {
 		return description;
 	}
@@ -182,7 +182,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Geographic Location'.
 	 * @return String geoLocation
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Geographic Location")
+	@Field(domain = "DoLabel", label = "Geographic Location")
 	public String getGeoLocation() {
 		return geoLocation;
 	}
@@ -201,7 +201,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Current base assets value'.
 	 * @return BigDecimal assetsValue
 	 */
-	@Field(domain = "DoCurrency", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Current base assets value")
+	@Field(domain = "DoCurrency", label = "Current base assets value")
 	public java.math.BigDecimal getAssetsValue() {
 		return assetsValue;
 	}
@@ -220,7 +220,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Renting Fee'.
 	 * @return BigDecimal rentingFee
 	 */
-	@Field(domain = "DoCurrency", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Renting Fee")
+	@Field(domain = "DoCurrency", label = "Renting Fee")
 	public java.math.BigDecimal getRentingFee() {
 		return rentingFee;
 	}
@@ -239,7 +239,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Tags'.
 	 * @return String tags
 	 */
-	@Field(domain = "DoMultipleIds", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Tags")
+	@Field(domain = "DoMultipleIds", label = "Tags")
 	public String getTags() {
 		return tags;
 	}
@@ -258,7 +258,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Base Type'.
 	 * @return String baseTypeId
 	 */
-	@Field(domain = "DoCode", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Base Type")
+	@Field(domain = "DoCode", type = "FOREIGN_KEY", label = "Base Type")
 	public String getBaseTypeId() {
 		return (String) baseTypeIdAccessor.getId();
 	}
@@ -277,7 +277,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Base Geosector'.
 	 * @return Long geosectorId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Base Geosector")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Base Geosector")
 	public Long getGeosectorId() {
 		return (Long) geosectorIdAccessor.getId();
 	}

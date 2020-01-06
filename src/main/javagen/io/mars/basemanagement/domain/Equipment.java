@@ -116,7 +116,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
+	@Field(domain = "DoLabel", label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -135,7 +135,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Code'.
 	 * @return String code
 	 */
-	@Field(domain = "DoCode", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Code")
+	@Field(domain = "DoCode", label = "Code")
 	public String getCode() {
 		return code;
 	}
@@ -154,7 +154,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Health Level'.
 	 * @return Integer healthLevel
 	 */
-	@Field(domain = "DoHealth", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Health Level")
+	@Field(domain = "DoHealth", label = "Health Level")
 	public Integer getHealthLevel() {
 		return healthLevel;
 	}
@@ -173,7 +173,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Date of purchase'.
 	 * @return LocalDate purchaseDate
 	 */
-	@Field(domain = "DoLocaldate", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Date of purchase")
+	@Field(domain = "DoLocaldate", label = "Date of purchase")
 	public java.time.LocalDate getPurchaseDate() {
 		return purchaseDate;
 	}
@@ -192,7 +192,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Description'.
 	 * @return String description
 	 */
-	@Field(domain = "DoDescription", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Description")
+	@Field(domain = "DoDescription", label = "Description")
 	public String getDescription() {
 		return description;
 	}
@@ -211,7 +211,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Tags'.
 	 * @return String tags
 	 */
-	@Field(domain = "DoMultipleIds", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Tags")
+	@Field(domain = "DoMultipleIds", label = "Tags")
 	public String getTags() {
 		return tags;
 	}
@@ -230,7 +230,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Geographic Location'.
 	 * @return String geoLocation
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Geographic Location")
+	@Field(domain = "DoLabel", label = "Geographic Location")
 	public String getGeoLocation() {
 		return geoLocation;
 	}
@@ -249,7 +249,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Renting Fee'.
 	 * @return BigDecimal rentingFee
 	 */
-	@Field(domain = "DoCurrency", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Renting Fee")
+	@Field(domain = "DoCurrency", label = "Renting Fee")
 	public java.math.BigDecimal getRentingFee() {
 		return rentingFee;
 	}
@@ -268,7 +268,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Current equipment value'.
 	 * @return BigDecimal equipmentValue
 	 */
-	@Field(domain = "DoCurrency", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Current equipment value")
+	@Field(domain = "DoCurrency", label = "Current equipment value")
 	public java.math.BigDecimal getEquipmentValue() {
 		return equipmentValue;
 	}
@@ -287,7 +287,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return Long baseId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Base")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Base")
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}
@@ -306,7 +306,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Equipment Geosector'.
 	 * @return Long geosectorId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment Geosector")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Equipment Geosector")
 	public Long getGeosectorId() {
 		return (Long) geosectorIdAccessor.getId();
 	}
@@ -325,7 +325,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Business'.
 	 * @return Long businessId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Business")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Business")
 	public Long getBusinessId() {
 		return (Long) businessIdAccessor.getId();
 	}
@@ -344,7 +344,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Equipment Type'.
 	 * @return Long equipmentTypeId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment Type")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Equipment Type")
 	public Long getEquipmentTypeId() {
 		return (Long) equipmentTypeIdAccessor.getId();
 	}

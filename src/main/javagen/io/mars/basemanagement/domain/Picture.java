@@ -63,7 +63,7 @@ public final class Picture implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long picturefileId
 	 */
-	@Field(domain = "DoId", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Id")
+	@Field(domain = "DoId", label = "Id")
 	public Long getPicturefileId() {
 		return picturefileId;
 	}

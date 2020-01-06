@@ -48,7 +48,7 @@ public final class EquipmentCategory implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment Category Label'.
 	 * @return String label
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment Category Label")
+	@Field(domain = "DoLabel", label = "Equipment Category Label")
 	public String getLabel() {
 		return label;
 	}
@@ -67,7 +67,7 @@ public final class EquipmentCategory implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment category is active'.
 	 * @return Boolean active
 	 */
-	@Field(domain = "DoYesNo", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment category is active")
+	@Field(domain = "DoYesNo", label = "Equipment category is active")
 	public Boolean getActive() {
 		return active;
 	}

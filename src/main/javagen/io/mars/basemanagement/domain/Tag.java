@@ -47,7 +47,7 @@ public final class Tag implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Label'.
 	 * @return String label
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Label")
+	@Field(domain = "DoLabel", label = "Label")
 	public String getLabel() {
 		return label;
 	}

@@ -47,7 +47,7 @@ public final class OpendataSetStatus implements DtStaticMasterData {
 	 * Récupère la valeur de la propriété 'Status Label'.
 	 * @return String label
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Status Label")
+	@Field(domain = "DoLabel", label = "Status Label")
 	public String getLabel() {
 		return label;
 	}

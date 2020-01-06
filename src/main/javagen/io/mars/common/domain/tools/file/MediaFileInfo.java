@@ -128,7 +128,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'path'.
 	 * @return String filePath
 	 */
-	@Field(domain = "DoFilePath", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "path")
+	@Field(domain = "DoFilePath", label = "path")
 	public String getFilePath() {
 		return filePath;
 	}
@@ -147,7 +147,7 @@ public final class MediaFileInfo implements Entity {
 	 * Récupère la valeur de la propriété 'data'.
 	 * @return DataStream fileData
 	 */
-	@Field(domain = "DoFileData", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "data")
+	@Field(domain = "DoFileData", label = "data")
 	public io.vertigo.core.lang.DataStream getFileData() {
 		return fileData;
 	}

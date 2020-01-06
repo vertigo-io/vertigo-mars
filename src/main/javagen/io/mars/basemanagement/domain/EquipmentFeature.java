@@ -63,7 +63,7 @@ public final class EquipmentFeature implements Entity {
 	 * Récupère la valeur de la propriété 'Name'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Name")
+	@Field(domain = "DoLabel", label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -82,7 +82,7 @@ public final class EquipmentFeature implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment'.
 	 * @return Long equipmentId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", cardinality = io.vertigo.core.lang.Cardinality.OPTIONAL_OR_NULLABLE, label = "Equipment")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Equipment")
 	public Long getEquipmentId() {
 		return (Long) equipmentIdAccessor.getId();
 	}
