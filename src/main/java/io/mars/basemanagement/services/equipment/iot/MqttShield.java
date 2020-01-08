@@ -15,23 +15,20 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import io.vertigo.commons.eventbus.EventBusManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
 import io.vertigo.connectors.mqtt.MosquittoConnector;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.node.config.discovery.NotDiscoverable;
 import io.vertigo.database.timeseries.Measure;
 
 @NotDiscoverable
-public class MqttShield implements Component, Activeable {
+public class MqttShield implements Component {
 
 	private static final Logger LOGGER = LogManager.getLogger(MqttShield.class);
 
@@ -56,21 +53,6 @@ public class MqttShield implements Component, Activeable {
 			mqttClient.setCallback(callback);
 			mqttClientPub = connectorsByName.get("Publisher").getClient();
 			subscribe();
-		} catch (final MqttException me) {
-			throw WrappedException.wrap(me);
-		}
-	}
-
-	@Override
-	public void start() {
-		// string
-	}
-
-	@Override
-	public void stop() {
-		try {
-			//unsubscribe is automatically done when disconnecting
-			disconnect();
 		} catch (final MqttException me) {
 			throw WrappedException.wrap(me);
 		}
@@ -115,24 +97,6 @@ public class MqttShield implements Component, Activeable {
 		}
 	};
 
-	private void connect(final String brokerHost, final String clientId, final String publisherId) throws MqttException {
-		final MqttClient sampleClient = new MqttClient(brokerHost, clientId, new MemoryPersistence());
-		final MqttClient samplePublisher = new MqttClient(brokerHost, publisherId, new MemoryPersistence());
-		final MqttConnectOptions connOpts = new MqttConnectOptions();
-		connOpts.setCleanSession(true);
-
-		// Connect to broker
-		LOGGER.info("Connecting to broker, host : {}", brokerHost);
-		sampleClient.connect(connOpts);
-		connOpts.setCleanSession(true);
-		samplePublisher.connect();
-		sampleClient.setCallback(callback);
-		LOGGER.info("Connected");
-
-		mqttClient = sampleClient;
-		mqttClientPub = samplePublisher;
-	}
-
 	private void subscribe() throws MqttException {
 		//final String topicPub = "alpha/MQTT";
 		final String topicSub = "#";
@@ -140,17 +104,6 @@ public class MqttShield implements Component, Activeable {
 		mqttClient.subscribe(topicSub, 0);
 		LOGGER.info("Subscribed to channel: " + topicSub);
 
-	}
-
-	private void disconnect() throws MqttException {
-		if (mqttClient != null) {
-			mqttClient.disconnect();
-			LOGGER.info("Disconnected");
-		}
-		if (mqttClientPub != null) {
-			mqttClientPub.disconnect();
-			LOGGER.info("Disconnected");
-		}
 	}
 
 	private void handleMessage(final MqttMessage message, final String topic) {
