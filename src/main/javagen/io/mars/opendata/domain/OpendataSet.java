@@ -2,7 +2,7 @@ package io.mars.opendata.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.EnumVAccessor;
+import io.vertigo.dynamo.impl.store.datastore.EnumStoreVAccessor;
 import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
@@ -36,7 +36,7 @@ public final class OpendataSet implements Entity {
 			foreignRole = "OpendataSet",
 			foreignLabel = "OpendataSet",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<io.mars.opendata.domain.OpendataSetStatus, io.mars.opendata.domain.OpendataSetStatusEnum> opendataSetStatusIdAccessor = new EnumVAccessor<>(io.mars.opendata.domain.OpendataSetStatus.class, "OpendataSetStatus", io.mars.opendata.domain.OpendataSetStatusEnum.class);
+	private final EnumStoreVAccessor<io.mars.opendata.domain.OpendataSetStatus, io.mars.opendata.domain.OpendataSetStatusEnum> opendataSetStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.opendata.domain.OpendataSetStatus.class, "OpendataSetStatus", io.mars.opendata.domain.OpendataSetStatusEnum.class);
 
 	/** {@inheritDoc} */
 	@Override
@@ -200,7 +200,7 @@ public final class OpendataSet implements Entity {
 	 * Association : Opendata Set Status.
 	 * @return l'accesseur vers la propriété 'Opendata Set Status'
 	 */
-	public EnumVAccessor<io.mars.opendata.domain.OpendataSetStatus, io.mars.opendata.domain.OpendataSetStatusEnum> opendataSetStatus() {
+	public EnumStoreVAccessor<io.mars.opendata.domain.OpendataSetStatus, io.mars.opendata.domain.OpendataSetStatusEnum> opendataSetStatus() {
 		return opendataSetStatusIdAccessor;
 	}
 	

@@ -3,7 +3,7 @@ package io.mars.hr.domain;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -31,7 +31,7 @@ public final class Mission implements Entity {
 			foreignRole = "Mission",
 			foreignLabel = "Mission",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.hr.domain.Person> personIdAccessor = new VAccessor<>(io.mars.hr.domain.Person.class, "Person");
+	private final StoreVAccessor<io.mars.hr.domain.Person> personIdAccessor = new StoreVAccessor<>(io.mars.hr.domain.Person.class, "Person");
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "AMissionBase",
@@ -46,7 +46,7 @@ public final class Mission implements Entity {
 			foreignRole = "Mission",
 			foreignLabel = "Mission",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "ABusinessMission",
@@ -61,7 +61,7 @@ public final class Mission implements Entity {
 			foreignRole = "Mission",
 			foreignLabel = "Mission",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Business> businessIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Business.class, "Business");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Business> businessIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Business.class, "Business");
 
 	/** {@inheritDoc} */
 	@Override
@@ -168,7 +168,7 @@ public final class Mission implements Entity {
 	 * Association : Business.
 	 * @return l'accesseur vers la propriété 'Business'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Business> business() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Business> business() {
 		return businessIdAccessor;
 	}
 
@@ -176,7 +176,7 @@ public final class Mission implements Entity {
 	 * Association : Base.
 	 * @return l'accesseur vers la propriété 'Base'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Base> base() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Base> base() {
 		return baseIdAccessor;
 	}
 
@@ -184,7 +184,7 @@ public final class Mission implements Entity {
 	 * Association : Person.
 	 * @return l'accesseur vers la propriété 'Person'
 	 */
-	public VAccessor<io.mars.hr.domain.Person> person() {
+	public StoreVAccessor<io.mars.hr.domain.Person> person() {
 		return personIdAccessor;
 	}
 	

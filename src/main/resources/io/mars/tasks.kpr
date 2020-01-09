@@ -1,0 +1,5 @@
+basemanagement/basemanagement_tasks.kpr
+catalog/catalog_tasks.kpr
+hr/hr_tasks.kpr
+maintenance/maintenance_tasks.kpr
+opendata/opendata_tasks.kpr

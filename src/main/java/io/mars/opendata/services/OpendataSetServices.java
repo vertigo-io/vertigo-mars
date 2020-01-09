@@ -12,10 +12,10 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.dynamo.domain.model.FileInfoURI;
 import io.vertigo.dynamo.file.FileManager;
 import io.vertigo.dynamo.file.metamodel.FileInfoDefinition;
 import io.vertigo.dynamo.file.model.FileInfo;
+import io.vertigo.dynamo.file.model.FileInfoURI;
 import io.vertigo.dynamo.file.model.VFile;
 import io.vertigo.dynamo.store.StoreManager;
 

@@ -3,7 +3,7 @@ package io.mars.basemanagement.domain;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -31,7 +31,7 @@ public final class Picture implements Entity {
 			foreignRole = "Picture",
 			foreignLabel = "Picture",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
 
 	/** {@inheritDoc} */
 	@Override
@@ -100,7 +100,7 @@ public final class Picture implements Entity {
 	 * Association : Base.
 	 * @return l'accesseur vers la propriété 'Base'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Base> base() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Base> base() {
 		return baseIdAccessor;
 	}
 	

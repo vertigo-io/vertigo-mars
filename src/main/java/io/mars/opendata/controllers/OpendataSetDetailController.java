@@ -14,7 +14,7 @@ import io.mars.basemanagement.domain.Tag;
 import io.mars.opendata.domain.OpendataSet;
 import io.mars.opendata.services.OpendataSetServices;
 import io.vertigo.core.param.ParamValue;
-import io.vertigo.dynamo.domain.model.FileInfoURI;
+import io.vertigo.dynamo.file.model.FileInfoURI;
 import io.vertigo.dynamo.file.model.VFile;
 import io.vertigo.ui.core.ProtectedValueUtil;
 import io.vertigo.ui.core.ViewContext;

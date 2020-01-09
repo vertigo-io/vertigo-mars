@@ -83,21 +83,15 @@ modules:
           __flags__: ["home"]
           classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           source: java:/comp/env/jdbc/DataSourceHome
-  io.vertigo.dynamo.DynamoFeatures:
+  io.vertigo.dynamo.DataModelFeatures:
+  io.vertigo.dynamo.DataStoreFeatures:
     features:
       - store:
       - kvStore:
-      - search:
-      - domainMetrics:
     featuresConfig:
       - store.data.sql:
       - store.data.sql:
           dataSpace: orchestra
-      - collections.luceneIndex:
-      - search.elasticsearch.restHL:
-          envIndexPrefix: mars
-          rowsPerQuery: 50
-          config.file: search/elasticsearch.yml
       - store.file.db:
           __flags__: ["klee"]
           storeDtName: DtMediaFileInfo
@@ -115,6 +109,15 @@ modules:
       - kvStore.berkeley:
           collections: VViewContext;TTL=43200
           dbFilePath: ${java.io.tmpdir}/vertigo-ui/MarsVViewContext
+  io.vertigo.dynamo.DataFactoryFeatures:
+    features:
+      - search:
+    featuresConfig:
+      - collections.luceneIndex:
+      - search.elasticsearch.restHL:
+          envIndexPrefix: mars
+          rowsPerQuery: 50
+          config.file: search/elasticsearch.yml
   io.vertigo.account.AccountFeatures:
     features:
       - security:

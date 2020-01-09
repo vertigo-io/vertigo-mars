@@ -2,9 +2,9 @@ package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.KeyConcept;
-import io.vertigo.dynamo.domain.model.EnumVAccessor;
+import io.vertigo.dynamo.impl.store.datastore.EnumStoreVAccessor;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -40,7 +40,7 @@ public final class Base implements KeyConcept {
 			foreignRole = "Base",
 			foreignLabel = "Base",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<io.mars.basemanagement.domain.BaseType, io.mars.basemanagement.domain.BaseTypeEnum> baseTypeIdAccessor = new EnumVAccessor<>(io.mars.basemanagement.domain.BaseType.class, "BaseType", io.mars.basemanagement.domain.BaseTypeEnum.class);
+	private final EnumStoreVAccessor<io.mars.basemanagement.domain.BaseType, io.mars.basemanagement.domain.BaseTypeEnum> baseTypeIdAccessor = new EnumStoreVAccessor<>(io.mars.basemanagement.domain.BaseType.class, "BaseType", io.mars.basemanagement.domain.BaseTypeEnum.class);
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "ABaseGeosector",
@@ -55,7 +55,7 @@ public final class Base implements KeyConcept {
 			foreignRole = "Base",
 			foreignLabel = "Base",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Geosector> geosectorIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Geosector.class, "Geosector");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Geosector> geosectorIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Geosector.class, "Geosector");
 
 	/** {@inheritDoc} */
 	@Override
@@ -295,7 +295,7 @@ public final class Base implements KeyConcept {
 	 * Association : Base Type.
 	 * @return l'accesseur vers la propriété 'Base Type'
 	 */
-	public EnumVAccessor<io.mars.basemanagement.domain.BaseType, io.mars.basemanagement.domain.BaseTypeEnum> baseType() {
+	public EnumStoreVAccessor<io.mars.basemanagement.domain.BaseType, io.mars.basemanagement.domain.BaseTypeEnum> baseType() {
 		return baseTypeIdAccessor;
 	}
 
@@ -303,7 +303,7 @@ public final class Base implements KeyConcept {
 	 * Association : Base Geosector.
 	 * @return l'accesseur vers la propriété 'Base Geosector'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Geosector> geosector() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Geosector> geosector() {
 		return geosectorIdAccessor;
 	}
 	

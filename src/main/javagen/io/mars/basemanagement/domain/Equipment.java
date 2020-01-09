@@ -3,7 +3,7 @@ package io.mars.basemanagement.domain;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.KeyConcept;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -39,7 +39,7 @@ public final class Equipment implements KeyConcept {
 			foreignRole = "Equipment",
 			foreignLabel = "Equipment",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "AEquipmentGeosector",
@@ -54,7 +54,7 @@ public final class Equipment implements KeyConcept {
 			foreignRole = "Equipment",
 			foreignLabel = "Equipment",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Geosector> geosectorIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Geosector.class, "Geosector");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Geosector> geosectorIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Geosector.class, "Geosector");
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "ABusinessEquipment",
@@ -69,7 +69,7 @@ public final class Equipment implements KeyConcept {
 			foreignRole = "Equipment",
 			foreignLabel = "Equipment",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Business> businessIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Business.class, "Business");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Business> businessIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Business.class, "Business");
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "AEquipmentEquipmentType",
@@ -84,7 +84,7 @@ public final class Equipment implements KeyConcept {
 			foreignRole = "Equipment",
 			foreignLabel = "Equipment",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.catalog.domain.EquipmentType> equipmentTypeIdAccessor = new VAccessor<>(io.mars.catalog.domain.EquipmentType.class, "EquipmentType");
+	private final StoreVAccessor<io.mars.catalog.domain.EquipmentType> equipmentTypeIdAccessor = new StoreVAccessor<>(io.mars.catalog.domain.EquipmentType.class, "EquipmentType");
 
 	/** {@inheritDoc} */
 	@Override
@@ -362,7 +362,7 @@ public final class Equipment implements KeyConcept {
 	 * Association : Base.
 	 * @return l'accesseur vers la propriété 'Base'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Base> base() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Base> base() {
 		return baseIdAccessor;
 	}
 
@@ -370,7 +370,7 @@ public final class Equipment implements KeyConcept {
 	 * Association : Business.
 	 * @return l'accesseur vers la propriété 'Business'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Business> business() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Business> business() {
 		return businessIdAccessor;
 	}
 
@@ -378,7 +378,7 @@ public final class Equipment implements KeyConcept {
 	 * Association : Equipment Type.
 	 * @return l'accesseur vers la propriété 'Equipment Type'
 	 */
-	public VAccessor<io.mars.catalog.domain.EquipmentType> equipmentType() {
+	public StoreVAccessor<io.mars.catalog.domain.EquipmentType> equipmentType() {
 		return equipmentTypeIdAccessor;
 	}
 
@@ -386,7 +386,7 @@ public final class Equipment implements KeyConcept {
 	 * Association : Equipment Geosector.
 	 * @return l'accesseur vers la propriété 'Equipment Geosector'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Geosector> geosector() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Geosector> geosector() {
 		return geosectorIdAccessor;
 	}
 	

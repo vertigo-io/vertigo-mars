@@ -2,9 +2,9 @@ package io.mars.maintenance.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.EnumVAccessor;
+import io.vertigo.dynamo.impl.store.datastore.EnumStoreVAccessor;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -36,7 +36,7 @@ public final class Ticket implements Entity {
 			foreignRole = "Ticket",
 			foreignLabel = "Ticket",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<io.mars.maintenance.domain.TicketStatus, io.mars.maintenance.domain.TicketStatusEnum> ticketStatusIdAccessor = new EnumVAccessor<>(io.mars.maintenance.domain.TicketStatus.class, "TicketStatus", io.mars.maintenance.domain.TicketStatusEnum.class);
+	private final EnumStoreVAccessor<io.mars.maintenance.domain.TicketStatus, io.mars.maintenance.domain.TicketStatusEnum> ticketStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.maintenance.domain.TicketStatus.class, "TicketStatus", io.mars.maintenance.domain.TicketStatusEnum.class);
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "AEquipmentTicket",
@@ -51,7 +51,7 @@ public final class Ticket implements Entity {
 			foreignRole = "Ticket",
 			foreignLabel = "Ticket",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.basemanagement.domain.Equipment> equipmentIdAccessor = new VAccessor<>(io.mars.basemanagement.domain.Equipment.class, "Equipment");
+	private final StoreVAccessor<io.mars.basemanagement.domain.Equipment> equipmentIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Equipment.class, "Equipment");
 
 	/** {@inheritDoc} */
 	@Override
@@ -215,7 +215,7 @@ public final class Ticket implements Entity {
 	 * Association : Equipment.
 	 * @return l'accesseur vers la propriété 'Equipment'
 	 */
-	public VAccessor<io.mars.basemanagement.domain.Equipment> equipment() {
+	public StoreVAccessor<io.mars.basemanagement.domain.Equipment> equipment() {
 		return equipmentIdAccessor;
 	}
 
@@ -223,7 +223,7 @@ public final class Ticket implements Entity {
 	 * Association : Ticket Status.
 	 * @return l'accesseur vers la propriété 'Ticket Status'
 	 */
-	public EnumVAccessor<io.mars.maintenance.domain.TicketStatus, io.mars.maintenance.domain.TicketStatusEnum> ticketStatus() {
+	public EnumStoreVAccessor<io.mars.maintenance.domain.TicketStatus, io.mars.maintenance.domain.TicketStatusEnum> ticketStatus() {
 		return ticketStatusIdAccessor;
 	}
 	

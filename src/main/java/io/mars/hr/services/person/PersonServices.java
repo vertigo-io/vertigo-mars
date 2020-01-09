@@ -9,14 +9,13 @@ import io.mars.support.services.MarsFileServices;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.dynamo.collections.CollectionsManager;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.dynamo.domain.model.FileInfoURI;
 import io.vertigo.dynamo.file.FileManager;
 import io.vertigo.dynamo.file.metamodel.FileInfoDefinition;
 import io.vertigo.dynamo.file.model.FileInfo;
+import io.vertigo.dynamo.file.model.FileInfoURI;
 import io.vertigo.dynamo.file.model.VFile;
 import io.vertigo.dynamo.store.StoreManager;
 
@@ -34,9 +33,6 @@ public class PersonServices implements Component, Activeable {
 
 	@Inject
 	private MarsFileServices commonsServices;
-
-	@Inject
-	private CollectionsManager collectionsManager;
 
 	private VFile defaultPhoto;
 
@@ -72,7 +68,7 @@ public class PersonServices implements Component, Activeable {
 	public DtList<Person> getPersons(final DtListState dtListState) {
 		final DtList<Person> persons = personDAO.findAll(Criterions.alwaysTrue(), dtListState);
 		if (dtListState.getSortFieldName().isPresent()) {
-			return collectionsManager.sort(persons, dtListState.getSortFieldName().get(), dtListState.isSortDesc().get());
+			return storeManager.sort(persons, dtListState.getSortFieldName().get(), dtListState.isSortDesc().get());
 		}
 		return persons;
 	}

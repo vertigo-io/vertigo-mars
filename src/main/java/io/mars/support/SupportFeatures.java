@@ -22,7 +22,9 @@ import io.mars.support.boot.MarsMasterDataDefinitionProvider;
 import io.mars.support.services.MarsFileServices;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Features;
-import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
+import io.vertigo.dynamo.impl.file.grammar.FileStoreDefinitionProvider;
+import io.vertigo.dynamo.impl.search.grammar.SearchDefinitionProvider;
+import io.vertigo.dynamo.plugins.environment.ModelDefinitionProvider;
 
 public class SupportFeatures extends Features<SupportFeatures> {
 
@@ -33,9 +35,16 @@ public class SupportFeatures extends Features<SupportFeatures> {
 	@Override
 	protected void buildFeatures() {
 		getModuleConfigBuilder()
-				.addDefinitionProvider(DefinitionProviderConfig.builder(DynamoDefinitionProvider.class)
-						.addDefinitionResource("kpr", "io/mars/run.kpr")
+				.addDefinitionProvider(DefinitionProviderConfig.builder(ModelDefinitionProvider.class)
+						.addDefinitionResource("kpr", "io/mars/support/support_model_run.kpr")
+						.addDefinitionResource("kpr", "io/mars/tasks.kpr")
 						.addDefinitionResource("classes", "io.mars.domain.DtDefinitions")
+						.build())
+				.addDefinitionProvider(DefinitionProviderConfig.builder(SearchDefinitionProvider.class)
+						.addDefinitionResource("kpr", "io/mars/search.kpr")
+						.build())
+				.addDefinitionProvider(DefinitionProviderConfig.builder(FileStoreDefinitionProvider.class)
+						.addDefinitionResource("kpr", "io/mars/support/support_file.kpr")
 						.build())
 				.addDefinitionProvider(MarsMasterDataDefinitionProvider.class)
 				.addComponent(MarsFileServices.class);

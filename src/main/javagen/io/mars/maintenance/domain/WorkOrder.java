@@ -2,9 +2,9 @@ package io.mars.maintenance.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.EnumVAccessor;
+import io.vertigo.dynamo.impl.store.datastore.EnumStoreVAccessor;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -38,7 +38,7 @@ public final class WorkOrder implements Entity {
 			foreignRole = "WorkOrder",
 			foreignLabel = "WorkOrder",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.maintenance.domain.Ticket> ticketIdAccessor = new VAccessor<>(io.mars.maintenance.domain.Ticket.class, "Ticket");
+	private final StoreVAccessor<io.mars.maintenance.domain.Ticket> ticketIdAccessor = new StoreVAccessor<>(io.mars.maintenance.domain.Ticket.class, "Ticket");
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "AWorkOrderWorkOrderStatus",
@@ -53,7 +53,7 @@ public final class WorkOrder implements Entity {
 			foreignRole = "WorkOrder",
 			foreignLabel = "WorkOrder",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<io.mars.maintenance.domain.WorkOrderStatus, io.mars.maintenance.domain.WorkOrderStatusEnum> workOrderStatusIdAccessor = new EnumVAccessor<>(io.mars.maintenance.domain.WorkOrderStatus.class, "WorkOrderStatus", io.mars.maintenance.domain.WorkOrderStatusEnum.class);
+	private final EnumStoreVAccessor<io.mars.maintenance.domain.WorkOrderStatus, io.mars.maintenance.domain.WorkOrderStatusEnum> workOrderStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.maintenance.domain.WorkOrderStatus.class, "WorkOrderStatus", io.mars.maintenance.domain.WorkOrderStatusEnum.class);
 
 	/** {@inheritDoc} */
 	@Override
@@ -255,7 +255,7 @@ public final class WorkOrder implements Entity {
 	 * Association : Ticket.
 	 * @return l'accesseur vers la propriété 'Ticket'
 	 */
-	public VAccessor<io.mars.maintenance.domain.Ticket> ticket() {
+	public StoreVAccessor<io.mars.maintenance.domain.Ticket> ticket() {
 		return ticketIdAccessor;
 	}
 
@@ -263,7 +263,7 @@ public final class WorkOrder implements Entity {
 	 * Association : Work Order Status.
 	 * @return l'accesseur vers la propriété 'Work Order Status'
 	 */
-	public EnumVAccessor<io.mars.maintenance.domain.WorkOrderStatus, io.mars.maintenance.domain.WorkOrderStatusEnum> workOrderStatus() {
+	public EnumStoreVAccessor<io.mars.maintenance.domain.WorkOrderStatus, io.mars.maintenance.domain.WorkOrderStatusEnum> workOrderStatus() {
 		return workOrderStatusIdAccessor;
 	}
 	

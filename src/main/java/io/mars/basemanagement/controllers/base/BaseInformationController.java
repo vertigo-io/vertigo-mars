@@ -22,7 +22,7 @@ import io.mars.domain.DtDefinitions.PictureFields;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.mission.MissionServices;
 import io.vertigo.core.lang.VUserException;
-import io.vertigo.dynamo.domain.model.FileInfoURI;
+import io.vertigo.dynamo.file.model.FileInfoURI;
 import io.vertigo.ui.core.BasicUiListModifiable;
 import io.vertigo.ui.core.ProtectedValueUtil;
 import io.vertigo.ui.core.ViewContext;

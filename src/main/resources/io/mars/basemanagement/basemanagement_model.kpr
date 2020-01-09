@@ -1,0 +1,4 @@
+model/basemanagement.ksp
+model/baseManagementUi.ksp
+model/searchBase.ksp
+model/searchEquipment.ksp

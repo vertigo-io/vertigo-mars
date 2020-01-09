@@ -16,7 +16,7 @@ import io.mars.hr.domain.MissionDisplay;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.mission.MissionServices;
 import io.mars.hr.services.person.PersonServices;
-import io.vertigo.dynamo.domain.model.FileInfoURI;
+import io.vertigo.dynamo.file.model.FileInfoURI;
 import io.vertigo.dynamo.file.model.VFile;
 import io.vertigo.ui.core.ProtectedValueUtil;
 import io.vertigo.ui.core.ViewContext;

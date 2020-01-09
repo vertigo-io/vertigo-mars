@@ -3,7 +3,7 @@ package io.mars.catalog.domain;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -32,7 +32,7 @@ public final class EquipmentType implements Entity {
 			foreignRole = "EquipmentType",
 			foreignLabel = "EquipmentType",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.catalog.domain.EquipmentCategory> equipmentCategoryIdAccessor = new VAccessor<>(io.mars.catalog.domain.EquipmentCategory.class, "EquipmentCategory");
+	private final StoreVAccessor<io.mars.catalog.domain.EquipmentCategory> equipmentCategoryIdAccessor = new StoreVAccessor<>(io.mars.catalog.domain.EquipmentCategory.class, "EquipmentCategory");
 
 	/** {@inheritDoc} */
 	@Override
@@ -120,7 +120,7 @@ public final class EquipmentType implements Entity {
 	 * Association : Equipment Category.
 	 * @return l'accesseur vers la propriété 'Equipment Category'
 	 */
-	public VAccessor<io.mars.catalog.domain.EquipmentCategory> equipmentCategory() {
+	public StoreVAccessor<io.mars.catalog.domain.EquipmentCategory> equipmentCategory() {
 		return equipmentCategoryIdAccessor;
 	}
 	

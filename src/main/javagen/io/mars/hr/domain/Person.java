@@ -3,7 +3,7 @@ package io.mars.hr.domain;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
+import io.vertigo.dynamo.impl.store.datastore.StoreVAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
@@ -37,7 +37,7 @@ public final class Person implements Entity {
 			foreignRole = "Person",
 			foreignLabel = "Person",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.mars.hr.domain.Groups> groupIdAccessor = new VAccessor<>(io.mars.hr.domain.Groups.class, "Groups");
+	private final StoreVAccessor<io.mars.hr.domain.Groups> groupIdAccessor = new StoreVAccessor<>(io.mars.hr.domain.Groups.class, "Groups");
 
 	/** {@inheritDoc} */
 	@Override
@@ -230,7 +230,7 @@ public final class Person implements Entity {
 	 * Association : Group.
 	 * @return l'accesseur vers la propriété 'Group'
 	 */
-	public VAccessor<io.mars.hr.domain.Groups> groups() {
+	public StoreVAccessor<io.mars.hr.domain.Groups> groups() {
 		return groupIdAccessor;
 	}
 	

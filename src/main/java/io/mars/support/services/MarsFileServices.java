@@ -6,9 +6,9 @@ import io.mars.fileinfo.FileInfoTmp;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.dynamo.domain.model.FileInfoURI;
 import io.vertigo.dynamo.file.metamodel.FileInfoDefinition;
 import io.vertigo.dynamo.file.model.FileInfo;
+import io.vertigo.dynamo.file.model.FileInfoURI;
 import io.vertigo.dynamo.file.model.VFile;
 import io.vertigo.dynamo.store.StoreManager;
 

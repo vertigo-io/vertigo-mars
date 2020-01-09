@@ -10,8 +10,10 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.util.InjectorUtil;
-import io.vertigo.dynamo.DynamoFeatures;
-import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
+import io.vertigo.dynamo.DataStoreFeatures;
+import io.vertigo.dynamo.impl.file.grammar.FileStoreDefinitionProvider;
+import io.vertigo.dynamo.impl.search.grammar.SearchDefinitionProvider;
+import io.vertigo.dynamo.plugins.environment.ModelDefinitionProvider;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaManager;
 
@@ -29,11 +31,18 @@ public class Studio {
 						.withScript()
 						.withJaninoScript()
 						.build())
-				.addModule(new DynamoFeatures().build())
+				.addModule(new DataStoreFeatures().build())
 				//----Definitions
 				.addModule(ModuleConfig.builder("ressources")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(DynamoDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/mars/gen.kpr")
+						.addDefinitionProvider(DefinitionProviderConfig.builder(ModelDefinitionProvider.class)
+								.addDefinitionResource("kpr", "io/mars/model.kpr")
+								.addDefinitionResource("kpr", "io/mars/tasks.kpr")
+								.build())
+						.addDefinitionProvider(DefinitionProviderConfig.builder(SearchDefinitionProvider.class)
+								.addDefinitionResource("kpr", "io/mars/search.kpr")
+								.build())
+						.addDefinitionProvider(DefinitionProviderConfig.builder(FileStoreDefinitionProvider.class)
+								.addDefinitionResource("kpr", "io/mars/support/support_file.kpr")
 								.build())
 						.build())
 				// ---StudioFeature
