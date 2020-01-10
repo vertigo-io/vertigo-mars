@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.support.services.MarsFileServices;
-import io.vertigo.dynamo.file.model.FileInfoURI;
-import io.vertigo.dynamo.file.model.VFile;
+import io.vertigo.datastore.filestore.model.FileInfoURI;
+import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.vega.webservice.stereotype.QueryParam;
 
 @Controller

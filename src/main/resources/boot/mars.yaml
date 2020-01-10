@@ -84,22 +84,23 @@ modules:
           classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           source: java:/comp/env/jdbc/DataSourceHome
   io.vertigo.dynamo.DataModelFeatures:
-  io.vertigo.dynamo.DataStoreFeatures:
+  io.vertigo.datastore.DataStoreFeatures:
     features:
-      - store:
+      - entitystore:
+      - filestore:
       - kvStore:
     featuresConfig:
-      - store.data.sql:
-      - store.data.sql:
+      - entitystore.sql:
+      - entitystore.sql:
           dataSpace: orchestra
-      - store.file.db:
+      - filestore.db:
           __flags__: ["klee"]
           storeDtName: DtMediaFileInfo
-      - store.file.filesystem:
+      - filestore.filesystem:
           __flags__: ["home"]
           storeDtName: DtMediaFileInfo
           path: ${user.home}/marsFiles/
-      - store.file.fullFilesystem:
+      - filestore.fullFilesystem:
           name: temp
           path: ${java.io.tmpdir}/marsFiles/
           purgeDelayMinutes: 30

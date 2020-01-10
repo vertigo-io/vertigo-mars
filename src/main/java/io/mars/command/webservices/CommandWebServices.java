@@ -22,6 +22,7 @@ import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.ClassUtil;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.dynamo.collections.CollectionsManager;
 import io.vertigo.dynamo.domain.metamodel.DtDefinition;
 import io.vertigo.dynamo.domain.metamodel.DtField;
@@ -30,7 +31,6 @@ import io.vertigo.dynamo.domain.model.DtListURIForMasterData;
 import io.vertigo.dynamo.domain.model.DtObject;
 import io.vertigo.dynamo.domain.model.Entity;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.dynamo.store.StoreManager;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.AnonymousAccessAllowed;
 import io.vertigo.vega.webservice.stereotype.GET;
@@ -46,7 +46,7 @@ public class CommandWebServices implements WebServices {
 	@Inject
 	private CommandManager commandManager;
 	@Inject
-	private StoreManager storeManager;
+	private EntityStoreManager entityStoreManager;
 	@Inject
 	private VTransactionManager transactionManager;
 	@Inject
@@ -146,7 +146,7 @@ public class CommandWebServices implements WebServices {
 
 	private final DtList<Entity> autocompleteParam(final String terms, final DtDefinition dtDefinition) {
 		final DtListURIForMasterData dtListURIForMasterData = new DtListURIForMasterData(dtDefinition, null);
-		Assertion.checkArgument(storeManager.getMasterDataConfig().containsMasterData(dtListURIForMasterData.getDtDefinition()), "Autocomplete can't be use with {0}, it's not a MasterDataList.",
+		Assertion.checkArgument(entityStoreManager.getMasterDataConfig().containsMasterData(dtListURIForMasterData.getDtDefinition()), "Autocomplete can't be use with {0}, it's not a MasterDataList.",
 				dtListURIForMasterData.getDtDefinition().getName());
 
 		//-----
@@ -155,7 +155,7 @@ public class CommandWebServices implements WebServices {
 		final Collection<DtField> searchedFields = Collections.singletonList(labelDtField);
 		final DtList<Entity> results;
 		try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) { //Open a transaction because all fields are indexed. If there is a MDL it was load too.
-			final DtList dtList = storeManager.getDataStore().findAll(dtListURIForMasterData);
+			final DtList dtList = entityStoreManager.findAll(dtListURIForMasterData);
 			final UnaryOperator<DtList<DtObject>> fullTextFilter = collectionsManager.createIndexDtListFunctionBuilder()
 					.filter(terms != null ? terms : "", 20, searchedFields)
 					.build();

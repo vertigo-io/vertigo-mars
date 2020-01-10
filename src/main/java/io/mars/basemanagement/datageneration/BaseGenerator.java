@@ -14,10 +14,10 @@ import io.mars.basemanagement.domain.Picture;
 import io.mars.fileinfo.FileInfoStd;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.dynamo.file.FileManager;
-import io.vertigo.dynamo.file.model.FileInfo;
-import io.vertigo.dynamo.file.model.VFile;
-import io.vertigo.dynamo.store.StoreManager;
+import io.vertigo.datastore.filestore.FileManager;
+import io.vertigo.datastore.filestore.FileStoreManager;
+import io.vertigo.datastore.filestore.model.FileInfo;
+import io.vertigo.datastore.filestore.model.VFile;
 
 @Transactional
 public class BaseGenerator implements Component {
@@ -33,7 +33,7 @@ public class BaseGenerator implements Component {
 	@Inject
 	private FileManager fileManager;
 	@Inject
-	private StoreManager storeManager;
+	private FileStoreManager fileStoreManager;
 
 	public List<Base> generateInitialBases() {
 		final List<String> geoLocations = Collections.singletonList("{ \"lon\": 2.333333 , \"lat\" : 48.866667 } "); //paris by default for everybody
@@ -171,7 +171,7 @@ public class BaseGenerator implements Component {
 						"image/" + picturePath.substring(picturePath.lastIndexOf('.') + 1),
 						this.getClass().getResource(picturePath));
 
-				final FileInfo fileInfo = storeManager.getFileStore().create(new FileInfoStd(pictureFile));
+				final FileInfo fileInfo = fileStoreManager.create(new FileInfoStd(pictureFile));
 
 				final Picture picture = new Picture();
 				picture.setBaseId(base.getBaseId());

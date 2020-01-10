@@ -18,13 +18,13 @@ import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
+import io.vertigo.datastore.filestore.FileManager;
+import io.vertigo.datastore.filestore.FileStoreManager;
+import io.vertigo.datastore.filestore.model.FileInfo;
+import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.dynamo.file.FileManager;
-import io.vertigo.dynamo.file.model.FileInfo;
-import io.vertigo.dynamo.file.model.VFile;
-import io.vertigo.dynamo.store.StoreManager;
 
 @Transactional
 public class PersonGenerator implements Component {
@@ -38,7 +38,7 @@ public class PersonGenerator implements Component {
 	@Inject
 	private FileManager fileManager;
 	@Inject
-	private StoreManager storeManager;
+	private FileStoreManager fileStoreManager;
 	@Inject
 	private MissionServices missionServices;
 
@@ -67,7 +67,7 @@ public class PersonGenerator implements Component {
 					picturePath.substring(picturePath.lastIndexOf('/') + 1),
 					"image/" + picturePath.substring(picturePath.lastIndexOf('.') + 1),
 					this.getClass().getResource(picturePath));
-			final FileInfo fileInfo = storeManager.getFileStore().create(new FileInfoStd(pictureFile));
+			final FileInfo fileInfo = fileStoreManager.create(new FileInfoStd(pictureFile));
 			pictureId = (Long) fileInfo.getURI().getKey();
 		}
 

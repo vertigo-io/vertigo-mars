@@ -2,7 +2,7 @@ package io.mars.opendata.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.impl.store.datastore.EnumStoreVAccessor;
+import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
 import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;

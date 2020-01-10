@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.job.services.JobServices;
 import io.vertigo.core.param.ParamValue;
-import io.vertigo.dynamo.file.model.FileInfoURI;
+import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.orchestra.definitions.OrchestraDefinitionManager;
 import io.vertigo.orchestra.monitoring.domain.summary.OExecutionSummary;
 import io.vertigo.orchestra.monitoring.domain.uidefinitions.OProcessUi;

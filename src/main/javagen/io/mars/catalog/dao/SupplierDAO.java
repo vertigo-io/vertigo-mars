@@ -4,9 +4,9 @@ import javax.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.catalog.domain.Supplier;
 
@@ -19,12 +19,12 @@ public final class SupplierDAO extends DAO<Supplier, java.lang.String> implement
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public SupplierDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(Supplier.class, storeManager, taskManager);
+	public SupplierDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
+		super(Supplier.class, entityStoreManager, taskManager);
 	}
 
 	/**
@@ -35,7 +35,7 @@ public final class SupplierDAO extends DAO<Supplier, java.lang.String> implement
 	 * @return KeyConcept à modifier
 	 */
 	public Supplier readOneForUpdate(final UID<Supplier> uid) {
-		return dataStore.readOneForUpdate(uid);
+		return entityStoreManager.readOneForUpdate(uid);
 	}
 
 	/**

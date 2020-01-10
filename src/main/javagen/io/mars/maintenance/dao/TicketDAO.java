@@ -7,9 +7,9 @@ import io.vertigo.core.node.Home;
 import io.vertigo.dynamo.task.metamodel.TaskDefinition;
 import io.vertigo.dynamo.task.model.Task;
 import io.vertigo.dynamo.task.model.TaskBuilder;
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.maintenance.domain.Ticket;
 
@@ -22,12 +22,12 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public TicketDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(Ticket.class, storeManager, taskManager);
+	public TicketDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
+		super(Ticket.class, entityStoreManager, taskManager);
 	}
 
 

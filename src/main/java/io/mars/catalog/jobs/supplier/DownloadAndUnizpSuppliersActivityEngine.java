@@ -18,8 +18,8 @@ import io.mars.catalog.services.supplier.SupplierServices;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.param.ParamManager;
-import io.vertigo.dynamo.file.FileManager;
-import io.vertigo.dynamo.file.model.VFile;
+import io.vertigo.datastore.filestore.FileManager;
+import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.orchestra.impl.services.execution.AbstractActivityEngine;
 import io.vertigo.orchestra.services.execution.ActivityExecutionWorkspace;
 

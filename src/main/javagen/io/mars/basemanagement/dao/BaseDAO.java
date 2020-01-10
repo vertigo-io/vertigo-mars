@@ -4,9 +4,9 @@ import javax.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.basemanagement.domain.Base;
 
@@ -19,12 +19,12 @@ public final class BaseDAO extends DAO<Base, java.lang.Long> implements StoreSer
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public BaseDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(Base.class, storeManager, taskManager);
+	public BaseDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
+		super(Base.class, entityStoreManager, taskManager);
 	}
 
 	/**
@@ -35,7 +35,7 @@ public final class BaseDAO extends DAO<Base, java.lang.Long> implements StoreSer
 	 * @return KeyConcept à modifier
 	 */
 	public Base readOneForUpdate(final UID<Base> uid) {
-		return dataStore.readOneForUpdate(uid);
+		return entityStoreManager.readOneForUpdate(uid);
 	}
 
 	/**

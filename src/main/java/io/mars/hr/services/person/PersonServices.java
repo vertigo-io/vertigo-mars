@@ -9,15 +9,16 @@ import io.mars.support.services.MarsFileServices;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.filestore.FileManager;
+import io.vertigo.datastore.filestore.FileStoreManager;
+import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
+import io.vertigo.datastore.filestore.model.FileInfo;
+import io.vertigo.datastore.filestore.model.FileInfoURI;
+import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.dynamo.file.FileManager;
-import io.vertigo.dynamo.file.metamodel.FileInfoDefinition;
-import io.vertigo.dynamo.file.model.FileInfo;
-import io.vertigo.dynamo.file.model.FileInfoURI;
-import io.vertigo.dynamo.file.model.VFile;
-import io.vertigo.dynamo.store.StoreManager;
 
 @Transactional
 public class PersonServices implements Component, Activeable {
@@ -26,8 +27,9 @@ public class PersonServices implements Component, Activeable {
 	private PersonDAO personDAO;
 
 	@Inject
-	private StoreManager storeManager;
-
+	private EntityStoreManager entityStoreManager;
+	@Inject
+	private FileStoreManager fileStoreManager;
 	@Inject
 	private FileManager fileManager;
 
@@ -68,7 +70,7 @@ public class PersonServices implements Component, Activeable {
 	public DtList<Person> getPersons(final DtListState dtListState) {
 		final DtList<Person> persons = personDAO.findAll(Criterions.alwaysTrue(), dtListState);
 		if (dtListState.getSortFieldName().isPresent()) {
-			return storeManager.sort(persons, dtListState.getSortFieldName().get(), dtListState.isSortDesc().get());
+			return entityStoreManager.sort(persons, dtListState.getSortFieldName().get(), dtListState.isSortDesc().get());
 		}
 		return persons;
 	}
@@ -78,7 +80,7 @@ public class PersonServices implements Component, Activeable {
 		if (fileId == null) {
 			return defaultPhoto;
 		}
-		return storeManager.getFileStore().read(toFileInfoStdURI(fileId)).getVFile();
+		return fileStoreManager.read(toFileInfoStdURI(fileId)).getVFile();
 	}
 
 	public void savePersonPicture(final Long personId, final FileInfoURI personPictureTmp) {
@@ -86,11 +88,11 @@ public class PersonServices implements Component, Activeable {
 		//apply security check
 		final Long oldPicture = person.getPicturefileId();
 		final VFile fileTmp = commonsServices.getFileTmp(personPictureTmp);
-		final FileInfo fileInfo = storeManager.getFileStore().create(new FileInfoStd(fileTmp));
+		final FileInfo fileInfo = fileStoreManager.create(new FileInfoStd(fileTmp));
 		person.setPicturefileId((Long) fileInfo.getURI().getKey());
 		updatePerson(person);
 		if (oldPicture != null) {
-			storeManager.getFileStore().delete(toFileInfoStdURI(oldPicture));
+			fileStoreManager.delete(toFileInfoStdURI(oldPicture));
 		}
 	}
 

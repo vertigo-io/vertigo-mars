@@ -22,7 +22,7 @@ import io.mars.support.boot.MarsMasterDataDefinitionProvider;
 import io.mars.support.services.MarsFileServices;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Features;
-import io.vertigo.dynamo.impl.file.grammar.FileStoreDefinitionProvider;
+import io.vertigo.datastore.impl.filestore.grammar.FileStoreDefinitionProvider;
 import io.vertigo.dynamo.impl.search.grammar.SearchDefinitionProvider;
 import io.vertigo.dynamo.plugins.environment.ModelDefinitionProvider;
 

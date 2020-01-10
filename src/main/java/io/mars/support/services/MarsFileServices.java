@@ -6,34 +6,34 @@ import io.mars.fileinfo.FileInfoTmp;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.dynamo.file.metamodel.FileInfoDefinition;
-import io.vertigo.dynamo.file.model.FileInfo;
-import io.vertigo.dynamo.file.model.FileInfoURI;
-import io.vertigo.dynamo.file.model.VFile;
-import io.vertigo.dynamo.store.StoreManager;
+import io.vertigo.datastore.filestore.FileStoreManager;
+import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
+import io.vertigo.datastore.filestore.model.FileInfo;
+import io.vertigo.datastore.filestore.model.FileInfoURI;
+import io.vertigo.datastore.filestore.model.VFile;
 
 @Transactional
 public class MarsFileServices implements Component {
 
 	@Inject
-	private StoreManager storeManager;
+	private FileStoreManager fileStoreManager;
 
 	public FileInfoURI saveFileTmp(final VFile file) {
 		//apply security check
-		final FileInfo fileInfo = storeManager.getFileStore().create(new FileInfoTmp(file));
+		final FileInfo fileInfo = fileStoreManager.create(new FileInfoTmp(file));
 		return fileInfo.getURI();
 	}
 
 	public VFile getFileTmp(final FileInfoURI fileTmpUri) {
 		final FileInfoDefinition tmpFileInfoDefinition = FileInfoDefinition.findFileInfoDefinition(FileInfoTmp.class);
 		Assertion.checkArgument(tmpFileInfoDefinition.equals(fileTmpUri.getDefinition()), "Can't access this file storage."); //not too much infos for security purpose
-		return storeManager.getFileStore().read(fileTmpUri).getVFile();
+		return fileStoreManager.read(fileTmpUri).getVFile();
 	}
 
 	public void deleteFileTmp(final FileInfoURI fileTmpUri) {
 		final FileInfoDefinition tmpFileInfoDefinition = FileInfoDefinition.findFileInfoDefinition(FileInfoTmp.class);
 		Assertion.checkArgument(tmpFileInfoDefinition.equals(fileTmpUri.getDefinition()), "Can't access this file storage."); //not too much infos for security purpose
-		storeManager.getFileStore().delete(fileTmpUri);
+		fileStoreManager.delete(fileTmpUri);
 	}
 
 }

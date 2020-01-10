@@ -29,7 +29,7 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseType;
 import io.mars.basemanagement.domain.Picture;
 import io.mars.basemanagement.services.base.BaseServices;
-import io.vertigo.dynamo.file.model.VFile;
+import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.ui.core.ProtectedValueUtil;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;

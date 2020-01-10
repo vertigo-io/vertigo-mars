@@ -8,9 +8,9 @@ import io.vertigo.dynamo.task.metamodel.TaskDefinition;
 import io.vertigo.dynamo.task.model.Task;
 import io.vertigo.dynamo.task.model.TaskBuilder;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.basemanagement.domain.Equipment;
 
@@ -23,12 +23,12 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public EquipmentDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(Equipment.class, storeManager, taskManager);
+	public EquipmentDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
+		super(Equipment.class, entityStoreManager, taskManager);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	 * @return KeyConcept à modifier
 	 */
 	public Equipment readOneForUpdate(final UID<Equipment> uid) {
-		return dataStore.readOneForUpdate(uid);
+		return entityStoreManager.readOneForUpdate(uid);
 	}
 
 	/**

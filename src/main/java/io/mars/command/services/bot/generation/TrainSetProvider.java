@@ -15,16 +15,16 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.node.component.Component;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.metamodel.DataAccessor;
 import io.vertigo.dynamo.domain.metamodel.DtDefinition;
 import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.dynamo.store.StoreManager;
 
 public class TrainSetProvider implements Component {
 
 	@Inject
-	private StoreManager storeManager;
+	private EntityStoreManager entityStoreManager;
 	@Inject
 	private VTransactionManager transactionManager;
 
@@ -76,7 +76,7 @@ public class TrainSetProvider implements Component {
 				try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) {
 					final DtDefinition dtDefinition = Home.getApp().getDefinitionSpace().resolve(commandParamTrainingConfiguration.getDtDefinition(), DtDefinition.class);
 					final DataAccessor dtFieldDataAccessor = dtDefinition.getField(commandParamTrainingConfiguration.getDtField()).getDataAccessor();
-					return storeManager.getDataStore().find(dtDefinition, Criterions.alwaysTrue(), DtListState.of(commandParamTrainingConfiguration.getLimit()))
+					return entityStoreManager.find(dtDefinition, Criterions.alwaysTrue(), DtListState.of(commandParamTrainingConfiguration.getLimit()))
 							.stream()
 							.map(entity -> String.valueOf(dtFieldDataAccessor.getValue(entity)))
 							.collect(Collectors.toList());

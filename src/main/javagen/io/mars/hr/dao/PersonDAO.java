@@ -8,9 +8,9 @@ import io.vertigo.core.node.Home;
 import io.vertigo.dynamo.task.metamodel.TaskDefinition;
 import io.vertigo.dynamo.task.model.Task;
 import io.vertigo.dynamo.task.model.TaskBuilder;
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.hr.domain.Person;
 
@@ -23,12 +23,12 @@ public final class PersonDAO extends DAO<Person, java.lang.Long> implements Stor
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public PersonDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(Person.class, storeManager, taskManager);
+	public PersonDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
+		super(Person.class, entityStoreManager, taskManager);
 	}
 
 

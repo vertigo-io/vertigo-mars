@@ -9,15 +9,15 @@ import io.mars.support.services.MarsFileServices;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
+import io.vertigo.datastore.filestore.FileManager;
+import io.vertigo.datastore.filestore.FileStoreManager;
+import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
+import io.vertigo.datastore.filestore.model.FileInfo;
+import io.vertigo.datastore.filestore.model.FileInfoURI;
+import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.dynamo.file.FileManager;
-import io.vertigo.dynamo.file.metamodel.FileInfoDefinition;
-import io.vertigo.dynamo.file.model.FileInfo;
-import io.vertigo.dynamo.file.model.FileInfoURI;
-import io.vertigo.dynamo.file.model.VFile;
-import io.vertigo.dynamo.store.StoreManager;
 
 @Transactional
 public class OpendataSetServices implements Component, Activeable {
@@ -25,7 +25,7 @@ public class OpendataSetServices implements Component, Activeable {
 	@Inject
 	private OpendataSetDAO opendataSetDAO;
 	@Inject
-	private StoreManager storeManager;
+	private FileStoreManager fileStoreManager;
 	@Inject
 	private MarsFileServices commonsServices;
 	@Inject
@@ -68,7 +68,7 @@ public class OpendataSetServices implements Component, Activeable {
 		if (fileId == null) {
 			return defaultOpendataSetPicture;
 		}
-		return storeManager.getFileStore().read(toFileInfoStdURI(fileId)).getVFile();
+		return fileStoreManager.read(toFileInfoStdURI(fileId)).getVFile();
 	}
 
 	public void saveOpendataSetPicture(final Long odsId, final FileInfoURI odsPictureTmp) {
@@ -76,11 +76,11 @@ public class OpendataSetServices implements Component, Activeable {
 		//apply security check
 		final Long oldPicture = opendataSet.getPicturefileId();
 		final VFile fileTmp = commonsServices.getFileTmp(odsPictureTmp);
-		final FileInfo fileInfo = storeManager.getFileStore().create(new FileInfoStd(fileTmp));
+		final FileInfo fileInfo = fileStoreManager.create(new FileInfoStd(fileTmp));
 		opendataSet.setPicturefileId((Long) fileInfo.getURI().getKey());
 		updateOpendataSet(opendataSet);
 		if (oldPicture != null) {
-			storeManager.getFileStore().delete(toFileInfoStdURI(oldPicture));
+			fileStoreManager.delete(toFileInfoStdURI(oldPicture));
 		}
 	}
 

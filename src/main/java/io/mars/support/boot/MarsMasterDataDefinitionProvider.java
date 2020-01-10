@@ -11,7 +11,7 @@ import io.mars.basemanagement.domain.Tag;
 import io.mars.catalog.domain.EquipmentType;
 import io.mars.maintenance.domain.TicketStatus;
 import io.mars.maintenance.domain.WorkOrderStatus;
-import io.vertigo.dynamo.impl.store.datastore.AbstractMasterDataDefinitionProvider;
+import io.vertigo.datastore.impl.entitystore.AbstractMasterDataDefinitionProvider;
 
 /**
  * Init masterdata list.
