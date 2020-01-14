@@ -25,8 +25,8 @@ import javax.inject.Inject;
 
 import io.vertigo.core.node.Home;
 import io.vertigo.core.node.component.ComponentInitializer;
-import io.vertigo.dynamo.search.SearchManager;
-import io.vertigo.dynamo.search.metamodel.SearchIndexDefinition;
+import io.vertigo.datafactory.search.SearchManager;
+import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
 
 /**
  * Init sample data for the app.

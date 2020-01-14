@@ -110,7 +110,7 @@ modules:
       - kvStore.berkeley:
           collections: VViewContext;TTL=43200
           dbFilePath: ${java.io.tmpdir}/vertigo-ui/MarsVViewContext
-  io.vertigo.dynamo.DataFactoryFeatures:
+  io.vertigo.datafactory.DataFactoryFeatures:
     features:
       - search:
     featuresConfig:

@@ -9,11 +9,11 @@ import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.node.Home;
+import io.vertigo.datafactory.search.metamodel.SearchChunk;
+import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
+import io.vertigo.datafactory.search.model.SearchIndex;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.search.metamodel.SearchChunk;
-import io.vertigo.dynamo.search.metamodel.SearchIndexDefinition;
-import io.vertigo.dynamo.search.model.SearchIndex;
 import io.vertigo.dynamo.task.TaskManager;
 import io.vertigo.dynamox.search.AbstractSqlSearchLoader;
 

@@ -9,15 +9,15 @@ import io.mars.catalog.domain.Supplier;
 import io.mars.catalog.search.SupplierSearchClient;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.dynamo.collections.ListFilter;
-import io.vertigo.dynamo.collections.model.FacetedQueryResult;
-import io.vertigo.dynamo.collections.model.SelectedFacetValues;
+import io.vertigo.datafactory.collections.ListFilter;
+import io.vertigo.datafactory.collections.model.FacetedQueryResult;
+import io.vertigo.datafactory.collections.model.SelectedFacetValues;
+import io.vertigo.datafactory.search.SearchManager;
+import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
+import io.vertigo.datafactory.search.model.SearchIndex;
+import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.dynamo.domain.model.DtListState;
 import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.search.SearchManager;
-import io.vertigo.dynamo.search.metamodel.SearchIndexDefinition;
-import io.vertigo.dynamo.search.model.SearchIndex;
-import io.vertigo.dynamo.search.model.SearchQuery;
 
 @Transactional
 public class SupplierServices implements Component {
