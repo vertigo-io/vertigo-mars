@@ -10,6 +10,7 @@ import io.vertigo.dynamo.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.maintenance.domain.Ticket;
 
@@ -26,8 +27,8 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public TicketDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(Ticket.class, entityStoreManager, taskManager);
+	public TicketDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(Ticket.class, entityStoreManager, taskManager, modelManager);
 	}
 
 
@@ -42,9 +43,18 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 	}
 
 	/**
-	 * Execute la tache TkGetLastTickets.
+	 * Execute la tache StTkGetLastTickets.
 	 * @return DtList de Ticket tickets
 	*/
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetLastTickets",
+			request = "select " + 
+ "            	tic.*" + 
+ "			from ticket tic" + 
+ "			order by tic.date_created desc" + 
+ "			limit 50",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtTicket")
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.maintenance.domain.Ticket> getLastTickets() {
 		final Task task = createTaskBuilder("TkGetLastTickets")
 				.build();
@@ -54,11 +64,22 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 	}
 
 	/**
-	 * Execute la tache TkGetLastTicketsByBaseId.
+	 * Execute la tache StTkGetLastTicketsByBaseId.
 	 * @param baseId Long
 	 * @return DtList de Ticket tickets
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(final Long baseId) {
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetLastTicketsByBaseId",
+			request = "select " + 
+ "            	tic.*" + 
+ "			from ticket tic" + 
+ "			join equipment equ on equ.equipment_id = tic.equipment_id" + 
+ "			where equ.base_id = #baseId#" + 
+ "			order by tic.date_created desc" + 
+ "			limit 50",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtTicket")
+	public io.vertigo.dynamo.domain.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(@io.vertigo.dynamo.task.proxy.TaskInput(name = "baseId", domain = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetLastTicketsByBaseId")
 				.addValue("baseId", baseId)
 				.build();

@@ -11,7 +11,7 @@ import io.mars.basemanagement.dao.BaseDAO;
 import io.mars.basemanagement.dao.PictureDAO;
 import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.Picture;
-import io.mars.fileinfo.FileInfoStd;
+import io.mars.support.fileinfo.FileInfoStd;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datastore.filestore.FileManager;

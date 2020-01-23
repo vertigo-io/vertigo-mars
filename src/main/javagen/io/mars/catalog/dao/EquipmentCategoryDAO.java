@@ -6,6 +6,7 @@ import io.vertigo.core.lang.Generated;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.catalog.domain.EquipmentCategory;
 
@@ -22,8 +23,8 @@ public final class EquipmentCategoryDAO extends DAO<EquipmentCategory, java.lang
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public EquipmentCategoryDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(EquipmentCategory.class, entityStoreManager, taskManager);
+	public EquipmentCategoryDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(EquipmentCategory.class, entityStoreManager, taskManager, modelManager);
 	}
 
 }

@@ -7,6 +7,7 @@ import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.catalog.domain.Supplier;
 
@@ -23,8 +24,8 @@ public final class SupplierDAO extends DAO<Supplier, java.lang.String> implement
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public SupplierDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(Supplier.class, entityStoreManager, taskManager);
+	public SupplierDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(Supplier.class, entityStoreManager, taskManager, modelManager);
 	}
 
 	/**

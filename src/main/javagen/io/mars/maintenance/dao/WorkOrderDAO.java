@@ -10,6 +10,7 @@ import io.vertigo.dynamo.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.maintenance.domain.WorkOrder;
 
@@ -26,8 +27,8 @@ public final class WorkOrderDAO extends DAO<WorkOrder, java.lang.Long> implement
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public WorkOrderDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(WorkOrder.class, entityStoreManager, taskManager);
+	public WorkOrderDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(WorkOrder.class, entityStoreManager, taskManager, modelManager);
 	}
 
 
@@ -42,9 +43,18 @@ public final class WorkOrderDAO extends DAO<WorkOrder, java.lang.Long> implement
 	}
 
 	/**
-	 * Execute la tache TkGetLastWorkOrders.
+	 * Execute la tache StTkGetLastWorkOrders.
 	 * @return DtList de WorkOrder workOrders
 	*/
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetLastWorkOrders",
+			request = "select " + 
+ "            	wor.*" + 
+ "			from work_order wor" + 
+ "			order by wor.date_created desc" + 
+ "			limit 20",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtWorkOrder")
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.maintenance.domain.WorkOrder> getLastWorkOrders() {
 		final Task task = createTaskBuilder("TkGetLastWorkOrders")
 				.build();

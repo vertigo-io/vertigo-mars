@@ -2,7 +2,7 @@ package io.mars.support.services;
 
 import javax.inject.Inject;
 
-import io.mars.fileinfo.FileInfoTmp;
+import io.mars.support.fileinfo.FileInfoTmp;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;

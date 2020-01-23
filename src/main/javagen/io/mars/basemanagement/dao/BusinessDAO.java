@@ -10,6 +10,7 @@ import io.vertigo.dynamo.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.basemanagement.domain.Business;
 
@@ -26,8 +27,8 @@ public final class BusinessDAO extends DAO<Business, java.lang.Long> implements 
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public BusinessDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(Business.class, entityStoreManager, taskManager);
+	public BusinessDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(Business.class, entityStoreManager, taskManager, modelManager);
 	}
 
 
@@ -42,9 +43,14 @@ public final class BusinessDAO extends DAO<Business, java.lang.Long> implements 
 	}
 
 	/**
-	 * Execute la tache TkSelectBusiness.
+	 * Execute la tache StTkSelectBusiness.
 	 * @return DtList de Business dtcBusiness
 	*/
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkSelectBusiness",
+			request = "select BUSINESS_ID, NAME from BUSINESS",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtBusiness")
 	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Business> selectBusiness() {
 		final Task task = createTaskBuilder("TkSelectBusiness")
 				.build();

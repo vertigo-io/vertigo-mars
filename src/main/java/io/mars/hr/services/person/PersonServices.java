@@ -2,9 +2,9 @@ package io.mars.hr.services.person;
 
 import javax.inject.Inject;
 
-import io.mars.fileinfo.FileInfoStd;
 import io.mars.hr.dao.PersonDAO;
 import io.mars.hr.domain.Person;
+import io.mars.support.fileinfo.FileInfoStd;
 import io.mars.support.services.MarsFileServices;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Activeable;

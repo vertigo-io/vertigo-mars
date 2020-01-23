@@ -6,6 +6,7 @@ import io.vertigo.core.lang.Generated;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.opendata.domain.OpendataSetStatus;
 
@@ -22,8 +23,8 @@ public final class OpendataSetStatusDAO extends DAO<OpendataSetStatus, java.lang
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public OpendataSetStatusDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(OpendataSetStatus.class, entityStoreManager, taskManager);
+	public OpendataSetStatusDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(OpendataSetStatus.class, entityStoreManager, taskManager, modelManager);
 	}
 
 }

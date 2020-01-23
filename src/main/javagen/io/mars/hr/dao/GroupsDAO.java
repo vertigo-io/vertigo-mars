@@ -6,6 +6,7 @@ import io.vertigo.core.lang.Generated;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.hr.domain.Groups;
 
@@ -22,8 +23,8 @@ public final class GroupsDAO extends DAO<Groups, java.lang.Long> implements Stor
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public GroupsDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(Groups.class, entityStoreManager, taskManager);
+	public GroupsDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(Groups.class, entityStoreManager, taskManager, modelManager);
 	}
 
 }

@@ -6,6 +6,7 @@ import io.vertigo.core.lang.Generated;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.basemanagement.domain.Geosector;
 
@@ -22,8 +23,8 @@ public final class GeosectorDAO extends DAO<Geosector, java.lang.Long> implement
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public GeosectorDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(Geosector.class, entityStoreManager, taskManager);
+	public GeosectorDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(Geosector.class, entityStoreManager, taskManager, modelManager);
 	}
 
 }

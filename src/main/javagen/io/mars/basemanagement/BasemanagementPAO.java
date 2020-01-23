@@ -41,11 +41,19 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkGetBaseOverview.
+	 * Execute la tache StTkGetBaseOverview.
 	 * @param baseId Long
 	 * @return BaseOverview baseOverview
 	*/
-	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(final Long baseId) {
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetBaseOverview",
+			request = "select " + 
+ "				(select count(*) from equipment equ where equ.base_id = #baseId#) as equipment_count," + 
+ "				(select count(*) from ticket tic join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
+ "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtBaseOverview")
+	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(@io.vertigo.dynamo.task.proxy.TaskInput(name = "baseId", domain = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetBaseOverview")
 				.addValue("baseId", baseId)
 				.build();
@@ -55,9 +63,18 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkGetBasesSummary.
+	 * Execute la tache StTkGetBasesSummary.
 	 * @return BasesSummary basesSummary
 	*/
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetBasesSummary",
+			request = "select " + 
+ "				(select count(*) from base) as base_count," + 
+ "				(select avg(health_level) from base) as base_mean_health," + 
+ "				(select count(*) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets," + 
+ "				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from equipment) as online_equipment_percent;",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtBasesSummary")
 	public io.mars.basemanagement.domain.BasesSummary getBasesSummary() {
 		final Task task = createTaskBuilder("TkGetBasesSummary")
 				.build();
@@ -67,11 +84,18 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkGetEquipmentMaintenanceOverview.
+	 * Execute la tache StTkGetEquipmentMaintenanceOverview.
 	 * @param equipmentId Long
 	 * @return EquipmentMaintenanceOverview equipmentMaintenanceOverview
 	*/
-	public io.mars.basemanagement.domain.EquipmentMaintenanceOverview getEquipmentMaintenanceOverview(final Long equipmentId) {
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetEquipmentMaintenanceOverview",
+			request = "select " + 
+ "				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
+ "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = #equipmentId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtEquipmentMaintenanceOverview")
+	public io.mars.basemanagement.domain.EquipmentMaintenanceOverview getEquipmentMaintenanceOverview(@io.vertigo.dynamo.task.proxy.TaskInput(name = "equipmentId", domain = "STyId") final Long equipmentId) {
 		final Task task = createTaskBuilder("TkGetEquipmentMaintenanceOverview")
 				.addValue("equipmentId", equipmentId)
 				.build();
@@ -81,11 +105,26 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkGetEquipmentsOverview.
+	 * Execute la tache StTkGetEquipmentsOverview.
 	 * @param baseId Long
 	 * @return DtList de EquipmentOverview overview
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(final Long baseId) {
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetEquipmentsOverview",
+			request = "select " + 
+ "            	count(1) as count," + 
+ "            	bus.business_id as business_id," + 
+ "            	bus.name as business_name," + 
+ "            	bus.icon as business_icon," + 
+ "            	sum(case when equ.health_level >= 30 then 1 else 0 end) as ok_count," + 
+ "            	sum(case when equ.health_level < 30 then 1 else 0 end) as down_count" + 
+ "			from equipment equ" + 
+ "				join business bus on bus.business_id = equ.business_id " + 
+ "			where equ.base_id = #baseId#" + 
+ "			group by business_name, bus.business_id",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtEquipmentOverview")
+	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(@io.vertigo.dynamo.task.proxy.TaskInput(name = "baseId", domain = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetEquipmentsOverview")
 				.addValue("baseId", baseId)
 				.build();
@@ -95,11 +134,24 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkLoadBaseIndex.
+	 * Execute la tache StTkLoadBaseIndex.
 	 * @param baseIds List de Long
 	 * @return DtList de BaseIndex dtcIndex
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.search.BaseIndex> loadBaseIndex(final java.util.List<Long> baseIds) {
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkLoadBaseIndex",
+			request = "select 	bas.BASE_ID, " + 
+ "						bas.NAME, " + 
+ "						bas.CODE, " + 
+ "						bas.CREATION_DATE, " + 
+ "						bas.TAGS, " + 
+ "						bastype.LABEL as BASE_TYPE_LABEL" + 
+ "				from BASE bas" + 
+ "				join BASE_TYPE bastype on bastype.base_type_id = bas.base_type_id" + 
+ "				where BASE_ID in (#baseIds.rownum#);",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtBaseIndex")
+	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.search.BaseIndex> loadBaseIndex(@io.vertigo.dynamo.task.proxy.TaskInput(name = "baseIds", domain = "STyId") final java.util.List<Long> baseIds) {
 		final Task task = createTaskBuilder("TkLoadBaseIndex")
 				.addValue("baseIds", baseIds)
 				.build();
@@ -109,11 +161,26 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkLoadEquipmentIndex.
+	 * Execute la tache StTkLoadEquipmentIndex.
 	 * @param equipmentIds List de Long
 	 * @return DtList de EquipmentIndex dtcIndex
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.search.EquipmentIndex> loadEquipmentIndex(final java.util.List<Long> equipmentIds) {
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkLoadEquipmentIndex",
+			request = "select 	equ.EQUIPMENT_ID," + 
+ "						equ.NAME, " + 
+ "						equ.CODE, " + 
+ "						equ.PURCHASE_DATE, " + 
+ "						equ.TAGS, " + 
+ "						equipmentType.LABEL as EQUIPMENT_TYPE_NAME," + 
+ "						equipmentCategory.LABEL as EQUIPMENT_CATEGORY_NAME" + 
+ "				from EQUIPMENT equ" + 
+ "				join EQUIPMENT_TYPE equipmentType on equipmentType.equipment_type_id = equ.equipment_type_id" + 
+ "				join EQUIPMENT_CATEGORY equipmentCategory on equipmentCategory.equipment_category_id = equipmentType.equipment_category_id" + 
+ "				where EQUIPMENT_ID in (#equipmentIds.rownum#);",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtEquipmentIndex")
+	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.search.EquipmentIndex> loadEquipmentIndex(@io.vertigo.dynamo.task.proxy.TaskInput(name = "equipmentIds", domain = "STyId") final java.util.List<Long> equipmentIds) {
 		final Task task = createTaskBuilder("TkLoadEquipmentIndex")
 				.addValue("equipmentIds", equipmentIds)
 				.build();
@@ -123,9 +190,14 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkSelectBaseId.
+	 * Execute la tache StTkSelectBaseId.
 	 * @return List de Long baseIdList
 	*/
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkSelectBaseId",
+			request = "select BASE_ID from BASE",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyId")
 	public java.util.List<Long> selectBaseId() {
 		final Task task = createTaskBuilder("TkSelectBaseId")
 				.build();
@@ -135,9 +207,14 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkSelectBusinessId.
+	 * Execute la tache StTkSelectBusinessId.
 	 * @return List de Long businessIdList
 	*/
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkSelectBusinessId",
+			request = "select BUSINESS_ID from BUSINESS",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyId")
 	public java.util.List<Long> selectBusinessId() {
 		final Task task = createTaskBuilder("TkSelectBusinessId")
 				.build();
@@ -147,9 +224,14 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkSelectGeosectorId.
+	 * Execute la tache StTkSelectGeosectorId.
 	 * @return List de Long geosectorIdList
 	*/
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkSelectGeosectorId",
+			request = "select GEOSECTOR_ID from GEOSECTOR",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyId")
 	public java.util.List<Long> selectGeosectorId() {
 		final Task task = createTaskBuilder("TkSelectGeosectorId")
 				.build();

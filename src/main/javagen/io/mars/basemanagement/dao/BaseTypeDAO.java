@@ -6,6 +6,7 @@ import io.vertigo.core.lang.Generated;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.basemanagement.domain.BaseType;
 
@@ -22,8 +23,8 @@ public final class BaseTypeDAO extends DAO<BaseType, java.lang.String> implement
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public BaseTypeDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(BaseType.class, entityStoreManager, taskManager);
+	public BaseTypeDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(BaseType.class, entityStoreManager, taskManager, modelManager);
 	}
 
 }

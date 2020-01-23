@@ -6,6 +6,7 @@ import io.vertigo.core.lang.Generated;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.dynamo.ngdomain.ModelManager;
 import io.vertigo.dynamo.task.TaskManager;
 import io.mars.maintenance.domain.WorkOrderStatus;
 
@@ -22,8 +23,8 @@ public final class WorkOrderStatusDAO extends DAO<WorkOrderStatus, java.lang.Str
 	 * @param taskManager Manager de Task
 	 */
 	@Inject
-	public WorkOrderStatusDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager) {
-		super(WorkOrderStatus.class, entityStoreManager, taskManager);
+	public WorkOrderStatusDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
+		super(WorkOrderStatus.class, entityStoreManager, taskManager, modelManager);
 	}
 
 }

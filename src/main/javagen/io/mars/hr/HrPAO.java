@@ -41,11 +41,24 @@ public final class HrPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkGetMissionsDisplayByPersonId.
+	 * Execute la tache StTkGetMissionsDisplayByPersonId.
 	 * @param personId Long
 	 * @return DtList de MissionDisplay missions
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(final Long personId) {
+	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+			name = "TkGetMissionsDisplayByPersonId",
+			request = "select " + 
+ "            		mis.mission_id as MISSION_ID," + 
+ "            		mis.role as ROLE," + 
+ "            		bas.name as BASE_NAME," + 
+ "            		bus.name as BUSINESS_NAME" + 
+ "            	from mission mis" + 
+ "            	left join base bas on mis.base_id = bas.base_id" + 
+ "				left join business bus on mis.business_id = bus.business_id" + 
+ "            	where mis.person_id = #personId#;",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtMissionDisplay")
+	public io.vertigo.dynamo.domain.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(@io.vertigo.dynamo.task.proxy.TaskInput(name = "personId", domain = "STyId") final Long personId) {
 		final Task task = createTaskBuilder("TkGetMissionsDisplayByPersonId")
 				.addValue("personId", personId)
 				.build();

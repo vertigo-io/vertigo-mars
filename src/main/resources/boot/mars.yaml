@@ -96,14 +96,17 @@ modules:
       - filestore.db:
           __flags__: ["klee"]
           storeDtName: DtMediaFileInfo
+          fileInfoClass: io.mars.support.fileinfo.FileInfoStd 
       - filestore.filesystem:
           __flags__: ["home"]
           storeDtName: DtMediaFileInfo
           path: ${user.home}/marsFiles/
+          fileInfoClass: io.mars.support.fileinfo.FileInfoStd
       - filestore.fullFilesystem:
           name: temp
           path: ${java.io.tmpdir}/marsFiles/
           purgeDelayMinutes: 30
+          fileInfoClass: io.mars.support.fileinfo.FileInfoTmp
       - kvStore.delayedMemory:
           collections: protected-value
           timeToLiveSeconds: 3600
