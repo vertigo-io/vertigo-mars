@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.opendata.domain.OpendataSet;
 import io.mars.opendata.services.OpendataSetServices;
-import io.vertigo.dynamo.domain.model.DtListState;
+import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;

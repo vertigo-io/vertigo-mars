@@ -5,14 +5,14 @@ import javax.inject.Inject;
 import java.util.Optional;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.Home;
-import io.vertigo.dynamo.task.metamodel.TaskDefinition;
-import io.vertigo.dynamo.task.model.Task;
-import io.vertigo.dynamo.task.model.TaskBuilder;
+import io.vertigo.datamodel.task.metamodel.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
-import io.vertigo.dynamo.ngdomain.ModelManager;
-import io.vertigo.dynamo.task.TaskManager;
+import io.vertigo.datamodel.smarttype.ModelManager;
+import io.vertigo.datamodel.task.TaskManager;
 import io.mars.hr.domain.Person;
 
 /**
@@ -48,7 +48,7 @@ public final class PersonDAO extends DAO<Person, java.lang.Long> implements Stor
 	 * @param baseId Long
 	 * @return Option de Person manager
 	*/
-	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetBaseManager",
 			request = "select per.*" + 
  "            	from mission mis" + 
@@ -56,8 +56,8 @@ public final class PersonDAO extends DAO<Person, java.lang.Long> implements Stor
  "            	where mis.base_id = #baseId# and mis.role= 'Base Manager'" + 
  "            	limit 1;",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtPerson")
-	public Optional<io.mars.hr.domain.Person> getBaseManager(@io.vertigo.dynamo.task.proxy.TaskInput(name = "baseId", domain = "STyId") final Long baseId) {
+	@io.vertigo.datamodel.task.proxy.TaskOutput(domain = "STyDtPerson")
+	public Optional<io.mars.hr.domain.Person> getBaseManager(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", domain = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetBaseManager")
 				.addValue("baseId", baseId)
 				.build();

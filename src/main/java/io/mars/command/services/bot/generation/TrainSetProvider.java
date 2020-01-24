@@ -15,11 +15,11 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.node.component.Component;
+import io.vertigo.datamodel.criteria.Criterions;
+import io.vertigo.datamodel.structure.metamodel.DataAccessor;
+import io.vertigo.datamodel.structure.metamodel.DtDefinition;
+import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
-import io.vertigo.dynamo.criteria.Criterions;
-import io.vertigo.dynamo.domain.metamodel.DataAccessor;
-import io.vertigo.dynamo.domain.metamodel.DtDefinition;
-import io.vertigo.dynamo.domain.model.DtListState;
 
 public class TrainSetProvider implements Component {
 

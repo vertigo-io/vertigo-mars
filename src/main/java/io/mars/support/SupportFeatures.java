@@ -22,7 +22,7 @@ import io.mars.support.boot.MarsMasterDataDefinitionProvider;
 import io.mars.support.services.MarsFileServices;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Features;
-import io.vertigo.dynamo.ngdomain.NewModelDefinitionProvider;
+import io.vertigo.datamodel.smarttype.NewModelDefinitionProvider;
 
 public class SupportFeatures extends Features<SupportFeatures> {
 

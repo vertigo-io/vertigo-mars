@@ -12,9 +12,9 @@ import io.vertigo.core.node.Home;
 import io.vertigo.datafactory.search.metamodel.SearchChunk;
 import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
 import io.vertigo.datafactory.search.model.SearchIndex;
-import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.task.TaskManager;
+import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.dynamox.search.AbstractSqlSearchLoader;
 
 public final class EquipmentSearchLoader extends AbstractSqlSearchLoader<Long, Equipment, EquipmentIndex> {

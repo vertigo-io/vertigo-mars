@@ -5,10 +5,10 @@ import javax.inject.Inject;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Generated;
-import io.vertigo.dynamo.task.TaskManager;
-import io.vertigo.dynamo.task.metamodel.TaskDefinition;
-import io.vertigo.dynamo.task.model.Task;
-import io.vertigo.dynamo.task.model.TaskBuilder;
+import io.vertigo.datamodel.task.TaskManager;
+import io.vertigo.datamodel.task.metamodel.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
 import io.vertigo.datastore.impl.dao.StoreServices;
 
 /**
@@ -45,7 +45,7 @@ public final class HrPAO implements StoreServices {
 	 * @param personId Long
 	 * @return DtList de MissionDisplay missions
 	*/
-	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetMissionsDisplayByPersonId",
 			request = "select " + 
  "            		mis.mission_id as MISSION_ID," + 
@@ -57,8 +57,8 @@ public final class HrPAO implements StoreServices {
  "				left join business bus on mis.business_id = bus.business_id" + 
  "            	where mis.person_id = #personId#;",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtMissionDisplay")
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(@io.vertigo.dynamo.task.proxy.TaskInput(name = "personId", domain = "STyId") final Long personId) {
+	@io.vertigo.datamodel.task.proxy.TaskOutput(domain = "STyDtMissionDisplay")
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "personId", domain = "STyId") final Long personId) {
 		final Task task = createTaskBuilder("TkGetMissionsDisplayByPersonId")
 				.addValue("personId", personId)
 				.build();

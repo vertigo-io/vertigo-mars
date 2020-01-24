@@ -12,7 +12,7 @@ import io.mars.catalog.domain.EquipmentType;
 import io.mars.datageneration.DataGenerator;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.datamodel.structure.model.DtList;
 
 @SuppressWarnings("rawtypes")
 public class FakeEquipmentListBuilder implements Builder {

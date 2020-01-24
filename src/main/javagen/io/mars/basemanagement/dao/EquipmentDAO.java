@@ -4,15 +4,15 @@ import javax.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.Home;
-import io.vertigo.dynamo.task.metamodel.TaskDefinition;
-import io.vertigo.dynamo.task.model.Task;
-import io.vertigo.dynamo.task.model.TaskBuilder;
-import io.vertigo.dynamo.domain.model.UID;
+import io.vertigo.datamodel.task.metamodel.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
+import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
-import io.vertigo.dynamo.ngdomain.ModelManager;
-import io.vertigo.dynamo.task.TaskManager;
+import io.vertigo.datamodel.smarttype.ModelManager;
+import io.vertigo.datamodel.task.TaskManager;
 import io.mars.basemanagement.domain.Equipment;
 
 /**
@@ -69,7 +69,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	 * @param code String
 	 * @return DtList de Equipment equipments
 	*/
-	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetEquipmentsByBaseCode",
 			request = "select " + 
  "            	equ.*" + 
@@ -77,8 +77,8 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
  "				join base bas on bas.base_id = equ.base_id" + 
  "			where bas.code = #code#",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtEquipment")
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.dynamo.task.proxy.TaskInput(name = "code", domain = "STyCode") final String code) {
+	@io.vertigo.datamodel.task.proxy.TaskOutput(domain = "STyDtEquipment")
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.datamodel.task.proxy.TaskInput(name = "code", domain = "STyCode") final String code) {
 		final Task task = createTaskBuilder("TkGetEquipmentsByBaseCode")
 				.addValue("code", code)
 				.build();
@@ -92,7 +92,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	 * @param baseId Long
 	 * @return DtList de Equipment equipments
 	*/
-	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetLastPurchasedEquipmentsByBaseId",
 			request = "select " + 
  "            	equ.*" + 
@@ -101,8 +101,8 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
  "			order by equ.purchase_date desc" + 
  "			limit 50",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtEquipment")
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(@io.vertigo.dynamo.task.proxy.TaskInput(name = "baseId", domain = "STyId") final Long baseId) {
+	@io.vertigo.datamodel.task.proxy.TaskOutput(domain = "STyDtEquipment")
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", domain = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetLastPurchasedEquipmentsByBaseId")
 				.addValue("baseId", baseId)
 				.build();
@@ -115,7 +115,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	 * Execute la tache StTkInsertEquipmentsBatch.
 	 * @param equipmentsList DtList de Equipment
 	*/
-	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkInsertEquipmentsBatch",
 			request = "INSERT INTO EQUIPMENT (EQUIPMENT_ID, " + 
  "        							NAME, " + 
@@ -145,7 +145,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
  "        														#equipmentsList.businessId#," + 
  "        														#equipmentsList.equipmentTypeId#)",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineProcBatch.class)
-	public void insertEquipmentsBatch(@io.vertigo.dynamo.task.proxy.TaskInput(name = "equipmentsList", domain = "STyDtEquipment") final io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> equipmentsList) {
+	public void insertEquipmentsBatch(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentsList", domain = "STyDtEquipment") final io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> equipmentsList) {
 		final Task task = createTaskBuilder("TkInsertEquipmentsBatch")
 				.addValue("equipmentsList", equipmentsList)
 				.build();
@@ -159,7 +159,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	 * @param dateExist Instant
 	 * @return DtList de Equipment equipmentList
 	*/
-	@io.vertigo.dynamo.task.proxy.TaskAnnotation(
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkLoadEquipmentsByChunk",
 			request = "select * from EQUIPMENT " + 
  "			where EQUIPMENT_ID > #offset#" + 
@@ -167,8 +167,8 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
  "        	order by EQUIPMENT_ID asc" + 
  "			limit #limit#",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.dynamo.task.proxy.TaskOutput(domain = "STyDtEquipment")
-	public io.vertigo.dynamo.domain.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(@io.vertigo.dynamo.task.proxy.TaskInput(name = "limit", domain = "STyId") final Long limit, @io.vertigo.dynamo.task.proxy.TaskInput(name = "offset", domain = "STyId") final Long offset, @io.vertigo.dynamo.task.proxy.TaskInput(name = "dateExist", domain = "STyInstant") final java.time.Instant dateExist) {
+	@io.vertigo.datamodel.task.proxy.TaskOutput(domain = "STyDtEquipment")
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(@io.vertigo.datamodel.task.proxy.TaskInput(name = "limit", domain = "STyId") final Long limit, @io.vertigo.datamodel.task.proxy.TaskInput(name = "offset", domain = "STyId") final Long offset, @io.vertigo.datamodel.task.proxy.TaskInput(name = "dateExist", domain = "STyInstant") final java.time.Instant dateExist) {
 		final Task task = createTaskBuilder("TkLoadEquipmentsByChunk")
 				.addValue("limit", limit)
 				.addValue("offset", offset)

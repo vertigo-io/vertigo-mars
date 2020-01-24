@@ -5,17 +5,17 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 import io.vertigo.core.lang.DataStream;
-import io.vertigo.dynamo.ngdomain.annotations.Constraint;
-import io.vertigo.dynamo.ngdomain.annotations.Formatter;
-import io.vertigo.dynamo.ngdomain.annotations.FormatterDefault;
-import io.vertigo.dynamo.ngdomain.annotations.SmartTypeDefinition;
-import io.vertigo.dynamo.ngdomain.annotations.SmartTypeProperty;
-import io.vertigo.dynamox.domain.constraint.ConstraintNumberMaximum;
-import io.vertigo.dynamox.domain.constraint.ConstraintNumberMinimum;
-import io.vertigo.dynamox.domain.constraint.ConstraintRegex;
-import io.vertigo.dynamox.domain.constraint.ConstraintStringLength;
-import io.vertigo.dynamox.domain.formatter.FormatterDate;
-import io.vertigo.dynamox.domain.formatter.FormatterId;
+import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintNumberMaximum;
+import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintNumberMinimum;
+import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintRegex;
+import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintStringLength;
+import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDate;
+import io.vertigo.datamodel.impl.smarttype.formatter.FormatterId;
+import io.vertigo.datamodel.smarttype.annotations.Constraint;
+import io.vertigo.datamodel.smarttype.annotations.Formatter;
+import io.vertigo.datamodel.smarttype.annotations.FormatterDefault;
+import io.vertigo.datamodel.smarttype.annotations.SmartTypeDefinition;
+import io.vertigo.datamodel.smarttype.annotations.SmartTypeProperty;
 
 public enum MarsSmartTypes {
 

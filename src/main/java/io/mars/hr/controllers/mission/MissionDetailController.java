@@ -14,7 +14,7 @@ import io.mars.basemanagement.domain.Business;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.hr.domain.Mission;
 import io.mars.hr.services.mission.MissionServices;
-import io.vertigo.dynamo.domain.model.DtListState;
+import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;

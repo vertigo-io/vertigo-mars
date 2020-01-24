@@ -12,7 +12,7 @@ import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.maintenance.domain.WorkOrder;
 import io.mars.maintenance.domain.WorkOrderStatus;
 import io.mars.maintenance.services.workorder.WorkOrderServices;
-import io.vertigo.dynamo.domain.model.DtListState;
+import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
