@@ -61,30 +61,35 @@ public final class SupplierSearchClient implements Component {
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "term",
 				name = "FctSupplierTrancheEffectifs$qrySupplier",
+				dtDefinition = "DtSupplier",
 				fieldName = "trancheEffectifs",
 				label = "Workforce range",
 				order = io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder.count),
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "term",
 				name = "FctSupplierCategorieEntreprise$qrySupplier",
+				dtDefinition = "DtSupplier",
 				fieldName = "categorieEntreprise",
 				label = "Business category",
 				order = io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder.count),
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "term",
 				name = "FctSupplierCategorieJuridique$qrySupplier",
+				dtDefinition = "DtSupplier",
 				fieldName = "categorieJuridique",
 				label = "Legal category",
 				order = io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder.count),
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "term",
 				name = "FctSupplierActivitePrincipale$qrySupplier",
+				dtDefinition = "DtSupplier",
 				fieldName = "activitePrincipale",
 				label = "Core business",
 				order = io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder.count),
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "range",
 				name = "FctSupplierDateCreation$qrySupplier",
+				dtDefinition = "DtSupplier",
 				fieldName = "dateCreation",
 				label = "Creation date",
 				ranges = {

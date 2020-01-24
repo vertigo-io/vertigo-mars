@@ -62,12 +62,14 @@ public final class BaseSearchClient implements Component {
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "term",
 				name = "FctBaseBaseTypeLabel$qryBase",
+				dtDefinition = "DtBaseIndex",
 				fieldName = "baseTypeLabel",
 				label = "Base Type",
 				order = io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder.count),
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "range",
 				name = "FctBaseCreationDate$qryBase",
+				dtDefinition = "DtBaseIndex",
 				fieldName = "creationDate",
 				label = "Creation Date",
 				ranges = {

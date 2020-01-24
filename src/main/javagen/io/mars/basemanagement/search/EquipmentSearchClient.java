@@ -30,12 +30,12 @@ import io.mars.basemanagement.domain.Equipment;
  */
 @Generated
 @io.vertigo.datafactory.search.metamodel.annotation.SearchIndexAnnotation(name = "IdxEquipment", dtIndex = "DtEquipmentIndex", keyConcept = "DtEquipment", loaderId = "EquipmentSearchLoader")
-@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "equipmentCategoryName", to = {"allText"})
+@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "code", to = {"allText"})
 @io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "name", to = {"allText"})
 @io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "tags", to = {"allText"})
-@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "description", to = {"allText"})
-@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "code", to = {"allText"})
+@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "equipmentCategoryName", to = {"allText"})
 @io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "equipmentTypeName", to = {"allText"})
+@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "description", to = {"allText"})
 public final class EquipmentSearchClient implements Component {
 
 	private final SearchManager searchManager;
@@ -68,12 +68,14 @@ public final class EquipmentSearchClient implements Component {
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "term",
 				name = "FctEquipmentEquipmentTypeName$qryEquipment",
+				dtDefinition = "DtEquipmentIndex",
 				fieldName = "equipmentTypeName",
 				label = "Equipment Type",
 				order = io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder.count),
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "range",
 				name = "FctEquipmentPurchaseDate$qryEquipment",
+				dtDefinition = "DtEquipmentIndex",
 				fieldName = "purchaseDate",
 				label = "Purchase Date",
 				ranges = {
@@ -84,6 +86,7 @@ public final class EquipmentSearchClient implements Component {
 			@io.vertigo.datafactory.search.metamodel.annotation.Facet(
 				type = "term",
 				name = "FctEquipmentEquipmentCategoryName$qryEquipment",
+				dtDefinition = "DtEquipmentIndex",
 				fieldName = "equipmentCategoryName",
 				label = "Equipment Category",
 				order = io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder.count)		})
