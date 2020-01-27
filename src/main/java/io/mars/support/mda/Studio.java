@@ -11,7 +11,7 @@ import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.util.InjectorUtil;
 import io.vertigo.datastore.DataStoreFeatures;
-import io.vertigo.dynamo.plugins.environment.StudioModelDefinitionProvider;
+import io.vertigo.dynamo.plugins.environment.StudioDefinitionProvider;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaManager;
 
@@ -32,7 +32,7 @@ public class Studio {
 				.addModule(new DataStoreFeatures().build())
 				//----Definitions
 				.addModule(ModuleConfig.builder("ressources")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioModelDefinitionProvider.class)
+						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
 								.addDefinitionResource("kpr", "io/mars/model.kpr")
 								.addDefinitionResource("kpr", "io/mars/tasks.kpr")
 								.addDefinitionResource("kpr", "io/mars/search.kpr")

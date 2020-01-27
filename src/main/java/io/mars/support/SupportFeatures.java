@@ -22,7 +22,7 @@ import io.mars.support.boot.MarsMasterDataDefinitionProvider;
 import io.mars.support.services.MarsFileServices;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Features;
-import io.vertigo.datamodel.smarttype.NewModelDefinitionProvider;
+import io.vertigo.datamodel.smarttype.ModelDefinitionProvider;
 
 public class SupportFeatures extends Features<SupportFeatures> {
 
@@ -33,7 +33,7 @@ public class SupportFeatures extends Features<SupportFeatures> {
 	@Override
 	protected void buildFeatures() {
 		getModuleConfigBuilder()
-				.addDefinitionProvider(DefinitionProviderConfig.builder(NewModelDefinitionProvider.class)
+				.addDefinitionProvider(DefinitionProviderConfig.builder(ModelDefinitionProvider.class)
 						.addDefinitionResource("smarttypes", MarsSmartTypes.class.getName())
 						.addDefinitionResource("dtobjects", "io.mars.domain.DtDefinitions")
 						.build())
