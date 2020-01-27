@@ -26,8 +26,8 @@ public class I18nResourcesInitializer implements ComponentInitializer {
 	/** {@inheritDoc} */
 	@Override
 	public void init() {
-		registerMessageKey(localeManager, "io.vertigo.dynamox.domain.constraint.Constraint", io.vertigo.datamodel.impl.smarttype.constraint.Resources.class);
-		registerMessageKey(localeManager, "io.vertigo.dynamox.domain.formatter.Formatter", io.vertigo.datamodel.impl.smarttype.formatter.Resources.class);
+		registerMessageKey(localeManager, "io.vertigo.datamodel.impl.smarttype.constraint.Constraint", io.vertigo.datamodel.impl.smarttype.constraint.Resources.class);
+		registerMessageKey(localeManager, "io.vertigo.datamodel.impl.smarttype.formatter.Formatter", io.vertigo.datamodel.impl.smarttype.formatter.Resources.class);
 	}
 
 	/**
