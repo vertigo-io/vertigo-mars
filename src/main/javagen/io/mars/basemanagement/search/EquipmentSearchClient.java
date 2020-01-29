@@ -30,12 +30,12 @@ import io.mars.basemanagement.domain.Equipment;
  */
 @Generated
 @io.vertigo.datafactory.search.metamodel.annotation.SearchIndexAnnotation(name = "IdxEquipment", dtIndex = "DtEquipmentIndex", keyConcept = "DtEquipment", loaderId = "EquipmentSearchLoader")
-@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "code", to = {"allText"})
-@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "name", to = {"allText"})
-@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "tags", to = {"allText"})
 @io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "equipmentCategoryName", to = {"allText"})
+@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "code", to = {"allText"})
 @io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "equipmentTypeName", to = {"allText"})
 @io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "description", to = {"allText"})
+@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "tags", to = {"allText"})
+@io.vertigo.datafactory.search.metamodel.annotation.IndexCopyTo(field = "name", to = {"allText"})
 public final class EquipmentSearchClient implements Component {
 
 	private final SearchManager searchManager;
