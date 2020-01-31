@@ -11,6 +11,7 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseTypeEnum;
 import io.mars.datageneration.DataGenerator;
 import io.mars.datageneration.FakeDataUtil;
+import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
@@ -21,7 +22,7 @@ public final class FakeBaseListBuilder implements Builder {
 	private List<String> myNameSecondPartDictionnary;
 	private List<String> myTagsDictionnary;
 	private List<Long> myGeosectorIds;
-	private List<String> myGeoLocations;
+	private List<GeoPoint> myGeoLocations;
 	private final List<PictureGeneratorInfos> pictureGeneratorInfos = new ArrayList<>();
 
 	private int myMaxValues = 0;
@@ -56,7 +57,7 @@ public final class FakeBaseListBuilder implements Builder {
 		return this;
 	}
 
-	public FakeBaseListBuilder withGeoLocations(final List<String> geoLocations) {
+	public FakeBaseListBuilder withGeoLocations(final List<GeoPoint> geoLocations) {
 		myGeoLocations = geoLocations;
 		return this;
 	}
@@ -121,7 +122,7 @@ public final class FakeBaseListBuilder implements Builder {
 		return "The " + firstPart + " " + secondPart + " base was created on " + creationDate + ". Its current HealthLevel is :" + healthLevel + ".";
 	}
 
-	private String getGeoLocation() {
+	private GeoPoint getGeoLocation() {
 		Assertion.checkNotNull(myGeoLocations);
 		return myGeoLocations.get(DataGenerator.RND.nextInt(myGeoLocations.size()));
 	}
@@ -142,7 +143,7 @@ public final class FakeBaseListBuilder implements Builder {
 			final int healthLevel,
 			final LocalDate creationDate,
 			final String description,
-			final String geoLocation,
+			final GeoPoint geoLocation,
 			final BigDecimal assetsValue,
 			final BigDecimal rentingFee,
 			final Long geosectorId,

@@ -228,3 +228,10 @@ create Domain DoCount {
 	formatter : FmtDefault
 	storeType : "NUMERIC"
 }
+
+create Domain DoGeoPoint {
+	dataType : ValueObject
+	formatter : FmtDefault
+	type : "io.mars.support.smarttypes.GeoPoint"
+	storeType : "TEXT"
+}

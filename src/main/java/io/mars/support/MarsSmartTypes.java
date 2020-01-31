@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 
+import io.mars.support.smarttypes.GeoPoint;
+import io.mars.support.smarttypes.GeoPointAdapter;
+import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.lang.DataStream;
 import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintNumberMaximum;
 import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintNumberMinimum;
@@ -11,6 +14,7 @@ import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintRegex;
 import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintStringLength;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDate;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterId;
+import io.vertigo.datamodel.smarttype.annotations.Adapter;
 import io.vertigo.datamodel.smarttype.annotations.Constraint;
 import io.vertigo.datamodel.smarttype.annotations.Formatter;
 import io.vertigo.datamodel.smarttype.annotations.FormatterDefault;
@@ -125,6 +129,12 @@ public enum MarsSmartTypes {
 	@SmartTypeDefinition(Long.class)
 	@FormatterDefault
 	@SmartTypeProperty(property = "storeType", value = "NUMERIC")
-	Count;
+	Count,
+
+	@SmartTypeDefinition(GeoPoint.class)
+	@FormatterDefault
+	@Adapter(clazz = GeoPointAdapter.class, targetBasicType = BasicType.String)
+	@SmartTypeProperty(property = "storeType", value = "TEXT")
+	GeoPoint;
 
 }

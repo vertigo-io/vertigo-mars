@@ -147,6 +147,7 @@ modules:
             tokens: mars-api
         - webservices.rateLimiting:
         - webservices.security:
+        - webservices.swagger:
         - webservices.apiPrefix:
             apiPrefix: /api
   io.vertigo.orchestra.OrchestraFeatures:

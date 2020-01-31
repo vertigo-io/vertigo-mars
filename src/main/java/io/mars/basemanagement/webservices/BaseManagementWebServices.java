@@ -1,9 +1,12 @@
 package io.mars.basemanagement.webservices;
 
+import java.util.Collections;
+
 import javax.inject.Inject;
 
 import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.Equipment;
+import io.mars.basemanagement.domain.Picture;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.catalog.domain.EquipmentType;
@@ -13,6 +16,7 @@ import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.AnonymousAccessAllowed;
 import io.vertigo.vega.webservice.stereotype.GET;
+import io.vertigo.vega.webservice.stereotype.PUT;
 import io.vertigo.vega.webservice.stereotype.PathParam;
 
 public class BaseManagementWebServices implements WebServices {
@@ -30,6 +34,13 @@ public class BaseManagementWebServices implements WebServices {
 	@GET("/bases")
 	public DtList<Base> bases() {
 		return baseServices.getBases(DtListState.defaultOf(Base.class));
+	}
+
+	@AnonymousAccessAllowed
+	@PUT("/base/")
+	public Base saveBase(final Base base) {
+		baseServices.save(base, Collections.emptyList(), new DtList<>(Picture.class));
+		return baseServices.get(base.getBaseId());
 	}
 
 	@AnonymousAccessAllowed
