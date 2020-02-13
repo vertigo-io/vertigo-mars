@@ -38,9 +38,9 @@ import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 @Controller
 @RequestMapping("/basemanagement/base/")
 public final class BaseDetailController extends AbstractVSpringMvcController {
-	private static final ViewContextKey<Base> baseKey = ViewContextKey.of("base");
-	private static final ViewContextKey<BaseType> baseTypesKey = ViewContextKey.of("baseTypes");
-	private static final ViewContextKey<Picture> basePictures = ViewContextKey.of("basePictures");
+	public static final ViewContextKey<Base> baseKey = ViewContextKey.of("base");
+	public static final ViewContextKey<BaseType> baseTypesKey = ViewContextKey.of("baseTypes");
+	public static final ViewContextKey<Picture> basePictures = ViewContextKey.of("basePictures");
 
 	@Inject
 	private BaseServices baseServices;

@@ -102,6 +102,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	@PostMapping("/_ajaxValidation")
 	public ViewContext doAjaxValidation(final ViewContext viewContext, @ViewAttribute("base") final Base base) {
 		// do something or just validation from retrieving a view attribute
+		viewContext.publishDto(BaseDetailController.baseKey, base);
 		return viewContext;
 	}
 
