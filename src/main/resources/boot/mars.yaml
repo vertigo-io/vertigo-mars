@@ -71,13 +71,13 @@ modules:
       - search.elasticsearchEmbedded:
           __flags__: ["home"]
           home: search/
-          envIndexPrefix: mars
+          envIndex: mars
           rowsPerQuery: 50
           config.file: search/elasticsearch.yml
       - search.elasticsearchTransport:
           __flags__: ["klee"]
           servers.names: ${esHost}
-          envIndexPrefix: mars
+          envIndex: mars
           cluster.name: mars
           rowsPerQuery: 50
           config.file: search/elasticsearch.yml
