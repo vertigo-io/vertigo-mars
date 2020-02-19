@@ -25,8 +25,8 @@
 	    		<vu:include-data-primitive key="login" />
 	      		<vu:include-data-primitive key="password" />
 	      			<vu:messages/>
-					<q-input v-model="vueData.login" name="login" label="Login" orientation="vertical"></q-input>
-					<q-input v-model="vueData.password" name="password" label="Password" orientation="vertical" type="password"></q-input>
+					<q-input v-model="vueData.login" name="login" label="Login" stack-label orientation="vertical"></q-input>
+					<q-input type="password" v-model="vueData.password" name="password" label="Password" stack-label orientation="vertical"></q-input>
 					<div class="float-right">
 						<vu:button-submit label="Login" action="@{_login}" class="bg-primary text-white" flat />
 					</div>
