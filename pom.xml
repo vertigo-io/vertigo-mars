@@ -98,6 +98,12 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.200</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.8.6</version>
+		</dependency>
 
 		<!-- test -->
 		<dependency>

@@ -69,6 +69,8 @@ modules:
     features:
       - sql:
       - timeseries:
+      - migration:
+          mode: update
     featuresConfig:
       - timeseries.influxdb: 
           __flags__: ["klee"]
@@ -83,6 +85,8 @@ modules:
           __flags__: ["home"]
           classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           source: java:/comp/env/jdbc/DataSourceHome
+      - migration.liquibase:
+          masterFile: /boot/liquibase/master.xml
   io.vertigo.datamodel.DataModelFeatures:
   io.vertigo.datastore.DataStoreFeatures:
     features:
@@ -211,8 +215,8 @@ modules:
   io.mars.home.HomeFeatures:
   io.mars.command.CommandFeatures:
 initializers:
-  - io.mars.support.boot.DataBaseInitializer:
-      __flags__: ["initdb"]
+  - io.mars.support.boot.InitialDataInitializer:
+      __flags__: ["initialData"]
   - io.mars.support.boot.I18nResourcesInitializer:
   - io.mars.support.boot.SearchInitializer:
   - io.mars.support.boot.OrchestraInitializer:

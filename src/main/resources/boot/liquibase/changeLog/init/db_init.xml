@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<!-- Création de la BDD -->
+	<changeSet author="vertigo" id="init">
+		<sqlFile encoding="utf8" path="/sqlgen/crebas.sql" />
+		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_base_type.sql" />
+		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_ticket_status.sql" />
+		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_work_order_status.sql" />
+		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_opendata_set_status.sql" />
+		<sqlFile encoding="utf8" path="/io/vertigo/orchestra/sql/orchestra_create_init.sql" />
+	</changeSet>
+</databaseChangeLog>

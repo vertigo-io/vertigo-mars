@@ -15,7 +15,7 @@ import io.vertigo.datastore.impl.entitystore.AbstractMasterDataDefinitionProvide
 
 /**
  * Init masterdata list.
- * @author jmforhan
+ * @author mlaroche
  */
 public class MarsMasterDataDefinitionProvider extends AbstractMasterDataDefinitionProvider {
 
