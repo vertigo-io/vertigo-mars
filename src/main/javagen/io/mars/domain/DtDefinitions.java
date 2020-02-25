@@ -133,7 +133,9 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Tags'. */
 		tags,
 		/** Propriété 'Type'. */
-		baseTypeLabel	}
+		baseTypeLabel,
+		/** Propriété 'Geographic Location'. */
+		geoLocation	}
 
 	/**
 	 * Enumération des champs de BaseOverview.

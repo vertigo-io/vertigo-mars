@@ -144,7 +144,8 @@ public final class BasemanagementPAO implements StoreServices {
  "						bas.NAME, " + 
  "						bas.CODE, " + 
  "						bas.CREATION_DATE, " + 
- "						bas.TAGS, " + 
+ "						bas.TAGS," + 
+ "						bas.GEO_LOCATION,  " + 
  "						bastype.LABEL as BASE_TYPE_LABEL" + 
  "				from BASE bas" + 
  "				join BASE_TYPE bastype on bastype.base_type_id = bas.base_type_id" + 

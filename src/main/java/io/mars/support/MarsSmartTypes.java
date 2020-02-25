@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import io.mars.support.smarttypes.GeoPoint;
 import io.mars.support.smarttypes.GeoPointAdapter;
+import io.mars.support.smarttypes.GeoPointSearchAdapter;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.lang.DataStream;
 import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintNumberMaximum;
@@ -134,7 +135,9 @@ public enum MarsSmartTypes {
 	@SmartTypeDefinition(GeoPoint.class)
 	@FormatterDefault
 	@Adapter(clazz = GeoPointAdapter.class, targetBasicType = BasicType.String)
+	@Adapter(clazz = GeoPointSearchAdapter.class, targetBasicType = BasicType.String, type = "search")
 	@SmartTypeProperty(property = "storeType", value = "TEXT")
+	@SmartTypeProperty(property = "indexType", value = ":geo_point")
 	GeoPoint;
 
 }

@@ -12,5 +12,6 @@ create DtDefinition DtBaseIndex {
   field creationDate {domain: DoLocaldate label: "Creation Date" cardinality: "?"}
   field tags {domain: DoTags label: "Tags" cardinality: "?"}
   field baseTypeLabel {domain: DoLabel label: "Type" cardinality: "?" }
+  field geoLocation {domain: DoGeoPoint label:"Geographic Location" cardinality: "?"}
 }
 

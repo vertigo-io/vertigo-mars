@@ -14,7 +14,7 @@ public class GeoPoint implements Serializable {
 		this.lat = lat;
 	}
 
-	public double getLong() {
+	public double getLon() {
 		return lon;
 	}
 

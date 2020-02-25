@@ -181,6 +181,12 @@ modules:
           __flags__: ["klee"]
       - handles.memory:
           __flags__: ["home"]
+  io.vertigo.geo.GeoFeatures:
+    features:
+      - geosearch:
+    featuresConfig:
+      - geosearch.es:
+          envIndexPrefix: mars
   io.vertigo.dashboard.DashboardFeatures:
     features:
       - analytics:

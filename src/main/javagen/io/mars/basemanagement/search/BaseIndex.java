@@ -19,6 +19,7 @@ public final class BaseIndex implements DtObject {
 	private java.time.LocalDate creationDate;
 	private String tags;
 	private String baseTypeLabel;
+	private io.mars.support.smarttypes.GeoPoint geoLocation;
 	
 	/**
 	 * Champ : DATA.
@@ -132,6 +133,25 @@ public final class BaseIndex implements DtObject {
 	 */
 	public void setBaseTypeLabel(final String baseTypeLabel) {
 		this.baseTypeLabel = baseTypeLabel;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Geographic Location'.
+	 * @return GeoPoint geoLocation
+	 */
+	@Field(smartType = "STyGeoPoint", label = "Geographic Location")
+	public io.mars.support.smarttypes.GeoPoint getGeoLocation() {
+		return geoLocation;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Geographic Location'.
+	 * @param geoLocation GeoPoint
+	 */
+	public void setGeoLocation(final io.mars.support.smarttypes.GeoPoint geoLocation) {
+		this.geoLocation = geoLocation;
 	}
 	
 	/** {@inheritDoc} */
