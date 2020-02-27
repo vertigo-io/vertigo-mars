@@ -13,6 +13,7 @@ import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.catalog.domain.EquipmentType;
 import io.mars.catalog.services.equipment.EquipmentTypeServices;
 import io.mars.domain.DtDefinitions.BaseIndexFields;
+import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.geo.services.geocoder.GeoLocation;
@@ -64,9 +65,9 @@ public class BaseManagementWebServices implements WebServices {
 	}
 
 	@AnonymousAccessAllowed
-	@GET("/_geoSearch")
-	public DtList<BaseIndex> geoSearch(@QueryParam("lat1") final Double lat1, @QueryParam("lon1") final Double lon1, @QueryParam("lat2") final Double lat2, @QueryParam("lon2") final Double lon2) {
-		return geoSearchServices.searchInBoundingBox(new GeoLocation(lat1, lon1), new GeoLocation(lat2, lon2), "IdxBase", BaseIndex.class, BaseIndexFields.geoLocation);
+	@GET("/bases/_geoSearch")
+	public DtList<BaseIndex> geoSearch(@QueryParam("topLeft") final GeoPoint topLeft, @QueryParam("bottomRight") final GeoPoint bottomRight) {
+		return geoSearchServices.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxBase", BaseIndex.class, BaseIndexFields.geoLocation);
 	}
 
 }
