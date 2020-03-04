@@ -256,6 +256,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		equipmentTypeName,
 		/** Propriété 'Category'. */
 		equipmentCategoryName,
+		/** Propriété 'Geographic Location'. */
+		geoLocation,
 		/** Propriété 'ALL_TEXT'. */
 		allText	}
 

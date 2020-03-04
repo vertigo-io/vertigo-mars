@@ -48,7 +48,7 @@ public final class EquipmentTypeDAO extends DAO<EquipmentType, java.lang.Long> i
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkSelectEquipmentType",
-			request = "select EQUIPMENT_TYPE_ID, LABEL from EQUIPMENT_TYPE",
+			request = "select EQUIPMENT_TYPE_ID, LABEL, EQUIPMENT_CATEGORY_ID from EQUIPMENT_TYPE",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentType")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.catalog.domain.EquipmentType> selectEquipmentType() {

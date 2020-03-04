@@ -14,6 +14,7 @@ create DtDefinition DtEquipmentIndex {
 	field tags {domain: DoTags label: "Tags" cardinality: "?"}
 	field equipmentTypeName {domain: DoLabel label:"Type" cardinality: "?"}
 	field equipmentCategoryName {domain: DoLabel label:"Category" cardinality: "?"}
+	field geoLocation {domain: DoGeoPoint label:"Geographic Location" cardinality: "?"}
 }
 
 

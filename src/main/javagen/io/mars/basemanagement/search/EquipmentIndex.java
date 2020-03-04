@@ -21,6 +21,7 @@ public final class EquipmentIndex implements DtObject {
 	private String tags;
 	private String equipmentTypeName;
 	private String equipmentCategoryName;
+	private io.mars.support.smarttypes.GeoPoint geoLocation;
 	
 	/**
 	 * Champ : DATA.
@@ -172,6 +173,25 @@ public final class EquipmentIndex implements DtObject {
 	 */
 	public void setEquipmentCategoryName(final String equipmentCategoryName) {
 		this.equipmentCategoryName = equipmentCategoryName;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Geographic Location'.
+	 * @return GeoPoint geoLocation
+	 */
+	@Field(smartType = "STyGeoPoint", label = "Geographic Location")
+	public io.mars.support.smarttypes.GeoPoint getGeoLocation() {
+		return geoLocation;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Geographic Location'.
+	 * @param geoLocation GeoPoint
+	 */
+	public void setGeoLocation(final io.mars.support.smarttypes.GeoPoint geoLocation) {
+		this.geoLocation = geoLocation;
 	}
 	
 	/**

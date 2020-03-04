@@ -1,6 +1,7 @@
 package io.mars.basemanagement.webservices;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -8,11 +9,13 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.domain.Picture;
 import io.mars.basemanagement.search.BaseIndex;
+import io.mars.basemanagement.search.EquipmentIndex;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.catalog.domain.EquipmentType;
 import io.mars.catalog.services.equipment.EquipmentTypeServices;
 import io.mars.domain.DtDefinitions.BaseIndexFields;
+import io.mars.domain.DtDefinitions.EquipmentIndexFields;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
@@ -67,7 +70,13 @@ public class BaseManagementWebServices implements WebServices {
 	@AnonymousAccessAllowed
 	@GET("/bases/_geoSearch")
 	public DtList<BaseIndex> geoSearch(@QueryParam("topLeft") final GeoPoint topLeft, @QueryParam("bottomRight") final GeoPoint bottomRight) {
-		return geoSearchServices.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxBase", BaseIndex.class, BaseIndexFields.geoLocation);
+		return geoSearchServices.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxBase", BaseIndex.class, BaseIndexFields.geoLocation, Optional.empty());
+	}
+
+	@AnonymousAccessAllowed
+	@GET("/equipments/_geoSearch")
+	public DtList<EquipmentIndex> geoSearchEquipment(@QueryParam("topLeft") final GeoPoint topLeft, @QueryParam("bottomRight") final GeoPoint bottomRight) {
+		return geoSearchServices.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxEquipment", EquipmentIndex.class, EquipmentIndexFields.geoLocation, Optional.empty());
 	}
 
 }

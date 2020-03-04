@@ -178,6 +178,12 @@
 						          </div>
 					          </q-item-section>
 					        </q-item>
+					        <q-item tag="a" th:href="@{/basemanagement/equipmentsMap/}" >
+					          <q-item-section avatar>
+					          	<q-icon name="fas fa-rocket" title="Equipments Map"></q-icon>
+					          </q-item-section>
+					          <q-item-section>Equipments Map</q-item-section>
+					        </q-item>
 				    </component>
 				    <q-separator></q-separator>
 			       	<component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'" label="People" default-opened >

@@ -41,11 +41,14 @@ public class EquipmentGenerator implements Component {
 	private ResourceManager resourceManager;
 
 	public void createInitialEquipments(final int equipmentUnitsToGenerate, final List<Base> bases) {
+		final DtList<EquipmentType> equipmentTypes = equipmentTypeDAO.selectEquipmentType();
+		equipmentTypes.forEach(equType -> equType.equipmentCategory().load());// not so great but 20 lines
+
 		final DtList<Equipment> equipments = new FakeEquipmentListBuilder()
 				.withBases(bases)
 				.withGeosectorIdList(basemanagementPAO.selectGeosectorId())
 				.withBusinessList(businessDAO.selectBusiness())
-				.withEquipmentTypeList(equipmentTypeDAO.selectEquipmentType())
+				.withEquipmentTypeList(equipmentTypes)
 				.withMaxValues(equipmentUnitsToGenerate)
 				.build();
 

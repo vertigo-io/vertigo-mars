@@ -173,6 +173,7 @@ public final class BasemanagementPAO implements StoreServices {
  "						equ.CODE, " + 
  "						equ.PURCHASE_DATE, " + 
  "						equ.TAGS, " + 
+ "						equ.GEO_LOCATION,  " + 
  "						equipmentType.LABEL as EQUIPMENT_TYPE_NAME," + 
  "						equipmentCategory.LABEL as EQUIPMENT_CATEGORY_NAME" + 
  "				from EQUIPMENT equ" + 

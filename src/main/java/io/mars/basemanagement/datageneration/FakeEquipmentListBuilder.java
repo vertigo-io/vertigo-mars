@@ -10,6 +10,7 @@ import io.mars.basemanagement.domain.Business;
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.catalog.domain.EquipmentType;
 import io.mars.datageneration.DataGenerator;
+import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.datamodel.structure.model.DtList;
@@ -122,7 +123,8 @@ public class FakeEquipmentListBuilder implements Builder {
 			final String description,
 			final LocalDate purchaseDate,
 			final BigDecimal rentingFee,
-			final String tags) {
+			final String tags,
+			final GeoPoint geoLocation) {
 		final Equipment equipment = new Equipment();
 		equipment.base().setId(base.getBaseId());
 		equipment.business().set(business);
@@ -130,7 +132,7 @@ public class FakeEquipmentListBuilder implements Builder {
 		equipment.geosector().setId(geoSectorId);
 		equipment.setCode(code);
 		equipment.setEquipmentValue(equipmentValue);
-		equipment.setGeoLocation(base.getGeoLocation());
+		equipment.setGeoLocation(geoLocation);
 		equipment.setHealthLevel(healthLevel);
 		equipment.setName(name);
 		equipment.setDescription(description);
@@ -142,6 +144,27 @@ public class FakeEquipmentListBuilder implements Builder {
 
 	private static Double myNextDouble(final int min, final int max) {
 		return min + DataGenerator.RND.nextDouble() * (max - min);
+	}
+
+	private static GeoPoint getRandomizedLocation(final GeoPoint geoPoint, final Double equipmentTypeLongitudeDeviation) {
+		final int latitudeInvertionFactor = DataGenerator.RND.nextBoolean() ? 1 : -1;
+		final int longitudeInvertionFactor = DataGenerator.RND.nextBoolean() ? 1 : -1;
+		return new GeoPoint(
+				geoPoint.getLon() + DataGenerator.RND.nextDouble() * equipmentTypeLongitudeDeviation * longitudeInvertionFactor * 2, // because 180 vs 360
+				geoPoint.getLat() + DataGenerator.RND.nextDouble() * equipmentTypeLongitudeDeviation * latitudeInvertionFactor);
+	}
+
+	private static Double getEquipmentTypeDeviation(final EquipmentType equipmentType) {
+		switch (equipmentType.equipmentCategory().get().getLabel()) {
+			case "Bot":
+				return 0.5;
+			case "Building":
+				return 0.1;
+			case "Vehicle":
+				return 2.0;
+			default:
+				return 0.0;// no change by default
+		}
 	}
 
 	@Override
@@ -158,6 +181,7 @@ public class FakeEquipmentListBuilder implements Builder {
 			final Business currentBusiness = myBusinessList.get(DataGenerator.RND.nextInt(myBusinessList.size()));
 			final Base base = myBases.get(DataGenerator.RND.nextInt(myBases.size()));
 			final Long currentGeosectorId = myGeosectorIds.get(DataGenerator.RND.nextInt(myGeosectorIds.size()));
+			final GeoPoint equipmentLocation = getRandomizedLocation(base.getGeoLocation(), getEquipmentTypeDeviation(currentEquipmentType));
 			final Equipment equipment = createEquipment(
 					base,
 					currentBusiness,
@@ -170,7 +194,8 @@ public class FakeEquipmentListBuilder implements Builder {
 					getDescription(),
 					getPurchaseDate(),
 					getRentingFee(),
-					getTags());
+					getTags(),
+					equipmentLocation);
 			equipments.add(equipment);
 		}
 		return equipments;
