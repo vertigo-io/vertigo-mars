@@ -39,11 +39,6 @@
 		</dependency>
 		<dependency>
 			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-adapters</artifactId>
-			<version>${vertigo.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-dashboard</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
@@ -72,6 +67,11 @@
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-mqtt-connector</artifactId>
+			<version>${vertigo.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-ifttt-connector</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
 		<dependency>

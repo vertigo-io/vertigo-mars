@@ -1,26 +1,19 @@
 package io.mars.maintenance.services.workorder;
 
-import java.util.Optional;
-
 import javax.inject.Inject;
 
 import io.mars.maintenance.domain.WorkOrder;
-import io.vertigo.adapters.ifttt.IftttAdapter;
-import io.vertigo.adapters.ifttt.MakerEvent;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
+import io.vertigo.connectors.ifttt.IftttClient;
+import io.vertigo.connectors.ifttt.MakerEvent;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.core.param.ParamManager;
 
 public class TrelloWorkOrderEventSubscriber implements Component {
-
-	private final String iftttApiKey;
-	private final String iftttApiUrl;
+	private final IftttClient iftttClient;
 
 	@Inject
-	public TrelloWorkOrderEventSubscriber(final ParamManager paramManager) {
-		iftttApiKey = paramManager.getParam("iftttApiKey").getValue();
-		iftttApiUrl = paramManager.getParam("iftttApiUrl").getValue();
-
+	public TrelloWorkOrderEventSubscriber(final IftttClient iftttClient) {
+		this.iftttClient = iftttClient;
 	}
 
 	@EventBusSubscribed
@@ -34,7 +27,7 @@ public class TrelloWorkOrderEventSubscriber implements Component {
 			event.getEventMetadatas().setValue2(workOrder.getName());
 			event.getEventMetadatas().setValue3(workOrder.getDescription());
 
-			IftttAdapter.sendMakerEvent(event, iftttApiUrl, iftttApiKey, Optional.empty(), Optional.empty());
+			iftttClient.sendMakerEvent(event);
 
 		}
 	}

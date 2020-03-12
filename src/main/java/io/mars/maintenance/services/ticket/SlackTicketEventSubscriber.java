@@ -1,27 +1,22 @@
 package io.mars.maintenance.services.ticket;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
 import io.mars.maintenance.domain.Ticket;
-import io.vertigo.adapters.ifttt.IftttAdapter;
-import io.vertigo.adapters.ifttt.MakerEvent;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
+import io.vertigo.connectors.ifttt.IftttClient;
+import io.vertigo.connectors.ifttt.MakerEvent;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.core.param.ParamManager;
 
 public class SlackTicketEventSubscriber implements Component {
 
-	private final String iftttApiKey;
-	private final String iftttApiUrl;
+	private final IftttClient iftttClient;
 
 	@Inject
-	public SlackTicketEventSubscriber(final ParamManager paramManager) {
-		iftttApiKey = paramManager.getParam("iftttApiKey").getValue();
-		iftttApiUrl = paramManager.getParam("iftttApiUrl").getValue();
-
+	public SlackTicketEventSubscriber(final IftttClient iftttClient) {
+		this.iftttClient = iftttClient;
 	}
 
 	@EventBusSubscribed
@@ -40,7 +35,7 @@ public class SlackTicketEventSubscriber implements Component {
 			// Put the ticket creation date in IFTTT value 3
 			event.getEventMetadatas().setValue3(ticket.getDateCreated().format(formatter));
 
-			IftttAdapter.sendMakerEvent(event, iftttApiUrl, iftttApiKey, Optional.empty(), Optional.empty());
+			iftttClient.sendMakerEvent(event);
 		}
 	}
 
