@@ -60,11 +60,9 @@ modules:
   io.vertigo.commons.CommonsFeatures:
     features:
       - script:
-      - cache:
       - command:
     featuresConfig:
       - script.janino:
-      - cache.memory:
   io.vertigo.database.DatabaseFeatures:
     features:
       - sql:
@@ -93,6 +91,7 @@ modules:
       - entitystore:
       - filestore:
       - kvStore:
+      - cache:
     featuresConfig:
       - entitystore.sql:
       - entitystore.sql:
@@ -117,6 +116,7 @@ modules:
       - kvStore.berkeley:
           collections: VViewContext;TTL=43200
           dbFilePath: ${java.io.tmpdir}/vertigo-ui/MarsVViewContext
+      - cache.memory:
   io.vertigo.datafactory.DataFactoryFeatures:
     features:
       - search:
@@ -204,6 +204,11 @@ modules:
           walletPath: ${walletPath}
       - ledger.fake:
           __flags__: ["!ethereum"]
+  io.vertigo.connectors.ifttt.IftttFeatures:
+    features:
+      - ifttt:
+          baseUrl: ${iftttApiUrl}
+          apiKey: ${iftttApiKey}    
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:
   io.mars.hr.HrFeatures:

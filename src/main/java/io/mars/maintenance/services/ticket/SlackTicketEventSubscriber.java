@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import io.mars.maintenance.domain.Ticket;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
 import io.vertigo.connectors.ifttt.IftttClient;
+import io.vertigo.connectors.ifttt.IftttConnector;
 import io.vertigo.connectors.ifttt.MakerEvent;
 import io.vertigo.core.node.component.Component;
 
@@ -15,8 +16,8 @@ public class SlackTicketEventSubscriber implements Component {
 	private final IftttClient iftttClient;
 
 	@Inject
-	public SlackTicketEventSubscriber(final IftttClient iftttClient) {
-		this.iftttClient = iftttClient;
+	public SlackTicketEventSubscriber(final IftttConnector iftttConnector) {
+		iftttClient = iftttConnector.getClient();
 	}
 
 	@EventBusSubscribed
