@@ -55,7 +55,7 @@
 
 		<dependency>
 			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-ledger</artifactId>
+			<artifactId>vertigo-audit</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
 

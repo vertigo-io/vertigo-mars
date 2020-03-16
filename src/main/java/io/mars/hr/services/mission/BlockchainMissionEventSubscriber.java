@@ -11,11 +11,11 @@ import io.mars.hr.domain.Mission;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.person.PersonServices;
 import io.vertigo.account.account.Account;
+import io.vertigo.audit.ledger.LedgerManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.ledger.services.LedgerManager;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
 

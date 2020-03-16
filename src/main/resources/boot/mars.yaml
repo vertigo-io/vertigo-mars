@@ -191,7 +191,9 @@ modules:
     features:
       - analytics:
           appName: mars-analytics
-  io.vertigo.ledger.LedgerFeatures:
+  io.vertigo.audit.AuditFeatures:
+    features:
+      - ledger:
     featuresConfig:
       - ledger.ethereum:
           __flags__: ["ethereum"]

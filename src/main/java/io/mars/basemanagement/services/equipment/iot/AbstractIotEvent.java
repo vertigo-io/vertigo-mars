@@ -2,8 +2,6 @@ package io.mars.basemanagement.services.equipment.iot;
 
 import java.util.Optional;
 
-import org.bouncycastle.crypto.RuntimeCryptoException;
-
 import io.vertigo.commons.eventbus.Event;
 import io.vertigo.core.lang.Assertion;
 
@@ -29,7 +27,7 @@ public class AbstractIotEvent implements Event {
 				case 1:
 					return ON;
 				default:
-					throw new RuntimeCryptoException("Unknown value : " + value);
+					throw new RuntimeException("Unknown value : " + value);
 			}
 		}
 	}
