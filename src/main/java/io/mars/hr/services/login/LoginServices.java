@@ -21,8 +21,8 @@ import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.social.services.notification.Notification;
-import io.vertigo.social.services.notification.NotificationServices;
+import io.vertigo.social.notification.Notification;
+import io.vertigo.social.notification.NotificationManager;
 
 @Transactional
 public class LoginServices implements Component {
@@ -33,7 +33,7 @@ public class LoginServices implements Component {
 	private VSecurityManager securityManager;
 
 	@Inject
-	private NotificationServices notificationServices;
+	private NotificationManager notificationManager;
 
 	@Inject
 	private PersonServices personServices;
@@ -72,7 +72,7 @@ public class LoginServices implements Component {
 				.stream()
 				.map((person) -> UID.of(Account.class, String.valueOf(person.getPersonId())))
 				.collect(Collectors.toSet());
-		notificationServices.send(notification, accountUIDs);
+		notificationManager.send(notification, accountUIDs);
 	}
 
 	public boolean isAuthenticated() {

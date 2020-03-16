@@ -34,8 +34,8 @@ import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
 import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;
-import io.vertigo.social.services.notification.Notification;
-import io.vertigo.social.services.notification.NotificationServices;
+import io.vertigo.social.notification.Notification;
+import io.vertigo.social.notification.NotificationManager;
 
 @Transactional
 public class BaseServices implements Component, Activeable {
@@ -60,7 +60,7 @@ public class BaseServices implements Component, Activeable {
 	@Inject
 	private PersonServices personServices;
 	@Inject
-	private NotificationServices notificationServices;
+	private NotificationManager notificationManager;
 
 	private VFile defaultPhoto;
 
@@ -164,6 +164,6 @@ public class BaseServices implements Component, Activeable {
 				.stream()
 				.map((person) -> UID.of(Account.class, String.valueOf(person.getPersonId())))
 				.collect(Collectors.toSet());
-		notificationServices.send(notification, accountUIDs);
+		notificationManager.send(notification, accountUIDs);
 	}
 }

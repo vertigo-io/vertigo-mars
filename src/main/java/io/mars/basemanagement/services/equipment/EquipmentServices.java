@@ -26,8 +26,8 @@ import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.social.services.comment.Comment;
-import io.vertigo.social.services.comment.CommentServices;
+import io.vertigo.social.comment.Comment;
+import io.vertigo.social.comment.CommentManager;
 
 @Transactional
 public class EquipmentServices implements Component {
@@ -39,7 +39,7 @@ public class EquipmentServices implements Component {
 	@Inject
 	private EquipmentSearchClient equipmentSearchClient;
 	@Inject
-	private CommentServices commentServices;
+	private CommentManager commentManager;
 	@Inject
 	private AuthenticationManager authenticationManager;
 
@@ -103,12 +103,11 @@ public class EquipmentServices implements Component {
 				.withMsg(commentString)
 				.build();
 
-		commentServices.publish(currentAccountUID, comment, UID.of(Equipment.class, equipmentId));
-
+		commentManager.publish(currentAccountUID, comment, UID.of(Equipment.class, equipmentId));
 	}
 
 	public List<String> getComments(final Long equipmentId) {
-		return commentServices.getComments(UID.of(Equipment.class, equipmentId)).stream()
+		return commentManager.getComments(UID.of(Equipment.class, equipmentId)).stream()
 				.map(Comment::getMsg)
 				.collect(Collectors.toList());
 	}

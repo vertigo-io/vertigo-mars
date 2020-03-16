@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.social.services.handle.HandleServices;
+import io.vertigo.social.handle.HandleManager;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
@@ -18,7 +18,7 @@ import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 public class WebHandlesController extends AbstractVSpringMvcController {
 
 	@Inject
-	private HandleServices handleServices;
+	private HandleManager handleManager;
 
 	@GetMapping("/{definitionName}/{code}")
 	public String forward(@PathVariable("definitionName") final String definitionName, @PathVariable("code") final String code) {
@@ -26,7 +26,7 @@ public class WebHandlesController extends AbstractVSpringMvcController {
 		Assertion.checkArgNotEmpty(code);
 		//---
 		final String handle = definitionName + "/" + code;
-		final UID uid = handleServices.getHandleByCode(handle).getUid();
+		final UID uid = handleManager.getHandleByCode(handle).getUid();
 		switch (uid.getDefinition().getName()) {
 			case "DtBase":
 				return "redirect:/basemanagement/base/information/" + uid.getId();

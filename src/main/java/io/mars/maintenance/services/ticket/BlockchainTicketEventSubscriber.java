@@ -14,8 +14,8 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.ledger.services.LedgerManager;
-import io.vertigo.social.services.notification.Notification;
-import io.vertigo.social.services.notification.NotificationServices;
+import io.vertigo.social.notification.Notification;
+import io.vertigo.social.notification.NotificationManager;
 
 public class BlockchainTicketEventSubscriber implements Component {
 
@@ -28,7 +28,7 @@ public class BlockchainTicketEventSubscriber implements Component {
 	private PersonServices personServices;
 
 	@Inject
-	private NotificationServices notificationServices;
+	private NotificationManager notificationManager;
 
 	@EventBusSubscribed
 	public void onTicketEvent(final TicketEvent ticketEvent) {
@@ -75,7 +75,7 @@ public class BlockchainTicketEventSubscriber implements Component {
 				.stream()
 				.map((person) -> UID.of(Account.class, String.valueOf(person.getPersonId())))
 				.collect(Collectors.toSet());
-		notificationServices.send(notification, accountUIDs);
+		notificationManager.send(notification, accountUIDs);
 	}
 
 }

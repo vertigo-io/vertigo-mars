@@ -19,8 +19,8 @@ import io.mars.domain.DtDefinitions.EquipmentIndexFields;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.geo.services.geocoder.GeoLocation;
-import io.vertigo.geo.services.geosearch.GeoSearchServices;
+import io.vertigo.geo.geocoder.GeoLocation;
+import io.vertigo.geo.geosearch.GeoSearchManager;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.AnonymousAccessAllowed;
 import io.vertigo.vega.webservice.stereotype.GET;
@@ -40,7 +40,7 @@ public class BaseManagementWebServices implements WebServices {
 	private EquipmentTypeServices equipmentTypeServices;
 
 	@Inject
-	private GeoSearchServices geoSearchServices;
+	private GeoSearchManager geoSearchManager;
 
 	@AnonymousAccessAllowed
 	@GET("/bases")
@@ -70,13 +70,13 @@ public class BaseManagementWebServices implements WebServices {
 	@AnonymousAccessAllowed
 	@GET("/bases/_geoSearch")
 	public DtList<BaseIndex> geoSearch(@QueryParam("topLeft") final GeoPoint topLeft, @QueryParam("bottomRight") final GeoPoint bottomRight) {
-		return geoSearchServices.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxBase", BaseIndex.class, BaseIndexFields.geoLocation, Optional.empty());
+		return geoSearchManager.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxBase", BaseIndex.class, BaseIndexFields.geoLocation, Optional.empty());
 	}
 
 	@AnonymousAccessAllowed
 	@GET("/equipments/_geoSearch")
 	public DtList<EquipmentIndex> geoSearchEquipment(@QueryParam("topLeft") final GeoPoint topLeft, @QueryParam("bottomRight") final GeoPoint bottomRight) {
-		return geoSearchServices.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxEquipment", EquipmentIndex.class, EquipmentIndexFields.geoLocation, Optional.empty());
+		return geoSearchManager.searchInBoundingBox(new GeoLocation(topLeft.getLat(), topLeft.getLon()), new GeoLocation(bottomRight.getLat(), bottomRight.getLon()), "IdxEquipment", EquipmentIndex.class, EquipmentIndexFields.geoLocation, Optional.empty());
 	}
 
 }
