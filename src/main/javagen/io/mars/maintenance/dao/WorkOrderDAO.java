@@ -10,7 +10,7 @@ import io.vertigo.datamodel.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
-import io.vertigo.datamodel.smarttype.ModelManager;
+import io.vertigo.datamodel.smarttype.SmartTypeManager;
 import io.vertigo.datamodel.task.TaskManager;
 import io.mars.maintenance.domain.WorkOrder;
 
@@ -25,10 +25,11 @@ public final class WorkOrderDAO extends DAO<WorkOrder, java.lang.Long> implement
 	 * Contructeur.
 	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
+	 * @param smartTypeManager SmartTypeManager
 	 */
 	@Inject
-	public WorkOrderDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final ModelManager modelManager) {
-		super(WorkOrder.class, entityStoreManager, taskManager, modelManager);
+	public WorkOrderDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final SmartTypeManager smartTypeManager) {
+		super(WorkOrder.class, entityStoreManager, taskManager, smartTypeManager);
 	}
 
 
