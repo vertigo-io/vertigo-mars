@@ -95,6 +95,10 @@
 		<filter-name>Security Filter</filter-name>
 		<filter-class>io.vertigo.vega.impl.servlet.filter.SecurityFilter</filter-class>
 		<init-param>
+			<param-name>delegate-authentication-handler-component</param-name>
+			<param-value>loginServices</param-value>
+		</init-param>
+		<init-param>
 			<param-name>url-no-authentification</param-name>
 			<param-value>/login;/login/*</param-value>
 		</init-param>
@@ -107,6 +111,7 @@
 		<filter-name>Security Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<filter>
 		<filter-name>VegaSparkFilter</filter-name>
 		<filter-class>io.vertigo.vega.plugins.webservice.webserver.sparkjava.VegaSparkFilter</filter-class>

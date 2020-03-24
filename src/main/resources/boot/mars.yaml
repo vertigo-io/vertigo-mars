@@ -57,6 +57,10 @@ modules:
       - mosquitto:
           name: Publisher
           host: ${mosquittoHost}
+  io.vertigo.connectors.keycloak.KeycloakFeatures:
+    __flags__: ["keycloak"]
+    features:
+      - deployment:
   io.vertigo.commons.CommonsFeatures:
     features:
       - script:
@@ -141,7 +145,14 @@ modules:
           photoFileInfo: FiFileInfoStd
           userToAccountMapping: 'id:personId, displayName:lastName, email:email, authToken:email, photo: picturefileId'
           groupToGroupAccountMapping: 'id:groupId, displayName:name'
+      - authentication.store:
+          __flags__: ["keycloak"]
+          userCredentialEntity: DtPerson
+          userLoginField: email
+          userPasswordField: notused
+          userTokenIdField: email
       - authentication.text:
+          __flags__: ["!keycloak"]
           filePath: /io/mars/support/userAccounts.txt
   io.vertigo.vega.VegaFeatures:
     features:

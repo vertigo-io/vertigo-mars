@@ -84,6 +84,12 @@
 			<artifactId>vertigo-elasticsearch-connector</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-keycloak-connector</artifactId>
+			<version>${vertigo.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.opencsv</groupId>
@@ -102,18 +108,20 @@
 			<artifactId>influxdb-java</artifactId>
 			<version>2.16</version>  <!-- InfluxDbTimeSeriesPlugin -->
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.200</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>3.8.6</version>
 		</dependency>
+
+		
 
 		<!-- test -->
 		<dependency>
@@ -135,7 +143,7 @@
 			<version>5.5.2</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
@@ -157,24 +165,24 @@
 
 		<!-- Search -->
 		<dependency>
-		    <groupId>org.elasticsearch.client</groupId>
-		    <artifactId>transport</artifactId>
-		    <version>7.4.1</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>transport</artifactId>
+			<version>7.4.1</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
 		</dependency>
 		<dependency>
-		    <groupId>org.elasticsearch.client</groupId>
-		    <artifactId>elasticsearch-rest-high-level-client</artifactId>
-		    <version>7.4.1</version> <!-- REstHighLevelElasticSearchConnector -->
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>elasticsearch-rest-high-level-client</artifactId>
+			<version>7.4.1</version> <!-- REstHighLevelElasticSearchConnector -->
 		</dependency>
 		<dependency>
-	        <groupId>org.codelibs.elasticsearch.module</groupId>
-	        <artifactId>analysis-common</artifactId> 
-	        <version>7.4.1</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
-	    </dependency>
-	   	<dependency>
-		    <groupId>org.codelibs.elasticsearch.module</groupId>
-		    <artifactId>mapper-extras</artifactId>
-		    <version>7.4.1</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<groupId>org.codelibs.elasticsearch.module</groupId>
+			<artifactId>analysis-common</artifactId>
+			<version>7.4.1</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+		</dependency>
+		<dependency>
+			<groupId>org.codelibs.elasticsearch.module</groupId>
+			<artifactId>mapper-extras</artifactId>
+			<version>7.4.1</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
 		</dependency>
 
 		<dependency>
