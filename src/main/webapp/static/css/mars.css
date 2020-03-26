@@ -60,7 +60,7 @@ img {
 }
 
 body.login {
-	background: url(../img/bcf60b99d4_121619_mars-bfrs.jpg) !important;
+	background: fixed url(../img/bcf60b99d4_121619_mars-bfrs.jpg) center / cover no-repeat !important;
 }
 
 .login #page {
