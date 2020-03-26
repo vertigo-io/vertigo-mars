@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.mars.catalog.domain.Supplier;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -25,8 +26,6 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.mars.catalog.domain.Supplier;
-
 
 /**
  * This class is automatically generated.
@@ -54,8 +53,8 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 	 * @param criteria Critères de recherche
 	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
 	 * @return SearchQueryBuilder pour ce type de recherche
-	 */	
-	public SearchQueryBuilder createSearchQueryBuilderSupplier(final java.lang.String criteria, final SelectedFacetValues selectedFacetValues) {
+	 */
+	public SearchQueryBuilder createSearchQueryBuilderSupplier(final String criteria, final SelectedFacetValues selectedFacetValues) {
 		return SearchQuery.builder("QrySupplier")
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
@@ -95,7 +94,7 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 	public void markAsDirty(final Supplier entity) {
 		markAsDirty(UID.of(entity));
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public List<DefinitionSupplier> get(final DefinitionSpace definitionSpace) {
@@ -105,9 +104,9 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 				//-----
 				.add(new SearchIndexDefinitionSupplier("IdxSupplier")
 						.withIndexDtDefinition("DtSupplier")
-						.withKeyConcept("DtSupplier")						
+						.withKeyConcept("DtSupplier")
 						.withLoaderId("SupplierSearchLoader"))
-							
+
 				//---
 				// FacetTermDefinition
 				//-----
@@ -152,8 +151,8 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 						.withFacet("FctSupplierDateCreation")
 						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("[nom,denomination]:#+query*#")
-						.withCriteriaSmartType("STyLabel"))						
-				
+						.withCriteriaSmartType("STyLabel"))
+
 				.build();
 	}
 }

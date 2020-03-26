@@ -43,6 +43,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		EquipmentOverview(io.mars.basemanagement.domain.EquipmentOverview.class),
 		/** Objet de données EquipmentType. */
 		EquipmentType(io.mars.catalog.domain.EquipmentType.class),
+		/** Objet de données GeoSearchEquipmentCriteria. */
+		GeoSearchEquipmentCriteria(io.mars.basemanagement.search.GeoSearchEquipmentCriteria.class),
 		/** Objet de données Geosector. */
 		Geosector(io.mars.basemanagement.domain.Geosector.class),
 		/** Objet de données Groups. */
@@ -299,6 +301,19 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		active,
 		/** Propriété 'Equipment Category'. */
 		equipmentCategoryId	}
+
+	/**
+	 * Enumération des champs de GeoSearchEquipmentCriteria.
+	 */
+	public enum GeoSearchEquipmentCriteriaFields implements DtFieldName<io.mars.basemanagement.search.GeoSearchEquipmentCriteria> {
+		/** Propriété 'Criteria'. */
+		criteria,
+		/** Propriété 'geoUpperLeft'. */
+		geoUpperLeft,
+		/** Propriété 'geoLowerRight'. */
+		geoLowerRight,
+		/** Propriété 'geoLocation'. */
+		geoLocation	}
 
 	/**
 	 * Enumération des champs de Geosector.

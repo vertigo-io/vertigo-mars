@@ -5,7 +5,7 @@ create IndexDefinition IdxEquipment {
   dtIndex : DtEquipmentIndex 
   indexCopyTo allText { from: "name,code,description,tags,equipmentTypeName,equipmentCategoryName" }
   loaderId : "EquipmentSearchLoader"
-}
+} 
 
 create FacetDefinition FctEquipmentEquipmentTypeName {
 	dtDefinition:DtEquipmentIndex, fieldName:"equipmentTypeName", label:"Equipment Type"
@@ -22,10 +22,38 @@ create FacetDefinition FctEquipmentPurchaseDate {
 	range r3 { filter:"purchaseDate:[01/01/2016 TO *]", label:"after 2016"}
 }
 
+create FacetDefinition FctEquipmentGeoDistance { 
+	dtDefinition:DtEquipmentIndex, fieldName:"geoLocation", label:"Location"
+	range r1 { filter:"geoLocation:#geoLocation#~5km", label:"< 5km"}, /* #geoLocation# ref a field of criteria not index */
+	range r2 { filter:"geoLocation:#geoLocation#~10km", label:"< 10km"},
+	range r3 { filter:"geoLocation:#geoLocation#~20km", label:"< 20km"},
+	range r4 { filter:"geoLocation:#geoLocation#~50km", label:"< 50km"},
+	range r5 { filter:"geoLocation:#geoLocation#~100km", label:"< 100km"},
+	range r6 { filter:"geoLocation:#geoLocation#~200km", label:"< 200km"},
+	range r7 { filter:"geoLocation:#geoLocation#~500km", label:"< 500km"},
+	range r8 { filter:"geoLocation:[#geoLocation#~500km to *]", label:"> 500km"}	
+}
+
+create FacetDefinition FctEquipmentGeoHash {
+	dtDefinition:DtEquipmentIndex, fieldName:"geoLocation", label:"Location"
+	params geohash_grid { value : "field : \"geoLocation\", precision : 5" }
+	params innerWriteTo { value : "writeVInt(5);writeVInt(1000);writeVInt(-1)" }
+}
+
 create FacetedQueryDefinition QryEquipment {
 	keyConcept : DtEquipment
 	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName ]
 	domainCriteria : DoLabel
 	listFilterBuilderClass : "io.vertigo.dynamox.search.DslListFilterBuilder"  
 	listFilterBuilderQuery : "allText:#+query*#"
+}
+
+
+create FacetedQueryDefinition QryEquipmentGeo {
+	keyConcept : DtEquipment
+	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentGeoDistance]
+	domainCriteria : DoDtGeoSearchEquipmentCriteria
+	listFilterBuilderClass : "io.vertigo.dynamox.search.DslListFilterBuilder"  
+	listFilterBuilderQuery : "allText:#+criteria*#"
+	geoSearchQuery : "geoLocation: [#geoUpperLeft# to #geoLowerRight#]"
 }

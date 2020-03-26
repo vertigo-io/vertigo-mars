@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.mars.basemanagement.domain.Base;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -25,9 +26,6 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.mars.basemanagement.search.BaseIndex;
-import io.mars.basemanagement.domain.Base;
-
 
 /**
  * This class is automatically generated.
@@ -55,8 +53,8 @@ public final class BaseSearchClient implements Component, DefinitionProvider {
 	 * @param criteria Critères de recherche
 	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
 	 * @return SearchQueryBuilder pour ce type de recherche
-	 */	
-	public SearchQueryBuilder createSearchQueryBuilderBase(final java.lang.String criteria, final SelectedFacetValues selectedFacetValues) {
+	 */
+	public SearchQueryBuilder createSearchQueryBuilderBase(final String criteria, final SelectedFacetValues selectedFacetValues) {
 		return SearchQuery.builder("QryBase")
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
@@ -96,7 +94,7 @@ public final class BaseSearchClient implements Component, DefinitionProvider {
 	public void markAsDirty(final Base entity) {
 		markAsDirty(UID.of(entity));
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public List<DefinitionSupplier> get(final DefinitionSpace definitionSpace) {
@@ -106,9 +104,9 @@ public final class BaseSearchClient implements Component, DefinitionProvider {
 				//-----
 				.add(new SearchIndexDefinitionSupplier("IdxBase")
 						.withIndexDtDefinition("DtBaseIndex")
-						.withKeyConcept("DtBase")						
+						.withKeyConcept("DtBase")
 						.withLoaderId("BaseSearchLoader"))
-							
+
 				//---
 				// FacetTermDefinition
 				//-----
@@ -134,8 +132,8 @@ public final class BaseSearchClient implements Component, DefinitionProvider {
 						.withFacet("FctBaseCreationDate")
 						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("baseId:#query# name:#query# code:#+query*#")
-						.withCriteriaSmartType("STyLabel"))						
-				
+						.withCriteriaSmartType("STyLabel"))
+
 				.build();
 	}
 }

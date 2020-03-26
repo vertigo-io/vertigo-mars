@@ -17,6 +17,12 @@ create DtDefinition DtEquipmentIndex {
 	field geoLocation {domain: DoGeoPoint label:"Geographic Location" cardinality: "?"}
 }
 
+create DtDefinition DtGeoSearchEquipmentCriteria {
+	field criteria {domain: DoLabel label: "Criteria" cardinality: "1"}
+	field geoUpperLeft {domain: DoGeoPoint label: "geoUpperLeft" cardinality: "?"}
+	field geoLowerRight {domain: DoGeoPoint label: "geoLowerRight" cardinality: "?"}
+	field geoLocation {domain: DoGeoPoint label: "geoLocation" cardinality: "?"}
+}
 
 alter DtDefinition DtEquipmentIndex {
     computed allText {	domain : DoDescription, cardinality: "?",  label:"ALL_TEXT", expression:"throw new io.vertigo.core.lang.VSystemException(\"Can't use index copyTo field\");"    }

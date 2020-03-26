@@ -15,6 +15,7 @@ import io.vertigo.core.util.ListBuilder;
 import io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder;
 import io.vertigo.datafactory.collections.metamodel.FacetRangeDefinitionSupplier;
 import io.vertigo.datafactory.collections.metamodel.FacetTermDefinitionSupplier;
+import io.vertigo.datafactory.collections.metamodel.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.metamodel.FacetedQueryDefinitionSupplier;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -56,8 +57,19 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
 	 * @return SearchQueryBuilder pour ce type de recherche
 	 */	
-	public SearchQueryBuilder createSearchQueryBuilderEquipment(final java.lang.String criteria, final SelectedFacetValues selectedFacetValues) {
+	public SearchQueryBuilder createSearchQueryBuilderEquipment(final String criteria, final SelectedFacetValues selectedFacetValues) {
 		return SearchQuery.builder("QryEquipment")
+				.withCriteria(criteria)
+				.withFacet(selectedFacetValues);
+	}
+	/**
+	 * Création d'une SearchQuery de type : EquipmentGeo.
+	 * @param criteria Critères de recherche
+	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
+	 * @return SearchQueryBuilder pour ce type de recherche
+	 */	
+	public SearchQueryBuilder createSearchQueryBuilderEquipmentGeo(final io.mars.basemanagement.search.GeoSearchEquipmentCriteria criteria, final SelectedFacetValues selectedFacetValues) {
+		return SearchQuery.builder("QryEquipmentGeo")
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
@@ -123,6 +135,26 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withFieldName("equipmentTypeName")
 						.withLabel("Equipment Type")
 						.withOrder(FacetOrder.count))
+				.add(new FacetRangeDefinitionSupplier("FctEquipmentGeoDistance")
+						.withDtDefinition("DtEquipmentIndex")
+						.withFieldName("geoLocation")
+						.withLabel("Location")
+						.withRange("r1", "geoLocation:#geoLocation#~5km", "< 5km")
+						.withRange("r2", "geoLocation:#geoLocation#~10km", "< 10km")
+						.withRange("r3", "geoLocation:#geoLocation#~20km", "< 20km")
+						.withRange("r4", "geoLocation:#geoLocation#~50km", "< 50km")
+						.withRange("r5", "geoLocation:#geoLocation#~100km", "< 100km")
+						.withRange("r6", "geoLocation:#geoLocation#~200km", "< 200km")
+						.withRange("r7", "geoLocation:#geoLocation#~500km", "< 500km")
+						.withRange("r8", "geoLocation:[#geoLocation#~500km to *]", "> 500km")
+						.withOrder(FacetOrder.definition))
+				.add(new FacetCustomDefinitionSupplier("FctEquipmentGeoHash")
+						.withDtDefinition("DtEquipmentIndex")
+						.withFieldName("geoLocation")
+						.withLabel("Location")
+						.withParams("geohash_grid", "field : \"geoLocation\", precision : 5")
+						.withParams("innerWriteTo", "writeVInt(5);writeVInt(1000);writeVInt(-1)")
+						.withOrder(FacetOrder.definition))
 				.add(new FacetRangeDefinitionSupplier("FctEquipmentPurchaseDate")
 						.withDtDefinition("DtEquipmentIndex")
 						.withFieldName("purchaseDate")
@@ -142,6 +174,15 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("allText:#+query*#")
 						.withCriteriaSmartType("STyLabel"))						
+				.add(new FacetedQueryDefinitionSupplier("QryEquipmentGeo")
+						.withFacet("FctEquipmentEquipmentTypeName")
+						.withFacet("FctEquipmentPurchaseDate")
+						.withFacet("FctEquipmentEquipmentCategoryName")
+						.withFacet("FctEquipmentGeoDistance")
+						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
+						.withListFilterBuilderQuery("allText:#+criteria*#")
+						.withGeoSearchQuery("geoLocation: [#geoUpperLeft# to #geoLowerRight#]")
+						.withCriteriaSmartType("STyDtGeoSearchEquipmentCriteria"))						
 				
 				.build();
 	}
