@@ -133,7 +133,6 @@ public final class BaseSearchClient implements Component, DefinitionProvider {
 						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("baseId:#query# name:#query# code:#+query*#")
 						.withCriteriaSmartType("STyLabel"))
-
 				.build();
 	}
 }

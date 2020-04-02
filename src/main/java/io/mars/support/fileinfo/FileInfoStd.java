@@ -20,4 +20,3 @@ public final class FileInfoStd extends AbstractFileInfo {
 		super(FileInfoDefinition.findFileInfoDefinition(FileInfoStd.class), vFile);
 	}
 }
-

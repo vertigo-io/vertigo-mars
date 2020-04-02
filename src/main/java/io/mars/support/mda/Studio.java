@@ -37,7 +37,7 @@ public class Studio {
 								.addDefinitionResource("kpr", "io/mars/model.kpr")
 								.addDefinitionResource("kpr", "io/mars/tasks.kpr")
 								.addDefinitionResource("kpr", "io/mars/search.kpr")
-								.addDefinitionResource("kpr", "io/mars/support/support_file.kpr")
+								//.addDefinitionResource("kpr", "io/mars/support/support_file.kpr")
 								.build())
 						.build())
 				// ---StudioFeature
@@ -49,7 +49,7 @@ public class Studio {
 								Param.of("generateDtResources", "false"))
 						.withTaskGenerator()
 						.withSearchGenerator()
-						.withFileGenerator()
+						//.withFileGenerator()
 						.withSqlDomainGenerator(
 								Param.of("targetSubDir", "javagen/sqlgen"),
 								Param.of("baseCible", "H2"),

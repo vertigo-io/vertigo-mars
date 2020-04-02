@@ -152,7 +152,6 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("[nom,denomination]:#+query*#")
 						.withCriteriaSmartType("STyLabel"))
-
 				.build();
 	}
 }
