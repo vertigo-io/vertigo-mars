@@ -1,7 +1,5 @@
 package io.mars.support.mda;
 
-import javax.inject.Inject;
-
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
@@ -9,7 +7,6 @@ import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
-import io.vertigo.core.util.InjectorUtil;
 import io.vertigo.datastore.DataStoreFeatures;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaManager;
@@ -63,20 +60,13 @@ public class Studio {
 
 	}
 
-	@Inject
-	private MdaManager mdaManager;
-
 	public static void main(final String[] args) {
-		try (final AutoCloseableApp app = new AutoCloseableApp(buildNodeConfig())) {
-			final Studio sample = new Studio();
-			InjectorUtil.injectMembers(sample);
+		try (final AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
+			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
-			sample.cleanGenerate();
+			mdaManager.clean();
+			mdaManager.generate(studioApp.getDefinitionSpace()).displayResultMessage(System.out);
 		}
 	}
 
-	void cleanGenerate() {
-		mdaManager.clean();
-		mdaManager.generate().displayResultMessage(System.out);
-	}
 }
