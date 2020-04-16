@@ -32,7 +32,6 @@ public class Studio {
 						.build())
 				// ---StudioFeature
 				.addModule(new StudioFeatures()
-						.withMasterData()
 						.withMetamodel()
 						.withVertigoMetamodel()
 						.withMda(
@@ -47,9 +46,6 @@ public class Studio {
 								Param.of("baseCible", "H2"),
 								Param.of("generateDrop", "true"),
 								Param.of("generateMasterData", "true"))
-						.withJsonMasterDataValuesProvider(
-								Param.of("fileName", "io/mars/support/masterDataValues.json"))
-
 						.build())
 				.build();
 
@@ -65,7 +61,8 @@ public class Studio {
 					new MetamodelResource("kpr", "io/mars/model.kpr"),
 					new MetamodelResource("kpr", "io/mars/tasks.kpr"),
 					//new MetamodelResource("kpr", "io/mars/support/support_file.kpr"),
-					new MetamodelResource("kpr", "io/mars/search.kpr"));
+					new MetamodelResource("kpr", "io/mars/search.kpr"),
+					new MetamodelResource("staticMasterData", "io/mars/support/masterDataValues.json"));
 			mdaManager.generate(studioMetamodelManager.parseResources(resources)).displayResultMessage(System.out);
 		}
 	}
