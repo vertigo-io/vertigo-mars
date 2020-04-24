@@ -2,13 +2,10 @@ package io.mars.support.mda;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
-import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
-import io.vertigo.datastore.DataStoreFeatures;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
@@ -23,14 +20,6 @@ public class Studio {
 				.withLocales("fr_FR")
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
-				.addModule(new CommonsFeatures()
-						.withScript()
-						.withJaninoScript()
-						.build())
-				.addModule(new DataStoreFeatures()
-						.withCache()
-						.withMemoryCache()
-						.build())
 				// ---StudioFeature
 				.addModule(new StudioFeatures()
 						.withMetamodel()
@@ -48,17 +37,17 @@ public class Studio {
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
 
-			final Properties mdaProperties = new Properties();
-			mdaProperties.put("vertigo.domain.java", "true");
-			mdaProperties.put("vertigo.domain.java.generateDtResources", "false");
-			mdaProperties.put("vertigo.domain.sql", "true");
-			mdaProperties.put("vertigo.domain.sql.targetSubDir", "javagen/sqlgen");
-			mdaProperties.put("vertigo.domain.sql.baseCible", "H2");
-			mdaProperties.put("vertigo.domain.sql.generateDrop", "true");
-			mdaProperties.put("vertigo.domain.sql.generateMasterData", "true");
-			mdaProperties.put("vertigo.task", "true");
-			mdaProperties.put("vertigo.search", "true");
-			final MdaConfig mdaConfig = MdaConfig.of("io.mars", mdaProperties);
+			final MdaConfig mdaConfig = MdaConfig.builder("io.mars")
+					.addProperty("vertigo.domain.java", "true")
+					.addProperty("vertigo.domain.java.generateDtResources", "false")
+					.addProperty("vertigo.domain.sql", "true")
+					.addProperty("vertigo.domain.sql.targetSubDir", "javagen/sqlgen")
+					.addProperty("vertigo.domain.sql.baseCible", "H2")
+					.addProperty("vertigo.domain.sql.generateDrop", "true")
+					.addProperty("vertigo.domain.sql.generateMasterData", "true")
+					.addProperty("vertigo.task", "true")
+					.addProperty("vertigo.search", "true")
+					.build();
 
 			mdaManager.clean(mdaConfig);
 			final List<MetamodelResource> resources = Arrays.asList(
