@@ -8,3 +8,5 @@ target/
 mvn-release.txt
 **/WEB-INF/classes/**
 *.class
+.factorypath
+.vscode/

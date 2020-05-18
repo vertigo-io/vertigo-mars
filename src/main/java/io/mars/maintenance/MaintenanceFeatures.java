@@ -20,7 +20,7 @@ package io.mars.maintenance;
 
 import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
-public class MaintenanceFeatures extends ModuleDiscoveryFeatures {
+public class MaintenanceFeatures extends ModuleDiscoveryFeatures<MaintenanceFeatures> {
 
 	public MaintenanceFeatures() {
 		super("maintenance");

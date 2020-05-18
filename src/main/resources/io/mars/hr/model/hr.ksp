@@ -10,7 +10,7 @@ create DtDefinition DtPerson {
 	field picturefileIdTmp {domain: DoLabel label:"Picture" cardinality: "?" persistent:"false"}
 	field tags {domain: DoMultipleIds label: "Tags" cardinality: "?"}
 	field dateHired {domain: DoLocaldate label: "Date hired" cardinality: "?"}
-	computed fullName {domain : DoLabel, label:"Full name" cardinality: "1"
+	computed fullName {domain : DoLabel, label:"Full name"
         expression:"return getFirstName() + \" \" + getLastName();"
     }
 }

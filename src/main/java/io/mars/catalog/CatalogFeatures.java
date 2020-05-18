@@ -20,7 +20,7 @@ package io.mars.catalog;
 
 import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
-public class CatalogFeatures extends ModuleDiscoveryFeatures {
+public class CatalogFeatures extends ModuleDiscoveryFeatures<CatalogFeatures> {
 
 	public CatalogFeatures() {
 		super("catalog");

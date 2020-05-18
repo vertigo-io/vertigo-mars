@@ -20,7 +20,7 @@ package io.mars.opendata;
 
 import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 
-public class OpendataFeatures extends ModuleDiscoveryFeatures {
+public class OpendataFeatures extends ModuleDiscoveryFeatures<OpendataFeatures> {
 
 	public OpendataFeatures() {
 		super("opendata");

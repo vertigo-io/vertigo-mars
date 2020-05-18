@@ -35,7 +35,7 @@ create DtDefinition DtPicture {
 
 
 create DtDefinition DtGeosector {
-	id geosectorId {domain: DoId label:"Id"}
+	id geosectorId {domain: DoId label:"Id"} 
 	field sectorLabel {domain: DoLabel label:"Sector Label" cardinality: "?"}
 }
 

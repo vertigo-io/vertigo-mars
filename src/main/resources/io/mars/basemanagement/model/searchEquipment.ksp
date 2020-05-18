@@ -25,5 +25,5 @@ create DtDefinition DtGeoSearchEquipmentCriteria {
 }
 
 alter DtDefinition DtEquipmentIndex {
-    computed allText {	domain : DoDescription, cardinality: "?",  label:"ALL_TEXT", expression:"throw new io.vertigo.core.lang.VSystemException(\"Can't use index copyTo field\");"    }
+    computed allText {	domain : DoDescription, label:"ALL_TEXT", expression:"throw new io.vertigo.core.lang.VSystemException(\"Can't use index copyTo field\");"    }
 }

@@ -80,7 +80,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	@PostMapping("/_save")
 	public String doSave(final ViewContext viewContext, @ViewAttribute("base") final Base base, @QueryParam("baseTmpPictureUris") final List<FileInfoURI> addedPictureFile, final UiMessageStack uiMessageStack) {
 		final BasicUiListModifiable<Picture> pictures = viewContext.getUiListModifiable(basePictures);
-		pictures.mergeAndCheckInput(Collections.EMPTY_LIST, uiMessageStack); //needed to populate Delta
+		pictures.mergeAndCheckInput(Collections.emptyList(), uiMessageStack); //needed to populate Delta
 		baseServices.save(base, addedPictureFile, pictures.getDtListDelta().getDeleted()); //Warning : always one service call : one transaction
 		return "redirect:/basemanagement/base/information/" + base.getBaseId();
 	}
