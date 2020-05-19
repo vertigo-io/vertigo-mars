@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/mmcParentLayout}"
+>
+	<head>
+		<title>Showcase</title>
+		<!-- maps -->
+		<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"/>
+		<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+		<script th:src="@{/vertigo-ui/static/js/v-components/v-map.js}"></script>
+		<script th:src="@{/vertigo-ui/static/js/v-components/v-geopoint-input.js}"></script>
+	</head>
+	
+	<body>
+		<section layout:fragment="page-container">
+		 	<q-page class="q-layout-padding">
+		 		<vu:form>
+		 			<vu:include-data object="base" field="'*'" />
+		 			<vu:block id="general" title="Buttons">
+						<vu:button-link label="Label" url="'#'"/>
+						<vu:button-link icon="add" url="'#'"/>
+						<vu:button-link label="Label and icon" icon="add" url="'#'"/>
+						<br/>
+						<vu:button-link icon="add" url="'#'"/>
+						<vu:button-link icon="add" url="'#'" round/>
+						<br/>
+						<vu:button-link icon="add" url="'#'" round size="xs"/>
+						<vu:button-link icon="add" url="'#'" round size="sm"/>
+						<vu:button-link icon="add" url="'#'" round />
+						<vu:button-link icon="add" url="'#'" round size="lg"/>
+						<vu:button-link icon="add" url="'#'" round size="xl"/>
+						<br/>
+						<vu:button-link icon="add" url="'#'" round color="primary"/>
+						<vu:button-link icon="add" url="'#'" round color="secondary"/>
+						<vu:button-link icon="add" url="'#'" round color="tertiary" text-color="black"/>
+						<br/>
+						<vu:buttons-group moreLabel="More actions"  xs="1" md="2" lg="4" xl="5">
+							<vu:button-link label="Button 1" ariaLabel="Button 1" icon="add" url="'#'"/>
+							<vu:button-link label="Button 2" ariaLabel="Button 2" icon="add" url="'#'"/>
+							<vu:button-link label="Button 3" ariaLabel="Button 3" icon="add" url="'#'"/>
+							<vu:button-link label="Button 4" ariaLabel="Button 4" icon="add" url="'#'"/>
+							<vu:button-link label="Button 5" ariaLabel="Button 5" icon="add" url="'#'"/>
+							<vu:button-link label="Button 6" ariaLabel="Button 6" icon="add" url="'#'"/>
+						</vu:buttons-group> 
+					</vu:block>
+		
+			 		<vu:block id="general" title="Form field structure">
+			 			<div style="max-width:250px;">
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name" label="Custom Label"/>
+							<vu:text-field object="base" field="code" label="Required"/>
+							<vu:text-field object="base" field="name" label="With suffix" suffix="unit"/>
+							<vu:text-field object="emptyBase" field="name" label="With placeholder" placeholder="Some placeholder"/>
+							<vu:text-field object="emptyBase" field="name" label="With hint" hint="Some hint"/>
+							<vu:text-field object="emptyBase" field="assetsValue" label="With Error" suffix=""/>
+						</div>
+					</vu:block>
+					<vu:block id="general" title="Grid system">
+						<vu:grid cols="2">
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+						</vu:grid>
+						<vu:grid cols="3">
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+							<vu:text-field object="base" field="name"/>
+						</vu:grid>
+					</vu:block>
+					
+					<vu:block id="general" title="Text inputs">
+						<vu:grid cols="2">
+							<vu:text-field-edit object="base" field="name"/>
+							<vu:text-field-read object="base" field="name"/>
+							<vu:text-area-edit object="base" field="description" />
+							<vu:text-area-read object="base" field="description" />
+							<vu:chips-autocomplete-edit object="base" field="tags" list="tags" staticData="true" />
+							<vu:chips-autocomplete-read object="base" field="tags" list="tags" staticData="true" />
+							<vu:grid-cell>
+								<q-editor v-model="vueData.base.description"></q-editor>
+							</vu:grid-cell>
+						</vu:grid>
+					</vu:block>
+					
+					<vu:block id="general" title="Boolean inputs">
+						<vu:grid cols="2">
+							<vu:checkbox-edit object="job" field="active" />
+							<vu:checkbox-read object="job" field="active" />
+						</vu:grid>
+					</vu:block>
+					
+					<vu:block id="general" title="Numeric inputs">
+						<vu:grid cols="2">
+							<vu:text-field-edit object="base" field="healthLevel"/>
+							<vu:text-field-read object="base" field="healthLevel"/>
+							<vu:knob-edit object="base" field="healthLevel"/>
+							<vu:knob-read object="base" field="healthLevel"/>
+							<vu:slider-edit object="base" field="healthLevel"/>
+							<vu:slider-read object="base" field="healthLevel"/>
+						</vu:grid>
+					</vu:block>
+					
+					<vu:block id="general" title="Date inputs">
+						<vu:grid cols="2">
+							<vu:date-edit object="base" field="creationDate"/>
+							<vu:date-read object="base" field="creationDate"/>
+							<vu:datetime-edit object="jobExecution" field="beginTime"/>
+							<vu:datetime-read object="jobExecution" field="beginTime"/>
+						</vu:grid>
+					</vu:block>
+					
+					<vu:block id="general" title="Selection inputs">
+						<vu:grid cols="2">
+							<vu:autocomplete-edit object="base" field="geosectorId" list="geosectors" />
+							<vu:autocomplete-read object="base" field="geosectorId" list="geosectors" />
+							<vu:select-edit object="base" field="geosectorId" list="geosectors" />
+							<vu:select-read object="base" field="geosectorId" list="geosectors" />
+							<vu:radio-edit object="base" field="baseTypeId" list="baseTypes" />
+							<vu:radio-read object="base" field="baseTypeId" list="baseTypes" />
+							<vu:radio-edit object="base" field="baseTypeId" list="baseTypes" layout="horizontal" />
+							<vu:radio-read object="base" field="baseTypeId" list="baseTypes" layout="horizontal" />
+						</vu:grid>
+					</vu:block>
+					
+					
+					<vu:block id="general" title="Geolocation">
+						<vu:grid cols="2">
+							<vu:geolocation-edit object="base" field="geoLocation" />
+							<vu:geolocation-read object="base" field="geoLocation" />
+						</vu:grid>
+					</vu:block>
+					
+					
+					<vu:include-data object="bases" field="'*'" />
+					<vu:block id="general" title="Cards">
+						<vu:cards list="bases" componentId="baseCards" cardClass="marsCard col-lg-3 col-md-6 col-xs-12" rowsPerPage="8" showMore="true" showMoreLabel="Show more" >
+								<q-img th::src="|'@{/basemanagement/base/}'+item.baseId+'/mainPicture'|"></q-img>
+								<q-card-section class="row" >
+									<div class="col-4 q-mr-sm" style="max-width: 100px;" >
+										<div><q-knob
+											  show-value
+											  :value="item.healthLevel"
+											  :min="0" :max="100"
+											  color="positive" track-color="grey-2" size="80px"
+											  :thickness="0.15"
+											  :readonly="true" ><q-icon name="fas fa-dice-d20" size="2rem" color="primary" ></q-icon></q-knob></div>
+									</div>
+									<div class="col ellipsis" >
+										<span class="text-primary small-caps text-bigger">{{item.name}}</span><br/>
+										<span >{{item.code}}</span><br/>
+										<vu:field-read field="baseTypeId" list="baseTypes" listKey="baseTypeId" /><br/>
+										Created : {{item.creationDate}}<br/>
+										<q-icon name="location_on" size="25px"></q-icon><vu:field-read field="geosectorId" list="geosectors" listKey="geosectorId" listDisplay="sectorLabel" /><br/>		
+									</div>		
+							</q-card-section>
+							<q-separator></q-separator>
+							<q-card-actions>
+								<q-chip v-for="tag in item.tags" :hide-underline="true" >{{tag}}</q-chip>
+							</q-card-actions>
+						</vu:cards>
+					</vu:block>
+					
+					<vu:block id="general" title="Table">
+						<vu:table list="bases" color="primary" componentId="baseTable" 	>
+							<vu:column field="name" sortable="true" />
+							<vu:column field="code" sortable="true" />
+							<vu:column field="creationDate" sortable="true" />
+							<vu:column name="geosector" label="Geosector" >
+								<vu:field-read field="geosectorId" list="geosectors" listKey="geosectorId" listDisplay="sectorLabel" />
+							</vu:column>
+						</vu:table>
+					</vu:block>
+				</vu:form>
+			</q-page>		
+		</section>
+	</body>
+</html>
