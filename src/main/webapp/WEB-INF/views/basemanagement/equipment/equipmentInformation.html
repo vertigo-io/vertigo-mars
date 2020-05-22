@@ -4,6 +4,11 @@
 <head>
 <title>Equipment Information</title>
 <script th:src="@{/vertigo-ui/static/js/v-components/v-comments.js}"></script>
+<!-- maps -->
+	<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"/>
+	<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+	<script th:src="@{/vertigo-ui/static/js/v-components/v-map.js}"></script>
+	<script th:src="@{/vertigo-ui/static/js/v-components/v-geopoint-input.js}"></script>
 </head>
 <body>
 	<section layout:fragment="content-nav">
@@ -65,7 +70,7 @@
 				<vu:select object="equipment" field="businessId" list="businesses" labelField="name" />
 				<vu:date object="equipment" field="purchaseDate" />
 				<vu:chips-autocomplete object="equipment" field="tags" list="tags" staticData="true" />
-				<vu:text-field object="equipment" field="geoLocation" />
+				<vu:geolocation object="equipment" field="geoLocation" />
 			</vu:grid>
 		</vu:block>
 		<vu:block id="financial" title="Financial value">
