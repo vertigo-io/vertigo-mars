@@ -18,24 +18,25 @@
 		 	<q-page class="q-layout-padding">
 		 		<vu:form>
 		 			<vu:include-data object="base" field="'*'" />
-		 			<vu:block id="general" title="Buttons">
+		 			<div class="bg-white q-pa-md">
+		 				<p class="text-subtitle2 q-pt-md">Types of buttons</p>
+						<vu:button-link icon="add" url="'#'" round />
 						<vu:button-link label="Label" url="'#'"/>
-						<vu:button-link icon="add" url="'#'"/>
 						<vu:button-link label="Label and icon" icon="add" url="'#'"/>
-						<br/>
-						<vu:button-link icon="add" url="'#'"/>
-						<vu:button-link icon="add" url="'#'" round/>
-						<br/>
+						<p class="text-subtitle2 q-pt-md">Size</p>
 						<vu:button-link icon="add" url="'#'" round size="xs"/>
 						<vu:button-link icon="add" url="'#'" round size="sm"/>
 						<vu:button-link icon="add" url="'#'" round />
 						<vu:button-link icon="add" url="'#'" round size="lg"/>
 						<vu:button-link icon="add" url="'#'" round size="xl"/>
-						<br/>
+						<p class="text-subtitle2 q-pt-md">Color</p>
 						<vu:button-link icon="add" url="'#'" round color="primary"/>
 						<vu:button-link icon="add" url="'#'" round color="secondary"/>
 						<vu:button-link icon="add" url="'#'" round color="tertiary" text-color="black"/>
-						<br/>
+						<p class="text-subtitle2 q-pt-md">Aspect</p>
+						<vu:button-link icon="add" url="'#'" round />
+						<vu:button-link icon="add" url="'#'" round flat />
+						<p class="text-subtitle2 q-pt-md">Groups</p>
 						<vu:buttons-group moreLabel="More actions"  xs="1" md="2" lg="4" xl="5">
 							<vu:button-link label="Button 1" ariaLabel="Button 1" icon="add" url="'#'"/>
 							<vu:button-link label="Button 2" ariaLabel="Button 2" icon="add" url="'#'"/>
@@ -44,26 +45,32 @@
 							<vu:button-link label="Button 5" ariaLabel="Button 5" icon="add" url="'#'"/>
 							<vu:button-link label="Button 6" ariaLabel="Button 6" icon="add" url="'#'"/>
 						</vu:buttons-group> 
-					</vu:block>
-		
-			 		<vu:block id="general" title="Form field structure">
-			 			<div style="max-width:250px;">
-							<vu:text-field object="base" field="name"/>
-							<vu:text-field object="base" field="name" label="Custom Label"/>
-							<vu:text-field object="base" field="code" label="Required"/>
-							<vu:text-field object="base" field="name" label="With suffix" suffix="unit"/>
-							<vu:text-field object="emptyBase" field="name" label="With placeholder" placeholder="Some placeholder"/>
-							<vu:text-field object="emptyBase" field="name" label="With hint" hint="Some hint"/>
-							<vu:text-field object="emptyBase" field="assetsValue" label="With Error" suffix=""/>
-						</div>
-					</vu:block>
-					<vu:block id="general" title="Grid system">
+					</div> 
+		 			<div style="max-width:350px;" class="bg-white q-pa-md">
+		 				<p class="text-subtitle2 q-pt-md">Basic</p>
+						<vu:text-field object="base" field="name"/>
+						<p class="text-subtitle2 q-pt-md">Custom Label</p>
+						<vu:text-field object="base" field="name" label="Custom Label"/>
+						<p class="text-subtitle2 q-pt-md">Required</p>
+						<vu:text-field object="base" field="code" label="Required"/>
+						<p class="text-subtitle2 q-pt-md">Suffix</p>
+						<vu:text-field object="base" field="name" label="With suffix" suffix="unit"/>
+						<p class="text-subtitle2 q-pt-md">Placeholder</p>
+						<vu:text-field object="emptyBase" field="name" label="With placeholder" placeholder="Some placeholder"/>
+						<p class="text-subtitle2 q-pt-md">Hint</p>
+						<vu:text-field object="emptyBase" field="name" label="With hint" hint="Some hint"/>
+						<p class="text-subtitle2 q-pt-md">Error</p>
+						<vu:text-field object="emptyBase" field="assetsValue" label="With Error" suffix=""/>
+					</div>
+					<div class="bg-white q-pa-md">
+						<p class="text-subtitle2 q-pt-md">2 columns</p>
 						<vu:grid cols="2">
 							<vu:text-field object="base" field="name"/>
 							<vu:text-field object="base" field="name"/>
 							<vu:text-field object="base" field="name"/>
 							<vu:text-field object="base" field="name"/>
 						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">3 columns</p>
 						<vu:grid cols="3">
 							<vu:text-field object="base" field="name"/>
 							<vu:text-field object="base" field="name"/>
@@ -72,74 +79,141 @@
 							<vu:text-field object="base" field="name"/>
 							<vu:text-field object="base" field="name"/>
 						</vu:grid>
-					</vu:block>
+					</div>
 					
-					<vu:block id="general" title="Text inputs">
-						<vu:grid cols="2">
+					<div class="bg-white q-pa-md">
+						<p class="text-subtitle2 q-pt-md">Single line</p>
+						<vu:grid>
 							<vu:text-field-edit object="base" field="name"/>
 							<vu:text-field-read object="base" field="name"/>
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Multiple line</p>
+						<vu:grid>
 							<vu:text-area-edit object="base" field="description" />
 							<vu:text-area-read object="base" field="description" />
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Chips autocomplete</p>
+						<vu:grid>
 							<vu:chips-autocomplete-edit object="base" field="tags" list="tags" staticData="true" />
 							<vu:chips-autocomplete-read object="base" field="tags" list="tags" staticData="true" />
-							<vu:grid-cell>
-								<q-editor v-model="vueData.base.description"></q-editor>
-							</vu:grid-cell>
-						</vu:grid>
-					</vu:block>
+						</vu:grid>	
+						<p class="text-subtitle2 q-pt-md">Rich text editor (WYSIWYG)</p>
+						<q-editor v-model="vueData.base.description"></q-editor>
+					</div>
 					
-					<vu:block id="general" title="Boolean inputs">
-						<vu:grid cols="2">
+					<div class="bg-white q-pa-md">
+						<p class="text-subtitle2 q-pt-md">Checkbox</p>
+						<vu:grid>
 							<vu:checkbox-edit object="job" field="active" />
 							<vu:checkbox-read object="job" field="active" />
 						</vu:grid>
-					</vu:block>
+					</div>
 					
-					<vu:block id="general" title="Numeric inputs">
-						<vu:grid cols="2">
+					<div class="bg-white q-pa-md">
+						<p class="text-subtitle2 q-pt-md">Single line text</p>
+						<vu:grid>
 							<vu:text-field-edit object="base" field="healthLevel"/>
 							<vu:text-field-read object="base" field="healthLevel"/>
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Knob</p>
+						<vu:grid>
 							<vu:knob-edit object="base" field="healthLevel"/>
 							<vu:knob-read object="base" field="healthLevel"/>
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Slider</p>
+						<vu:grid>
 							<vu:slider-edit object="base" field="healthLevel"/>
 							<vu:slider-read object="base" field="healthLevel"/>
 						</vu:grid>
-					</vu:block>
+					</div>
 					
-					<vu:block id="general" title="Date inputs">
-						<vu:grid cols="2">
+					<div class="bg-white q-pa-md">
+						<p class="text-subtitle2 q-pt-md">Localdate</p>
+						<vu:grid>
 							<vu:date-edit object="base" field="creationDate"/>
 							<vu:date-read object="base" field="creationDate"/>
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Localdate and time</p>
+						<vu:grid>
 							<vu:datetime-edit object="jobExecution" field="beginTime"/>
 							<vu:datetime-read object="jobExecution" field="beginTime"/>
 						</vu:grid>
-					</vu:block>
+					</div>
 					
-					<vu:block id="general" title="Selection inputs">
-						<vu:grid cols="2">
-							<vu:autocomplete-edit object="base" field="geosectorId" list="geosectors" />
-							<vu:autocomplete-read object="base" field="geosectorId" list="geosectors" />
+					<div class="bg-white q-pa-md">
+						<p class="text-subtitle2 q-pt-md">Combo select</p>
+						<vu:grid>
 							<vu:select-edit object="base" field="geosectorId" list="geosectors" />
 							<vu:select-read object="base" field="geosectorId" list="geosectors" />
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Autocomplete</p>
+						<vu:grid>
+							<vu:autocomplete-edit object="base" field="geosectorId" list="geosectors" />
+							<vu:autocomplete-read object="base" field="geosectorId" list="geosectors" />
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Vertical radio</p>
+						<vu:grid>
 							<vu:radio-edit object="base" field="baseTypeId" list="baseTypes" />
 							<vu:radio-read object="base" field="baseTypeId" list="baseTypes" />
+						</vu:grid>
+						<p class="text-subtitle2 q-pt-md">Horizontal radio</p>
+						<vu:grid>
 							<vu:radio-edit object="base" field="baseTypeId" list="baseTypes" layout="horizontal" />
 							<vu:radio-read object="base" field="baseTypeId" list="baseTypes" layout="horizontal" />
 						</vu:grid>
-					</vu:block>
+					</div>
 					
 					
-					<vu:block id="general" title="Geolocation">
+					<div class="bg-white q-pa-md">
 						<vu:grid cols="2">
 							<vu:geolocation-edit object="base" field="geoLocation" />
 							<vu:geolocation-read object="base" field="geoLocation" />
 						</vu:grid>
-					</vu:block>
+					</div>
 					
+					<div class="q-pa-md">
+						<vu:block title="Block title" >
+							<vu:slot name="actions_slot"><div class="q-gutter-sm"><q-btn round icon="add" title="Some action" color="primary" ></q-btn><q-btn round icon="thumb_up" title="Some other action"  ></q-btn></div></vu:slot>
+							<vu:grid>
+								<vu:text-field-read object="base" field="name"/>
+								<vu:text-field-read object="base" field="name"/>
+								<vu:text-field-read object="base" field="name"/>
+								<vu:text-field-read object="base" field="name"/>
+							</vu:grid>
+						</vu:block>
+					</div>
+					
+					<div class="q-pa-md">
+						<q-card style="max-width: 350px;">
+							<q-img th::src="|'@{/basemanagement/base/}'+vueData.base.baseId+'/mainPicture'|"></q-img>
+							<q-card-section class="row" >
+								<div class="col-4 q-mr-sm" style="max-width: 100px;" >
+									<div><q-knob
+										  show-value
+										  :value="vueData.base.healthLevel"
+										  :min="0" :max="100"
+										  color="positive" track-color="grey-2" size="80px"
+										  :thickness="0.15"
+										  :readonly="true" ><q-icon name="fas fa-dice-d20" size="2rem" color="primary" ></q-icon></q-knob></div>
+								</div>
+								<div class="col ellipsis" >
+									<span class="text-primary small-caps text-bigger">{{vueData.base.name}}</span><br/>
+									<span >{{vueData.base.code}}</span><br/>
+									<vu:field-read object="base" field="baseTypeId" list="baseTypes" listKey="baseTypeId" /><br/>
+									Created : {{vueData.base.creationDate}}<br/>
+									<q-icon name="location_on" size="25px"></q-icon><vu:field-read object="base" field="geosectorId" list="geosectors" listKey="geosectorId" listDisplay="sectorLabel" /><br/>		
+								</div>		
+							</q-card-section>
+							<q-separator></q-separator>
+							<q-card-actions>
+								<q-chip v-for="tag in vueData.base.tags" :hide-underline="true" >{{tag}}</q-chip>
+							</q-card-actions>
+						</q-card>
+					</div>
 					
 					<vu:include-data object="bases" field="'*'" />
-					<vu:block id="general" title="Cards">
-						<vu:cards list="bases" componentId="baseCards" cardClass="marsCard col-lg-3 col-md-6 col-xs-12" rowsPerPage="8" showMore="true" showMoreLabel="Show more" >
+					<div class="">
+						<vu:cards list="bases" componentId="baseCards" cardClass="marsCard col-lg-3 col-md-6 col-xs-12" rowsPerPage="4" showMore="true" showMoreLabel="Show more" >
 								<q-img th::src="|'@{/basemanagement/base/}'+item.baseId+'/mainPicture'|"></q-img>
 								<q-card-section class="row" >
 									<div class="col-4 q-mr-sm" style="max-width: 100px;" >
@@ -164,10 +238,31 @@
 								<q-chip v-for="tag in item.tags" :hide-underline="true" >{{tag}}</q-chip>
 							</q-card-actions>
 						</vu:cards>
-					</vu:block>
+					</div>
 					
-					<vu:block id="general" title="Table">
-						<vu:table list="bases" color="primary" componentId="baseTable" 	>
+					<div class="">
+						<vu:list list="bases" componentId="basesList" rowsPerPage="8" pagination_:direction-links="true"
+							pagination_:boundary-links="true" item_style="box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);">
+							<q-item-section avatar > <q-img th::src="|'@{/basemanagement/base/}'+item.baseId+'/mainPicture'|" class="avatar"></q-img> </q-item-section>
+							<q-item-section>
+								<a class="text-primary small-caps text-bigger" >{{item.name}}</a>Created : {{item.creationDate}}
+							</q-item-section>
+							<q-item-section>
+								<div>
+									<q-icon name="location_on"></q-icon>
+									<span><vu:field-read field="geosectorId" list="geosectors" listKey="geosectorId" listDisplay="sectorLabel" /></span>
+								</div>
+								<div><q-chip v-for="tag in item.tags" :label="tag" dense ></q-chip></div>
+							</q-item-section>
+							<q-item-section side> <q-btn round color="primary" icon="arrow_forward" ></q-btn> </q-item-section>
+						</vu:list>
+					</div>
+					
+					<div>
+						<p class="text-subtitle2 q-pt-md">Standard</p>
+						<vu:table title="Bases" list="bases" color="primary" componentId="baseTable" 	>
+							<vu:slot name="top_right_slot"><div class="q-gutter-sm"><q-btn round icon="add" title="Some action" color="primary" ></q-btn><q-btn round icon="thumb_up" title="Some other action"  ></q-btn></div></vu:slot>
+							<vu:slot name="actions_slot"><q-btn round icon="open_in_new" title="Some action" ></q-btn></vu:slot>
 							<vu:column field="name" sortable="true" />
 							<vu:column field="code" sortable="true" />
 							<vu:column field="creationDate" sortable="true" />
@@ -175,7 +270,18 @@
 								<vu:field-read field="geosectorId" list="geosectors" listKey="geosectorId" listDisplay="sectorLabel" />
 							</vu:column>
 						</vu:table>
-					</vu:block>
+						<p class="text-subtitle2 q-pt-md">Selectable</p>
+						<vu:table title="Bases" list="bases" color="primary" componentId="baseTableSelectable" selectable="true"	>
+							<vu:slot name="top_right_slot"><div class="q-gutter-sm"><q-btn round icon="add" title="Some action" color="primary" ></q-btn><q-btn round icon="thumb_up" title="Some other action"  ></q-btn></div></vu:slot>
+							<vu:slot name="actions_slot"><q-btn round icon="open_in_new" title="Some action" ></q-btn></vu:slot>
+							<vu:column field="name" sortable="true" />
+							<vu:column field="code" sortable="true" />
+							<vu:column field="creationDate" sortable="true" />
+							<vu:column name="geosector" label="Geosector" >
+								<vu:field-read field="geosectorId" list="geosectors" listKey="geosectorId" listDisplay="sectorLabel" />
+							</vu:column>
+						</vu:table>
+					</div>
 				</vu:form>
 			</q-page>		
 		</section>
