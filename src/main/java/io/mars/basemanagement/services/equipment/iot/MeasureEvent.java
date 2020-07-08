@@ -17,7 +17,7 @@ public final class MeasureEvent implements Event {
 	 * @param measure the measure
 	 */
 	public MeasureEvent(final Measure measure) {
-		Assertion.checkNotNull(measure);
+		Assertion.check().isNotNull(measure);
 		//-----
 		this.measure = measure;
 	}

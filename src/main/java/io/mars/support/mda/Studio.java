@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
@@ -16,10 +17,10 @@ public class Studio {
 
 	private static NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
-				.beginBoot()
-				.withLocales("fr_FR")
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-				.endBoot()
+				.withBoot(BootConfig.builder()
+						.withLocales("fr_FR")
+						.addPlugin(ClassPathResourceResolverPlugin.class)
+						.build())
 				// ---StudioFeature
 				.addModule(new StudioFeatures()
 						.withMetamodel()
@@ -51,11 +52,11 @@ public class Studio {
 
 			mdaManager.clean(mdaConfig);
 			final List<MetamodelResource> resources = Arrays.asList(
-					new MetamodelResource("kpr", "io/mars/model.kpr"),
-					new MetamodelResource("kpr", "io/mars/tasks.kpr"),
+					MetamodelResource.of("kpr", "io/mars/model.kpr"),
+					MetamodelResource.of("kpr", "io/mars/tasks.kpr"),
 					//new MetamodelResource("kpr", "io/mars/support/support_file.kpr"),
-					new MetamodelResource("kpr", "io/mars/search.kpr"),
-					new MetamodelResource("staticMasterData", "io/mars/support/masterDataValues.json"));
+					MetamodelResource.of("kpr", "io/mars/search.kpr"),
+					MetamodelResource.of("staticMasterData", "io/mars/support/masterDataValues.json"));
 			mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig).displayResultMessage(System.out);
 		}
 	}

@@ -50,18 +50,6 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 	}
 
 	/**
-	 * Création d'une SearchQuery de type : Equipment.
-	 * @param criteria Critères de recherche
-	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
-	 * @return SearchQueryBuilder pour ce type de recherche
-	 */
-	public SearchQueryBuilder createSearchQueryBuilderEquipment(final String criteria, final SelectedFacetValues selectedFacetValues) {
-		return SearchQuery.builder("QryEquipment")
-				.withCriteria(criteria)
-				.withFacet(selectedFacetValues);
-	}
-
-	/**
 	 * Création d'une SearchQuery de type : EquipmentGeo.
 	 * @param criteria Critères de recherche
 	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
@@ -69,6 +57,18 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 	 */
 	public SearchQueryBuilder createSearchQueryBuilderEquipmentGeo(final io.mars.basemanagement.search.GeoSearchEquipmentCriteria criteria, final SelectedFacetValues selectedFacetValues) {
 		return SearchQuery.builder("QryEquipmentGeo")
+				.withCriteria(criteria)
+				.withFacet(selectedFacetValues);
+	}
+
+	/**
+	 * Création d'une SearchQuery de type : Equipment.
+	 * @param criteria Critères de recherche
+	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
+	 * @return SearchQueryBuilder pour ce type de recherche
+	 */
+	public SearchQueryBuilder createSearchQueryBuilderEquipment(final String criteria, final SelectedFacetValues selectedFacetValues) {
+		return SearchQuery.builder("QryEquipment")
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
@@ -124,16 +124,6 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 				//---
 				// FacetTermDefinition
 				//-----
-				.add(new FacetTermDefinitionSupplier("FctEquipmentEquipmentCategoryName")
-						.withDtDefinition("DtEquipmentIndex")
-						.withFieldName("equipmentCategoryName")
-						.withLabel("Equipment Category")
-						.withOrder(FacetOrder.count))
-				.add(new FacetTermDefinitionSupplier("FctEquipmentEquipmentTypeName")
-						.withDtDefinition("DtEquipmentIndex")
-						.withFieldName("equipmentTypeName")
-						.withLabel("Equipment Type")
-						.withOrder(FacetOrder.count))
 				.add(new FacetRangeDefinitionSupplier("FctEquipmentGeoDistance")
 						.withDtDefinition("DtEquipmentIndex")
 						.withFieldName("geoLocation")
@@ -147,13 +137,16 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withRange("r7", "geoLocation:#geoLocation#~500km", "< 500km")
 						.withRange("r8", "geoLocation:[#geoLocation#~500km to *]", "> 500km")
 						.withOrder(FacetOrder.definition))
-				.add(new FacetCustomDefinitionSupplier("FctEquipmentGeoHash")
+				.add(new FacetTermDefinitionSupplier("FctEquipmentEquipmentTypeName")
 						.withDtDefinition("DtEquipmentIndex")
-						.withFieldName("geoLocation")
-						.withLabel("Location")
-						.withParams("geohash_grid", "field : \"geoLocation\", precision : 5")
-						.withParams("innerWriteTo", "writeVInt(5);writeVInt(1000);writeVInt(-1)")
-						.withOrder(FacetOrder.definition))
+						.withFieldName("equipmentTypeName")
+						.withLabel("Equipment Type")
+						.withOrder(FacetOrder.count))
+				.add(new FacetTermDefinitionSupplier("FctEquipmentEquipmentCategoryName")
+						.withDtDefinition("DtEquipmentIndex")
+						.withFieldName("equipmentCategoryName")
+						.withLabel("Equipment Category")
+						.withOrder(FacetOrder.count))
 				.add(new FacetRangeDefinitionSupplier("FctEquipmentPurchaseDate")
 						.withDtDefinition("DtEquipmentIndex")
 						.withFieldName("purchaseDate")
@@ -162,17 +155,17 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withRange("r2", "purchaseDate:[01/01/2012 TO 01/01/2016]", "2012-2016")
 						.withRange("r3", "purchaseDate:[01/01/2016 TO *]", "after 2016")
 						.withOrder(FacetOrder.definition))
+				.add(new FacetCustomDefinitionSupplier("FctEquipmentGeoHash")
+						.withDtDefinition("DtEquipmentIndex")
+						.withFieldName("geoLocation")
+						.withLabel("Location")
+						.withParams("geohash_grid", "field : \"geoLocation\", precision : 5")
+						.withParams("innerWriteTo", "writeVInt(5);writeVInt(1000);writeVInt(-1)")
+						.withOrder(FacetOrder.definition))
 
 				//---
 				// FacetedQueryDefinition
 				//-----
-				.add(new FacetedQueryDefinitionSupplier("QryEquipment")
-						.withFacet("FctEquipmentEquipmentTypeName")
-						.withFacet("FctEquipmentPurchaseDate")
-						.withFacet("FctEquipmentEquipmentCategoryName")
-						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
-						.withListFilterBuilderQuery("allText:#+query*#")
-						.withCriteriaSmartType("STyLabel"))
 				.add(new FacetedQueryDefinitionSupplier("QryEquipmentGeo")
 						.withFacet("FctEquipmentEquipmentTypeName")
 						.withFacet("FctEquipmentPurchaseDate")
@@ -182,6 +175,13 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withListFilterBuilderQuery("allText:#+criteria*#")
 						.withGeoSearchQuery("geoLocation: [#geoUpperLeft# to #geoLowerRight#]")
 						.withCriteriaSmartType("STyDtGeoSearchEquipmentCriteria"))
+				.add(new FacetedQueryDefinitionSupplier("QryEquipment")
+						.withFacet("FctEquipmentEquipmentTypeName")
+						.withFacet("FctEquipmentPurchaseDate")
+						.withFacet("FctEquipmentEquipmentCategoryName")
+						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
+						.withListFilterBuilderQuery("allText:#+query*#")
+						.withCriteriaSmartType("STyLabel"))
 				.build();
 	}
 }

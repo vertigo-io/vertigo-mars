@@ -28,7 +28,7 @@ public class JobServices implements Component {
 	private SummaryPAO summaryPAO;
 
 	public DtList<OProcessExecutionUi> getProcessExecutions(final String processName, final String status, final Integer limit, final Integer offset) {
-		Assertion.checkArgNotEmpty(processName);
+		Assertion.check().isNotBlank(processName);
 		//---
 		return uiexecutionsPAO.getExecutionsByProcessName(processName, status, limit, offset);
 	}
@@ -38,7 +38,7 @@ public class JobServices implements Component {
 	}
 
 	public OExecutionSummary getSummaryByDate(final String processName, final Instant minDate, final Instant maxDate) {
-		Assertion.checkArgNotEmpty(processName);
+		Assertion.check().isNotBlank(processName);
 		//---
 		return summaryPAO.getExecutionSummaryByDateAndName(minDate, maxDate, processName);
 	}

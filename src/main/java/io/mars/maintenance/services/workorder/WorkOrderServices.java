@@ -38,7 +38,7 @@ public class WorkOrderServices implements Component {
 	}
 
 	public DtList<WorkOrder> getWorkOrdersByTicketId(final Long ticketId) {
-		Assertion.checkNotNull(ticketId);
+		Assertion.check().isNotNull(ticketId);
 		//---
 		return workOrderDAO.findAll(
 				Criterions.isEqualTo(WorkOrderFields.ticketId, ticketId), DtListState.defaultOf(WorkOrder.class));
@@ -49,7 +49,7 @@ public class WorkOrderServices implements Component {
 	}
 
 	public void createWorkOrder(final WorkOrder workOrder) {
-		Assertion.checkArgument(workOrder.getWoId() == null, "No id should be provided for a new ticket");
+		Assertion.check().isNull(workOrder.getWoId(), "No id should be provided for a new ticket");
 		//---
 		workOrder.setDateCreated(LocalDate.now());
 		workOrder.workOrderStatus().setEnumValue(WorkOrderStatusEnum.pending);

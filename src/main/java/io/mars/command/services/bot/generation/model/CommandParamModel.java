@@ -8,7 +8,7 @@ public class CommandParamModel {
 	private final CommandParam commandParam;
 
 	public CommandParamModel(final CommandParam commandParam) {
-		Assertion.checkNotNull(commandParam);
+		Assertion.check().isNotNull(commandParam);
 		//---
 		this.commandParam = commandParam;
 	}

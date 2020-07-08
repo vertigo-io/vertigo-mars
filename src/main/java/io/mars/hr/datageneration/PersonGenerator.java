@@ -49,7 +49,7 @@ public class PersonGenerator implements Component {
 	}
 
 	private void consume(final String csvFilePath, final String[] record) {
-		Assertion.checkArgument(record.length == PERSON_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Persons", csvFilePath);
+		Assertion.check().isTrue(record.length == PERSON_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Persons", csvFilePath);
 		// ---
 		final String firstName = record[0];
 		final String lastName = record[1];

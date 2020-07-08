@@ -19,7 +19,7 @@ public final class MissionEvent implements Event {
 	 * @param ticket The ticket
 	 */
 	public MissionEvent(final Mission mission) {
-		Assertion.checkNotNull(mission);
+		Assertion.check().isNotNull(mission);
 		//-----
 		this.mission = mission;
 	}

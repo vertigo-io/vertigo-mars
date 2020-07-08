@@ -40,7 +40,7 @@ public class MissionServices implements Component {
 	}
 
 	public void createMission(final Mission mission) {
-		Assertion.checkArgument(mission.getMissionId() == null, "No id should be provided for a new ticket");
+		Assertion.check().isNull(mission.getMissionId(), "No id should be provided for a new ticket");
 		//---
 		missionDAO.save(mission);
 		// Loading person, base and business entities for the mission event
@@ -56,13 +56,13 @@ public class MissionServices implements Component {
 	}
 
 	public Optional<Person> getBaseManager(final Long baseId) {
-		Assertion.checkNotNull(baseId);
+		Assertion.check().isNotNull(baseId);
 		//---
 		return personDAO.getBaseManager(baseId);
 	}
 
 	public DtList<MissionDisplay> getMissionsByPersonId(final Long personId) {
-		Assertion.checkNotNull(personId);
+		Assertion.check().isNotNull(personId);
 		//---
 		return hrPAO.getMissionsDisplayByPersonId(personId);
 	}

@@ -55,7 +55,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 
 	@Override
 	public void start() {
-		Assertion.checkNotNull(keycloakDeploymentConnectors);
+		Assertion.check().isNotNull(keycloakDeploymentConnectors);
 		//---
 		final Optional<KeycloakDeploymentConnector> keycloakDeploymentConnectorOpt = keycloakDeploymentConnectors.stream().filter(connector -> "main".equals(connector.getName())).findFirst();
 		if (keycloakDeploymentConnectorOpt.isPresent()) {

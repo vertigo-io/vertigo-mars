@@ -51,7 +51,7 @@ public final class FakeBaseListBuilder implements Builder {
 	}
 
 	public FakeBaseListBuilder withGeosectorIds(final List<Long> geosectorIds) {
-		Assertion.checkNotNull(geosectorIds);
+		Assertion.check().isNotNull(geosectorIds);
 		//---
 		myGeosectorIds = geosectorIds;
 		return this;
@@ -123,7 +123,7 @@ public final class FakeBaseListBuilder implements Builder {
 	}
 
 	private GeoPoint getGeoLocation() {
-		Assertion.checkNotNull(myGeoLocations);
+		Assertion.check().isNotNull(myGeoLocations);
 		return myGeoLocations.get(DataGenerator.RND.nextInt(myGeoLocations.size()));
 	}
 
@@ -173,7 +173,7 @@ public final class FakeBaseListBuilder implements Builder {
 
 	@Override
 	public List<Base> build() {
-		Assertion.checkNotNull(myGeosectorIds);
+		Assertion.check().isNotNull(myGeosectorIds);
 		//---
 		final List<Base> bases = new ArrayList<>();
 

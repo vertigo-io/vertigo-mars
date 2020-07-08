@@ -89,6 +89,33 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	}
 
 	/**
+	 * Execute la tache StTkLoadEquipmentsByChunk.
+	 * @param limit Long
+	 * @param offset Long
+	 * @param dateExist Instant
+	 * @return DtList de Equipment equipmentList
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkLoadEquipmentsByChunk",
+			request = "select * from EQUIPMENT " + 
+ "			where EQUIPMENT_ID > #offset#" + 
+ "			and PURCHASE_DATE <= #dateExist#" + 
+ "        	order by EQUIPMENT_ID asc" + 
+ "			limit #limit#",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(@io.vertigo.datamodel.task.proxy.TaskInput(name = "limit", smartType = "STyId") final Long limit, @io.vertigo.datamodel.task.proxy.TaskInput(name = "offset", smartType = "STyId") final Long offset, @io.vertigo.datamodel.task.proxy.TaskInput(name = "dateExist", smartType = "STyInstant") final java.time.Instant dateExist) {
+		final Task task = createTaskBuilder("TkLoadEquipmentsByChunk")
+				.addValue("limit", limit)
+				.addValue("offset", offset)
+				.addValue("dateExist", dateExist)
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
+	}
+
+	/**
 	 * Execute la tache StTkGetLastPurchasedEquipmentsByBaseId.
 	 * @param baseId Long
 	 * @return DtList de Equipment equipments
@@ -151,33 +178,6 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 				.addValue("equipmentsList", equipmentsList)
 				.build();
 		getTaskManager().execute(task);
-	}
-
-	/**
-	 * Execute la tache StTkLoadEquipmentsByChunk.
-	 * @param limit Long
-	 * @param offset Long
-	 * @param dateExist Instant
-	 * @return DtList de Equipment equipmentList
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkLoadEquipmentsByChunk",
-			request = "select * from EQUIPMENT " + 
- "			where EQUIPMENT_ID > #offset#" + 
- "			and PURCHASE_DATE <= #dateExist#" + 
- "        	order by EQUIPMENT_ID asc" + 
- "			limit #limit#",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(@io.vertigo.datamodel.task.proxy.TaskInput(name = "limit", smartType = "STyId") final Long limit, @io.vertigo.datamodel.task.proxy.TaskInput(name = "offset", smartType = "STyId") final Long offset, @io.vertigo.datamodel.task.proxy.TaskInput(name = "dateExist", smartType = "STyInstant") final java.time.Instant dateExist) {
-		final Task task = createTaskBuilder("TkLoadEquipmentsByChunk")
-				.addValue("limit", limit)
-				.addValue("offset", offset)
-				.addValue("dateExist", dateExist)
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
 	}
 
 }

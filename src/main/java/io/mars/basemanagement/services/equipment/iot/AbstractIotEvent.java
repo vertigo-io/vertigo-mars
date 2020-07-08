@@ -41,9 +41,10 @@ public class AbstractIotEvent implements Event {
 	 * @param type the type (on/off)
 	 */
 	protected AbstractIotEvent(final Type type, final String topic, final Optional<String> payloadOpt) {
-		Assertion.checkNotNull(type);
-		Assertion.checkArgNotEmpty(topic);
-		Assertion.checkNotNull(payloadOpt);
+		Assertion.check()
+				.isNotNull(type)
+				.isNotBlank(topic)
+				.isNotNull(payloadOpt);
 		//-----
 		this.type = type;
 		this.topic = topic;

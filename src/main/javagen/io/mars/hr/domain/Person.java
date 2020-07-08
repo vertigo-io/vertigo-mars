@@ -219,9 +219,9 @@ public final class Person implements Entity {
 	/**
 	 * Champ : COMPUTED.
 	 * Récupère la valeur de la propriété calculée 'Full name'.
-	 * @return String fullName <b>Obligatoire</b>
+	 * @return String fullName
 	 */
-	@Field(smartType = "STyLabel", type = "COMPUTED", cardinality = io.vertigo.core.lang.Cardinality.ONE, persistent = false, label = "Full name")
+	@Field(smartType = "STyLabel", type = "COMPUTED", persistent = false, label = "Full name")
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
 	}

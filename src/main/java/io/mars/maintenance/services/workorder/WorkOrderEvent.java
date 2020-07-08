@@ -29,8 +29,9 @@ public final class WorkOrderEvent implements Event {
 	 * @param workOrder The work order
 	 */
 	public WorkOrderEvent(final Type type, final WorkOrder workOrder) {
-		Assertion.checkNotNull(type);
-		Assertion.checkNotNull(workOrder);
+		Assertion.check()
+				.isNotNull(type)
+				.isNotNull(workOrder);
 		//-----
 		this.type = type;
 		this.workOrder = workOrder;

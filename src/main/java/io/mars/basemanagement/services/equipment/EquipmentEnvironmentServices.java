@@ -100,8 +100,9 @@ public class EquipmentEnvironmentServices implements Component {
 	}
 
 	public void displayMessage(final String message) {
-		Assertion.checkArgNotEmpty(message);
-		Assertion.checkArgument(message.length() <= 64, "Message size must be <= 64 characters", message);
+		Assertion.check()
+				.isNotBlank(message)
+				.isTrue(message.length() <= 64, "Message size must be <= 64 characters", message);
 		//Add escape character
 		//send payload to bus to publish message
 		final InputEvent sendMessage = new InputEvent(InputEvent.Type.of(1), "base/message", message);

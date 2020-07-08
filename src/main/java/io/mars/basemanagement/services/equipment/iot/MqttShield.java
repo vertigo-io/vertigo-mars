@@ -45,7 +45,7 @@ public class MqttShield implements Component {
 		for (final MosquittoConnector mqttConnector : mqttConnectors) {
 			final String name = mqttConnector.getName();
 			final MosquittoConnector previous = connectorsByName.put(name, mqttConnector);
-			Assertion.checkState(previous == null, "MqttConnector {0}, was already registered", name);
+			Assertion.check().isNull(previous, "MqttConnector {0}, was already registered", name);
 		}
 
 		try {
@@ -85,8 +85,9 @@ public class MqttShield implements Component {
 
 		@Override
 		public void messageArrived(final String topic, final MqttMessage message) {
-			Assertion.checkNotNull(topic);
-			Assertion.checkNotNull(message);
+			Assertion.check()
+					.isNotNull(topic)
+					.isNotNull(message);
 			//
 			handleMessage(message, topic);
 		}
@@ -107,8 +108,9 @@ public class MqttShield implements Component {
 	}
 
 	private void handleMessage(final MqttMessage message, final String topic) {
-		Assertion.checkNotNull(message);
-		Assertion.checkNotNull(topic);
+		Assertion.check()
+				.isNotNull(message)
+				.isNotNull(topic);
 		//---
 		final String[] data = parseMqttMessage(message);
 		final String[] parsedTopic = parseTopic(topic);
@@ -158,21 +160,21 @@ public class MqttShield implements Component {
 	}
 
 	private static String[] parseMqttMessage(final MqttMessage message) {
-		Assertion.checkNotNull(message);
+		Assertion.check().isNotNull(message);
 		//
 		final String[] dataParsed = message.toString().split(" ");
 		return dataParsed;
 	}
 
 	private static String[] parseTopic(final String topic) {
-		Assertion.checkNotNull(topic);
+		Assertion.check().isNotNull(topic);
 		//
 		final String[] dataParsed = topic.split("/");
 		return dataParsed;
 	}
 
 	private static InputEvent createActuatorEvent(final MqttMessage message, final String topic) {
-		Assertion.checkNotNull(message);
+		Assertion.check().isNotNull(message);
 		//---
 		final String[] parsedMessage = parseMqttMessage(message);
 		final Integer actuatorValue = Integer.parseInt(parsedMessage[1]);
@@ -189,7 +191,7 @@ public class MqttShield implements Component {
 
 	@EventBusSubscribed
 	public void onOutput(final OutputEvent outputEvent) throws MqttException {
-		Assertion.checkNotNull(outputEvent);
+		Assertion.check().isNotNull(outputEvent);
 		LOGGER.info("outputEvent : {}", outputEvent);
 		//---
 		if (outputEvent.getPayloadOpt().isPresent()) {

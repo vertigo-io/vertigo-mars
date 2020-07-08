@@ -29,8 +29,9 @@ public final class TicketEvent implements Event {
 	 * @param ticket The ticket
 	 */
 	public TicketEvent(final Type type, final Ticket ticket) {
-		Assertion.checkNotNull(type);
-		Assertion.checkNotNull(ticket);
+		Assertion.check()
+				.isNotNull(type)
+				.isNotNull(ticket);
 		//-----
 		this.type = type;
 		this.ticket = ticket;

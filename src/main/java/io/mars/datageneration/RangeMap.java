@@ -11,9 +11,10 @@ final class RangeMap<T extends Comparable<T>, V> {
 	private final Map<MyRange<T>, V> myMap = new HashMap<>();
 
 	public void addSegment(final T minValue, final T maxValue, final V value) {
-		Assertion.checkNotNull(minValue);
-		Assertion.checkNotNull(maxValue);
-		Assertion.checkNotNull(value);
+		Assertion.check()
+				.isNotNull(minValue)
+				.isNotNull(maxValue)
+				.isNotNull(value);
 		//
 		final MyRange<T> myRange = new MyRange<>(minValue, maxValue);
 		if (!isOverlappingExistingSegments(myRange)) {
@@ -25,7 +26,7 @@ final class RangeMap<T extends Comparable<T>, V> {
 	}
 
 	public V getValue(final T pointInKey) {
-		Assertion.checkNotNull(pointInKey);
+		Assertion.check().isNotNull(pointInKey);
 		//
 		final MyRange<T> goodRange = myMap.keySet().stream()
 				.filter(range -> pointInKey.compareTo(range.getMinValue()) >= 0 && pointInKey.compareTo(range.getMaxValue()) < 0)
@@ -50,9 +51,10 @@ final class RangeMap<T extends Comparable<T>, V> {
 		private final R myMaxValue;
 
 		public MyRange(final R minValue, final R maxValue) {
-			Assertion.checkNotNull(minValue);
-			Assertion.checkNotNull(maxValue);
-			Assertion.checkArgument(minValue.compareTo(maxValue) < 0, "The range minValue must be strictly inferior to maxValue");
+			Assertion.check()
+					.isNotNull(minValue)
+					.isNotNull(maxValue)
+					.isTrue(minValue.compareTo(maxValue) < 0, "The range minValue must be strictly inferior to maxValue");
 			//
 			myMinValue = minValue;
 			myMaxValue = maxValue;

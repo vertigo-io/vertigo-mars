@@ -53,7 +53,7 @@ public class LoginController extends AbstractVSpringMvcController {
 
 	@PostMapping("/_login")
 	public String doLogin(@RequestParam("login") final String login, @RequestParam("password") final String password) {
-		if (StringUtil.isEmpty(login) || StringUtil.isEmpty(password)) {
+		if (StringUtil.isBlank(login) || StringUtil.isBlank(password)) {
 			throw new VUserException("Login and Password are mandatory");
 		}
 		loginServices.loginWithLoginPassword(login, password);

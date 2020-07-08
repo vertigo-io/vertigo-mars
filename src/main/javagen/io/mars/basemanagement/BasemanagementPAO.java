@@ -25,7 +25,7 @@ public final class BasemanagementPAO implements StoreServices {
 	 */
 	@Inject
 	public BasemanagementPAO(final TaskManager taskManager) {
-		Assertion.checkNotNull(taskManager);
+		Assertion.check().isNotNull(taskManager);
 		//-----
 		this.taskManager = taskManager;
 	}
@@ -38,28 +38,6 @@ public final class BasemanagementPAO implements StoreServices {
 	private static TaskBuilder createTaskBuilder(final String name) {
 		final TaskDefinition taskDefinition = Home.getApp().getDefinitionSpace().resolve(name, TaskDefinition.class);
 		return Task.builder(taskDefinition);
-	}
-
-	/**
-	 * Execute la tache StTkGetBaseOverview.
-	 * @param baseId Long
-	 * @return BaseOverview baseOverview
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkGetBaseOverview",
-			request = "select " + 
- "				(select count(*) from equipment equ where equ.base_id = #baseId#) as equipment_count," + 
- "				(select count(*) from ticket tic join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
- "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseOverview")
-	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
-		final Task task = createTaskBuilder("TkGetBaseOverview")
-				.addValue("baseId", baseId)
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
 	}
 
 	/**
@@ -77,27 +55,6 @@ public final class BasemanagementPAO implements StoreServices {
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBasesSummary")
 	public io.mars.basemanagement.domain.BasesSummary getBasesSummary() {
 		final Task task = createTaskBuilder("TkGetBasesSummary")
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
-	}
-
-	/**
-	 * Execute la tache StTkGetEquipmentMaintenanceOverview.
-	 * @param equipmentId Long
-	 * @return EquipmentMaintenanceOverview equipmentMaintenanceOverview
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkGetEquipmentMaintenanceOverview",
-			request = "select " + 
- "				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
- "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = #equipmentId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentMaintenanceOverview")
-	public io.mars.basemanagement.domain.EquipmentMaintenanceOverview getEquipmentMaintenanceOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId) {
-		final Task task = createTaskBuilder("TkGetEquipmentMaintenanceOverview")
-				.addValue("equipmentId", equipmentId)
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -127,6 +84,100 @@ public final class BasemanagementPAO implements StoreServices {
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetEquipmentsOverview")
 				.addValue("baseId", baseId)
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
+	}
+
+	/**
+	 * Execute la tache StTkSelectGeosectorId.
+	 * @return List de Long geosectorIdList
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkSelectGeosectorId",
+			request = "select GEOSECTOR_ID from GEOSECTOR",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
+	public java.util.List<Long> selectGeosectorId() {
+		final Task task = createTaskBuilder("TkSelectGeosectorId")
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
+	}
+
+	/**
+	 * Execute la tache StTkGetBaseOverview.
+	 * @param baseId Long
+	 * @return BaseOverview baseOverview
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkGetBaseOverview",
+			request = "select " + 
+ "				(select count(*) from equipment equ where equ.base_id = #baseId#) as equipment_count," + 
+ "				(select count(*) from ticket tic join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
+ "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseOverview")
+	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
+		final Task task = createTaskBuilder("TkGetBaseOverview")
+				.addValue("baseId", baseId)
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
+	}
+
+	/**
+	 * Execute la tache StTkSelectBaseId.
+	 * @return List de Long baseIdList
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkSelectBaseId",
+			request = "select BASE_ID from BASE",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
+	public java.util.List<Long> selectBaseId() {
+		final Task task = createTaskBuilder("TkSelectBaseId")
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
+	}
+
+	/**
+	 * Execute la tache StTkSelectBusinessId.
+	 * @return List de Long businessIdList
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkSelectBusinessId",
+			request = "select BUSINESS_ID from BUSINESS",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
+	public java.util.List<Long> selectBusinessId() {
+		final Task task = createTaskBuilder("TkSelectBusinessId")
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
+	}
+
+	/**
+	 * Execute la tache StTkGetEquipmentMaintenanceOverview.
+	 * @param equipmentId Long
+	 * @return EquipmentMaintenanceOverview equipmentMaintenanceOverview
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkGetEquipmentMaintenanceOverview",
+			request = "select " + 
+ "				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
+ "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = #equipmentId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
+			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentMaintenanceOverview")
+	public io.mars.basemanagement.domain.EquipmentMaintenanceOverview getEquipmentMaintenanceOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId) {
+		final Task task = createTaskBuilder("TkGetEquipmentMaintenanceOverview")
+				.addValue("equipmentId", equipmentId)
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -185,57 +236,6 @@ public final class BasemanagementPAO implements StoreServices {
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.search.EquipmentIndex> loadEquipmentIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentIds", smartType = "STyId") final java.util.List<Long> equipmentIds) {
 		final Task task = createTaskBuilder("TkLoadEquipmentIndex")
 				.addValue("equipmentIds", equipmentIds)
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
-	}
-
-	/**
-	 * Execute la tache StTkSelectBaseId.
-	 * @return List de Long baseIdList
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkSelectBaseId",
-			request = "select BASE_ID from BASE",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
-	public java.util.List<Long> selectBaseId() {
-		final Task task = createTaskBuilder("TkSelectBaseId")
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
-	}
-
-	/**
-	 * Execute la tache StTkSelectBusinessId.
-	 * @return List de Long businessIdList
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkSelectBusinessId",
-			request = "select BUSINESS_ID from BUSINESS",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
-	public java.util.List<Long> selectBusinessId() {
-		final Task task = createTaskBuilder("TkSelectBusinessId")
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
-	}
-
-	/**
-	 * Execute la tache StTkSelectGeosectorId.
-	 * @return List de Long geosectorIdList
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkSelectGeosectorId",
-			request = "select GEOSECTOR_ID from GEOSECTOR",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
-	public java.util.List<Long> selectGeosectorId() {
-		final Task task = createTaskBuilder("TkSelectGeosectorId")
 				.build();
 		return getTaskManager()
 				.execute(task)

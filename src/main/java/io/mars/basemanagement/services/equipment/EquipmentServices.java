@@ -68,31 +68,31 @@ public class EquipmentServices implements Component {
 	}
 
 	public DtList<EquipmentOverview> getEquipmentOverviewByBaseId(final Long baseId) {
-		Assertion.checkNotNull(baseId);
+		Assertion.check().isNotNull(baseId);
 		//---
 		return basemanagementPAO.getEquipmentsOverview(baseId);
 	}
 
 	public DtList<Equipment> getLastPurchasedEquipmentsByBase(final Long baseId) {
-		Assertion.checkNotNull(baseId);
+		Assertion.check().isNotNull(baseId);
 		//---
 		return equipmentDAO.getLastPurchasedEquipmentsByBaseId(baseId);
 	}
 
 	public DtList<Equipment> getEquipmentByBase(final String baseCode) {
-		Assertion.checkNotNull(baseCode);
+		Assertion.check().isNotNull(baseCode);
 		//---
 		return equipmentDAO.getEquipmentsByBaseCode(baseCode);
 	}
 
 	public EquipmentMaintenanceOverview getMaintenanceOverviewByEquipment(final Long equipmentId) {
-		Assertion.checkNotNull(equipmentId);
+		Assertion.check().isNotNull(equipmentId);
 		//---
 		return basemanagementPAO.getEquipmentMaintenanceOverview(equipmentId);
 	}
 
 	public void addCommentToEquipment(final String commentString, final Long equipmentId) {
-		Assertion.checkNotNull(equipmentId);
+		Assertion.check().isNotNull(equipmentId);
 		//
 
 		final Account currentAccount = authenticationManager.getLoggedAccount().orElseThrow(() -> new VSecurityException(MessageText.of("No user currently logged in")));

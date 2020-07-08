@@ -31,7 +31,7 @@ public class ReferenceDataGenerator implements Component {
 	}
 
 	private void createInitialBusinessFromCSV(final String csvFilePath, final String[] businessRecord) {
-		Assertion.checkArgument(businessRecord.length == BUSINESS_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Equipment Types", csvFilePath);
+		Assertion.check().isTrue(businessRecord.length == BUSINESS_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Equipment Types", csvFilePath);
 		// ---
 		final String businessName = businessRecord[0];
 		final String businessIcon = businessRecord[1];
@@ -39,7 +39,7 @@ public class ReferenceDataGenerator implements Component {
 	}
 
 	private void createInitialGeosectorFromCSV(final String csvFilePath, final String[] geoSectorRecord) {
-		Assertion.checkArgument(geoSectorRecord.length == GEOSECTOR_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Equipment Types", csvFilePath);
+		Assertion.check().isTrue(geoSectorRecord.length == GEOSECTOR_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Equipment Types", csvFilePath);
 		// ---
 		final String geosectorName = geoSectorRecord[0];
 		geosectorDAO.create(createGeosector(geosectorName));

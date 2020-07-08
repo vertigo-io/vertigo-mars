@@ -36,7 +36,7 @@ public class TicketServices implements Component {
 	}
 
 	public void createTicket(final Ticket ticket) {
-		Assertion.checkArgument(ticket.getTicketId() == null, "No id should be provided for a new ticket");
+		Assertion.check().isNull(ticket.getTicketId(), "No id should be provided for a new ticket");
 		//---
 		ticket.setDateCreated(LocalDate.now());
 		ticket.ticketStatus().setEnumValue(TicketStatusEnum.open);
@@ -55,7 +55,7 @@ public class TicketServices implements Component {
 	}
 
 	public DtList<Ticket> getLastestTicketsByBase(final Long baseId) {
-		Assertion.checkNotNull(baseId);
+		Assertion.check().isNotNull(baseId);
 		//---
 		return ticketDAO.getLastTicketsByBaseId(baseId);
 	}
@@ -65,7 +65,7 @@ public class TicketServices implements Component {
 	}
 
 	public DtList<Ticket> getOpenedTicketsByEquipment(final Long equipmentId) {
-		Assertion.checkNotNull(equipmentId);
+		Assertion.check().isNotNull(equipmentId);
 		//---
 		return ticketDAO.findAll(
 				Criterions.isEqualTo(TicketFields.equipmentId, equipmentId)
@@ -74,7 +74,7 @@ public class TicketServices implements Component {
 	}
 
 	public DtList<Ticket> getClosedTicketsByEquipment(final Long equipmentId) {
-		Assertion.checkNotNull(equipmentId);
+		Assertion.check().isNotNull(equipmentId);
 		//---
 		return ticketDAO.findAll(
 				Criterions.isEqualTo(TicketFields.equipmentId, equipmentId)

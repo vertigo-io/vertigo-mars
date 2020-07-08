@@ -11,8 +11,9 @@ public class CommandTrainingModel {
 	private final List<String> examples;
 
 	public CommandTrainingModel(final CommandDefinition commandDefinition, final List<String> examples) {
-		Assertion.checkNotNull(commandDefinition);
-		Assertion.checkNotNull(examples);
+		Assertion.check()
+				.isNotNull(commandDefinition)
+				.isNotNull(examples);
 		//---
 		this.commandDefinition = commandDefinition;
 		this.examples = examples;

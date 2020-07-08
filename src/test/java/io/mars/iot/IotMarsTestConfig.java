@@ -21,6 +21,7 @@ package io.mars.iot;
 import io.mars.basemanagement.services.equipment.iot.IotEquipmentServices;
 import io.mars.basemanagement.services.equipment.iot.MqttShield;
 import io.vertigo.commons.CommonsFeatures;
+import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.node.config.NodeConfigBuilder;
@@ -33,11 +34,12 @@ import io.vertigo.database.plugins.timeseries.influxdb.InfluxDbTimeSeriesPlugin;
 public final class IotMarsTestConfig {
 
 	public static NodeConfigBuilder createNodeConfigBuilder() {
-		return NodeConfig.builder().beginBoot()
-				.withLocales("fr_FR")
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-				.addPlugin(URLResourceResolverPlugin.class)
-				.endBoot()
+		return NodeConfig.builder()
+				.withBoot(BootConfig.builder()
+						.withLocales("fr_FR")
+						.addPlugin(ClassPathResourceResolverPlugin.class)
+						.addPlugin(URLResourceResolverPlugin.class)
+						.build())
 				.addModule(new CommonsFeatures()
 						.build())
 				.addModule(new DatabaseFeatures()

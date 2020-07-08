@@ -69,7 +69,7 @@ public class TrainSetProvider implements Component {
 	}
 
 	private final List<String> retrievePossibleValues(final CommandParamTrainingConfiguration commandParamTrainingConfiguration) {
-		Assertion.checkArgNotEmpty(commandParamTrainingConfiguration.getType());
+		Assertion.check().isNotBlank(commandParamTrainingConfiguration.getType());
 
 		switch (commandParamTrainingConfiguration.getType()) {
 			case "fromDb":
@@ -82,7 +82,7 @@ public class TrainSetProvider implements Component {
 							.collect(Collectors.toList());
 				}
 			case "static":
-				Assertion.checkNotNull(commandParamTrainingConfiguration.getValues());
+				Assertion.check().isNotNull(commandParamTrainingConfiguration.getValues());
 				return commandParamTrainingConfiguration.getValues();
 			default:
 				throw new VSystemException("Unsupported training type : ", commandParamTrainingConfiguration.getType());

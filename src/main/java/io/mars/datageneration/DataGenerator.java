@@ -48,7 +48,7 @@ public class DataGenerator implements Component {
 	@Inject
 	public DataGenerator(
 			@ParamValue("initialEquipmentUnits") final Integer initialEquipmentUnits) {
-		Assertion.checkNotNull(initialEquipmentUnits);
+		Assertion.check().isNotNull(initialEquipmentUnits);
 		//---
 		this.initialEquipmentUnits = initialEquipmentUnits;
 	}
@@ -85,8 +85,9 @@ public class DataGenerator implements Component {
 	}
 
 	private void generatePastData(final Instant from, final Instant to) {
-		Assertion.checkNotNull(from);
-		Assertion.checkNotNull(to);
+		Assertion.check()
+				.isNotNull(from)
+				.isNotNull(to);
 		//
 		Instant timeCursor = from;
 		while (timeCursor.isBefore(to)) {

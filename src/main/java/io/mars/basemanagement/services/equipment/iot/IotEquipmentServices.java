@@ -21,7 +21,7 @@ public class IotEquipmentServices implements Component {
 
 	@EventBusSubscribed
 	public void onInput(final InputEvent inputEvent) {
-		Assertion.checkNotNull(inputEvent);
+		Assertion.check().isNotNull(inputEvent);
 		//---
 		LOGGER.info("Actuator is triggered {}", inputEvent.getType());
 
@@ -37,7 +37,7 @@ public class IotEquipmentServices implements Component {
 
 	@EventBusSubscribed
 	public void onMeasure(final MeasureEvent measureEvent) {
-		Assertion.checkNotNull(measureEvent);
+		Assertion.check().isNotNull(measureEvent);
 		//---
 		timeSeriesDataBaseManager.insertMeasure("mars-test", measureEvent.getMeasure());
 		LOGGER.info("Added measure to mars-test");

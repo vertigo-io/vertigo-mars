@@ -35,7 +35,7 @@ public class DownloadAndUnizpSuppliersActivityEngine extends AbstractActivityEng
 
 	@Override
 	public ActivityExecutionWorkspace execute(final ActivityExecutionWorkspace workspace) {
-		Assertion.checkState(workspace.containsKey("stockSireneUniteLegaleUrl"), "param stockSireneUniteLegaleUrl is required");
+		Assertion.check().isTrue(workspace.containsKey("stockSireneUniteLegaleUrl"), "param stockSireneUniteLegaleUrl is required");
 		//---
 		final String url = workspace.getValue("stockSireneUniteLegaleUrl");
 		final String rootDirectory = "file:///" + paramManager.getParam("orchestra.root.directory").getValueAsString() + "/IMPORT/SIRENE/";

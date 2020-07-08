@@ -49,28 +49,28 @@ public class FakeEquipmentListBuilder implements Builder {
 	}
 
 	public FakeEquipmentListBuilder withEquipmentTypeList(final DtList<EquipmentType> equipmentTypes) {
-		Assertion.checkNotNull(equipmentTypes);
+		Assertion.check().isNotNull(equipmentTypes);
 		//---
 		myEquipmentTypes = equipmentTypes;
 		return this;
 	}
 
 	public FakeEquipmentListBuilder withBusinessList(final DtList<Business> businesses) {
-		Assertion.checkNotNull(businesses);
+		Assertion.check().isNotNull(businesses);
 		//---
 		myBusinessList = businesses;
 		return this;
 	}
 
 	public FakeEquipmentListBuilder withBases(final List<Base> bases) {
-		Assertion.checkNotNull(bases);
+		Assertion.check().isNotNull(bases);
 		//---
 		myBases = bases;
 		return this;
 	}
 
 	public FakeEquipmentListBuilder withGeosectorIdList(final List<Long> geosectorIds) {
-		Assertion.checkNotNull(geosectorIds);
+		Assertion.check().isNotNull(geosectorIds);
 		//---
 		myGeosectorIds = geosectorIds;
 		return this;
@@ -169,10 +169,11 @@ public class FakeEquipmentListBuilder implements Builder {
 
 	@Override
 	public DtList<Equipment> build() {
-		Assertion.checkNotNull(myEquipmentTypes);
-		Assertion.checkNotNull(myBusinessList);
-		Assertion.checkNotNull(myBases);
-		Assertion.checkNotNull(myGeosectorIds);
+		Assertion.check()
+				.isNotNull(myEquipmentTypes)
+				.isNotNull(myBusinessList)
+				.isNotNull(myBases)
+				.isNotNull(myGeosectorIds);
 		final DtList<Equipment> equipments = new DtList<>(Equipment.class);
 
 		for (int currentCounter = 0; currentCounter < myMaxValues; currentCounter++) {

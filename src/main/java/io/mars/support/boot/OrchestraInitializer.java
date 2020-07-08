@@ -26,21 +26,21 @@ public class OrchestraInitializer implements ComponentInitializer {
 	@Override
 	public void init() {
 
-		final ProcessDefinition processDefinition = ProcessDefinition.builder("EQUIPMENT_DECOMMISSIONING", "Equipment decommissioning")
+		final ProcessDefinition processDefinition = ProcessDefinition.builder("ProEquipmentDecommissioning", "Equipment decommissioning")
 				.withCronExpression("0 0/1 * ? * * *")
 				.addActivity("DECOMMISSION", "Decommission equipmenents", DecommissionEquipmentActivityEngine.class)
 				.addActivity("REPORT", "Produce a file report of the decommisioned equipments", DecommissioningReportActivityEngine.class)
 				.build();
 		orchestraDefinitionManager.createOrUpdateDefinition(processDefinition);
 
-		final ProcessDefinition importSuppliers = ProcessDefinition.builder("IMPORT_SUPPLIERS", "Import Suppliers")
+		final ProcessDefinition importSuppliers = ProcessDefinition.builder("ProImportSuppliers", "Import Suppliers")
 				.addActivity("CLEAN", "Clean", CleanAllSuppliers.class)
 				.addActivity("INDEX", "Index", ParseCSVSuppliersActivityEngine.class)
 				.build();
 
 		orchestraDefinitionManager.createOrUpdateDefinition(importSuppliers);
 
-		final ProcessDefinition downloadSuppliers = ProcessDefinition.builder("DOWNLOAD_SUPPLIERS", "Download Suppliers")
+		final ProcessDefinition downloadSuppliers = ProcessDefinition.builder("ProDownloadSuppliers", "Download Suppliers")
 				.addActivity("DOWNLOAD", "Download", DownloadAndUnizpSuppliersActivityEngine.class)
 				.addInitialParam("stockSireneUniteLegaleUrl", "http://files.data.gouv.fr/insee-sirene/StockUniteLegale_utf8.zip")
 				.build();

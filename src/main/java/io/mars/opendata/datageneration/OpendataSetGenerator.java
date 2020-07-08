@@ -25,8 +25,8 @@ public class OpendataSetGenerator implements Component {
 		CSVReaderUtil.parseCSV(resourceManager, csvFilePath, this::consume);
 	}
 
-	private void consume(String csvFilePath, String[] record) {
-		Assertion.checkArgument(record.length == OPENDATA_SERVICES_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Equipment Types", csvFilePath);
+	private void consume(final String csvFilePath, final String[] record) {
+		Assertion.check().isTrue(record.length == OPENDATA_SERVICES_CSV_FILE_COLUMN_NUMBER, "CSV File {0} Format not suitable for Equipment Types", csvFilePath);
 		//
 		final OpendataSetStatusEnum status;
 		switch (record[0]) {

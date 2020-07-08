@@ -15,10 +15,11 @@ import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 
 public final class CSVReaderUtil {
-	public static void parseCSV(final ResourceManager resourceManager, final String csvFilePath, BiConsumer<String, String[]> recordConsumer) {
-		Assertion.checkNotNull(resourceManager);
-		Assertion.checkNotNull(csvFilePath);
-		Assertion.checkNotNull(recordConsumer);
+	public static void parseCSV(final ResourceManager resourceManager, final String csvFilePath, final BiConsumer<String, String[]> recordConsumer) {
+		Assertion.check()
+				.isNotNull(resourceManager)
+				.isNotNull(csvFilePath)
+				.isNotNull(recordConsumer);
 		//---
 		try (Reader reader = new BufferedReader(new InputStreamReader(resourceManager.resolve(csvFilePath).openStream()));
 				CSVReader csvReader = new CSVReaderBuilder(reader)

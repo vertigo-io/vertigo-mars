@@ -13,7 +13,7 @@ public class CommandModel {
 	private final List<CommandParamModel> commandParamsModel;
 
 	public CommandModel(final CommandDefinition commandDefinition) {
-		Assertion.checkNotNull(commandDefinition);
+		Assertion.check().isNotNull(commandDefinition);
 		//---
 		this.commandDefinition = commandDefinition;
 		commandParamsModel = commandDefinition.getParams()

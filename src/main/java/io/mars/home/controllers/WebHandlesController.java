@@ -22,8 +22,9 @@ public class WebHandlesController extends AbstractVSpringMvcController {
 
 	@GetMapping("/{definitionName}/{code}")
 	public String forward(@PathVariable("definitionName") final String definitionName, @PathVariable("code") final String code) {
-		Assertion.checkArgNotEmpty(definitionName);
-		Assertion.checkArgNotEmpty(code);
+		Assertion.check()
+				.isNotBlank(definitionName)
+				.isNotBlank(code);
 		//---
 		final String handle = definitionName + "/" + code;
 		final UID uid = handleManager.getHandleByCode(handle).getUid();

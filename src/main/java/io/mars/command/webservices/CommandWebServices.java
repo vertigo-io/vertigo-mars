@@ -86,7 +86,7 @@ public class CommandWebServices implements WebServices {
 
 	private final String evaluateParam(final String rawValue, final Class entityClass) {
 		final DtList<Entity> results = autocompleteParam(rawValue, DtObjectUtil.findDtDefinition(entityClass));
-		Assertion.checkState(results.size() == 1, "Impossible to evaluate param '{0}' as a '{1}'", rawValue, entityClass);
+		Assertion.check().isTrue(results.size() == 1, "Impossible to evaluate param '{0}' as a '{1}'", rawValue, entityClass);
 		return results.get(0).getUID().urn();
 	}
 
@@ -146,7 +146,7 @@ public class CommandWebServices implements WebServices {
 
 	private final DtList<Entity> autocompleteParam(final String terms, final DtDefinition dtDefinition) {
 		final DtListURIForMasterData dtListURIForMasterData = new DtListURIForMasterData(dtDefinition, null);
-		Assertion.checkArgument(entityStoreManager.getMasterDataConfig().containsMasterData(dtListURIForMasterData.getDtDefinition()), "Autocomplete can't be use with {0}, it's not a MasterDataList.",
+		Assertion.check().isTrue(entityStoreManager.getMasterDataConfig().containsMasterData(dtListURIForMasterData.getDtDefinition()), "Autocomplete can't be use with {0}, it's not a MasterDataList.",
 				dtListURIForMasterData.getDtDefinition().getName());
 
 		//-----
