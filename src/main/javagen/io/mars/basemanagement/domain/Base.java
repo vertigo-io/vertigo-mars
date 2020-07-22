@@ -294,19 +294,19 @@ public final class Base implements KeyConcept {
 	}
 
  	/**
-	 * Association : Base Geosector.
-	 * @return l'accesseur vers la propriété 'Base Geosector'
-	 */
-	public StoreVAccessor<io.mars.basemanagement.domain.Geosector> geosector() {
-		return geosectorIdAccessor;
-	}
-
- 	/**
 	 * Association : Base Type.
 	 * @return l'accesseur vers la propriété 'Base Type'
 	 */
 	public EnumStoreVAccessor<io.mars.basemanagement.domain.BaseType, io.mars.basemanagement.domain.BaseTypeEnum> baseType() {
 		return baseTypeIdAccessor;
+	}
+
+ 	/**
+	 * Association : Base Geosector.
+	 * @return l'accesseur vers la propriété 'Base Geosector'
+	 */
+	public StoreVAccessor<io.mars.basemanagement.domain.Geosector> geosector() {
+		return geosectorIdAccessor;
 	}
 	
 	/** {@inheritDoc} */

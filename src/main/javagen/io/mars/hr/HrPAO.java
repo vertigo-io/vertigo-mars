@@ -41,7 +41,7 @@ public final class HrPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache StTkGetMissionsDisplayByPersonId.
+	 * Execute la tache TkGetMissionsDisplayByPersonId.
 	 * @param personId Long
 	 * @return DtList de MissionDisplay missions
 	*/

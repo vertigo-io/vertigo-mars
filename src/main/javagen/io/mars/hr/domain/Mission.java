@@ -173,19 +173,19 @@ public final class Mission implements Entity {
 	}
 
  	/**
-	 * Association : Person.
-	 * @return l'accesseur vers la propriété 'Person'
-	 */
-	public StoreVAccessor<io.mars.hr.domain.Person> person() {
-		return personIdAccessor;
-	}
-
- 	/**
 	 * Association : Base.
 	 * @return l'accesseur vers la propriété 'Base'
 	 */
 	public StoreVAccessor<io.mars.basemanagement.domain.Base> base() {
 		return baseIdAccessor;
+	}
+
+ 	/**
+	 * Association : Person.
+	 * @return l'accesseur vers la propriété 'Person'
+	 */
+	public StoreVAccessor<io.mars.hr.domain.Person> person() {
+		return personIdAccessor;
 	}
 	
 	/** {@inheritDoc} */

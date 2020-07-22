@@ -44,7 +44,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 	}
 
 	/**
-	 * Execute la tache StTkGetLastTickets.
+	 * Execute la tache TkGetLastTickets.
 	 * @return DtList de Ticket tickets
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
@@ -65,7 +65,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 	}
 
 	/**
-	 * Execute la tache StTkGetLastTicketsByBaseId.
+	 * Execute la tache TkGetLastTicketsByBaseId.
 	 * @param baseId Long
 	 * @return DtList de Ticket tickets
 	*/

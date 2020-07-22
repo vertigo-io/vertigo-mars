@@ -359,11 +359,11 @@ public final class Equipment implements KeyConcept {
 	}
 
  	/**
-	 * Association : Equipment Type.
-	 * @return l'accesseur vers la propriété 'Equipment Type'
+	 * Association : Base.
+	 * @return l'accesseur vers la propriété 'Base'
 	 */
-	public StoreVAccessor<io.mars.catalog.domain.EquipmentType> equipmentType() {
-		return equipmentTypeIdAccessor;
+	public StoreVAccessor<io.mars.basemanagement.domain.Base> base() {
+		return baseIdAccessor;
 	}
 
  	/**
@@ -375,11 +375,11 @@ public final class Equipment implements KeyConcept {
 	}
 
  	/**
-	 * Association : Base.
-	 * @return l'accesseur vers la propriété 'Base'
+	 * Association : Equipment Type.
+	 * @return l'accesseur vers la propriété 'Equipment Type'
 	 */
-	public StoreVAccessor<io.mars.basemanagement.domain.Base> base() {
-		return baseIdAccessor;
+	public StoreVAccessor<io.mars.catalog.domain.EquipmentType> equipmentType() {
+		return equipmentTypeIdAccessor;
 	}
 
  	/**

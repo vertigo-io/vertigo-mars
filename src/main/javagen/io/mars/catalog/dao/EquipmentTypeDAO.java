@@ -44,7 +44,7 @@ public final class EquipmentTypeDAO extends DAO<EquipmentType, java.lang.Long> i
 	}
 
 	/**
-	 * Execute la tache StTkSelectEquipmentType.
+	 * Execute la tache TkSelectEquipmentType.
 	 * @return DtList de EquipmentType dtcEquipmentType
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(

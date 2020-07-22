@@ -44,7 +44,7 @@ public final class WorkOrderDAO extends DAO<WorkOrder, java.lang.Long> implement
 	}
 
 	/**
-	 * Execute la tache StTkGetLastWorkOrders.
+	 * Execute la tache TkGetLastWorkOrders.
 	 * @return DtList de WorkOrder workOrders
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(

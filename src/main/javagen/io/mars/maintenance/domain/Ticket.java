@@ -212,19 +212,19 @@ public final class Ticket implements Entity {
 	}
 
  	/**
-	 * Association : Ticket Status.
-	 * @return l'accesseur vers la propriété 'Ticket Status'
-	 */
-	public EnumStoreVAccessor<io.mars.maintenance.domain.TicketStatus, io.mars.maintenance.domain.TicketStatusEnum> ticketStatus() {
-		return ticketStatusIdAccessor;
-	}
-
- 	/**
 	 * Association : Equipment.
 	 * @return l'accesseur vers la propriété 'Equipment'
 	 */
 	public StoreVAccessor<io.mars.basemanagement.domain.Equipment> equipment() {
 		return equipmentIdAccessor;
+	}
+
+ 	/**
+	 * Association : Ticket Status.
+	 * @return l'accesseur vers la propriété 'Ticket Status'
+	 */
+	public EnumStoreVAccessor<io.mars.maintenance.domain.TicketStatus, io.mars.maintenance.domain.TicketStatusEnum> ticketStatus() {
+		return ticketStatusIdAccessor;
 	}
 	
 	/** {@inheritDoc} */

@@ -10,8 +10,10 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.NotebookManager;
+import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 public class Studio {
 
@@ -23,8 +25,8 @@ public class Studio {
 						.build())
 				// ---StudioFeature
 				.addModule(new StudioFeatures()
-						.withMetamodel()
-						.withVertigoMetamodel()
+						.withSource()
+						.withVertigoSource()
 						.withMda()
 						.withVertigoMda()
 						.build())
@@ -34,7 +36,8 @@ public class Studio {
 
 	public static void main(final String[] args) {
 		try (final AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
-			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
+			final NotebookManager notebookManager = studioApp.getComponentSpace().resolve(NotebookManager.class);
+			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
 
@@ -51,13 +54,17 @@ public class Studio {
 					.build();
 
 			mdaManager.clean(mdaConfig);
-			final List<MetamodelResource> resources = Arrays.asList(
-					MetamodelResource.of("kpr", "io/mars/model.kpr"),
-					MetamodelResource.of("kpr", "io/mars/tasks.kpr"),
+			final List<NotebookSource> resources = Arrays.asList(
+					NotebookSource.of("kpr", "io/mars/model.kpr"),
+					NotebookSource.of("kpr", "io/mars/tasks.kpr"),
 					//new MetamodelResource("kpr", "io/mars/support/support_file.kpr"),
-					MetamodelResource.of("kpr", "io/mars/search.kpr"),
-					MetamodelResource.of("staticMasterData", "io/mars/support/masterDataValues.json"));
-			mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig).displayResultMessage(System.out);
+					NotebookSource.of("kpr", "io/mars/search.kpr"),
+					NotebookSource.of("staticMasterData", "io/mars/support/masterDataValues.json"));
+			final Notebook notebook = notebookSourceManager.read(resources);
+			final String notebookAsJson = notebookManager.toJson(notebook);
+			System.out.println(notebookAsJson);
+			mdaManager.generate(notebook, mdaConfig).displayResultMessage(System.out);
+
 		}
 	}
 

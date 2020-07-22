@@ -44,7 +44,7 @@ public final class BusinessDAO extends DAO<Business, java.lang.Long> implements 
 	}
 
 	/**
-	 * Execute la tache StTkSelectBusiness.
+	 * Execute la tache TkSelectBusiness.
 	 * @return DtList de Business dtcBusiness
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
