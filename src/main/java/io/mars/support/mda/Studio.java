@@ -11,7 +11,6 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.NotebookManager;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
 
@@ -36,7 +35,6 @@ public class Studio {
 
 	public static void main(final String[] args) {
 		try (final AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
-			final NotebookManager notebookManager = studioApp.getComponentSpace().resolve(NotebookManager.class);
 			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
@@ -61,8 +59,6 @@ public class Studio {
 					NotebookSource.of("kpr", "io/mars/search.kpr"),
 					NotebookSource.of("staticMasterData", "io/mars/support/masterDataValues.json"));
 			final Notebook notebook = notebookSourceManager.read(resources);
-			final String notebookAsJson = notebookManager.toJson(notebook);
-			System.out.println(notebookAsJson);
 			mdaManager.generate(notebook, mdaConfig).displayResultMessage(System.out);
 
 		}
