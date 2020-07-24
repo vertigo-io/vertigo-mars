@@ -4,10 +4,6 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{templates/mmcParentLayout}">
   
-  	<head>
-		<script th:src="@{/vertigo-ui/static/js/v-components/v-minify.js}"></script>
-	</head>
-	
   	<section layout:fragment="page-container">
   		<section th:ref="detailHeader" class="col-12" v-minify="{topOffsetEl:'.q-header', leftOffsetEl:'.q-drawer--left'}">
 			<div th:ref="maxiHeader" class="row justify-between items-center bg-secondary header-content" >

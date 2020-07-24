@@ -81,8 +81,8 @@
 		<section layout:fragment="javascript-footer" >
 			<script type="text/javascript">
 				function onMissionSuccess() {
-					componentStates.missionEditModal.opened = false;
-					VUi.methods.httpPostAjax("[[@{/hr/person/_reloadMissions}]]", {});
+					VUiPage.$data.componentStates.missionEditModal.opened = false;
+					VUiPage.httpPostAjax("[[@{/hr/person/_reloadMissions}]]", {});
 				}
 			</script>
 		</section>

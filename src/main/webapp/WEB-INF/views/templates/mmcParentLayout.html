@@ -18,13 +18,10 @@
 		Vue.use(VueShortkey);
 	</script>
 	
-	<script th:src="@{/vertigo-ui/static/js/v-components/v-notifications.js}"></script>
    	<script th:src="@{/static/js/mars.js}"></script>
+   
    	
    	<link  th:href="@{/static/chatbot/chatbot.css}" rel="stylesheet"/>
-   	<script th:src="@{/vertigo-ui/static/js/v-components/v-chatbot.js}"></script>
-   	<script th:src="@{/vertigo-ui/static/js/v-components/v-commands.js}"></script>
-   	<script th:src="@{/vertigo-ui/static/js/v-components/v-handles.js}"></script>
 </head>
 
 <body class="mat desktop no-touch platform-mat">
@@ -47,7 +44,7 @@
 					</div>
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="col q-mx-xl">
-						<!--  <v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands> --> 
+						<v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands> 
 					</div>
 					<div>
 						<v-notifications th:base-url="@{/api/}" :type-icon-map="notificationTypes()" ></v-notifications>

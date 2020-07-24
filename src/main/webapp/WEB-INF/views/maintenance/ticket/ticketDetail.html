@@ -78,8 +78,8 @@
 		<section layout:fragment="javascript-footer" >
 			<script type="text/javascript">
 				function onWorkOrderSuccess() {
-					componentStates.workOrderEditModal.opened = false;
-					VUi.methods.httpPostAjax("[[@{/maintenance/ticket/_reloadWorkOrders}]]", {});
+					VUiPage.$data.componentStates.workOrderEditModal.opened = false;
+					VUiPage.httpPostAjax("[[@{/maintenance/ticket/_reloadWorkOrders}]]", {});
 				}
 			</script>
 		</section>
