@@ -13,7 +13,7 @@ import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.App;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.metamodel.DataAccessor;
@@ -74,7 +74,7 @@ public class TrainSetProvider implements Component {
 		switch (commandParamTrainingConfiguration.getType()) {
 			case "fromDb":
 				try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) {
-					final DtDefinition dtDefinition = Home.getApp().getDefinitionSpace().resolve(commandParamTrainingConfiguration.getDtDefinition(), DtDefinition.class);
+					final DtDefinition dtDefinition = App.getApp().getDefinitionSpace().resolve(commandParamTrainingConfiguration.getDtDefinition(), DtDefinition.class);
 					final DataAccessor dtFieldDataAccessor = dtDefinition.getField(commandParamTrainingConfiguration.getDtField()).getDataAccessor();
 					return entityStoreManager.find(dtDefinition, Criterions.alwaysTrue(), DtListState.of(commandParamTrainingConfiguration.getLimit()))
 							.stream()

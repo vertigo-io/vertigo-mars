@@ -26,7 +26,7 @@ import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.account.security.UserSession;
 import io.vertigo.core.locale.MessageText;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.App;
 
 /**
  * UserSession.
@@ -63,7 +63,7 @@ public class MarsUserSession extends UserSession {
 	}
 
 	public final Account getLoggedAccount() {
-		return Home.getApp().getComponentSpace().resolve(AuthenticationManager.class).getLoggedAccount()
+		return App.getApp().getComponentSpace().resolve(AuthenticationManager.class).getLoggedAccount()
 				.orElseThrow(() -> new VSecurityException(MessageText.of("No account logged in")));
 	}
 

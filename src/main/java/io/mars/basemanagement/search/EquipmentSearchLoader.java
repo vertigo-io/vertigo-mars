@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.vertigo.commons.transaction.VTransactionManager;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.App;
 import io.vertigo.datafactory.search.metamodel.SearchChunk;
 import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
 import io.vertigo.datafactory.search.model.SearchIndex;
@@ -29,7 +29,7 @@ public final class EquipmentSearchLoader extends AbstractSqlSearchLoader<Long, E
 
 	@Override
 	public List<SearchIndex<Equipment, EquipmentIndex>> loadData(final SearchChunk<Equipment> searchChunk) {
-		final SearchIndexDefinition indexDefinition = Home.getApp().getDefinitionSpace().resolve("IdxEquipment", SearchIndexDefinition.class);
+		final SearchIndexDefinition indexDefinition = App.getApp().getDefinitionSpace().resolve("IdxEquipment", SearchIndexDefinition.class);
 		final List<Long> equipmentIds = new ArrayList<>();
 		for (final UID<Equipment> uid : searchChunk.getAllUIDs()) {
 			equipmentIds.add((Long) uid.getId());

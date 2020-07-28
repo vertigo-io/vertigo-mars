@@ -23,7 +23,7 @@ package io.mars.support.boot;
 
 import javax.inject.Inject;
 
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.App;
 import io.vertigo.core.node.component.ComponentInitializer;
 import io.vertigo.datafactory.search.SearchManager;
 import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
@@ -40,8 +40,8 @@ public class SearchInitializer implements ComponentInitializer {
 	/** {@inheritDoc} */
 	@Override
 	public void init() {
-		Home.getApp().registerPreActivateFunction(() -> {
-			Home.getApp().getDefinitionSpace()
+		App.getApp().registerPreActivateFunction(() -> {
+			App.getApp().getDefinitionSpace()
 					.getAll(SearchIndexDefinition.class)
 					.stream()
 					.filter(indexDefinition -> !"IdxSupplier".equals(indexDefinition.getName()))
