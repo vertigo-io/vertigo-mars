@@ -17,11 +17,11 @@ import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 public class ExtensionsStoreController extends AbstractVSpringMvcController {
 
 	@Inject
-	private AppManager nodeManager;
+	private AppManager appManager;
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishRef(() -> "skills", (ArrayList<String>) nodeManager.getCurrentNode().getSkills());
+		viewContext.publishRef(() -> "skills", (ArrayList<String>) appManager.getCurrentNode().getSkills());
 	}
 
 }

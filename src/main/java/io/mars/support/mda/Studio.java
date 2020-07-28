@@ -3,7 +3,7 @@ package io.mars.support.mda;
 import java.util.Arrays;
 import java.util.List;
 
-import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
@@ -34,7 +34,7 @@ public class Studio {
 	}
 
 	public static void main(final String[] args) {
-		try (final AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
+		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----

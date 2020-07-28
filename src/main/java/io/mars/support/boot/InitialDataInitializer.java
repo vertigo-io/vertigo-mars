@@ -27,7 +27,7 @@ import io.mars.datageneration.DataGenerator;
 import io.vertigo.core.node.component.ComponentInitializer;
 
 /**
- * Init sample data for the app.
+ * Init sample data for the node.
  * @author dszniten
  */
 public class InitialDataInitializer implements ComponentInitializer {

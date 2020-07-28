@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import java.util.Optional;
 import io.vertigo.core.lang.Generated;
-import io.vertigo.core.node.App;
+import io.vertigo.core.node.Node;
 import io.vertigo.datamodel.task.metamodel.TaskDefinition;
 import io.vertigo.datamodel.task.model.Task;
 import io.vertigo.datamodel.task.model.TaskBuilder;
@@ -40,7 +40,7 @@ public final class PersonDAO extends DAO<Person, java.lang.Long> implements Stor
 	 * @return the builder 
 	 */
 	private static TaskBuilder createTaskBuilder(final String name) {
-		final TaskDefinition taskDefinition = App.getApp().getDefinitionSpace().resolve(name, TaskDefinition.class);
+		final TaskDefinition taskDefinition = Node.getNode().getDefinitionSpace().resolve(name, TaskDefinition.class);
 		return Task.builder(taskDefinition);
 	}
 

@@ -29,7 +29,7 @@ import io.mars.command.services.bot.generation.model.CommandTrainingModel;
 import io.vertigo.commons.command.CommandDefinition;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.locale.MessageText;
-import io.vertigo.core.node.App;
+import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.dashboard.ui.DashboardRouter;
@@ -42,7 +42,7 @@ public class BotCommandGenerationServices implements Component {
 	private TrainSetProvider trainSetProvider;
 
 	public String generateRasaDomain() {
-		final List<CommandModel> commandModels = App.getApp().getDefinitionSpace().getAll(CommandDefinition.class)
+		final List<CommandModel> commandModels = Node.getNode().getDefinitionSpace().getAll(CommandDefinition.class)
 				.stream()
 				.map(CommandModel::new)
 				.collect(Collectors.toList());
@@ -53,7 +53,7 @@ public class BotCommandGenerationServices implements Component {
 	}
 
 	public String generateRasaStories() {
-		final List<CommandModel> commandModels = App.getApp().getDefinitionSpace().getAll(CommandDefinition.class)
+		final List<CommandModel> commandModels = Node.getNode().getDefinitionSpace().getAll(CommandDefinition.class)
 				.stream()
 				.map(CommandModel::new)
 				.collect(Collectors.toList());
@@ -66,7 +66,7 @@ public class BotCommandGenerationServices implements Component {
 	public String generateNlu() {
 		final TrainingConfiguration trainingConfiguration = new Gson().fromJson(parseFile(resourceManager.resolve("/io/mars/command/services/bot/generation/trainingConfiguration.json")), TrainingConfiguration.class);
 
-		final List<CommandTrainingModel> commandTrainingModels = App.getApp().getDefinitionSpace().getAll(CommandDefinition.class)
+		final List<CommandTrainingModel> commandTrainingModels = Node.getNode().getDefinitionSpace().getAll(CommandDefinition.class)
 				.stream()
 				.map(commandDefinition -> new CommandTrainingModel(
 						commandDefinition,
