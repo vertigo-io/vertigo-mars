@@ -18,7 +18,7 @@ create DtDefinition DtEquipmentIndex {
 }
 
 create DtDefinition DtGeoSearchEquipmentCriteria {
-	field criteria {domain: DoLabel label: "Criteria" cardinality: "1"}
+	field criteria {domain: DoLabel label: "Criteria" cardinality: "?"}
 	field geoUpperLeft {domain: DoGeoPoint label: "geoUpperLeft" cardinality: "?"}
 	field geoLowerRight {domain: DoGeoPoint label: "geoLowerRight" cardinality: "?"}
 	field geoLocation {domain: DoGeoPoint label: "geoLocation" cardinality: "?"}

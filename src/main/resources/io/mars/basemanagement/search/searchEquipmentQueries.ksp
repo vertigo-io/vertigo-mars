@@ -31,7 +31,7 @@ create FacetDefinition FctEquipmentGeoDistance {
 	range r5 { filter:"geoLocation:#geoLocation#~100km", label:"< 100km"},
 	range r6 { filter:"geoLocation:#geoLocation#~200km", label:"< 200km"},
 	range r7 { filter:"geoLocation:#geoLocation#~500km", label:"< 500km"},
-	range r8 { filter:"geoLocation:[#geoLocation#~500km to *]", label:"> 500km"}	
+	range r8 { filter:"geoLocation:[#geoLocation#~500km to #geoLocation#~0km]", label:"> 500km"}	
 }
 
 create FacetDefinition FctEquipmentGeoHash {
