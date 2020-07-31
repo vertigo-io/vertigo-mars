@@ -2,18 +2,18 @@ package io.mars.opendata.domain
 
 create DtDefinition DtOpendataSet {
 	id odsId 			{domain: DoId 			label:"Id"}
-	field code 			{domain: DoCode 		label: "Code" 					cardinality: "?"}
-	field title 		{domain: DoLabel 		label: "Title" 					cardinality: "?"}
-	field description 	{domain: DoDescription 	label: "Description" 			cardinality: "?"}
-	field endPointUrl 	{domain: DoUrl 			label:"Service Endpoint URL" 	cardinality: "?"}
-	field picturefileId {domain: DoId 			label:"Picture" 				cardinality: "?"}
-	field tags 			{domain: DoMultipleIds 	label: "Tags" 					cardinality: "?"}
+	field code 			{domain: DoCode 		label: "Code" 					}
+	field title 		{domain: DoLabel 		label: "Title" 					}
+	field description 	{domain: DoDescription 	label: "Description" 			}
+	field endPointUrl 	{domain: DoUrl 			label:"Service Endpoint URL" 	}
+	field picturefileId {domain: DoId 			label:"Picture" 				}
+	field tags 			{domain: DoMultipleIds 	label: "Tags" 					}
 }
 
 create DtDefinition DtOpendataSetStatus {
 	stereotype: "StaticMasterData"
 	id opendataSetStatusId 		{domain: DoCode 		label:"Id"}
-	field label				 	{domain: DoLabel 		label:"Status Label" 	cardinality: "?"}
+	field label				 	{domain: DoLabel 		label:"Status Label" 	}
 }
 
 create Association AOpendataSetOpendataSetStatus {

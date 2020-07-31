@@ -3,34 +3,34 @@ package io.mars.maintenance.domain
 
 create DtDefinition DtTicket {
 	id ticketId {domain: DoId label:"Id"}
-	field code {domain: DoLabel label: "Number" cardinality: "?"}
-	field title {domain: DoLabel label: "Title" cardinality: "?"}
-	field description {domain: DoDescription label: "Description" cardinality: "?"}
-	field dateCreated {domain: DoLocaldate label: "Creation Date" cardinality: "?"}
-	field dateClosed {domain: DoLocaldate label: "Closing Date" cardinality: "?"}
+	field code {domain: DoLabel label: "Number" }
+	field title {domain: DoLabel label: "Title" }
+	field description {domain: DoDescription label: "Description" }
+	field dateCreated {domain: DoLocaldate label: "Creation Date" }
+	field dateClosed {domain: DoLocaldate label: "Closing Date" }
 }
 
 create DtDefinition DtWorkOrder {
 	id woId {domain: DoId label:"Id"}
-	field code {domain: DoLabel label: "Code" cardinality: "?"}
-	field ticketCode {domain: DoLabel label: "Number" cardinality: "?"}
-	field name {domain: DoLabel label: "Name" cardinality: "?"}
-	field description {domain: DoDescription label: "Description" cardinality: "?"}
-	field dateCreated {domain: DoLocaldate label: "Creation Date" cardinality: "?"}
-	field dateClosed {domain: DoLocaldate label: "Closing Date" cardinality: "?"}
-	field dueDate {domain: DoLocaldate label: "Due Date" cardinality: "?"}	
+	field code {domain: DoLabel label: "Code" }
+	field ticketCode {domain: DoLabel label: "Number" }
+	field name {domain: DoLabel label: "Name" }
+	field description {domain: DoDescription label: "Description" }
+	field dateCreated {domain: DoLocaldate label: "Creation Date" }
+	field dateClosed {domain: DoLocaldate label: "Closing Date" }
+	field dueDate {domain: DoLocaldate label: "Due Date" }	
 }
 
 create DtDefinition DtWorkOrderStatus {
 	stereotype: "StaticMasterData"
 	id workOrderStatusId {domain: DoCode label:"Id"}
-	field label {domain: DoLabel label:"Status Label" cardinality: "?"}
+	field label {domain: DoLabel label:"Status Label" }
 }
 
 create DtDefinition DtTicketStatus {
 	stereotype: "StaticMasterData"
 	id ticketStatusId {domain: DoCode label:"Id"}
-	field label {domain: DoLabel label:"Status Label" cardinality: "?"}
+	field label {domain: DoLabel label:"Status Label" }
 }
 
 

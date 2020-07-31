@@ -10,7 +10,7 @@ create Task TkGetBaseManager {
             	limit 1;
              "
     attribute baseId     {domain : DoId         	 cardinality: "1"  inOut :"in"}
-    attribute manager     {domain : DoDtPerson    cardinality: "?"  inOut :"out"}
+    attribute manager     {domain : DoDtPerson      inOut :"out"}
 }
 
 

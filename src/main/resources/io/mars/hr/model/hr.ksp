@@ -3,33 +3,33 @@ package io.mars.hr.domain
 
 create DtDefinition DtPerson {
 	id personId {domain: DoId label:"Id"}
-	field firstName {domain: DoLabel label: "First Name" cardinality: "?"}
-	field lastName {domain: DoLabel label: "Last Name" cardinality: "?"}
-	field email {domain: DoEmail label:"E-mail" cardinality: "?"}
-	field picturefileId {domain: DoId label:"Picture" cardinality: "?"}
-	field picturefileIdTmp {domain: DoLabel label:"Picture" cardinality: "?" persistent:"false"}
-	field tags {domain: DoMultipleIds label: "Tags" cardinality: "?"}
-	field dateHired {domain: DoLocaldate label: "Date hired" cardinality: "?"}
-	computed fullName {domain : DoLabel, label:"Full name" cardinality: "?"
+	field firstName {domain: DoLabel label: "First Name" }
+	field lastName {domain: DoLabel label: "Last Name" }
+	field email {domain: DoEmail label:"E-mail" }
+	field picturefileId {domain: DoId label:"Picture" }
+	field picturefileIdTmp {domain: DoLabel label:"Picture"  persistent:"false"}
+	field tags {domain: DoMultipleIds label: "Tags" }
+	field dateHired {domain: DoLocaldate label: "Date hired" }
+	computed fullName {domain : DoLabel, label:"Full name" 
         expression:"return getFirstName() + \" \" + getLastName();"
     }
 }
 
 create DtDefinition DtGroups {
 	id groupId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" cardinality: "?"}
+	field name {domain: DoLabel label: "Name" }
 }
 
 create DtDefinition DtMission {
 	id missionId {domain: DoId label:"Id"}
-	field role {domain: DoCode label:"Role" cardinality: "?"}
+	field role {domain: DoCode label:"Role" }
 }
 
 create DtDefinition DtMissionDisplay {
-	field missionId {domain: DoId label:"Id" cardinality: "?"}
-	field role {domain: DoCode label:"Role" cardinality: "?"}
-	field baseName {domain: DoLabel label:"Base" cardinality: "?"}
-	field businessName {domain: DoLabel label:"Business" cardinality: "?"}
+	field missionId {domain: DoId label:"Id" }
+	field role {domain: DoCode label:"Role" }
+	field baseName {domain: DoLabel label:"Base" }
+	field businessName {domain: DoLabel label:"Business" }
 }
 
 

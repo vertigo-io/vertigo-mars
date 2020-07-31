@@ -7,6 +7,6 @@ create DtDefinition DtMediaFileInfo {
 	 field mimeType		{domain : DoLabel 		label : "MimeType" 			cardinality: "1" }
  	 field length 		{domain : DoSize 		label : "Size" 			    cardinality: "1" }
 	 field lastModified {domain : DoInstant		label : "Modification Date" cardinality: "1" }
-	 field filePath 	{domain : DoFilePath	label : "path" 				cardinality: "?"}	 
-	 field fileData 	{domain : DoFileData	label : "data" 				cardinality: "?"}	
+	 field filePath 	{domain : DoFilePath	label : "path" 				}	 
+	 field fileData 	{domain : DoFileData	label : "data" 				}	
 }
