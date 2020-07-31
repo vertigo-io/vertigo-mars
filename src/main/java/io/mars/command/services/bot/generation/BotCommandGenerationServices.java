@@ -100,9 +100,8 @@ public class BotCommandGenerationServices implements Component {
 				.flatMap(question -> {
 					if (trainSet.isEmpty() && commandDefinition.getParams().isEmpty()) {
 						return Collections.singletonList(question).stream();
-					} else {
-						return trainSet.stream().map(args -> MessageText.of(question, (Serializable[]) transformParamsForNlu(commandDefinition, args)).getDisplay());
 					}
+					return trainSet.stream().map(args -> MessageText.of(question, (Serializable[]) transformParamsForNlu(commandDefinition, args)).getDisplay());
 				})
 				.collect(Collectors.toList());
 	}
