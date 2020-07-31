@@ -7,11 +7,11 @@ package io.mars.basemanagement.search
 
 create DtDefinition DtBaseIndex {
   field baseId {domain: DoId label: "id" cardinality: "1" }
-  field name {domain: DoLabel label: "Name" cardinality: "?"}
-  field code {domain: DoCode label: "Code" cardinality: "?"}
-  field creationDate {domain: DoLocaldate label: "Creation Date" cardinality: "?"}
-  field tags {domain: DoTags label: "Tags" cardinality: "?"}
-  field baseTypeLabel {domain: DoLabel label: "Type" cardinality: "?" }
-  field geoLocation {domain: DoGeoPoint label:"Geographic Location" cardinality: "?"}
+  field name {domain: DoLabel label: "Name" }
+  field code {domain: DoCode label: "Code" }
+  field creationDate {domain: DoLocaldate label: "Creation Date" }
+  field tags {domain: DoTags label: "Tags" }
+  field baseTypeLabel {domain: DoLabel label: "Type"  }
+  field geoLocation {domain: DoGeoPoint label:"Geographic Location" }
 }
 

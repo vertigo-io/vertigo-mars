@@ -4,53 +4,53 @@ create DtDefinition DtBase {
 	stereotype: "KeyConcept"
 	id baseId {domain: DoId label: "Id"}
 	field code {domain: DoCode label: "Code" cardinality:"1"}
-	field name {domain: DoLabel label: "Name" cardinality: "?"}
-	field healthLevel {domain: DoHealth label: "Health Level" cardinality: "?"}	
-	field creationDate {domain: DoLocaldate label: "Creation Date" cardinality: "?"}
-	field description {domain: DoDescription label: "Description" cardinality: "?"}
-	field geoLocation {domain: DoGeoPoint label:"Geographic Location" cardinality: "?"}
-	field assetsValue {domain: DoCurrency label:"Current base assets value" cardinality: "?"}
-	field rentingFee {domain: DoCurrency label: "Renting Fee" cardinality: "?"}
-	field tags {domain: DoMultipleIds label: "Tags" cardinality: "?"}
+	field name {domain: DoLabel label: "Name" }
+	field healthLevel {domain: DoHealth label: "Health Level" }	
+	field creationDate {domain: DoLocaldate label: "Creation Date" }
+	field description {domain: DoDescription label: "Description" }
+	field geoLocation {domain: DoGeoPoint label:"Geographic Location" }
+	field assetsValue {domain: DoCurrency label:"Current base assets value" }
+	field rentingFee {domain: DoCurrency label: "Renting Fee" }
+	field tags {domain: DoMultipleIds label: "Tags" }
 }
 
 
 create DtDefinition DtTag {
 	stereotype: "KeyConcept"
 	id tagId {domain: DoId label: "Id"}
-	field label {domain: DoLabel label: "Label" cardinality: "?"}
+	field label {domain: DoLabel label: "Label" }
 }
 
 
 create DtDefinition DtBaseType {
 	stereotype : "StaticMasterData"
 	id baseTypeId {domain: DoCode label:"Id"}
-	field label {domain: DoLabel label:"Base Type Label" cardinality: "?"}	
+	field label {domain: DoLabel label:"Base Type Label" }	
 }
 
 create DtDefinition DtPicture {
 	id pictureId {domain: DoId label:"Id"}
-	field picturefileId {domain: DoId label:"Id" cardinality: "?"}
+	field picturefileId {domain: DoId label:"Id" }
 }
 
 
 create DtDefinition DtGeosector {
 	id geosectorId {domain: DoId label:"Id"} 
-	field sectorLabel {domain: DoLabel label:"Sector Label" cardinality: "?"}
+	field sectorLabel {domain: DoLabel label:"Sector Label" }
 }
 
 create DtDefinition DtEquipment {
 	stereotype: "KeyConcept"
 	id equipmentId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" cardinality: "?"}
-	field code {domain: DoCode label: "Code" cardinality: "?"}
-	field healthLevel {domain: DoHealth label: "Health Level" cardinality: "?"}	
-	field purchaseDate {domain: DoLocaldate label: "Date of purchase" cardinality: "?"}
-	field description {domain: DoDescription label: "Description" cardinality: "?"}
-	field tags {domain: DoMultipleIds label: "Tags" cardinality: "?"}
-	field geoLocation {domain: DoGeoPoint label:"Geographic Location" cardinality: "?"}
-	field rentingFee {domain: DoCurrency label: "Renting Fee" cardinality: "?"}
-	field equipmentValue {domain: DoCurrency label:"Current equipment value" cardinality: "?"}
+	field name {domain: DoLabel label: "Name" }
+	field code {domain: DoCode label: "Code" }
+	field healthLevel {domain: DoHealth label: "Health Level" }	
+	field purchaseDate {domain: DoLocaldate label: "Date of purchase" }
+	field description {domain: DoDescription label: "Description" }
+	field tags {domain: DoMultipleIds label: "Tags" }
+	field geoLocation {domain: DoGeoPoint label:"Geographic Location" }
+	field rentingFee {domain: DoCurrency label: "Renting Fee" }
+	field equipmentValue {domain: DoCurrency label:"Current equipment value" }
 }
 
 
@@ -58,14 +58,14 @@ create DtDefinition DtEquipment {
 /* Exemple : "Long Range Antenna","High Res Camera", "All Terrain Tires" */
 create DtDefinition DtEquipmentFeature {
 	id equipmentFeatureId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" cardinality: "?"}
+	field name {domain: DoLabel label: "Name" }
 }
 
 
 create DtDefinition DtBusiness {
 	id businessId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" cardinality: "?"}
-	field icon {domain: DoLabel label: "Icon" cardinality: "?"}
+	field name {domain: DoLabel label: "Name" }
+	field icon {domain: DoLabel label: "Icon" }
 }
 
 /* Associations */

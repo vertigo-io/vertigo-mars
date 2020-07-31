@@ -7,23 +7,23 @@ package io.mars.basemanagement.search
 
 create DtDefinition DtEquipmentIndex {
 	field equipmentId {domain: DoId label:"Id" cardinality: "1"}
-	field name {domain: DoLabel label: "Name" cardinality: "?"}
-	field code {domain: DoCode label: "Code" cardinality: "?"}
-	field purchaseDate {domain: DoLocaldate label: "Date of purchase" cardinality: "?"}
-	field description {domain: DoDescription label: "Description" cardinality: "?"}
-	field tags {domain: DoTags label: "Tags" cardinality: "?"}
-	field equipmentTypeName {domain: DoLabel label:"Type" cardinality: "?"}
-	field equipmentCategoryName {domain: DoLabel label:"Category" cardinality: "?"}
-	field geoLocation {domain: DoGeoPoint label:"Geographic Location" cardinality: "?"}
+	field name {domain: DoLabel label: "Name" }
+	field code {domain: DoCode label: "Code" }
+	field purchaseDate {domain: DoLocaldate label: "Date of purchase" }
+	field description {domain: DoDescription label: "Description" }
+	field tags {domain: DoTags label: "Tags" }
+	field equipmentTypeName {domain: DoLabel label:"Type" }
+	field equipmentCategoryName {domain: DoLabel label:"Category" }
+	field geoLocation {domain: DoGeoPoint label:"Geographic Location" }
 }
 
 create DtDefinition DtGeoSearchEquipmentCriteria {
-	field criteria {domain: DoLabel label: "Criteria" cardinality: "?"}
-	field geoUpperLeft {domain: DoGeoPoint label: "geoUpperLeft" cardinality: "?"}
-	field geoLowerRight {domain: DoGeoPoint label: "geoLowerRight" cardinality: "?"}
-	field geoLocation {domain: DoGeoPoint label: "geoLocation" cardinality: "?"}
+	field criteria {domain: DoLabel label: "Criteria" }
+	field geoUpperLeft {domain: DoGeoPoint label: "geoUpperLeft" }
+	field geoLowerRight {domain: DoGeoPoint label: "geoLowerRight" }
+	field geoLocation {domain: DoGeoPoint label: "geoLocation" }
 }
 
 alter DtDefinition DtEquipmentIndex {
-    computed allText {	domain : DoDescription, label:"ALL_TEXT", expression:"throw new io.vertigo.core.lang.VSystemException(\"Can't use index copyTo field\");"  cardinality: "?"   }
+    computed allText {	domain : DoDescription, label:"ALL_TEXT", expression:"throw new io.vertigo.core.lang.VSystemException(\"Can't use index copyTo field\");"     }
 }

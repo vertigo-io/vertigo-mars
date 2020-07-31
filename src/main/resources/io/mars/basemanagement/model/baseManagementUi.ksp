@@ -19,10 +19,10 @@ create DtDefinition DtEquipmentMaintenanceOverview {
 }
 
 create DtDefinition DtEquipmentOverview {
-	field businessId  {domain: DoId label: "Business Id" cardinality: "?"}
-	field count  {domain: DoCount label: "Count by business" cardinality: "?"}
-	field businessName  {domain: DoLabel label: "Business" cardinality: "?"}
-	field businessIcon  {domain: DoLabel label: "Business" cardinality: "?"}
-	field okCount  {domain: DoCount label: "Ok count" cardinality: "?"}
-	field downCount  {domain: DoCount label: "Down count" cardinality: "?"}
+	field businessId  {domain: DoId label: "Business Id" }
+	field count  {domain: DoCount label: "Count by business" }
+	field businessName  {domain: DoLabel label: "Business" }
+	field businessIcon  {domain: DoLabel label: "Business" }
+	field okCount  {domain: DoCount label: "Ok count" }
+	field downCount  {domain: DoCount label: "Down count" }
 }
