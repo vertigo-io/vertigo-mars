@@ -145,7 +145,7 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withRange("r5", "geoLocation:#geoLocation#~100km", "< 100km")
 						.withRange("r6", "geoLocation:#geoLocation#~200km", "< 200km")
 						.withRange("r7", "geoLocation:#geoLocation#~500km", "< 500km")
-						.withRange("r8", "geoLocation:[#geoLocation#~500km to *]", "> 500km")
+						.withRange("r8", "geoLocation:[#geoLocation#~500km to #geoLocation#~0km]", "> 500km")
 						.withOrder(FacetOrder.definition))
 				.add(new FacetCustomDefinitionSupplier("FctEquipmentGeoHash")
 						.withDtDefinition("DtEquipmentIndex")
