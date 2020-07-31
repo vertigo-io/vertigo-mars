@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.mars.basemanagement.domain.Equipment;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -12,10 +13,10 @@ import io.vertigo.core.node.definition.DefinitionProvider;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.util.ListBuilder;
+import io.vertigo.datafactory.collections.metamodel.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder;
 import io.vertigo.datafactory.collections.metamodel.FacetRangeDefinitionSupplier;
 import io.vertigo.datafactory.collections.metamodel.FacetTermDefinitionSupplier;
-import io.vertigo.datafactory.collections.metamodel.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.metamodel.FacetedQueryDefinitionSupplier;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -26,8 +27,6 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.mars.basemanagement.search.EquipmentIndex;
-import io.mars.basemanagement.domain.Equipment;
 
 /**
  * This class is automatically generated.
@@ -61,6 +60,7 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
+
 	/**
 	 * Création d'une SearchQuery de type : EquipmentGeo.
 	 * @param criteria Critères de recherche
