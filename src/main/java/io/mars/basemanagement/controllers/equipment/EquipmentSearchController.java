@@ -1,16 +1,21 @@
 package io.mars.basemanagement.controllers.equipment;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.search.EquipmentIndex;
+import io.mars.basemanagement.search.GeoSearchEquipmentCriteria;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.domain.DtDefinitions.EquipmentIndexFields;
+import io.vertigo.core.lang.VUserException;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
 import io.vertigo.datafactory.search.model.SearchQuery;
@@ -24,15 +29,22 @@ import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 @RequestMapping("/basemanagement/equipments")
 public class EquipmentSearchController extends AbstractVSpringMvcController {
 
-	private static final ViewContextKey<String> criteriaKey = ViewContextKey.of("criteria");
+	private static final ViewContextKey<String> listRenderer = ViewContextKey.of("listRenderer");
+	private static final ViewContextKey<GeoSearchEquipmentCriteria> criteriaKey = ViewContextKey.of("criteria");
 	private static final ViewContextKey<FacetedQueryResult<EquipmentIndex, SearchQuery>> equipments = ViewContextKey.of("equipments");
 
 	@Inject
 	private EquipmentServices equipmentServices;
 
 	@GetMapping("/")
-	public void initContext(final ViewContext viewContext) {
-		viewContext.publishRef(criteriaKey, "");
+	public void initContext(final ViewContext viewContext, @RequestParam("renderer") final Optional<String> renderer) {
+		final GeoSearchEquipmentCriteria geoCriteria = new GeoSearchEquipmentCriteria();
+		geoCriteria.setCriteria("");
+		/*geoCriteria.setGeoUpperLeft(new GeoPoint(-17.4560546875, 53.569872027316876));
+		geoCriteria.setGeoLowerRight(new GeoPoint(27.456054687500004, 34.92674507515672));
+		geoCriteria.setGeoLocation(new GeoPoint(5.456054687500004, 43.92674507515672));*/
+		viewContext.publishDto(criteriaKey, geoCriteria);
+		viewContext.publishRef(listRenderer, renderer.orElse("table"));
 		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 	}
@@ -40,11 +52,19 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 	@PostMapping("/_search")
 	public ViewContext doSearch(
 			final ViewContext viewContext,
-			@ViewAttribute("criteria") final String criteria,
+			@ViewAttribute("criteria") final GeoSearchEquipmentCriteria criteria,
 			@ViewAttribute("equipments") final SelectedFacetValues selectedFacetValues,
 			final DtListState dtListState) {
-		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchEquipments(criteria, selectedFacetValues, dtListState);
-		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
+		final String listRendererValue = viewContext.getString(listRenderer);
+		if ("table".equals(viewContext.getString(listRenderer))) {
+			final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
+			viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
+		} else if ("map".equals(viewContext.getString(listRenderer))) {
+			final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchGeoEquipments(criteria, selectedFacetValues, dtListState);
+			viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
+		} else {
+			throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		}
 		return viewContext;
 	}
 

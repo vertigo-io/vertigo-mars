@@ -12,6 +12,7 @@ import io.mars.basemanagement.domain.EquipmentMaintenanceOverview;
 import io.mars.basemanagement.domain.EquipmentOverview;
 import io.mars.basemanagement.search.EquipmentIndex;
 import io.mars.basemanagement.search.EquipmentSearchClient;
+import io.mars.basemanagement.search.GeoSearchEquipmentCriteria;
 import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.VSecurityException;
@@ -64,6 +65,11 @@ public class EquipmentServices implements Component {
 
 	public FacetedQueryResult<EquipmentIndex, SearchQuery> searchEquipments(final String criteria, final SelectedFacetValues selectedFacetValues, final DtListState dtListState) {
 		final SearchQuery searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipment(criteria, selectedFacetValues).build();
+		return equipmentSearchClient.loadList(searchQuery, dtListState);
+	}
+
+	public FacetedQueryResult<EquipmentIndex, SearchQuery> searchGeoEquipments(final GeoSearchEquipmentCriteria criteria, final SelectedFacetValues selectedFacetValues, final DtListState dtListState) {
+		final SearchQuery searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipmentGeo(criteria, selectedFacetValues).build();
 		return equipmentSearchClient.loadList(searchQuery, dtListState);
 	}
 

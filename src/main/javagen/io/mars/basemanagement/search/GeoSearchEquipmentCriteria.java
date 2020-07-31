@@ -21,9 +21,9 @@ public final class GeoSearchEquipmentCriteria implements DtObject {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Criteria'.
-	 * @return String criteria <b>Obligatoire</b>
+	 * @return String criteria
 	 */
-	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Criteria")
+	@Field(smartType = "STyLabel", label = "Criteria")
 	public String getCriteria() {
 		return criteria;
 	}
@@ -31,7 +31,7 @@ public final class GeoSearchEquipmentCriteria implements DtObject {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Criteria'.
-	 * @param criteria String <b>Obligatoire</b>
+	 * @param criteria String
 	 */
 	public void setCriteria(final String criteria) {
 		this.criteria = criteria;
