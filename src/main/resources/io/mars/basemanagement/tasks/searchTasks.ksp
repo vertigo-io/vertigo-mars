@@ -12,8 +12,8 @@ create Task TkLoadBaseIndex {
 				from BASE bas
 				join BASE_TYPE bastype on bastype.base_type_id = bas.base_type_id
 				where BASE_ID in (#baseIds.rownum#);"
-	attribute baseIds {domain : DoId, cardinality: "*", inOut :"in",} 
-	attribute dtcIndex {domain : DoDtBaseIndex, cardinality: "*", inOut :"out",} 
+	in 	baseIds 	{domain : DoId, 		cardinality: "*"} 
+	out	dtcIndex	{domain : DoDtBaseIndex cardinality: "*"} 
 }
 
 
@@ -31,6 +31,6 @@ create Task TkLoadEquipmentIndex {
 				join EQUIPMENT_TYPE equipmentType on equipmentType.equipment_type_id = equ.equipment_type_id
 				join EQUIPMENT_CATEGORY equipmentCategory on equipmentCategory.equipment_category_id = equipmentType.equipment_category_id
 				where EQUIPMENT_ID in (#equipmentIds.rownum#);"
-	attribute equipmentIds {domain : DoId, cardinality: "*", inOut :"in",} 
-	attribute dtcIndex {domain : DoDtEquipmentIndex, cardinality: "*", inOut :"out",} 
+	in 	equipmentIds 	{domain : DoId, cardinality: "*"} 
+	out dtcIndex 		{domain : DoDtEquipmentIndex, cardinality: "*"} 
 }

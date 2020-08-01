@@ -5,7 +5,7 @@ create Task TkSelectBusinessId {
     request : "
             select BUSINESS_ID from BUSINESS
              "
-    attribute businessIdList     {domain : DoId         cardinality: "*"  inOut :"out"}
+    out businessIdList     {domain : DoId         cardinality: "*" }
 }
 
 create Task TkSelectBusiness {  
@@ -13,7 +13,7 @@ create Task TkSelectBusiness {
     request : "
             select BUSINESS_ID, NAME from BUSINESS
              "
-    attribute dtcBusiness     {domain : DoDtBusiness cardinality: "*"  inOut :"out"} 
+    out dtcBusiness     {domain : DoDtBusiness cardinality: "*" } 
 }
 
 
@@ -22,7 +22,7 @@ create Task TkSelectBaseId {
    request : "
             select BASE_ID from BASE
              "
-    attribute baseIdList     {domain : DoId         cardinality: "*"  inOut :"out"}
+    out baseIdList     {domain : DoId         cardinality: "*"}
 
 }
 
@@ -31,7 +31,7 @@ create Task TkSelectGeosectorId {
    request : "
             select GEOSECTOR_ID from GEOSECTOR
              "
-    attribute geosectorIdList     {domain : DoId         cardinality: "*"  inOut :"out"}
+    out geosectorIdList     {domain : DoId         cardinality: "*"}
 
 }
 

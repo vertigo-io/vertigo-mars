@@ -10,8 +10,8 @@ create Task TkGetLastPurchasedEquipmentsByBaseId {
 			order by equ.purchase_date desc
 			limit 50
              "
-    attribute baseId     	 {domain : DoId         		cardinality: "1"  inOut :"in"}
-    attribute equipments     {domain : DoDtEquipment    cardinality: "*"  inOut :"out"}
+    in 	baseId     {domain : DoId         	cardinality: "1"}
+    out equipments {domain : DoDtEquipment	cardinality: "*"}
 }
 
 create Task TkGetEquipmentsByBaseCode {  
@@ -23,8 +23,8 @@ create Task TkGetEquipmentsByBaseCode {
 				join base bas on bas.base_id = equ.base_id
 			where bas.code = #code#
              "
-    attribute code     	 	{domain : DoCode         		cardinality: "1"  inOut :"in"}
-    attribute equipments    {domain : DoDtEquipment   cardinality: "*"  inOut :"out"} 
+    in 	code     	 {domain : DoCode         cardinality: "1" }
+    out	equipments   {domain : DoDtEquipment  cardinality: "*" } 
 }
 
 
@@ -60,7 +60,7 @@ create Task TkInsertEquipmentsBatch {
         														#equipmentsList.businessId#,
         														#equipmentsList.equipmentTypeId#)
 			"
-	attribute equipmentsList	 	{domain : DoDtEquipment		cardinality: "*" 	inOut :"in"}
+	in equipmentsList	{domain : DoDtEquipment	  cardinality: "*" }
 } 
 
 create Task TkLoadEquipmentsByChunk {
@@ -72,8 +72,8 @@ create Task TkLoadEquipmentsByChunk {
         	order by EQUIPMENT_ID asc
 			limit #limit#
 			"
-	attribute limit	 	{domain : DoId		cardinality: "1" 	inOut :"in"}
-	attribute offset	 	{domain : DoId		cardinality: "1" 	inOut :"in"}
-	attribute dateExist {domain : DoInstant cardinality: "1" inOut:"in"}
-	attribute equipmentList	 	{domain : DoDtEquipment		cardinality: "*" 	inOut :"out"}
+	in 	limit	 		{domain : DoId			cardinality: "1" }
+	in 	offset	 		{domain : DoId			cardinality: "1" }
+	in 	dateExist 		{domain : DoInstant 	cardinality: "1" }
+	out	equipmentList	{domain : DoDtEquipment	cardinality: "*" }
 }

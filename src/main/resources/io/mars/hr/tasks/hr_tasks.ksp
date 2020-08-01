@@ -9,8 +9,8 @@ create Task TkGetBaseManager {
             	where mis.base_id = #baseId# and mis.role= 'Base Manager'
             	limit 1;
              "
-    attribute baseId     {domain : DoId         	 cardinality: "1"  inOut :"in"}
-    attribute manager     {domain : DoDtPerson      inOut :"out"}
+    in 	baseId   {domain : DoId         cardinality: "1"}
+    out manager  {domain : DoDtPerson }
 }
 
 
@@ -27,6 +27,6 @@ create Task TkGetMissionsDisplayByPersonId {
 				left join business bus on mis.business_id = bus.business_id
             	where mis.person_id = #personId#;
              "
-    attribute personId     {domain : DoId         		cardinality: "1"  inOut :"in"}
-    attribute missions     {domain : DoDtMissionDisplay    cardinality: "*"  inOut :"out"}
+    in	personId     {domain : DoId         		cardinality: "1" }
+    out missions     {domain : DoDtMissionDisplay   cardinality: "*" }
 }

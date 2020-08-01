@@ -12,8 +12,8 @@ create Task TkGetLastTicketsByBaseId {
 			order by tic.date_created desc
 			limit 50
              "
-    attribute baseId     {domain : DoId         		cardinality: "1"  inOut :"in"}
-    attribute tickets     {domain : DoDtTicket    cardinality: "*"  inOut :"out"}
+    in 	baseId 	{domain : DoId         	cardinality: "1" }
+    out tickets {domain : DoDtTicket    cardinality: "*" }
 }
 
 create Task TkGetLastTickets {  
@@ -25,7 +25,7 @@ create Task TkGetLastTickets {
 			order by tic.date_created desc
 			limit 50
              "
-    attribute tickets     {domain : DoDtTicket    cardinality: "*"  inOut :"out"}
+    out  tickets     {domain : DoDtTicket    cardinality: "*"}
 }
 
 create Task TkGetLastWorkOrders {  
@@ -37,5 +37,5 @@ create Task TkGetLastWorkOrders {
 			order by wor.date_created desc
 			limit 20
              "
-    attribute workOrders     {domain : DoDtWorkOrder    cardinality: "*"  inOut :"out"}
+    out workOrders     {domain : DoDtWorkOrder    cardinality: "*"}
 }
