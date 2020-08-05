@@ -292,6 +292,16 @@ public final class Base implements KeyConcept {
 	public void setGeosectorId(final Long geosectorId) {
 		geosectorIdAccessor.setId(geosectorId);
 	}
+	
+	/**
+	 * Champ : COMPUTED.
+	 * Récupère la valeur de la propriété calculée 'Tags'.
+	 * @return List de String tagsAsList
+	 */
+	@Field(smartType = "STyLabel", type = "COMPUTED", cardinality = io.vertigo.core.lang.Cardinality.MANY, persistent = false, label = "Tags")
+	public java.util.List<String> getTagsAsList() {
+		return io.vertigo.core.util.StringUtil.isBlank(tags) ? java.util.Collections.emptyList() : java.util.Arrays.asList(tags.split(";"));
+	}
 
  	/**
 	 * Association : Base Type.

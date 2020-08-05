@@ -12,6 +12,7 @@ create DtDefinition DtBase {
 	field assetsValue {domain: DoCurrency label:"Current base assets value" }
 	field rentingFee {domain: DoCurrency label: "Renting Fee" }
 	field tags {domain: DoMultipleIds label: "Tags" }
+	computed tagsAsList {domain: DoLabel label: "Tags" cardinality:"*" expression:"return io.vertigo.core.util.StringUtil.isBlank(tags) ? java.util.Collections.emptyList() : java.util.Arrays.asList(tags.split(\";\"));"}
 }
 
 

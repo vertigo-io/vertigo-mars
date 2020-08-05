@@ -115,6 +115,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		rentingFee,
 		/** Propriété 'Tags'. */
 		tags,
+		/** Propriété 'Tags'. */
+		tagsAsList,
 		/** Propriété 'Base Type'. */
 		baseTypeId,
 		/** Propriété 'Base Geosector'. */
