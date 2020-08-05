@@ -1,6 +1,5 @@
 package io.mars.support.mda;
 
-import java.util.Arrays;
 import java.util.List;
 
 import io.vertigo.core.node.AutoCloseableNode;
@@ -52,7 +51,7 @@ public class Studio {
 					.build();
 
 			mdaManager.clean(mdaConfig);
-			final List<NotebookSource> resources = Arrays.asList(
+			final List<NotebookSource> resources = List.of(
 					NotebookSource.of("kpr", "io/mars/model.kpr"),
 					NotebookSource.of("kpr", "io/mars/tasks.kpr"),
 					//new MetamodelResource("kpr", "io/mars/support/support_file.kpr"),
