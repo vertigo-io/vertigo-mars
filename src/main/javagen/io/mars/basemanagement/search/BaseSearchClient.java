@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.mars.basemanagement.domain.Base;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -26,6 +25,7 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
+import io.mars.basemanagement.domain.Base;
 
 /**
  * This class is automatically generated.
