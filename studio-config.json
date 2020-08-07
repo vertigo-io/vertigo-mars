@@ -1,0 +1,22 @@
+{
+	"metamodelResources": [
+		{"type": "kpr", "path": "src/main/resources/io/mars/model.kpr"},
+		{"type": "kpr", "path": "src/main/resources/io/mars/tasks.kpr"},
+		{"type": "kpr", "path": "src/main/resources/io/mars/search.kpr"},
+		{"type": "staticMasterData", "path": "src/main/resources/io/mars/support/masterDataValues.json"}
+	],
+	"mdaConfig": {
+		"projectPackageName": "io.mars",
+		"targetGenDir" : "src/main/",
+		"properties" : {
+			"vertigo.domain.java": "true",
+			"vertigo.domain.java.generateDtResources": "false",
+			"vertigo.domain.sql": "true",
+			"vertigo.domain.sql.targetSubDir": "javagen/sqlgen",
+			"vertigo.domain.sql.baseCible": "H2",
+			"vertigo.domain.sql.generateDrop": "true",
+			"vertigo.task": "true",
+			"vertigo.search": "true"
+		}
+	}
+}
