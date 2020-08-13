@@ -56,15 +56,18 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 			@ViewAttribute("equipments") final SelectedFacetValues selectedFacetValues,
 			final DtListState dtListState) {
 		final String listRendererValue = viewContext.getString(listRenderer);
-		if ("table".equals(viewContext.getString(listRenderer))) {
-			final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
-			viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
-		} else if ("map".equals(viewContext.getString(listRenderer))) {
-			final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchGeoEquipments(criteria, selectedFacetValues, dtListState);
-			viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
-		} else {
-			throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult;
+		switch (listRendererValue) {
+			case "table":
+				facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
+				break;
+			case "map":
+				facetedQueryResult = equipmentServices.searchGeoEquipments(criteria, selectedFacetValues, dtListState);
+				break;
+			default:
+				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
 		}
+		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 		return viewContext;
 	}
 
