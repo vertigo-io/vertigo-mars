@@ -36,7 +36,7 @@ create FacetedQueryDefinition QrySupplier {
 	keyConcept : DtSupplier
 	facets : [FctSupplierTrancheEffectifs, FctSupplierCategorieEntreprise, FctSupplierCategorieJuridique, FctSupplierActivitePrincipale, FctSupplierDateCreation ]
 	domainCriteria : DoLabel
-	listFilterBuilderClass : "io.vertigo.dynamox.search.DslListFilterBuilder"  
+	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
 	listFilterBuilderQuery : "[nom,denomination]:#+query*#"
 }
 

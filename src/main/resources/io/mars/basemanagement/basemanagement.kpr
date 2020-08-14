@@ -1,0 +1,12 @@
+model/basemanagement.ksp
+model/baseManagementUi.ksp
+model/searchBase.ksp
+model/searchEquipment.ksp
+
+search/searchBaseQueries.ksp
+search/searchEquipmentQueries.ksp
+
+tasks/basemanagement_tasks.ksp
+tasks/basemanagement_ui.ksp
+tasks/searchTasks.ksp
+tasks/tasks.ksp

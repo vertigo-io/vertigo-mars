@@ -43,7 +43,7 @@ public class PersonServices implements Component, Activeable {
 		defaultPhoto = fileManager.createFile(
 				"defaultPhoto.png",
 				"image/png",
-				PersonServices.class.getResource("/defaultPhoto.png"));
+				PersonServices.class.getResource("/io/mars/datageneration/files/persons/defaultPhoto.png"));
 	}
 
 	@Override

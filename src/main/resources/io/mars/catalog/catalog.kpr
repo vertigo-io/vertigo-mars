@@ -1,0 +1,6 @@
+model/catalog.ksp
+model/supplier.ksp
+
+search/searchSuppliers.ksp
+
+tasks/tasks.ksp

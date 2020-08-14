@@ -39,7 +39,7 @@ public class OpendataSetServices implements Component, Activeable {
 		defaultOpendataSetPicture = fileManager.createFile(
 				"defaultOpendataSetPhoto.png",
 				"image/png",
-				OpendataSetServices.class.getResource("/defaultOpendataSetPhoto.png"));
+				OpendataSetServices.class.getResource("/io/mars/datageneration/files/opendataset/defaultOpendataSetPhoto.png"));
 	}
 
 	@Override

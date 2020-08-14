@@ -1,9 +1,0 @@
-package io.mars
-
-create FileInfo FiFileInfoStd {
-	storeName : "main"
-}
-
-create FileInfo FiFileInfoTmp {
-	storeName : "temp"
-}

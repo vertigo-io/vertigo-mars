@@ -130,7 +130,7 @@ public final class BaseSearchClient implements Component, DefinitionProvider {
 				.add(new FacetedQueryDefinitionSupplier("QryBase")
 						.withFacet("FctBaseBaseTypeLabel")
 						.withFacet("FctBaseCreationDate")
-						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
+						.withListFilterBuilderClass(io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("baseId:#query# name:#query# code:#+query*#")
 						.withCriteriaSmartType("STyLabel"))
 				.build();

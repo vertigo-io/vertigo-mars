@@ -13,7 +13,7 @@
 		Task/MDM de execution.kpr -->
 	<context-param>
 		<param-name>boot.applicationConfiguration</param-name>
-		<param-value>/boot/mars.yaml</param-value>
+		<param-value>/mars.yaml</param-value>
 	</context-param>
 	<context-param>
 		<param-name>boot.activeFlags</param-name>

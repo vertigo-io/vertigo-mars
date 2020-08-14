@@ -22,6 +22,6 @@ create FacetedQueryDefinition QryBase {
 	keyConcept : DtBase
 	facets : [FctBaseBaseTypeLabel,  FctBaseCreationDate ]
 	domainCriteria : DoLabel
-	listFilterBuilderClass : "io.vertigo.dynamox.search.DslListFilterBuilder"  
+	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
 	listFilterBuilderQuery : "baseId:#query# name:#query# code:#+query*#"
 }

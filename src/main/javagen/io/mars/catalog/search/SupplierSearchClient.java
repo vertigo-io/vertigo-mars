@@ -149,7 +149,7 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 						.withFacet("FctSupplierCategorieJuridique")
 						.withFacet("FctSupplierActivitePrincipale")
 						.withFacet("FctSupplierDateCreation")
-						.withListFilterBuilderClass(io.vertigo.dynamox.search.DslListFilterBuilder.class)
+						.withListFilterBuilderClass(io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("[nom,denomination]:#+query*#")
 						.withCriteriaSmartType("STyLabel"))
 				.build();

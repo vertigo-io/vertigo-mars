@@ -16,8 +16,6 @@ boot:
         __flags__: ["home"]
         url: D:\mars\marsconf\marsApiKeys.properties
     - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin: {}
-    - io.vertigo.core.plugins.param.xml.XmlParamPlugin:
-        url : "/boot/config/application-config.xml" 
     - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
         __flags__: ["klee"]
         appName: mars-analytics
@@ -88,7 +86,7 @@ modules:
           classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           source: java:/comp/env/jdbc/DataSourceHome
       - migration.liquibase:
-          masterFile: /boot/liquibase/master.xml
+          masterFile: /liquibase/master.xml
   io.vertigo.datamodel.DataModelFeatures:
   io.vertigo.datastore.DataStoreFeatures:
     features:
