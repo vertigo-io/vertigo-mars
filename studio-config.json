@@ -1,7 +1,6 @@
 {
 	"metamodelResources": [
-		{"type": "kpr", "path": "src/main/resources/io/mars/application.kpr"},
-		{"type": "staticMasterData", "path": "src/main/resources/io/mars/support/masterDataValues.json"}
+		{"type": "kpr", "path": "src/main/resources/io/mars/application.kpr"}
 	],
 	"mdaConfig": {
 		"projectPackageName": "io.mars",

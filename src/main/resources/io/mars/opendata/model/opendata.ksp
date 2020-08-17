@@ -14,6 +14,8 @@ create DtDefinition DtOpendataSetStatus {
 	stereotype: "StaticMasterData"
 	id opendataSetStatusId 		{domain: DoCode 		label:"Id"}
 	field label				 	{domain: DoLabel 		label:"Status Label" 	}
+	values : `{		"enabled" : 	{ "opendataSetStatusId" : "ENABLED", 	"label" : "Enabled" },
+        			"disabled" : 	{ "opendataSetStatusId" : "DISABLED", 	"label" : "Disabled"}}`
 }
 
 create Association AOpendataSetOpendataSetStatus {

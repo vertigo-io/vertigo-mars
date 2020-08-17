@@ -25,12 +25,19 @@ create DtDefinition DtWorkOrderStatus {
 	stereotype: "StaticMasterData"
 	id workOrderStatusId {domain: DoCode label:"Id"}
 	field label {domain: DoLabel label:"Status Label" }
+	values : ` { 	"done" : 		{ "workOrderStatusId" : "DONE", 		"label" : "Done" 		},
+        			"inProgress" : 	{ "workOrderStatusId" : "INPROGRESS",  	"label" : "In Progress" },
+        			"failed" : 		{ "workOrderStatusId" : "FAILED", 		"label" : "Failed"		},
+        			"pending" : 	{ "workOrderStatusId" : "PENDING", 		"label" : "Pending" 	}}`
 }
 
 create DtDefinition DtTicketStatus {
 	stereotype: "StaticMasterData"
 	id ticketStatusId {domain: DoCode label:"Id"}
 	field label {domain: DoLabel label:"Status Label" }
+	values : `{ 	"open" : 		{ "ticketStatusId" : "OPEN", 			"label" : "Open"  		},
+        			"assigned" : 	{ "ticketStatusId" : "ASSIGNED", 		"label" : "Assigned" 	},
+        			"closed" : 		{ "ticketStatusId" : "CLOSED", 			"label" : "Closed" 		}}`
 }
 
 

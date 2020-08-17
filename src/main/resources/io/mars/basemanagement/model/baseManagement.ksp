@@ -27,6 +27,9 @@ create DtDefinition DtBaseType {
 	stereotype : "StaticMasterData"
 	id baseTypeId {domain: DoCode label:"Id"}
 	field label {domain: DoLabel label:"Base Type Label" }	
+	values : `{ "hydro" : 		{ "baseTypeId" : "HYDRO",  		"label" : "Hydroponic"},
+				"mine" : 		{ "baseTypeId" : "MINE", 		"label" : "Mining Complex" },
+        		"dwelling" : 	{ "baseTypeId" : "DWELLING", 	"label" : "Dwelling Complex"} }`
 }
 
 create DtDefinition DtPicture {
