@@ -14,7 +14,7 @@ import io.vertigo.database.timeseries.ClusteredMeasure;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.TabularDatas;
 import io.vertigo.database.timeseries.TimeFilter;
-import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
+import io.vertigo.database.timeseries.TimeSeriesManager;
 import io.vertigo.database.timeseries.TimedDatas;
 
 public class EquipmentEnvironmentServices implements Component {
@@ -24,35 +24,35 @@ public class EquipmentEnvironmentServices implements Component {
 	private EventBusManager eventBusManager;
 
 	@Inject
-	private TimeSeriesDataBaseManager timeSeriesDataBaseManager;
+	private TimeSeriesManager timeSeriesManager;
 
 	public TimedDatas getTimeSeries(final List<String> measures, final DataFilter dataFilter, final TimeFilter timeFilter) {
-		return timeSeriesDataBaseManager.getTimeSeries(APP_NAME, measures, dataFilter, timeFilter);
+		return timeSeriesManager.getTimeSeries(APP_NAME, measures, dataFilter, timeFilter);
 
 	}
 
 	public TimedDatas getClusteredTimeSeries(final ClusteredMeasure clusteredMeasure, final DataFilter dataFilter, final TimeFilter timeFilter) {
-		return timeSeriesDataBaseManager.getClusteredTimeSeries(APP_NAME, clusteredMeasure, dataFilter, timeFilter);
+		return timeSeriesManager.getClusteredTimeSeries(APP_NAME, clusteredMeasure, dataFilter, timeFilter);
 	}
 
 	public TimedDatas getTabularTimedData(final List<String> measures, final DataFilter dataFilter, final TimeFilter timeFilter, final String... groupBy) {
-		return timeSeriesDataBaseManager.getTabularTimedData(APP_NAME, measures, dataFilter, timeFilter, groupBy);
+		return timeSeriesManager.getTabularTimedData(APP_NAME, measures, dataFilter, timeFilter, groupBy);
 	}
 
 	public TabularDatas getTabularData(final List<String> measures, final DataFilter dataFilter, final TimeFilter timeFilter, final String... groupBy) {
-		return timeSeriesDataBaseManager.getTabularData(APP_NAME, measures, dataFilter, timeFilter, groupBy);
+		return timeSeriesManager.getTabularData(APP_NAME, measures, dataFilter, timeFilter, groupBy);
 	}
 
 	public TabularDatas getTops(final String measure, final DataFilter dataFilter, final TimeFilter timeFilter, final String groupBy, final int maxRows) {
-		return timeSeriesDataBaseManager.getTops(APP_NAME, measure, dataFilter, timeFilter, groupBy, maxRows);
+		return timeSeriesManager.getTops(APP_NAME, measure, dataFilter, timeFilter, groupBy, maxRows);
 	}
 
 	public List<String> getTagValues(final String measurement, final String tag) {
-		return timeSeriesDataBaseManager.getTagValues(APP_NAME, measurement, tag);
+		return timeSeriesManager.getTagValues(APP_NAME, measurement, tag);
 	}
 
 	public Double getLastTemperature() {
-		final TabularDatas lastTemperatures = timeSeriesDataBaseManager.getTabularData(
+		final TabularDatas lastTemperatures = timeSeriesManager.getTabularData(
 				"mars-test",
 				Collections.singletonList("value:last"),
 				DataFilter.builder("temperature").build(),
@@ -64,7 +64,7 @@ public class EquipmentEnvironmentServices implements Component {
 	}
 
 	public Double getLastHumidity() {
-		final TabularDatas lastHumidities = timeSeriesDataBaseManager.getTabularData(
+		final TabularDatas lastHumidities = timeSeriesManager.getTabularData(
 				"mars-test",
 				Collections.singletonList("value:last"),
 				DataFilter.builder("humidite").build(),
@@ -77,7 +77,7 @@ public class EquipmentEnvironmentServices implements Component {
 
 	public Integer getTotalTemperatureMeasured() {
 		//a changer pour V2
-		final TabularDatas totalMeasure = timeSeriesDataBaseManager.getTabularData(
+		final TabularDatas totalMeasure = timeSeriesManager.getTabularData(
 				"mars-test",
 				Collections.singletonList("value:count"),
 				DataFilter.builder("temperature").build(),
@@ -120,7 +120,7 @@ public class EquipmentEnvironmentServices implements Component {
 	}
 
 	public Integer getWeeklyTriggeredAlarm() {
-		final TabularDatas totalAlerts = timeSeriesDataBaseManager.getTabularData(
+		final TabularDatas totalAlerts = timeSeriesManager.getTabularData(
 				"mars-test",
 				Collections.singletonList("value:sum"),
 				DataFilter.builder("fireAlarm").build(),
@@ -132,7 +132,7 @@ public class EquipmentEnvironmentServices implements Component {
 	}
 
 	public String actionMoistureLevel() {
-		final TabularDatas lastMoistureValue = timeSeriesDataBaseManager.getTabularData(
+		final TabularDatas lastMoistureValue = timeSeriesManager.getTabularData(
 				"mars-test",
 				Arrays.asList("value:last", "equipment:last"),
 				DataFilter.builder("moisture").build(),

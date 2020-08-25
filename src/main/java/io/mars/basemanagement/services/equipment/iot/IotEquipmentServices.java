@@ -9,7 +9,7 @@ import io.vertigo.commons.eventbus.EventBusManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
+import io.vertigo.database.timeseries.TimeSeriesManager;
 
 public class IotEquipmentServices implements Component {
 	private static final Logger LOGGER = LogManager.getLogger(IotEquipmentServices.class);
@@ -17,7 +17,7 @@ public class IotEquipmentServices implements Component {
 	@Inject
 	private EventBusManager eventBusManager;
 	@Inject
-	private TimeSeriesDataBaseManager timeSeriesDataBaseManager;
+	private TimeSeriesManager timeSeriesManager;
 
 	@EventBusSubscribed
 	public void onInput(final InputEvent inputEvent) {
@@ -39,7 +39,7 @@ public class IotEquipmentServices implements Component {
 	public void onMeasure(final MeasureEvent measureEvent) {
 		Assertion.check().isNotNull(measureEvent);
 		//---
-		timeSeriesDataBaseManager.insertMeasure("mars-test", measureEvent.getMeasure());
+		timeSeriesManager.insertMeasure("mars-test", measureEvent.getMeasure());
 		LOGGER.info("Added measure to mars-test");
 	}
 }

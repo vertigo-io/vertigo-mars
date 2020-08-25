@@ -40,7 +40,7 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.TabularDatas;
 import io.vertigo.database.timeseries.TimeFilter;
-import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
+import io.vertigo.database.timeseries.TimeSeriesManager;
 
 /**
  * Test of the IoT services for mars.
@@ -63,7 +63,7 @@ public final class IotMarsTest extends AbstractTestCaseJU5 {
 	}
 
 	@Inject
-	private TimeSeriesDataBaseManager timeSeriesDataBaseManager;
+	private TimeSeriesManager timeSeriesManager;
 
 	@Test
 	@Disabled
@@ -105,7 +105,7 @@ public final class IotMarsTest extends AbstractTestCaseJU5 {
 		//---
 		Thread.sleep(500L);
 		//---
-		final TabularDatas lastTemperature = timeSeriesDataBaseManager.getTabularData(
+		final TabularDatas lastTemperature = timeSeriesManager.getTabularData(
 				"mars-test",
 				Collections.singletonList("value:last"),
 				DataFilter.builder("temperature").build(),

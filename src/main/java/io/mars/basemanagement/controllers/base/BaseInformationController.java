@@ -30,9 +30,9 @@ import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 import io.vertigo.vega.webservice.stereotype.QueryParam;
+import io.vertigo.vega.webservice.stereotype.Validate;
 import io.vertigo.vega.webservice.validation.DefaultDtObjectValidator;
 import io.vertigo.vega.webservice.validation.UiMessageStack;
-import io.vertigo.vega.webservice.validation.ValidationUserException;
 
 @Controller
 @RequestMapping("/basemanagement/base/information")
@@ -80,15 +80,14 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_save")
-	public String doSave(final ViewContext viewContext, @ViewAttribute("base") final Base base, @QueryParam("baseTmpPictureUris") final List<FileInfoURI> addedPictureFile, final UiMessageStack uiMessageStack) {
+	public String doSave(
+			final ViewContext viewContext,
+			@Validate(DefaultDtObjectValidator.class) @ViewAttribute("base") final Base base,
+			@QueryParam("baseTmpPictureUris") final List<FileInfoURI> addedPictureFile,
+			final UiMessageStack uiMessageStack) {
 		final BasicUiListModifiable<Picture> pictures = viewContext.getUiListModifiable(basePictures);
 		pictures.mergeAndCheckInput(Collections.emptyList(), uiMessageStack); //needed to populate Delta
 		baseServices.save(base, addedPictureFile, pictures.getDtListDelta().getDeleted()); //Warning : always one service call : one transaction
-		viewContext.getUiObject(() -> "base").mergeAndCheckInput(Collections.singletonList(new DefaultDtObjectValidator()), uiMessageStack);
-		if (uiMessageStack.hasErrors()) {
-			throw new ValidationUserException();
-		}
-
 		return "redirect:/basemanagement/base/information/" + base.getBaseId();
 
 	}
