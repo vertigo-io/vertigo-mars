@@ -114,13 +114,15 @@
 	
 	<filter>
 		<filter-name>VegaSparkFilter</filter-name>
-		<filter-class>io.vertigo.vega.plugins.webservice.webserver.sparkjava.VegaSparkFilter</filter-class>
+		<filter-class>io.vertigo.vega.plugins.webservice.webserver.javalin.VegaJavalinFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>VegaSparkFilter</filter-name>
 		<url-pattern>/api/*</url-pattern>
 		<url-pattern>/dashboard/*</url-pattern>
 	</filter-mapping>
+	
+	
 	
 	<!-- <filter>
 		<description>
