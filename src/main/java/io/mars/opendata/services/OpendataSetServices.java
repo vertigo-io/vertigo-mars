@@ -12,12 +12,12 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.datastore.filestore.FileManager;
 import io.vertigo.datastore.filestore.FileStoreManager;
 import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
 import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;
+import io.vertigo.datastore.impl.filestore.model.StreamFile;
 
 @Transactional
 public class OpendataSetServices implements Component, Activeable {
@@ -28,15 +28,13 @@ public class OpendataSetServices implements Component, Activeable {
 	private FileStoreManager fileStoreManager;
 	@Inject
 	private MarsFileServices commonsServices;
-	@Inject
-	private FileManager fileManager;
 
 	private VFile defaultOpendataSetPicture;
 
 	@Override
 	public void start() {
 
-		defaultOpendataSetPicture = fileManager.createFile(
+		defaultOpendataSetPicture = StreamFile.of(
 				"defaultOpendataSetPhoto.png",
 				"image/png",
 				OpendataSetServices.class.getResource("/io/mars/datageneration/files/opendataset/defaultOpendataSetPhoto.png"));

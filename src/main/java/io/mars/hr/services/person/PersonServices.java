@@ -13,12 +13,12 @@ import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
-import io.vertigo.datastore.filestore.FileManager;
 import io.vertigo.datastore.filestore.FileStoreManager;
 import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
 import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;
+import io.vertigo.datastore.impl.filestore.model.StreamFile;
 
 @Transactional
 public class PersonServices implements Component, Activeable {
@@ -30,8 +30,6 @@ public class PersonServices implements Component, Activeable {
 	private EntityStoreManager entityStoreManager;
 	@Inject
 	private FileStoreManager fileStoreManager;
-	@Inject
-	private FileManager fileManager;
 
 	@Inject
 	private MarsFileServices commonsServices;
@@ -40,7 +38,7 @@ public class PersonServices implements Component, Activeable {
 
 	@Override
 	public void start() {
-		defaultPhoto = fileManager.createFile(
+		defaultPhoto = StreamFile.of(
 				"defaultPhoto.png",
 				"image/png",
 				PersonServices.class.getResource("/io/mars/datageneration/files/persons/defaultPhoto.png"));

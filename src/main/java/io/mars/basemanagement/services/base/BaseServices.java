@@ -28,12 +28,12 @@ import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datastore.filestore.FileManager;
 import io.vertigo.datastore.filestore.FileStoreManager;
 import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
 import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;
+import io.vertigo.datastore.impl.filestore.model.StreamFile;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
 
@@ -53,8 +53,6 @@ public class BaseServices implements Component, Activeable {
 	@Inject
 	private MarsFileServices commonsServices;
 	@Inject
-	private FileManager fileManager;
-	@Inject
 	private FileStoreManager fileStoreManager;
 
 	@Inject
@@ -66,7 +64,7 @@ public class BaseServices implements Component, Activeable {
 
 	@Override
 	public void start() {
-		defaultPhoto = fileManager.createFile(
+		defaultPhoto = StreamFile.of(
 				"defaultBase.png",
 				"image/png",
 				PersonServices.class.getResource("/io/mars/datageneration/files/bases/defaultBase.png"));

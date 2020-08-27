@@ -18,8 +18,8 @@ import io.mars.catalog.services.supplier.SupplierServices;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.param.ParamManager;
-import io.vertigo.datastore.filestore.FileManager;
 import io.vertigo.datastore.filestore.model.VFile;
+import io.vertigo.datastore.impl.filestore.model.StreamFile;
 import io.vertigo.orchestra.impl.services.execution.AbstractActivityEngine;
 import io.vertigo.orchestra.services.execution.ActivityExecutionWorkspace;
 
@@ -28,8 +28,6 @@ public class DownloadAndUnizpSuppliersActivityEngine extends AbstractActivityEng
 	@Inject
 	private SupplierServices supplierServices;
 
-	@Inject
-	private FileManager fileManager;
 	@Inject
 	private ParamManager paramManager;
 
@@ -40,7 +38,7 @@ public class DownloadAndUnizpSuppliersActivityEngine extends AbstractActivityEng
 		final String url = workspace.getValue("stockSireneUniteLegaleUrl");
 		final String rootDirectory = "file:///" + paramManager.getParam("orchestra.root.directory").getValueAsString() + "/IMPORT/SIRENE/";
 		try {
-			final VFile vFile = fileManager.createFile("StockUniteLegale_utf8.zip", "application/zip", new URL(url));
+			final VFile vFile = StreamFile.of("StockUniteLegale_utf8.zip", "application/zip", new URL(url));
 			try (final InputStream inputStream = vFile.createInputStream()) {
 				final Path destPath = Paths.get(new URL(rootDirectory + "StockUniteLegale_utf8.zip").toURI());
 				destPath.toFile().mkdirs();

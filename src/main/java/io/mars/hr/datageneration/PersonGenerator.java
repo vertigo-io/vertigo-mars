@@ -21,10 +21,10 @@ import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.datastore.filestore.FileManager;
 import io.vertigo.datastore.filestore.FileStoreManager;
 import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.VFile;
+import io.vertigo.datastore.impl.filestore.model.StreamFile;
 
 @Transactional
 public class PersonGenerator implements Component {
@@ -35,8 +35,6 @@ public class PersonGenerator implements Component {
 	private PersonDAO personDAO;
 	@Inject
 	private ResourceManager resourceManager;
-	@Inject
-	private FileManager fileManager;
 	@Inject
 	private FileStoreManager fileStoreManager;
 	@Inject
@@ -63,7 +61,7 @@ public class PersonGenerator implements Component {
 		if (picturePath.isEmpty()) {
 			pictureId = null;
 		} else {
-			final VFile pictureFile = fileManager.createFile(
+			final VFile pictureFile = StreamFile.of(
 					picturePath.substring(picturePath.lastIndexOf('/') + 1),
 					"image/" + picturePath.substring(picturePath.lastIndexOf('.') + 1),
 					this.getClass().getResource(picturePath));

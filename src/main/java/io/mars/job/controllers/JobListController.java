@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.job.services.JobServices;
-import io.vertigo.orchestra.domain.DtDefinitions.OExecutionSummaryFields;
-import io.vertigo.orchestra.domain.DtDefinitions.OProcessUiFields;
 import io.vertigo.orchestra.monitoring.domain.summary.OExecutionSummary;
 import io.vertigo.orchestra.monitoring.domain.uidefinitions.OProcessUi;
 import io.vertigo.ui.core.ViewContext;
@@ -34,13 +31,13 @@ public class JobListController extends AbstractVSpringMvcController {
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishDtList(jobs, OProcessUiFields.name, jobServices.getProcessDefinitions());
-
-		// We take the first day of the current week
-		final Calendar firstDayOfWeek = getFirstDayOfWeek();
-		// We make the call with the proper week dates
-		viewContext.publishDtList(summaries, OExecutionSummaryFields.proId, jobServices.getSummariesByDate(
-				firstDayOfWeek.toInstant(), getFirstDayOfNextWeekDate(firstDayOfWeek), Optional.of("ALL")));
+		//		viewContext.publishDtList(jobs, OProcessUiFields.name, jobServices.getProcessDefinitions());
+		//
+		//		// We take the first day of the current week
+		//		final Calendar firstDayOfWeek = getFirstDayOfWeek();
+		//		// We make the call with the proper week dates
+		//		viewContext.publishDtList(summaries, OExecutionSummaryFields.proId, jobServices.getSummariesByDate(
+		//				firstDayOfWeek.toInstant(), getFirstDayOfNextWeekDate(firstDayOfWeek), Optional.of("ALL")));
 
 	}
 

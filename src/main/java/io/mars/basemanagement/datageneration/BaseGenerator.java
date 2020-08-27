@@ -15,10 +15,10 @@ import io.mars.support.fileinfo.FileInfoStd;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.datastore.filestore.FileManager;
 import io.vertigo.datastore.filestore.FileStoreManager;
 import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.VFile;
+import io.vertigo.datastore.impl.filestore.model.StreamFile;
 
 @Transactional
 public class BaseGenerator implements Component {
@@ -31,8 +31,6 @@ public class BaseGenerator implements Component {
 	@Inject
 	private PictureDAO pictureDAO;
 
-	@Inject
-	private FileManager fileManager;
 	@Inject
 	private FileStoreManager fileStoreManager;
 
@@ -167,7 +165,7 @@ public class BaseGenerator implements Component {
 			//Add picture
 
 			for (final String picturePath : builder.generatePictures(baseIdx)) {
-				final VFile pictureFile = fileManager.createFile(
+				final VFile pictureFile = StreamFile.of(
 						picturePath.substring(picturePath.lastIndexOf('/') + 1),
 						"image/" + picturePath.substring(picturePath.lastIndexOf('.') + 1),
 						this.getClass().getResource(picturePath));
