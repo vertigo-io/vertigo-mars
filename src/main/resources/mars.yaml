@@ -159,13 +159,13 @@ modules:
     features:
         - webservices:
     featuresConfig:
+        - webservices.javalin:
+            apiPrefix: /api
         - webservices.token:
             tokens: mars-api
         - webservices.rateLimiting:
         - webservices.security:
         - webservices.swagger:
-        - webservices.apiPrefix:
-            apiPrefix: /api
   io.vertigo.orchestra.OrchestraFeatures:
     featuresConfig:
       - orchestra.database:
