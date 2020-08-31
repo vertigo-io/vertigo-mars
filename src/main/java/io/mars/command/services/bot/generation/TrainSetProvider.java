@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import io.mars.command.services.bot.generation.TrainingConfiguration.CommandParamTrainingConfiguration;
-import io.vertigo.commons.command.CommandDefinition;
+import io.vertigo.commons.command.definitions.CommandDefinition;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
@@ -16,8 +16,8 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.criteria.Criterions;
-import io.vertigo.datamodel.structure.metamodel.DataAccessor;
-import io.vertigo.datamodel.structure.metamodel.DtDefinition;
+import io.vertigo.datamodel.structure.definitions.DataAccessor;
+import io.vertigo.datamodel.structure.definitions.DtDefinition;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 

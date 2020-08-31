@@ -26,7 +26,7 @@ import javax.inject.Inject;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.ComponentInitializer;
 import io.vertigo.datafactory.search.SearchManager;
-import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
+import io.vertigo.datafactory.search.definitions.SearchIndexDefinition;
 
 /**
  * Init sample data for the node.

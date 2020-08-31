@@ -14,17 +14,17 @@ import java.util.stream.IntStream;
 
 import javax.inject.Inject;
 
-import io.vertigo.commons.command.CommandDefinition;
 import io.vertigo.commons.command.CommandManager;
-import io.vertigo.commons.command.CommandParam;
 import io.vertigo.commons.command.CommandResponse;
+import io.vertigo.commons.command.definitions.CommandDefinition;
+import io.vertigo.commons.command.definitions.CommandParam;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.datafactory.collections.CollectionsManager;
-import io.vertigo.datamodel.structure.metamodel.DtDefinition;
-import io.vertigo.datamodel.structure.metamodel.DtField;
+import io.vertigo.datamodel.structure.definitions.DtDefinition;
+import io.vertigo.datamodel.structure.definitions.DtField;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListURIForMasterData;
 import io.vertigo.datamodel.structure.model.DtObject;

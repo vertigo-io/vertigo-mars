@@ -14,7 +14,7 @@ import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.filestore.FileStoreManager;
-import io.vertigo.datastore.filestore.metamodel.FileInfoDefinition;
+import io.vertigo.datastore.filestore.definitions.FileInfoDefinition;
 import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;

@@ -1,6 +1,6 @@
 package io.mars.command.services.bot.generation.model;
 
-import io.vertigo.commons.command.CommandParam;
+import io.vertigo.commons.command.definitions.CommandParam;
 import io.vertigo.core.lang.Assertion;
 
 public class CommandParamModel {

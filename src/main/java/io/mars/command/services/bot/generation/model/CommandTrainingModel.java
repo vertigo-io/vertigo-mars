@@ -2,7 +2,7 @@ package io.mars.command.services.bot.generation.model;
 
 import java.util.List;
 
-import io.vertigo.commons.command.CommandDefinition;
+import io.vertigo.commons.command.definitions.CommandDefinition;
 import io.vertigo.core.lang.Assertion;
 
 public class CommandTrainingModel {

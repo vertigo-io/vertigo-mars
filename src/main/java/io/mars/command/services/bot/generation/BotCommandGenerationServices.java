@@ -26,7 +26,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.mars.command.services.bot.generation.model.CommandModel;
 import io.mars.command.services.bot.generation.model.CommandTrainingModel;
-import io.vertigo.commons.command.CommandDefinition;
+import io.vertigo.commons.command.definitions.CommandDefinition;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.Node;
