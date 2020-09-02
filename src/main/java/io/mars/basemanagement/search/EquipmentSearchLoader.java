@@ -9,13 +9,13 @@ import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.node.Node;
+import io.vertigo.datafactory.impl.search.loader.AbstractSqlSearchLoader;
 import io.vertigo.datafactory.search.definitions.SearchChunk;
 import io.vertigo.datafactory.search.definitions.SearchIndexDefinition;
 import io.vertigo.datafactory.search.model.SearchIndex;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datamodel.task.TaskManager;
-import io.vertigo.dynamox.search.AbstractSqlSearchLoader;
 
 public final class EquipmentSearchLoader extends AbstractSqlSearchLoader<Long, Equipment, EquipmentIndex> {
 
