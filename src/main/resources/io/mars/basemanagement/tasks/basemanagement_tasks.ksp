@@ -1,7 +1,7 @@
 package io.mars.basemanagement
 
 create Task TkGetLastPurchasedEquipmentsByBaseId {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
             	equ.*
@@ -15,7 +15,7 @@ create Task TkGetLastPurchasedEquipmentsByBaseId {
 }
 
 create Task TkGetEquipmentsByBaseCode {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
             	equ.*
@@ -30,7 +30,7 @@ create Task TkGetEquipmentsByBaseCode {
 
 
 create Task TkInsertEquipmentsBatch {
-    className : "io.vertigo.dynamox.task.TaskEngineProcBatch"
+    className : "io.vertigo.basics.task.TaskEngineProcBatch"
         request : "
         	INSERT INTO EQUIPMENT (EQUIPMENT_ID, 
         							NAME, 
@@ -64,7 +64,7 @@ create Task TkInsertEquipmentsBatch {
 } 
 
 create Task TkLoadEquipmentsByChunk {
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
         request : "
         	select * from EQUIPMENT 
 			where EQUIPMENT_ID > #offset#

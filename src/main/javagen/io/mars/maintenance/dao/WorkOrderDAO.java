@@ -54,7 +54,7 @@ public final class WorkOrderDAO extends DAO<WorkOrder, java.lang.Long> implement
  "			from work_order wor" + 
  "			order by wor.date_created desc" + 
  "			limit 20",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtWorkOrder")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.WorkOrder> getLastWorkOrders() {
 		final Task task = createTaskBuilder("TkGetLastWorkOrders")

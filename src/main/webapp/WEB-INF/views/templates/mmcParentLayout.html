@@ -50,7 +50,7 @@
 						<v-notifications th:base-url="@{/api/}" :type-icon-map="notificationTypes()" ></v-notifications>
 						<q-btn flat icon-right="arrow_drop_down" class="on-left gt-md">
 							<vu:include-data object="connectedUser" field="personId"/>
-							<img th::src="|'@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo'|" class="avatar" alt="user avatar"/>
+							<q-avatar><img th::src="|'@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo'|" alt="user avatar"/></q-avatar>
 							<div class="on-right"><span th:text="${model.vContext['connectedUser']['firstName']+' '+model.vContext['connectedUser']['lastName']}"></span><br/><small><span th:text="${model.vContext['activeProfile']}"></span></small></div>
 							<q-menu fit>
 							  <q-list>

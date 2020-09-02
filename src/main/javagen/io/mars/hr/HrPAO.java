@@ -56,7 +56,7 @@ public final class HrPAO implements StoreServices {
  "            	left join base bas on mis.base_id = bas.base_id" + 
  "				left join business bus on mis.business_id = bus.business_id" + 
  "            	where mis.person_id = #personId#;",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtMissionDisplay")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "personId", smartType = "STyId") final Long personId) {
 		final Task task = createTaskBuilder("TkGetMissionsDisplayByPersonId")

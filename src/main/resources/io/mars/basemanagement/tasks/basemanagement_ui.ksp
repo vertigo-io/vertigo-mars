@@ -3,7 +3,7 @@ package io.mars.basemanagement
 
 
 create Task TkGetEquipmentsOverview {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
             	count(1) as count,
@@ -22,7 +22,7 @@ create Task TkGetEquipmentsOverview {
 }
 
 create Task TkGetBasesSummary {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
 				(select count(*) from base) as base_count,
@@ -34,7 +34,7 @@ create Task TkGetBasesSummary {
 }
 
 create Task TkGetBaseOverview {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
            select 
 				(select count(*) from equipment equ where equ.base_id = #baseId#) as equipment_count,
@@ -47,7 +47,7 @@ create Task TkGetBaseOverview {
 
 
 create Task TkGetEquipmentMaintenanceOverview {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
            select 
 				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,

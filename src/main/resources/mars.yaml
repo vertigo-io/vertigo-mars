@@ -200,7 +200,6 @@ modules:
       - geosearch.es:
           envIndexPrefix: mars
   io.vertigo.dashboard.DashboardFeatures:
-    __flags__: ["no"]
     features:
       - analytics:
           appName: mars-analytics

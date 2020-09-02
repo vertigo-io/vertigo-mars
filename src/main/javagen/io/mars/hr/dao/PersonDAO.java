@@ -56,7 +56,7 @@ public final class PersonDAO extends DAO<Person, java.lang.Long> implements Stor
  "            	join person per on mis.person_id = per.person_id" + 
  "            	where mis.base_id = #baseId# and mis.role= 'Base Manager'" + 
  "            	limit 1;",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtPerson")
 	public Optional<io.mars.hr.domain.Person> getBaseManager(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetBaseManager")

@@ -54,7 +54,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
  "			from ticket tic" + 
  "			order by tic.date_created desc" + 
  "			limit 50",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtTicket")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTickets() {
 		final Task task = createTaskBuilder("TkGetLastTickets")
@@ -78,7 +78,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
  "			where equ.base_id = #baseId#" + 
  "			order by tic.date_created desc" + 
  "			limit 50",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtTicket")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
 		final Task task = createTaskBuilder("TkGetLastTicketsByBaseId")

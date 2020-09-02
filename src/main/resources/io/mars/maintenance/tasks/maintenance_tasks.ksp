@@ -2,7 +2,7 @@ package io.mars.maintenance
 
 
 create Task TkGetLastTicketsByBaseId {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
             	tic.*
@@ -17,7 +17,7 @@ create Task TkGetLastTicketsByBaseId {
 }
 
 create Task TkGetLastTickets {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
             	tic.*
@@ -29,7 +29,7 @@ create Task TkGetLastTickets {
 }
 
 create Task TkGetLastWorkOrders {  
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
             	wor.*

@@ -50,7 +50,7 @@ public final class BusinessDAO extends DAO<Business, java.lang.Long> implements 
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkSelectBusiness",
 			request = "select BUSINESS_ID, NAME from BUSINESS",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBusiness")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Business> selectBusiness() {
 		final Task task = createTaskBuilder("TkSelectBusiness")
