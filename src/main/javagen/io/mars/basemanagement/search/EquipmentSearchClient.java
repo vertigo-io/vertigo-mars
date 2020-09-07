@@ -71,6 +71,17 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
+	/**
+	 * Création d'une SearchQuery de type : EquipmentGeoDistance.
+	 * @param criteria Critères de recherche
+	 * @param selectedFacetValues Liste des facettes sélectionnées à appliquer
+	 * @return SearchQueryBuilder pour ce type de recherche
+	 */
+	public SearchQueryBuilder createSearchQueryBuilderEquipmentGeoDistance(final io.mars.basemanagement.search.GeoSearchEquipmentCriteria criteria, final SelectedFacetValues selectedFacetValues) {
+		return SearchQuery.builder("QryEquipmentGeoDistance")
+				.withCriteria(criteria)
+				.withFacet(selectedFacetValues);
+	}
 
 	/**
 	 * Récupération du résultat issu d'une requête.
@@ -173,6 +184,14 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withListFilterBuilderQuery("allText:#+query*#")
 						.withCriteriaSmartType("STyLabel"))
 				.add(new FacetedQueryDefinitionSupplier("QryEquipmentGeo")
+						.withFacet("FctEquipmentEquipmentTypeName")
+						.withFacet("FctEquipmentPurchaseDate")
+						.withFacet("FctEquipmentEquipmentCategoryName")
+						.withListFilterBuilderClass(io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder.class)
+						.withListFilterBuilderQuery("allText:#+criteria*#")
+						.withGeoSearchQuery("geoLocation: [#geoUpperLeft# to #geoLowerRight#]")
+						.withCriteriaSmartType("STyDtGeoSearchEquipmentCriteria"))
+				.add(new FacetedQueryDefinitionSupplier("QryEquipmentGeoDistance")
 						.withFacet("FctEquipmentEquipmentTypeName")
 						.withFacet("FctEquipmentPurchaseDate")
 						.withFacet("FctEquipmentEquipmentCategoryName")

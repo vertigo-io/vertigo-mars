@@ -40,9 +40,6 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext, @RequestParam("renderer") final Optional<String> renderer) {
 		final GeoSearchEquipmentCriteria geoCriteria = new GeoSearchEquipmentCriteria();
 		geoCriteria.setCriteria("");
-		/*geoCriteria.setGeoUpperLeft(new GeoPoint(-17.4560546875, 53.569872027316876));
-		geoCriteria.setGeoLowerRight(new GeoPoint(27.456054687500004, 34.92674507515672));
-		geoCriteria.setGeoLocation(new GeoPoint(5.456054687500004, 43.92674507515672));*/
 		viewContext.publishDto(criteriaKey, geoCriteria);
 		viewContext.publishRef(listRenderer, renderer.orElse("table"));
 		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));

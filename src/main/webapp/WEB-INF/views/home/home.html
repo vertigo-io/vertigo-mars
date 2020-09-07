@@ -18,7 +18,6 @@
 		<!-- maps -->
 		<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"/>
 		<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
-		<script th:src="@{/vertigo-ui/static/js/v-components/v-map.js}"></script>
 	</head>
 	<body>
 		<section layout:fragment="page-container">
@@ -26,7 +25,7 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<q-card>
 							<q-card-section class="text-h6 bg-secondary text-white">Bases</q-card-section>
-							<q-card-section class="row justify-center items-center" style="height: 100px;">
+							<q-card-section class="row justify-center items-center q-pt-none" style="height: 100px;">
 								<span class="text-secondary" style="font-size:5em;" th:text="${model.basesSummary.baseCount}"></span> 
 								<q-icon name="fas fa-dice-d20" color="grey on-right" size="4em"></q-icon>
 							</q-card-section>
@@ -35,7 +34,7 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<q-card>
 							<q-card-section class="text-h6 bg-secondary text-white">Global Health Level</q-card-section>
-							<q-card-section class="row justify-center" style="height: 100px;">
+							<q-card-section class="row justify-center  q-pt-none" style="height: 100px;">
 								<q-rating readonly th::value="${model.basesSummary.baseMeanHealth} / 100 * 3 + 1" :max="3" size="3em" icon="favorite" color="red"></q-rating>
 							</q-card-section>
 						</q-card>
@@ -43,7 +42,7 @@
 					<div class="col-lg-3 col-md-6 col-12" >
 						<q-card>
 							<q-card-section class="text-h6 bg-secondary text-white">Equipment</q-card-section>
-							<q-card-section  style="height: 100px;">
+							<q-card-section  class="q-pt-none" style="height: 100px;">
 								<div class="column items-center">
 									<div class="row text-secondary indicator" th:text="|${model.basesSummary.onlineEquipmentPercent} %|" ></div>
 									<div class="row text-grey indicator-title">Equipments online</div>
@@ -54,7 +53,7 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<q-card>
 							<q-card-section class="text-h6 bg-secondary text-white">Maintenance</q-card-section>
-							<q-card-section  style="height: 100px;">
+							<q-card-section class="q-pt-none" style="height: 100px;">
 								<div class="column items-center">
 									<div class="row text-secondary indicator" th:text="${model.basesSummary.openedTickets}" ></div>
 									<div class="row text-grey indicator-title">Opened Tickets</div>

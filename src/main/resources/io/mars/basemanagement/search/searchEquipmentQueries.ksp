@@ -51,9 +51,19 @@ create FacetedQueryDefinition QryEquipment {
 
 create FacetedQueryDefinition QryEquipmentGeo {
 	keyConcept : DtEquipment
+	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName]
+	domainCriteria : DoDtGeoSearchEquipmentCriteria
+	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
+	listFilterBuilderQuery : "allText:#+criteria*#"
+	geoSearchQuery : "geoLocation: [#geoUpperLeft# to #geoLowerRight#]"
+}
+
+create FacetedQueryDefinition QryEquipmentGeoDistance {
+	keyConcept : DtEquipment
 	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentGeoDistance]
 	domainCriteria : DoDtGeoSearchEquipmentCriteria
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
 	listFilterBuilderQuery : "allText:#+criteria*#"
 	geoSearchQuery : "geoLocation: [#geoUpperLeft# to #geoLowerRight#]"
 }
+

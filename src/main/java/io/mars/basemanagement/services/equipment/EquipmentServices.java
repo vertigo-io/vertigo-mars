@@ -69,7 +69,12 @@ public class EquipmentServices implements Component {
 	}
 
 	public FacetedQueryResult<EquipmentIndex, SearchQuery> searchGeoEquipments(final GeoSearchEquipmentCriteria criteria, final SelectedFacetValues selectedFacetValues, final DtListState dtListState) {
-		final SearchQuery searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipmentGeo(criteria, selectedFacetValues).build();
+		final SearchQuery searchQuery;
+		if (criteria.getGeoLocation() != null) {
+			searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipmentGeoDistance(criteria, selectedFacetValues).build();
+		} else {
+			searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipmentGeo(criteria, selectedFacetValues).build();
+		}
 		return equipmentSearchClient.loadList(searchQuery, dtListState);
 	}
 
