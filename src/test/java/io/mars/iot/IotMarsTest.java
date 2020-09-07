@@ -30,12 +30,15 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.lang.WrappedException;
+import io.vertigo.core.node.AutoCloseableNode;
+import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.TabularDatas;
@@ -47,7 +50,7 @@ import io.vertigo.database.timeseries.TimeSeriesManager;
  *
  * @author mlaroche
  */
-public final class IotMarsTest extends AbstractTestCaseJU5 {
+public final class IotMarsTest {
 
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -57,8 +60,22 @@ public final class IotMarsTest extends AbstractTestCaseJU5 {
 	private static final int QOS = 0;
 	private static final String CONTENT = "aaa 32";
 
-	@Override
-	protected NodeConfig buildNodeConfig() {
+	private AutoCloseableNode node;
+
+	@BeforeEach
+	public void setUp() {
+		node = new AutoCloseableNode(buildNodeConfig());
+		DIInjector.injectMembers(this, node.getComponentSpace());
+	}
+
+	@AfterEach
+	public void tearDown() {
+		if (node != null) {
+			node.close();
+		}
+	}
+
+	protected static NodeConfig buildNodeConfig() {
 		return IotMarsTestConfig.config();
 	}
 
