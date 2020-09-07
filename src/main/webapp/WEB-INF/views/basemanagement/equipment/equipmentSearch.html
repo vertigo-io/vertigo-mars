@@ -9,7 +9,6 @@
 		<!-- maps -->
 		<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"/>
 		<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
-		<script th:src="@{/vertigo-ui/static/js/v-components/v-map.js}"></script>
 	</head>
 	
 	<body>
@@ -48,14 +47,14 @@
 							<vu:include-data object="criteria" field="geoUpperLeft" />
 							<vu:include-data object="criteria" field="geoLowerRight" />
 							<vu:include-data object="criteria" field="geoLocation" />
-							<v-map2 :initial-center="{ lat : 45.0, lon: 5.0 }" 
+							<v-map :initial-center="{ lat : 45.0, lon: 5.0 }" 
 								:initial-zoom-level="5"
 								style="width:100%; height: 800px;" 
 								tabindex="1" id="map" marker-color="#027BE3" 
 								:list="vueData.equipments_list" field="geoLocation" name-field="name" 
 								@moveend="function(topLeft, bottomRight) { data.vueData.criteria.geoUpperLeft = {lon:topLeft[0], lat:topLeft[1], _v_inputValue:JSON.stringify({lon:topLeft[0], lat:topLeft[1]})};data.vueData.criteria.geoLowerRight = {lon:bottomRight[0], lat:bottomRight[1], _v_inputValue:JSON.stringify({lon:bottomRight[0], lat:bottomRight[1]})};search('equipments');}"
 								@click="function(pos) { data.vueData.criteria.geoLocation = {lon:pos[0], lat:pos[1], _v_inputValue:JSON.stringify({lon:pos[0], lat:pos[1]})};search('equipments');}">
-							</v-map2>
+							</v-map>
 						</th:block>
 					</div>
 				</div>

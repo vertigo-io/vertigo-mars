@@ -59,7 +59,7 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 				facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
 				break;
 			case "map":
-				facetedQueryResult = equipmentServices.searchGeoEquipments(criteria, selectedFacetValues, dtListState);
+				facetedQueryResult = equipmentServices.searchGeoEquipments(criteria, selectedFacetValues, DtListState.of(250));
 				break;
 			default:
 				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
