@@ -47,14 +47,53 @@
 							<vu:include-data object="criteria" field="geoUpperLeft" />
 							<vu:include-data object="criteria" field="geoLowerRight" />
 							<vu:include-data object="criteria" field="geoLocation" />
-							<v-map :initial-center="{ lat : 45.0, lon: 5.0 }" 
+							<script>
+								setPinOnMap = function(olMap, pos) {
+									var self = olMap;
+						            if(self.dinamicPinLayer !== undefined){
+						                console.log("move")
+						                self.iconGeometry.setCoordinates(pos);
+						                self.iconGeometry.transform('EPSG:4326', 'EPSG:3857');
+						                  //or create another pin 						                
+						            } else {
+						                self.iconGeometry = new ol.geom.Point(pos);
+						                self.iconGeometry.transform('EPSG:4326', 'EPSG:3857');
+						                var iconFeature = new ol.Feature({
+						                    geometry: self.iconGeometry,
+						                });
+						                var iconStyle = new ol.style.Style({
+						                	text : new ol.style.Text({
+						                        font : '35px Material Icons',
+						                        text : 'my_location',
+						                        fill : new ol.style.Fill({color : '#550000' }),
+						                        offsetY : 0,
+						                        offsetX : 0,
+						                    })
+						                });
+						                iconFeature.setStyle(iconStyle);
+						               
+						                var vectorSource = new ol.source.Vector({
+						                    features: [iconFeature]
+						                });
+						                self.dinamicPinLayer = new ol.layer.Vector({
+						                    source: vectorSource
+						                });
+						                self.addLayer(self.dinamicPinLayer); 
+						            }
+						        };
+							</script>
+							
+							<v-map ref="myMap" :initial-center="{ lat : 45.0, lon: 5.0 }" 
 								:initial-zoom-level="5"
 								style="width:100%; height: 800px;" 
 								tabindex="1" id="map" marker-color="#027BE3" 
 								:list="vueData.equipments_list" field="geoLocation" name-field="name" 
 								@moveend="function(topLeft, bottomRight) { data.vueData.criteria.geoUpperLeft = {lon:topLeft[0], lat:topLeft[1], _v_inputValue:JSON.stringify({lon:topLeft[0], lat:topLeft[1]})};data.vueData.criteria.geoLowerRight = {lon:bottomRight[0], lat:bottomRight[1], _v_inputValue:JSON.stringify({lon:bottomRight[0], lat:bottomRight[1]})};search('equipments');}"
-								@click="function(pos) { data.vueData.criteria.geoLocation = {lon:pos[0], lat:pos[1], _v_inputValue:JSON.stringify({lon:pos[0], lat:pos[1]})};search('equipments');}">
+								@click="function(pos) { data.vueData.criteria.geoLocation = {lon:pos[0], lat:pos[1], _v_inputValue:JSON.stringify({lon:pos[0], lat:pos[1]})};search('equipments');
+									setPinOnMap(VUiPage.$refs.myMap.olMap, pos);
+								}">
 							</v-map>
+							
 						</th:block>
 					</div>
 				</div>
