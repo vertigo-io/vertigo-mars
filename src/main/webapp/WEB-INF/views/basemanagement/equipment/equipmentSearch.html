@@ -47,41 +47,6 @@
 							<vu:include-data object="criteria" field="geoUpperLeft" />
 							<vu:include-data object="criteria" field="geoLowerRight" />
 							<vu:include-data object="criteria" field="geoLocation" />
-							<script>
-								setPinOnMap = function(olMap, pos) {
-									var self = olMap;
-						            if(self.dinamicPinLayer !== undefined){
-						                console.log("move")
-						                self.iconGeometry.setCoordinates(pos);
-						                self.iconGeometry.transform('EPSG:4326', 'EPSG:3857');
-						                  //or create another pin 						                
-						            } else {
-						                self.iconGeometry = new ol.geom.Point(pos);
-						                self.iconGeometry.transform('EPSG:4326', 'EPSG:3857');
-						                var iconFeature = new ol.Feature({
-						                    geometry: self.iconGeometry,
-						                });
-						                var iconStyle = new ol.style.Style({
-						                	text : new ol.style.Text({
-						                        font : '35px Material Icons',
-						                        text : 'my_location',
-						                        fill : new ol.style.Fill({color : '#880000' }),
-						                        offsetY : 0,
-						                        offsetX : 0,
-						                    })
-						                });
-						                iconFeature.setStyle(iconStyle);
-						               
-						                var vectorSource = new ol.source.Vector({
-						                    features: [iconFeature]
-						                });
-						                self.dinamicPinLayer = new ol.layer.Vector({
-						                    source: vectorSource
-						                });
-						                self.addLayer(self.dinamicPinLayer); 
-						            }
-						        };
-							</script>
 							<v-map ref="myMap" :initial-center="{ lat : 45.0, lon: 5.0 }" 
 								:initial-zoom-level="5"
 								style="width:100%; height: 800px;" 
