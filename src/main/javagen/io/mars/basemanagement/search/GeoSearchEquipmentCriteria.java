@@ -17,6 +17,7 @@ public final class GeoSearchEquipmentCriteria implements DtObject {
 	private io.mars.support.smarttypes.GeoPoint geoUpperLeft;
 	private io.mars.support.smarttypes.GeoPoint geoLowerRight;
 	private io.mars.support.smarttypes.GeoPoint geoLocation;
+	private Long geoPrecision;
 	
 	/**
 	 * Champ : DATA.
@@ -92,6 +93,25 @@ public final class GeoSearchEquipmentCriteria implements DtObject {
 	 */
 	public void setGeoLocation(final io.mars.support.smarttypes.GeoPoint geoLocation) {
 		this.geoLocation = geoLocation;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'geoPrecision'.
+	 * @return Long geoPrecision
+	 */
+	@Field(smartType = "STySize", label = "geoPrecision")
+	public Long getGeoPrecision() {
+		return geoPrecision;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'geoPrecision'.
+	 * @param geoPrecision Long
+	 */
+	public void setGeoPrecision(final Long geoPrecision) {
+		this.geoPrecision = geoPrecision;
 	}
 	
 	/** {@inheritDoc} */

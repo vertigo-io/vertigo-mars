@@ -42,8 +42,20 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 		geoCriteria.setCriteria("");
 		viewContext.publishDto(criteriaKey, geoCriteria);
 		viewContext.publishRef(listRenderer, renderer.orElse("table"));
-		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
+		final String listRendererValue = viewContext.getString(listRenderer);
+		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult;
+		switch (listRendererValue) {
+			case "table":
+				facetedQueryResult = equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
+				break;
+			case "map":
+				facetedQueryResult = equipmentServices.searchGeoClusterEquipments(geoCriteria, SelectedFacetValues.empty().build(), DtListState.of(3));
+				break;
+			default:
+				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		}
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
+
 	}
 
 	@PostMapping("/_search")
@@ -59,7 +71,29 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 				facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
 				break;
 			case "map":
-				facetedQueryResult = equipmentServices.searchGeoEquipments(criteria, selectedFacetValues, DtListState.of(250));
+				facetedQueryResult = equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(3));
+				break;
+			default:
+				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		}
+		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
+		return viewContext;
+	}
+
+	@PostMapping("/_searchGeo")
+	public ViewContext doSearchGeo(
+			final ViewContext viewContext,
+			@ViewAttribute("criteria") final GeoSearchEquipmentCriteria criteria,
+			@ViewAttribute("equipments") final SelectedFacetValues selectedFacetValues,
+			final DtListState dtListState) {
+		final String listRendererValue = viewContext.getString(listRenderer);
+		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult;
+		switch (listRendererValue) {
+			case "table":
+				facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
+				break;
+			case "map":
+				facetedQueryResult = equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(250));
 				break;
 			default:
 				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);

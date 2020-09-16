@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.mars.basemanagement.domain.Equipment;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -12,10 +13,10 @@ import io.vertigo.core.node.definition.DefinitionProvider;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.util.ListBuilder;
+import io.vertigo.datafactory.collections.definitions.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.definitions.FacetDefinition.FacetOrder;
 import io.vertigo.datafactory.collections.definitions.FacetRangeDefinitionSupplier;
 import io.vertigo.datafactory.collections.definitions.FacetTermDefinitionSupplier;
-import io.vertigo.datafactory.collections.definitions.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.definitions.FacetedQueryDefinitionSupplier;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -26,7 +27,6 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.mars.basemanagement.domain.Equipment;
 
 /**
  * This class is automatically generated.
@@ -60,6 +60,7 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
+
 	/**
 	 * Création d'une SearchQuery de type : EquipmentGeo.
 	 * @param criteria Critères de recherche
@@ -71,6 +72,7 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
+
 	/**
 	 * Création d'une SearchQuery de type : EquipmentGeoDistance.
 	 * @param criteria Critères de recherche
@@ -161,8 +163,8 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withDtDefinition("DtEquipmentIndex")
 						.withFieldName("geoLocation")
 						.withLabel("Location")
-						.withParams("geohash_grid", "field : \"geoLocation\", precision : 5")
-						.withParams("innerWriteTo", "writeVInt(5);writeVInt(1000);writeVInt(-1)")
+						.withParams("geohash_grid", "{\"field\" : \"geoLocation\", \"precision\" : #geoPrecision#}")
+						.withParams("innerWriteTo", "writeVInt(#geoPrecision#);writeVInt(1000);writeVInt(-1)")
 						.withOrder(FacetOrder.definition))
 				.add(new FacetRangeDefinitionSupplier("FctEquipmentPurchaseDate")
 						.withDtDefinition("DtEquipmentIndex")
@@ -187,6 +189,7 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withFacet("FctEquipmentEquipmentTypeName")
 						.withFacet("FctEquipmentPurchaseDate")
 						.withFacet("FctEquipmentEquipmentCategoryName")
+						.withFacet("FctEquipmentGeoHash")
 						.withListFilterBuilderClass(io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("allText:#+criteria*#")
 						.withGeoSearchQuery("geoLocation: [#geoUpperLeft# to #geoLowerRight#]")
@@ -196,6 +199,7 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 						.withFacet("FctEquipmentPurchaseDate")
 						.withFacet("FctEquipmentEquipmentCategoryName")
 						.withFacet("FctEquipmentGeoDistance")
+						.withFacet("FctEquipmentGeoHash")
 						.withListFilterBuilderClass(io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder.class)
 						.withListFilterBuilderQuery("allText:#+criteria*#")
 						.withGeoSearchQuery("geoLocation: [#geoUpperLeft# to #geoLowerRight#]")

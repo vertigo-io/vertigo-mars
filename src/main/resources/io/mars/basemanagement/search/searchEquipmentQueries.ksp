@@ -36,8 +36,8 @@ create FacetDefinition FctEquipmentGeoDistance {
 
 create FacetDefinition FctEquipmentGeoHash {
 	dtDefinition:DtEquipmentIndex, fieldName:"geoLocation", label:"Location"
-	params geohash_grid { value : "field : \"geoLocation\", precision : 5" }
-	params innerWriteTo { value : "writeVInt(5);writeVInt(1000);writeVInt(-1)" }
+	params geohash_grid { value : "{\"field\" : \"geoLocation\", \"precision\" : #geoPrecision#}" }
+	params innerWriteTo { value : "writeVInt(#geoPrecision#);writeVInt(1000);writeVInt(-1)" }
 }
 
 create FacetedQueryDefinition QryEquipment {
@@ -60,7 +60,7 @@ create FacetedQueryDefinition QryEquipmentGeo {
 
 create FacetedQueryDefinition QryEquipmentGeoDistance {
 	keyConcept : DtEquipment
-	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentGeoDistance]
+	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentGeoDistance, FctEquipmentGeoHash]
 	domainCriteria : DoDtGeoSearchEquipmentCriteria
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
 	listFilterBuilderQuery : "allText:#+criteria*#"

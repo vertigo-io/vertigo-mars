@@ -315,7 +315,9 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'geoLowerRight'. */
 		geoLowerRight,
 		/** Propriété 'geoLocation'. */
-		geoLocation	}
+		geoLocation,
+		/** Propriété 'geoPrecision'. */
+		geoPrecision	}
 
 	/**
 	 * Enumération des champs de Geosector.

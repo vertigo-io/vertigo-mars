@@ -22,6 +22,7 @@ create DtDefinition DtGeoSearchEquipmentCriteria {
 	field geoUpperLeft {domain: DoGeoPoint label: "geoUpperLeft" }
 	field geoLowerRight {domain: DoGeoPoint label: "geoLowerRight" }
 	field geoLocation {domain: DoGeoPoint label: "geoLocation" }
+    field geoPrecision {domain: DoSize label: "geoPrecision" }
 }
 
 alter DtDefinition DtEquipmentIndex {
