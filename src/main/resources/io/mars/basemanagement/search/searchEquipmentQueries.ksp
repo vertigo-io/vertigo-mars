@@ -51,7 +51,7 @@ create FacetedQueryDefinition QryEquipment {
 
 create FacetedQueryDefinition QryEquipmentGeo {
 	keyConcept : DtEquipment
-	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName]
+	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentGeoHash]
 	domainCriteria : DoDtGeoSearchEquipmentCriteria
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
 	listFilterBuilderQuery : "allText:#+criteria*#"
