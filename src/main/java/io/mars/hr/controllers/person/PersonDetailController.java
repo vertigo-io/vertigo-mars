@@ -1,5 +1,6 @@
 package io.mars.hr.controllers.person;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -11,11 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.basemanagement.domain.Tag;
+import io.mars.domain.DtDefinitions.GroupsFields;
 import io.mars.domain.DtDefinitions.MissionDisplayFields;
+import io.mars.hr.domain.Groups;
 import io.mars.hr.domain.MissionDisplay;
 import io.mars.hr.domain.Person;
+import io.mars.hr.domain.PersonInput;
 import io.mars.hr.services.mission.MissionServices;
 import io.mars.hr.services.person.PersonServices;
+import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.ui.core.ProtectedValueUtil;
@@ -30,8 +35,10 @@ import io.vertigo.vega.webservice.stereotype.QueryParam;
 public class PersonDetailController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<Person> personKey = ViewContextKey.of("person");
+	private static final ViewContextKey<PersonInput> personInputKey = ViewContextKey.of("personInput");
 	private static final ViewContextKey<MissionDisplay> missionsKey = ViewContextKey.of("missions");
 	private static final ViewContextKey<Tag> tagsKey = ViewContextKey.of("tags");
+	private static final ViewContextKey<Groups> groupsKey = ViewContextKey.of("groups");
 
 	@Inject
 	private PersonServices personServices;
@@ -43,6 +50,11 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		viewContext.publishMdl(tagsKey, Tag.class, null); //all
 		viewContext.publishDto(personKey, personServices.getPerson(personId));
 		viewContext.publishDtList(missionsKey, MissionDisplayFields.missionId, missionServices.getMissionsByPersonId(personId));
+
+		final PersonInput personInput = new PersonInput();
+		personInput.setGroups(Arrays.asList(1000L));
+		viewContext.publishDto(personInputKey, personInput);
+		viewContext.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
 		toModeReadOnly();
 	}
 
@@ -50,6 +62,8 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext) {
 		viewContext.publishDto(personKey, personServices.initPerson());
 		viewContext.publishMdl(tagsKey, Tag.class, null); //all
+		viewContext.publishDto(personInputKey, new PersonInput());
+		viewContext.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
 		toModeCreate();
 	}
 
@@ -80,7 +94,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_save")
-	public String doSave(@ViewAttribute("person") final Person person, @QueryParam("personTmpPictureUri") final Optional<FileInfoURI> personPictureFile) {
+	public String doSave(@ViewAttribute("person") final Person person, @ViewAttribute("personInput") final PersonInput personInput, @QueryParam("personTmpPictureUri") final Optional<FileInfoURI> personPictureFile) {
 		personServices.updatePerson(person);
 		if (personPictureFile.isPresent()) {
 			personServices.savePersonPicture(person.getPersonId(), personPictureFile.get());
@@ -92,6 +106,18 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	public ViewContext doReloadMissions(final ViewContext viewContext, @ViewAttribute("person") final Person person) {
 		viewContext.publishDtList(missionsKey, MissionDisplayFields.missionId, missionServices.getMissionsByPersonId(person.getPersonId()));
 		return viewContext;
+	}
+
+	private DtList<Groups> getFakeGroups() {
+		final Groups group1 = new Groups();
+		group1.setGroupId(1000L);
+		group1.setName("Group 1");
+
+		final Groups group2 = new Groups();
+		group2.setGroupId(1001L);
+		group2.setName("Group 2");
+
+		return DtList.of(group1, group2);
 	}
 
 }

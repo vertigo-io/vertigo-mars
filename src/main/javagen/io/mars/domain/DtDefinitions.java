@@ -61,6 +61,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		OpendataSetStatus(io.mars.opendata.domain.OpendataSetStatus.class),
 		/** Objet de données Person. */
 		Person(io.mars.hr.domain.Person.class),
+		/** Objet de données PersonInput. */
+		PersonInput(io.mars.hr.domain.PersonInput.class),
 		/** Objet de données Picture. */
 		Picture(io.mars.basemanagement.domain.Picture.class),
 		/** Objet de données Supplier. */
@@ -438,6 +440,13 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		fullName,
 		/** Propriété 'Group'. */
 		groupId	}
+
+	/**
+	 * Enumération des champs de PersonInput.
+	 */
+	public enum PersonInputFields implements DtFieldName<io.mars.hr.domain.PersonInput> {
+		/** Propriété 'Groups'. */
+		groups	}
 
 	/**
 	 * Enumération des champs de Picture.

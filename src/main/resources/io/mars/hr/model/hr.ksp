@@ -32,6 +32,10 @@ create DtDefinition DtMissionDisplay {
 	field businessName {domain: DoLabel label:"Business" }
 }
 
+create DtDefinition DtPersonInput {
+	field groups {domain: DoId label:"Groups" cardinality : "*"}
+}
+
 
 /* Associations */
 

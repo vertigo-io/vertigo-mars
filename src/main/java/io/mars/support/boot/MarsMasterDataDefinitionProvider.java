@@ -3,6 +3,8 @@
  */
 package io.mars.support.boot;
 
+import java.util.Map;
+
 import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseType;
 import io.mars.basemanagement.domain.Business;
@@ -22,14 +24,13 @@ public class MarsMasterDataDefinitionProvider extends AbstractMasterDataDefiniti
 	@Override
 	public void declareMasterDataLists() {
 		registerDtMasterDatas(BaseType.class);
-		registerDtMasterDatas(EquipmentType.class);
+		registerDtMasterDatas(EquipmentType.class, Map.of("active", EquipmentType::getActive), true);
 		registerDtMasterDatas(WorkOrderStatus.class);
 		registerDtMasterDatas(TicketStatus.class);
 		registerDtMasterDatas(Tag.class);
 		registerDtMasterDatas(Geosector.class);
 		registerDtMasterDatas(Business.class);
 		registerDtMasterDatas(Base.class);
-
 	}
 
 }

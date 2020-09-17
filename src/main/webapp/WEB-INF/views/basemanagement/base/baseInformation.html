@@ -70,7 +70,7 @@
 		</div>
 		<vu:block id="general" title="General Information">
 			<vu:slot name="actions_slot" th:if="${model.modeEdit}">
-				<q-btn th:@click="|httpPostAjax('@{_ajaxValidation}', vueDataParams(['base']))|" color="primary" label="Ajax Validation" ></q-btn>
+				<q-btn th:@click="|httpPostAjax('@{_ajaxValidation}', vueDataParams(['base']), { onSuccess: function(response) {$q.notify({message: 'test', type :'positive'})}})|" color="primary" label="Ajax Validation" ></q-btn>
 			</vu:slot>
 			<vu:grid cols="2">
 				<vu:text-field object="base" field="name" />

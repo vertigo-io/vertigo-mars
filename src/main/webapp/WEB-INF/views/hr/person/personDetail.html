@@ -42,6 +42,9 @@
 		
 		<section layout:fragment="content" >
 				<vu:block id="information" title="Information">
+					<vu:slot name="actions_slot" th:if="${model.modeEdit}">
+						<q-btn th:@click="|httpPostAjax('@{_save}', vueDataParams(['personInput']), { onSuccess: function(response) {$q.notify({message: 'test', type :'positive'})}})|" color="primary" label="Ajax Validation" ></q-btn>
+					</vu:slot>
 					<vu:grid cols="2">
 						<vu:text-field object="person" field="firstName"/>
 						<vu:text-field object="person" field="lastName" />
@@ -50,6 +53,7 @@
 						<vu:label-edit object="person" field="picturefileId" th:if="${viewMode=='edit'}"  >
 							<vu:fileupload th:url="'@{/commons/upload}'" key="personTmpPictureUri" />
 						</vu:label-edit>
+						<vu:checkbox-multiple object="personInput" field="groups" list="groups" labelField="name" layout="horizontal"/>
 					</vu:grid>
 				</vu:block>
 				<vu:block th:if="${!model.modeCreate}" id="contact" title="Contact actions">
