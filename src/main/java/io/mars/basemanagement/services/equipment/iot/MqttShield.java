@@ -52,6 +52,8 @@ public class MqttShield implements Component {
 			mqttClient = connectorsByName.get("Subscriber").getClient();
 			mqttClient.setCallback(callback);
 			mqttClientPub = connectorsByName.get("Publisher").getClient();
+			mqttClient.connect();
+			mqttClientPub.connect();
 			subscribe();
 		} catch (final MqttException me) {
 			throw WrappedException.wrap(me);

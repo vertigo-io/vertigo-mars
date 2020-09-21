@@ -4,7 +4,7 @@
 		auth="SERVLET"
 		type="javax.sql.DataSource"
 		driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://mars.dev.klee.lan.net:5432/mars"
+		url="jdbc:postgresql://mars.dev.klee.lan.net:5432/mars_dev"
 		username="mars"
 		password="mars" />
 				

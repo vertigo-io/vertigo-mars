@@ -14,7 +14,7 @@ boot:
         url: "${boot.apiKeysUrl}"
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
         __flags__: ["home"]
-        url: D:\mars\marsconf\marsApiKeys.properties
+        url: ${user.home}\mars\marsconf\marsApiKeys.properties
     - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin: {}
     - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
         __flags__: ["klee"]
