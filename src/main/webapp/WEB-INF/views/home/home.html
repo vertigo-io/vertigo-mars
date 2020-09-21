@@ -7,13 +7,6 @@
 >
 	<head>
 		<title>Home</title>
-		<!-- graphs -->
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-color/1.0.3/d3-color.min.js" ></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-interpolate/1.1.5/d3-interpolate.min.js" ></script>
-		<script th:src="@{/dashboard/static/dashboard.js}"></script>
-		<script th:src="@{/dashboard/static/dashboard.chartjs.js}"></script>
 		
 		<!-- maps -->
 		<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"/>
@@ -100,9 +93,4 @@
 		</q-page>
 		</section>
 	</body>
-	<section layout:fragment="javascript-footer" >
-		<script type="text/javascript">
-			showCharts();
-		</script>
-	</section>
 </html>
