@@ -68,7 +68,7 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult;
 		switch (listRendererValue) {
 			case "table":
-				facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
+				facetedQueryResult = equipmentServices.searchEquipments(Optional.ofNullable(criteria.getCriteria()).orElse(""), selectedFacetValues, dtListState);
 				break;
 			case "map":
 				facetedQueryResult = equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(3));
