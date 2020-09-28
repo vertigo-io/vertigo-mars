@@ -13,7 +13,7 @@ but the simplest way is to change its activeFlags from configuration.
 </context-param>
 ```
 
-2- change param-value to `home;initdb`. With this flags all components switch to an local hostable version (base H2, memory cache, embedded ES, ...)
+2- change param-value to `home;initialData`. With this flags all components switch to an local hostable version (base H2, memory cache, embedded ES, ...)
 
 3- boot your app server
 
