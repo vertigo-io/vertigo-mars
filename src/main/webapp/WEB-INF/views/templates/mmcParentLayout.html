@@ -14,9 +14,6 @@
 	<link rel="icon" th:href="@{/static/img/favicon.ico}"/>
    	<script src="https://unpkg.com/vue-cookies@1.5.12/vue-cookies.js"></script> 
 	<script th:src="@{/vertigo-ui/static/3rdParty/cdn.jsdelivr.net/npm/vue-shortkey@3.1.7/dist/index.js}"></script>
-	<script type="text/javascript">
-		Vue.use(VueShortkey);
-	</script>
    	<script th:src="@{/static/js/mars.js}"></script>
    	<link  th:href="@{/static/chatbot/chatbot.css}" rel="stylesheet"/>
 </head>
@@ -24,7 +21,6 @@
 <body class="mat desktop no-touch platform-mat">
 
 	<vu:page> 
-	
       <q-layout view="hHh LpR fff" id="page" v-cloak>
 			<!-- BEGIN HEADER-->
 			<q-header elevated>
