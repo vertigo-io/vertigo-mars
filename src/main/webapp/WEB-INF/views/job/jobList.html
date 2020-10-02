@@ -11,7 +11,15 @@
 	<body>
 		<section layout:fragment="content" >
 			<vui-orchestra th:api-url="@{/api/orchestra}" ></vui-orchestra>
-			
+		</section>
+		
+		<section layout:fragment="javascript-footer">
+			<script src="http://localhost:3001/js/chunk-vendors.js"></script>
+			<script src="http://localhost:3001/js/app.js"></script>
+			<script type="text/javascript">
+				Vue.use(VertigoOrchestraUi)
+			</script>
+			<script src="/mars/vertigo-ui/static/js/vertigo-ui-mpa.js"></script>
 		</section>
 	</body>
 	
