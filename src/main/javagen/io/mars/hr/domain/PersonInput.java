@@ -13,8 +13,8 @@ import io.vertigo.datamodel.structure.util.DtObjectUtil;
 public final class PersonInput implements DtObject {
 	private static final long serialVersionUID = 1L;
 
-	private java.util.List<Long> groups;
-
+	private java.util.List<Long> groups = new java.util.ArrayList<>();
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Groups'.
@@ -31,9 +31,11 @@ public final class PersonInput implements DtObject {
 	 * @param groups List de Long
 	 */
 	public void setGroups(final java.util.List<Long> groups) {
+		io.vertigo.core.lang.Assertion.check().isNotNull(groups);
+		//---
 		this.groups = groups;
 	}
-
+	
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
