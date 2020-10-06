@@ -59,6 +59,7 @@ modules:
     __flags__: ["keycloak"]
     features:
       - deployment:
+          configUrl: ${keycloakConfigUrl}
   io.vertigo.connectors.javalin.JavalinFeatures:
     features:
       - standalone:

@@ -34,4 +34,5 @@
 	<Parameter name="suppliersImportLimit" value="500000" />
 	<Parameter name="chatbotUrl" value="//mars.dev.klee.lan.net:5005/webhooks/rest/webhook" override="false"/>
 	<Parameter name="apiManagementUrl" value="https://mars.dev.klee.lan.net:9443/store/" override="false"/>
+	<Parameter name="keycloakConfigUrl" value="file:///C:\\Code\\Github\\vertigo-mars\\src\\main\\resources\\keycloak.json" override="false"/>
 </Context>

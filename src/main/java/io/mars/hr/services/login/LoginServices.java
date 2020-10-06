@@ -1,6 +1,7 @@
 package io.mars.hr.services.login;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -130,12 +131,18 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 	}
 
 	private void loginWithPrincipal(final String login) {
-		final Optional<Account> loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(login));
-		if (!loggedAccount.isPresent()) {
-			throw new VUserException("Login invalid");
-		}
-		final Account account = loggedAccount.get();
-		final Person person = personServices.getPerson(Long.valueOf(account.getId()));
+		final Account loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(login)).orElseGet(
+				() -> {
+					//throw new VUserException("Login invalid");
+					final Person newPerson = personServices.initPerson();
+					newPerson.setDateHired(LocalDate.now());
+					newPerson.setEmail(login);
+					newPerson.setLastName(login);
+					personServices.createPerson(newPerson);
+					return authenticationManager.login(new UsernameAuthenticationToken(login)).get();
+
+				});
+		final Person person = personServices.getPerson(Long.valueOf(loggedAccount.getId()));
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setCurrentProfile("Administrator");
 
