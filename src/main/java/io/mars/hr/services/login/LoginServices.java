@@ -87,8 +87,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 		if (!isAuthenticated()) {
 			// we should have a Principal
 			final KeycloakPrincipal keycloakPrincipal = (KeycloakPrincipal) request.getUserPrincipal();
-			final String email = keycloakPrincipal.getKeycloakSecurityContext().getIdToken().getEmail();
-			loginWithPrincipal(email);
+			loginWithPrincipal(keycloakPrincipal);
 			try {
 				response.sendRedirect(request.getContextPath() + "/home/");
 			} catch (final IOException e) {
@@ -130,16 +129,20 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 
 	}
 
-	private void loginWithPrincipal(final String login) {
-		final Account loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(login)).orElseGet(
+	private void loginWithPrincipal(final KeycloakPrincipal keycloakPrincipal) {
+		final String email = keycloakPrincipal.getKeycloakSecurityContext().getIdToken().getEmail();
+		final String firstName = keycloakPrincipal.getKeycloakSecurityContext().getToken().getGivenName();
+		final String lastName = keycloakPrincipal.getKeycloakSecurityContext().getToken().getFamilyName();
+		final Account loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(email)).orElseGet(
 				() -> {
-					//throw new VUserException("Login invalid");
+					// auto provisionning an account when using keycloak
 					final Person newPerson = personServices.initPerson();
 					newPerson.setDateHired(LocalDate.now());
-					newPerson.setEmail(login);
-					newPerson.setLastName(login);
+					newPerson.setEmail(email);
+					newPerson.setFirstName(firstName);
+					newPerson.setLastName(lastName);
 					personServices.createPerson(newPerson);
-					return authenticationManager.login(new UsernameAuthenticationToken(login)).get();
+					return authenticationManager.login(new UsernameAuthenticationToken(email)).get();
 
 				});
 		final Person person = personServices.getPerson(Long.valueOf(loggedAccount.getId()));
