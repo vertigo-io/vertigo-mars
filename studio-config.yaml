@@ -13,3 +13,4 @@ mdaConfig:
     vertigo.domain.sql.generateMasterData: true
     vertigo.task: true
     vertigo.search: true
+    mermaid: true

@@ -9,6 +9,7 @@ import java.util.function.BiConsumer;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
@@ -32,7 +33,7 @@ public final class CSVReaderUtil {
 			while ((record = csvReader.readNext()) != null) {
 				recordConsumer.accept(csvFilePath, record);
 			}
-		} catch (final IOException e) {
+		} catch (final IOException | CsvValidationException e) {
 			throw WrappedException.wrap(e, "Can't load csv file {0}", csvFilePath);
 		}
 	}
