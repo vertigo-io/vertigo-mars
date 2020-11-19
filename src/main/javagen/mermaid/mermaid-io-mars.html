@@ -246,7 +246,7 @@
 								<h1 v-cloak >Module common</h1>
 								<div class="mermaid">
 								classDiagram
-class MediaFileInfo {
+class MediaFileInfo:::entity {
 		+Long filId
 		+String fileName
 		+String mimeType
@@ -261,7 +261,7 @@ class MediaFileInfo {
 								<h1 v-cloak >Module opendata</h1>
 								<div class="mermaid">
 								classDiagram
-class OpendataSet {
+class OpendataSet:::entity {
 		+Long odsId
 		+String code
 		+String title
@@ -272,7 +272,7 @@ class OpendataSet {
 		+String opendataSetStatusId
 }
 OpendataSet "*" --> "0..1" OpendataSetStatus : OpendataSetStatus
-class OpendataSetStatus {
+class OpendataSetStatus:::dtStaticMasterData {
 		+String opendataSetStatusId
 		+String label
 }
@@ -282,19 +282,19 @@ class OpendataSetStatus {
 								<h1 v-cloak >Module catalog</h1>
 								<div class="mermaid">
 								classDiagram
-class EquipmentCategory {
+class EquipmentCategory:::entity {
 		+Long equipmentCategoryId
 		+String label
 		+Boolean active
 }
-class EquipmentType {
+class EquipmentType:::entity {
 		+Long equipmentTypeId
 		+String label
 		+Boolean active
 		+Long equipmentCategoryId
 }
 EquipmentType "*" --> "0..1" EquipmentCategory : EquipmentCategory
-class Supplier {
+class Supplier:::keyConcept {
 		+String siren
 		+String statutDiffusion
 		+java.time.LocalDate dateCreation
@@ -321,11 +321,11 @@ class Supplier {
 								<h1 v-cloak >Module hr</h1>
 								<div class="mermaid">
 								classDiagram
-class Groups {
+class Groups:::entity {
 		+Long groupId
 		+String name
 }
-class Mission {
+class Mission:::entity {
 		+Long missionId
 		+String role
 		+Long personId
@@ -335,7 +335,7 @@ class Mission {
 Mission "*" --> "0..1" Business : Business
 Mission "*" --> "0..1" Base : Base
 Mission "*" --> "0..1" Person : Person
-class Person {
+class Person:::entity {
 		+Long personId
 		+String firstName
 		+String lastName
@@ -353,7 +353,7 @@ Person "*" --> "0..1" Groups : Groups
 								<h1 v-cloak >Module maintenance</h1>
 								<div class="mermaid">
 								classDiagram
-class Ticket {
+class Ticket:::entity {
 		+Long ticketId
 		+String code
 		+String title
@@ -365,11 +365,11 @@ class Ticket {
 }
 Ticket "*" --> "0..1" Equipment : Equipment
 Ticket "*" --> "0..1" TicketStatus : TicketStatus
-class TicketStatus {
+class TicketStatus:::dtStaticMasterData {
 		+String ticketStatusId
 		+String label
 }
-class WorkOrder {
+class WorkOrder:::entity {
 		+Long woId
 		+String code
 		+String ticketCode
@@ -383,7 +383,7 @@ class WorkOrder {
 }
 WorkOrder "*" --> "0..1" Ticket : Ticket
 WorkOrder "*" --> "0..1" WorkOrderStatus : WorkOrderStatus
-class WorkOrderStatus {
+class WorkOrderStatus:::dtStaticMasterData {
 		+String workOrderStatusId
 		+String label
 }
@@ -393,7 +393,7 @@ class WorkOrderStatus {
 								<h1 v-cloak >Module basemanagement</h1>
 								<div class="mermaid">
 								classDiagram
-class Base {
+class Base:::keyConcept {
 		+Long baseId
 		+String code
 		+String name
@@ -409,16 +409,16 @@ class Base {
 }
 Base "*" --> "0..1" BaseType : BaseType
 Base "*" --> "0..1" Geosector : Geosector
-class BaseType {
+class BaseType:::dtStaticMasterData {
 		+String baseTypeId
 		+String label
 }
-class Business {
+class Business:::entity {
 		+Long businessId
 		+String name
 		+String icon
 }
-class Equipment {
+class Equipment:::keyConcept {
 		+Long equipmentId
 		+String name
 		+String code
@@ -438,23 +438,23 @@ Equipment "*" --> "0..1" Base : Base
 Equipment "*" --> "0..1" Business : Business
 Equipment "*" --> "0..1" EquipmentType : EquipmentType
 Equipment "*" --> "0..1" Geosector : Geosector
-class EquipmentFeature {
+class EquipmentFeature:::entity {
 		+Long equipmentFeatureId
 		+String name
 		+Long equipmentId
 }
 EquipmentFeature "*" --> "0..1" Equipment : Equipment
-class Geosector {
+class Geosector:::entity {
 		+Long geosectorId
 		+String sectorLabel
 }
-class Picture {
+class Picture:::entity {
 		+Long pictureId
 		+Long picturefileId
 		+Long baseId
 }
 Picture "*" --> "1" Base : Base
-class Tag {
+class Tag:::keyConcept {
 		+Long tagId
 		+String label
 }
