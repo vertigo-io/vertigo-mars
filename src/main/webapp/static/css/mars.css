@@ -63,7 +63,7 @@ body.login {
 	background: fixed url(../img/bcf60b99d4_121619_mars-bfrs.jpg) center / cover no-repeat !important;
 }
 
-.login #page {
+.login #page > div {
 	height:100vh;
 }
 

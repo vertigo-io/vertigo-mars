@@ -121,6 +121,25 @@
 		<url-pattern>/api/*</url-pattern>
 		<url-pattern>/dashboard/*</url-pattern>
 	</filter-mapping>
+	<!-- 
+	<filter>
+		<filter-name>VueJsSsrFilter</filter-name>
+		<filter-class>io.vertigo.ui.impl.vuejs.filter.VuejsSsrFilter</filter-class>
+		<init-param>
+			<param-name>url-exclude-pattern</param-name>
+			<param-value>/;/index.html;/api/*;/dashboard/*;/vertigo-ui/static/*;/static/*</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ssrServerUrl</param-name>
+			<param-value>http://localhost:8083/compile</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>VueJsSsrFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 -->
+	
 	
 	
 	

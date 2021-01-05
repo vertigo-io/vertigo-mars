@@ -17,22 +17,22 @@
 </head>
 
 <body class="mat desktop no-touch platform-mat login" >
-	<vu:page>
-	<div id="page" class="column justify-center items-center" v-cloak>
-      	<div class="title"><h2><img th:src="@{/static/img/titleMarsBaseNetwork.png}" alt="Home mars network"></h2></div>
-      	<vu:form>
-      	<div class="q-gutter-y-md">
-	    		<vu:include-data-primitive key="login" />
-	      		<vu:include-data-primitive key="password" />
-	      			<vu:messages/>
-					<q-input v-model="vueData.login" name="login" label="Login" stack-label orientation="vertical"></q-input>
-					<q-input type="password" v-model="vueData.password" name="password" label="Password" stack-label orientation="vertical"></q-input>
-					<div class="float-right">
-						<vu:button-submit label="Login" action="@{_login}" class="bg-primary text-white" flat />
-					</div>
-		</div>
-		</vu:form>
-	</div>
-	</vu:page>
+		<vu:page vuiSsr="false">
+			<div class="column justify-center items-center" v-cloak>
+		      	<div class="title"><h2><img th:src="@{/static/img/titleMarsBaseNetwork.png}" alt="Home mars network"></h2></div>
+		      	<vu:form>
+		      	<div class="q-gutter-y-md">
+			    		<vu:include-data-primitive key="login" />
+			      		<vu:include-data-primitive key="password" />
+			      			<vu:messages/>
+							<q-input v-model="vueData.login" name="login" label="Login" stack-label orientation="vertical"></q-input>
+							<q-input type="password" v-model="vueData.password" name="password" label="Password" stack-label orientation="vertical"></q-input>
+							<div class="float-right">
+								<vu:button-submit label="Login" action="@{_login}" class="bg-primary text-white" flat />
+							</div>
+				</div>
+				</vu:form>
+			</div>
+		</vu:page>
 </body>
 </html>
