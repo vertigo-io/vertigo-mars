@@ -1,5 +1,6 @@
 package io.mars.basemanagement.controllers.base;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.domain.DtDefinitions.PictureFields;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.mission.MissionServices;
+import io.mars.support.controllers.FileUploadController;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.ui.core.BasicUiListModifiable;
@@ -51,6 +53,8 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	private static final ViewContextKey<BaseOverview> baseOverview = ViewContextKey.of("baseOverview");
 	private static final ViewContextKey<Picture> basePictures = ViewContextKey.of("basePictures");
 
+	public static final ViewContextKey<ArrayList<FileInfoURI>> addedPictureFileUris = ViewContextKey.of("baseTmpPictureUris");
+
 	@GetMapping("/{baseId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId) {
 		baseDetailController.initCommonContext(viewContext, baseId);
@@ -65,6 +69,9 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 		viewContext.publishDto(baseManagerKey, missionServices.getBaseManager(baseId).orElse(noManagerPerson));
 
 		viewContext.publishDtListModifiable(basePictures, baseServices.getPictures(baseId));
+
+		viewContext.publishFileInfo(FileUploadController.storedFileInfo, new ArrayList<>());
+		viewContext.publishRef(addedPictureFileUris, new ArrayList<>());
 
 		toModeReadOnly();
 	}

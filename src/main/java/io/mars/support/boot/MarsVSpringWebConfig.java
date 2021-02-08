@@ -36,4 +36,9 @@ public class MarsVSpringWebConfig extends VSpringWebConfig {
 		}
 		return true;
 	}
+
+	@Override
+	protected String getCustomComponentsPathPrefix() {
+		return "io/mars/ui/";
+	}
 }

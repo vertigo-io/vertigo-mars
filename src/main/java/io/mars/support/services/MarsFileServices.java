@@ -18,10 +18,9 @@ public class MarsFileServices implements Component {
 	@Inject
 	private FileStoreManager fileStoreManager;
 
-	public FileInfoURI saveFileTmp(final VFile file) {
+	public FileInfo saveFileTmp(final VFile file) {
 		//apply security check
-		final FileInfo fileInfo = fileStoreManager.create(new FileInfoTmp(file));
-		return fileInfo.getURI();
+		return fileStoreManager.create(new FileInfoTmp(file));
 	}
 
 	public VFile getFileTmp(final FileInfoURI fileTmpUri) {
