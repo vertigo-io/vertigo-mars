@@ -82,7 +82,7 @@ public final class Picture implements Entity {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return Long baseId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase" )
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}
