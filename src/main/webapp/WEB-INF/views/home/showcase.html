@@ -16,7 +16,7 @@
 		<section layout:fragment="page-container">
 		 	<q-page class="q-layout-padding">
 		 		<vu:form>
-		 			<vu:include-data object="base" field="'*'" />
+		 			<vu:include-data object="base" field='*' />
 		 			<div class="bg-white q-pa-md">
 		 				<p class="text-subtitle2 q-pt-md">Types of buttons</p>
 						<vu:button-link icon="add" url="'#'" round />
@@ -210,7 +210,7 @@
 						</q-card>
 					</div>
 					
-					<vu:include-data object="bases" field="'*'" />
+					<vu:include-data object="bases" field='*' />
 					<div class="">
 						<vu:cards list="bases" componentId="baseCards" cardClass="marsCard col-lg-3 col-md-6 col-xs-12" rowsPerPage="4" showMore="true" showMoreLabel="Show more" >
 								<q-img th::src="|'@{/basemanagement/base/}'+item.baseId+'/mainPicture'|"></q-img>

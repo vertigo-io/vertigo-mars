@@ -20,8 +20,8 @@
 			</div>
 		</div>
 		<div layout:fragment="content-header-title" id="equipmentTitle">
-			<span class="text-bigger" th:text="${model.equipment.name?:'New Equipment'}"></span> <br />
-			<span class="text-smaller" th:text="${model.equipment.code}"></span>
+			<span class="text-bigger" vu:text="${model.equipment.name?:'New Equipment'}"></span> <br />
+			<span class="text-smaller" vu:text="${model.equipment.code}"></span>
 		</div>
 		<div th:if="${!model.modeCreate}" layout:fragment="content-header-actions">
 			<vu:button-link th:if="${model.modeEdit}" icon="fas fa-ban" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}" ariaLabel="Cancel"
@@ -49,11 +49,11 @@
 		<div class="col-md-9 col-xs-12" th:if="${!model.modeCreate}">
 			<q-card class="bg-white row justify-around items-center" style="height:100%;">
 				<div class="text-center">
-					<span class="indicator text-positive" th:text="${model.equipmentMaintenanceOverview.openedTickets}" /><br />
+					<span class="indicator text-positive" vu:text="${model.equipmentMaintenanceOverview.openedTickets}" /><br />
 					<span class="indicator-title text-faded">Opened Tickets(s)</span>
 				</div>
 				<div class="text-center">
-					<span class="indicator text-positive" th:text="${model.equipmentMaintenanceOverview.workOrdersInprogress}" /><br />
+					<span class="indicator text-positive" vu:text="${model.equipmentMaintenanceOverview.workOrdersInprogress}" /><br />
 					<span class="indicator-title text-faded">WorkOrder(s) in progress</span>
 				</div>
 			</q-card>

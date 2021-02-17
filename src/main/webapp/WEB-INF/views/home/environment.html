@@ -36,7 +36,7 @@
 					<div class="col-md-6 col-xs-12 text-center">
 						<div class="text-h6">Current Temperature</div>
 						<q-knob
-							th:text="|${model.lastTemperature}°C|"
+							vu:text="|${model.lastTemperature}°C|"
 							:min="0"
 							:max="50"
 							:decimals="1"
@@ -55,7 +55,7 @@
 					<div class="col-md-6 col-xs-12 text-center">
 						<div class="text-h6">Current Humidity</div>
 						<q-knob
-							th:text="|${model.lastHumidity}%|"
+							vu:text="|${model.lastHumidity}%|"
 							:min="0"
 							:max="50"
 							:decimals="1"
@@ -77,7 +77,7 @@
 			<vu:block id="farmoverview" title="Farm Overview" icon="fas fa-tractor">
 				<div class="row items-center">
 					<div class="col-md-6 col-xs-12 text-center gutter-xs">
-						<div class="text-center"> <span class="indicator text-negative" th:text="${model.farmsToWater}" /><br/><span class="indicator-title text-faded">Farms to water</span></div>
+						<div class="text-center"> <span class="indicator text-negative" vu:text="${model.farmsToWater}" /><br/><span class="indicator-title text-faded">Farms to water</span></div>
 							<div class="ml-1">
 								<q-btn rounded push th:@click="|httpPostAjax('@{_onFan}', {})|" :class="'on-left '" 
 								size="lg" color="red"  icon-right="fas fa-wind"
@@ -102,7 +102,7 @@
 			<vu:block id="securityoverview" title="Security Overview" icon="fas fa-lock">
 				<div class="row items-center">
 					<div class="col-md-6 col-xs-12 column items-center gutter-md">
-						<div class="text-center"> <span class="indicator text-deep-orange" th:text="${model.totalAlert}" /><br/><span class="indicator-title text-faded">Triggered alarm this week</span></div>
+						<div class="text-center"> <span class="indicator text-deep-orange" vu:text="${model.totalAlert}" /><br/><span class="indicator-title text-faded">Triggered alarm this week</span></div>
 						<div class="chart chartjs stakedbarchart bg-white" 
 								th:data-url="@{/api/basemanagment/equipment/environment/data/series}" 
 								data-query-measures='["value:count"]'

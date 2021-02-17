@@ -20,7 +20,7 @@
 		
 		<section>
 			<div layout:fragment="content-header-title">
-				<span class="text-bigger" th:text="${model.job.label}"></span> 
+				<span class="text-bigger" vu:text="${model.job.label}"></span> 
 			</div>
 			<div layout:fragment="content-header-actions">
 				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>

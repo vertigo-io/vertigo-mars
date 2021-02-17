@@ -10,7 +10,7 @@
 	
 	<section>
 		<div layout:fragment="content-header-title">
-			<big th:text="${model.job.label}"></big> 
+			<big vu:text="${model.job.label}"></big> 
 		</div>
 		<div layout:fragment="content-header-tabs">
 			<vu:button-link flat label="Detail" url="@{/jobDetail/} + ${model.job.name}"/>

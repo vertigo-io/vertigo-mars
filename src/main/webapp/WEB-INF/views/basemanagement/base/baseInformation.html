@@ -19,9 +19,9 @@
 			<img th:src="@{|/basemanagement/base/${model.base.baseId}/mainPicture|}" class="detailImg gt-md" alt="Main picture"/>
 		</div>
 		<div layout:fragment="content-header-title" id="baseTitle">
-			<span class="text-bigger" th:text="${model.base.name}"></span> <br />
-			<span class="text-smaller ne-mini" th:text="${model.base.code}"></span> <br class="ne-mini" />
-			<span class="text-smaller" th:text="${model.baseTypes.getById('baseTypeId', model.base.baseTypeId).label}"></span>
+			<span class="text-bigger" vu:text="${model.base.name}"></span> <br />
+			<span class="text-smaller ne-mini" vu:text="${model.base.code}"></span> <br class="ne-mini" />
+			<span class="text-smaller" vu:text="${model.baseTypes.getById('baseTypeId', model.base.baseTypeId).label}"></span>
 		</div>
 		<div layout:fragment="content-header-actions">
 			<vu:button-link th:if="${model.modeEdit}" class="text-accent-inverted on-left" flat round size="lg" icon="fas fa-ban"
@@ -55,15 +55,15 @@
 		<div class="col-md-9 col-xs-12" th:if="${!model.modeCreate}">
 			<q-card class="bg-white row justify-around items-center" style="height:100%;">
 			<div class="text-center">
-				<span class="indicator text-secondary" th:text="${model.baseOverview.equipmentCount}" /><br />
+				<span class="indicator text-secondary" vu:text="${model.baseOverview.equipmentCount}" /><br />
 				<span class="indicator-title text-faded">Equipment(s)</span>
 			</div>
 			<div class="text-center">
-				<span class="indicator text-secondary" th:text="${model.baseOverview.openedTickets}" /><br />
+				<span class="indicator text-secondary" vu:text="${model.baseOverview.openedTickets}" /><br />
 				<span class="indicator-title text-faded">Open Tickets(s)</span>
 			</div>
 			<div class="text-center">
-				<span class="indicator text-secondary" th:text="${model.baseOverview.workOrdersInprogress}" /><br />
+				<span class="indicator text-secondary" vu:text="${model.baseOverview.workOrdersInprogress}" /><br />
 				<span class="indicator-title text-faded">Work Order(s) in progress</span>
 			</div>
 			</q-card>
