@@ -63,7 +63,7 @@
 				<vu:block id="description" title="Description">
 					<vu:include-data object="opendataSet" field="description" />
 					<q-editor th:v-if="${!model.modeReadOnly}" v-model="vueData.opendataSet.description" ></q-editor>
-					<span th:if="${model.modeReadOnly}" th:utext="${model.opendataSet.description}"></span>
+					<span th:if="${model.modeReadOnly}" v-pre th:utext="${model.opendataSet.description}"></span>
 					<input th:v-if="${!model.modeReadOnly}" type="hidden" name="vContext[opendataSet][description]" v-bind:value="vueData.opendataSet.description" />
 				</vu:block>
 				

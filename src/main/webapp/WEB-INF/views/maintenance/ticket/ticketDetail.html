@@ -55,7 +55,7 @@
 					<vu:block title="Description">
 						<vu:include-data object="ticket" field="description" />
 						<q-editor th:v-if="${!model.modeReadOnly}" v-model="vueData.ticket.description" ></q-editor>
-						<pre th:if="${model.modeReadOnly}" th:utext="${model.ticket.description}"></pre>
+						<pre th:if="${model.modeReadOnly}" v-pre th:utext="${model.ticket.description}"></pre>
 						<input type="hidden" name="vContext[ticket][description]" v-bind:value="vueData.ticket.description" />
 					</vu:block>
 					<vu:table th:if="${model.modeReadOnly}" list="workOrders" title="Work Orders" componentId="workOrders" rowsPerPage="10">
