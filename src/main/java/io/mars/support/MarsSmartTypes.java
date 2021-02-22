@@ -21,6 +21,8 @@ import io.vertigo.datamodel.smarttype.annotations.Constraint;
 import io.vertigo.datamodel.smarttype.annotations.Formatter;
 import io.vertigo.datamodel.smarttype.annotations.SmartTypeDefinition;
 import io.vertigo.datamodel.smarttype.annotations.SmartTypeProperty;
+import io.vertigo.datastore.filestore.model.FileInfoURI;
+import io.vertigo.ui.core.FileInfoURIAdapter;
 
 public enum MarsSmartTypes {
 
@@ -138,6 +140,10 @@ public enum MarsSmartTypes {
 	@Adapter(clazz = GeoPointSearchAdapter.class, targetBasicType = BasicType.String, type = "search")
 	@SmartTypeProperty(property = "storeType", value = "TEXT")
 	@SmartTypeProperty(property = "indexType", value = ":geo_point")
-	GeoPoint;
+	GeoPoint,
 
+	@SmartTypeDefinition(FileInfoURI.class)
+	@Formatter(clazz = FormatterDefault.class)
+	@Adapter(clazz = FileInfoURIAdapter.class, targetBasicType = BasicType.String)
+	FileInfoURI;
 }

@@ -22,7 +22,6 @@ import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.domain.DtDefinitions.PictureFields;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.mission.MissionServices;
-import io.mars.support.controllers.FileUploadController;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.ui.core.BasicUiListModifiable;
@@ -31,7 +30,6 @@ import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
-import io.vertigo.vega.webservice.stereotype.QueryParam;
 import io.vertigo.vega.webservice.stereotype.Validate;
 import io.vertigo.vega.webservice.validation.DefaultDtObjectValidator;
 import io.vertigo.vega.webservice.validation.UiMessageStack;
@@ -52,6 +50,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	private static final ViewContextKey<Tag> tagsKey = ViewContextKey.of("tags");
 	private static final ViewContextKey<BaseOverview> baseOverview = ViewContextKey.of("baseOverview");
 	private static final ViewContextKey<Picture> basePictures = ViewContextKey.of("basePictures");
+	public static final ViewContextKey<ArrayList<FileInfoURI>> fileUrisKey = ViewContextKey.of("baseTmpPictureUris");
 
 	@GetMapping("/{baseId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId) {
@@ -67,8 +66,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 		viewContext.publishDto(baseManagerKey, missionServices.getBaseManager(baseId).orElse(noManagerPerson));
 
 		viewContext.publishDtListModifiable(basePictures, baseServices.getPictures(baseId));
-
-		viewContext.publishFileInfo(FileUploadController.storedFileInfo, new ArrayList<>());
+		viewContext.publishFileInfoURIs(fileUrisKey, new ArrayList<>());
 
 		toModeReadOnly();
 	}
@@ -87,7 +85,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	public String doSave(
 			final ViewContext viewContext,
 			@Validate(DefaultDtObjectValidator.class) @ViewAttribute("base") final Base base,
-			@QueryParam("baseTmpPictureUris") final List<FileInfoURI> addedPictureFile,
+			@ViewAttribute("baseTmpPictureUris") final List<FileInfoURI> addedPictureFile,
 			final UiMessageStack uiMessageStack) {
 		final BasicUiListModifiable<Picture> pictures = viewContext.getUiListModifiable(basePictures);
 		pictures.mergeAndCheckInput(Collections.emptyList(), uiMessageStack); //needed to populate Delta
