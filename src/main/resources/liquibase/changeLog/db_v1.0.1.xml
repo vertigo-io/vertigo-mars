@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<!-- Création de la BDD -->
+	<changeSet author="vertigo" id="v1.0.1">
+		<addNotNullConstraint
+            columnDataType="VARCHAR(100)"  
+            columnName="BASE_TYPE_ID"  
+            constraintName="FK_BASE_TYPE_ID"  
+            tableName="BASE"/>
+         <addNotNullConstraint
+            columnDataType="NUMERIC"  
+            columnName="EQUIPMENT_TYPE_ID"  
+            constraintName="FK_EQUIPMENT_TYPE_ID"  
+            tableName="EQUIPMENT"/>
+         <addNotNullConstraint
+            columnDataType="NUMERIC"  
+            columnName="BASE_ID"  
+            constraintName="FK_EQUIPMENT_TYPE_ID"  
+            tableName="EQUIPMENT" />
+	</changeSet>
+</databaseChangeLog>

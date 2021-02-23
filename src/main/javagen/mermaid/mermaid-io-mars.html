@@ -407,7 +407,7 @@ class Base:::keyConcept {
 		+String baseTypeId
 		+Long geosectorId
 }
-Base "*" --> "0..1" BaseType : BaseType
+Base "*" --> "1" BaseType : BaseType
 Base "*" --> "0..1" Geosector : Geosector
 class BaseType:::dtStaticMasterData {
 		+String baseTypeId
@@ -434,9 +434,9 @@ class Equipment:::keyConcept {
 		+Long businessId
 		+Long equipmentTypeId
 }
-Equipment "*" --> "0..1" Base : Base
+Equipment "*" --> "1" Base : Base
 Equipment "*" --> "0..1" Business : Business
-Equipment "*" --> "0..1" EquipmentType : EquipmentType
+Equipment "*" --> "1" EquipmentType : EquipmentType
 Equipment "*" --> "0..1" Geosector : Geosector
 class EquipmentFeature:::entity {
 		+Long equipmentFeatureId

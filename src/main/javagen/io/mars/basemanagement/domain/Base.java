@@ -34,7 +34,7 @@ public final class Base implements KeyConcept {
 			primaryIsNavigable = true,
 			primaryRole = "BaseType",
 			primaryLabel = "Base Type",
-			primaryMultiplicity = "0..1",
+			primaryMultiplicity = "1..1",
 			foreignDtDefinitionName = "DtBase",
 			foreignIsNavigable = false,
 			foreignRole = "Base",
@@ -258,9 +258,9 @@ public final class Base implements KeyConcept {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Base Type'.
-	 * @return String baseTypeId
+	 * @return String baseTypeId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Base Type", fkDefinition = "DtBaseType" )
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Base Type", fkDefinition = "DtBaseType", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public String getBaseTypeId() {
 		return (String) baseTypeIdAccessor.getId();
 	}
@@ -268,7 +268,7 @@ public final class Base implements KeyConcept {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Définit la valeur de la propriété 'Base Type'.
-	 * @param baseTypeId String
+	 * @param baseTypeId String <b>Obligatoire</b>
 	 */
 	public void setBaseTypeId(final String baseTypeId) {
 		baseTypeIdAccessor.setId(baseTypeId);

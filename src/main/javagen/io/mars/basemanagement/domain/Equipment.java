@@ -33,7 +33,7 @@ public final class Equipment implements KeyConcept {
 			primaryIsNavigable = true,
 			primaryRole = "Base",
 			primaryLabel = "Base",
-			primaryMultiplicity = "0..1",
+			primaryMultiplicity = "1..1",
 			foreignDtDefinitionName = "DtEquipment",
 			foreignIsNavigable = false,
 			foreignRole = "Equipment",
@@ -78,7 +78,7 @@ public final class Equipment implements KeyConcept {
 			primaryIsNavigable = true,
 			primaryRole = "EquipmentType",
 			primaryLabel = "Equipment Type",
-			primaryMultiplicity = "0..1",
+			primaryMultiplicity = "1..1",
 			foreignDtDefinitionName = "DtEquipment",
 			foreignIsNavigable = false,
 			foreignRole = "Equipment",
@@ -285,9 +285,9 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Base'.
-	 * @return Long baseId
+	 * @return Long baseId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase" )
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}
@@ -295,7 +295,7 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Définit la valeur de la propriété 'Base'.
-	 * @param baseId Long
+	 * @param baseId Long <b>Obligatoire</b>
 	 */
 	public void setBaseId(final Long baseId) {
 		baseIdAccessor.setId(baseId);
@@ -342,9 +342,9 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Equipment Type'.
-	 * @return Long equipmentTypeId
+	 * @return Long equipmentTypeId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Type", fkDefinition = "DtEquipmentType" )
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Type", fkDefinition = "DtEquipmentType", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getEquipmentTypeId() {
 		return (Long) equipmentTypeIdAccessor.getId();
 	}
@@ -352,7 +352,7 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Définit la valeur de la propriété 'Equipment Type'.
-	 * @param equipmentTypeId Long
+	 * @param equipmentTypeId Long <b>Obligatoire</b>
 	 */
 	public void setEquipmentTypeId(final Long equipmentTypeId) {
 		equipmentTypeIdAccessor.setId(equipmentTypeId);

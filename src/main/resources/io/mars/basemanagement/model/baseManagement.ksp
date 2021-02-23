@@ -84,16 +84,14 @@ create Association AMissionBase {
 	labelB : "Base"
 }
 
-
 create Association ABaseBasetype {
 	fkFieldName : "baseTypeId"
     
  	dtDefinitionA : DtBase
- 	type : "*>?"
+ 	type : "*>1"
 	dtDefinitionB : DtBaseType
 	
 	labelB : "Base Type"
-	
 }
 
 create Association ABaseGeosector {
@@ -120,7 +118,7 @@ create Association ABaseEquipment {
 	fkFieldName : "baseId"
     
  	dtDefinitionA : DtEquipment
- 	type : "*>?"
+ 	type : "*>1"
 	dtDefinitionB : DtBase
 			
 	labelB : "Base"
@@ -130,7 +128,7 @@ create Association AEquipmentEquipmentType {
 	fkFieldName : "equipmentTypeId"
     
  	dtDefinitionA : DtEquipment
- 	type : "*>?"
+ 	type : "*>1"
 	dtDefinitionB : DtEquipmentType
 			
 	labelB : "Equipment Type"
