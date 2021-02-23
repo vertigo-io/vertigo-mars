@@ -119,6 +119,9 @@ modules:
       - kvStore.delayedMemory:
           collections: protected-value
           timeToLiveSeconds: 3600
+      - kvStore.delayedMemory:
+          collections: uiFileInfos
+          timeToLiveSeconds: 300
       - kvStore.berkeley:
           collections: VViewContext;TTL=43200
           dbFilePath: ${java.io.tmpdir}/vertigo-ui/MarsVViewContext

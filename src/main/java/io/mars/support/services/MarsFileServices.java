@@ -23,6 +23,11 @@ public class MarsFileServices implements Component {
 		return fileStoreManager.create(new FileInfoTmp(file));
 	}
 
+	public FileInfo getFile(final FileInfoURI fileUri) {
+		//no file store check (use by uploader component)
+		return fileStoreManager.read(fileUri);
+	}
+
 	public VFile getFileTmp(final FileInfoURI fileTmpUri) {
 		final FileInfoDefinition tmpFileInfoDefinition = FileInfoDefinition.findFileInfoDefinition(FileInfoTmp.class);
 		Assertion.check().isTrue(tmpFileInfoDefinition.equals(fileTmpUri.getDefinition()), "Can't access this file storage."); //not too much infos for security purpose
