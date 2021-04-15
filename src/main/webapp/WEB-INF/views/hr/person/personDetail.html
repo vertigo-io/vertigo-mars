@@ -51,7 +51,7 @@
 						<vu:text-field object="person" field="email" />
 						<vu:chips-autocomplete object="person" field="tags" list="tags" staticData="true"/>
 						<vu:label-edit object="person" field="picturefileId" th:if="${viewMode=='edit'}"  >
-							<vu:fileupload th:url="'@{/commons/upload}'" key="personTmpPictureUri" />
+							<vu:fileupload th:url="'@{/commons/upload}'" key="personPictureUri" />
 						</vu:label-edit>
 						<vu:checkbox-multiple object="personInput" field="groups" list="groups" labelField="name" layout="horizontal"/>
 					</vu:grid>

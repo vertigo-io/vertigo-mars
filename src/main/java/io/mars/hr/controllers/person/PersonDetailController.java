@@ -28,7 +28,6 @@ import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
-import io.vertigo.vega.webservice.stereotype.QueryParam;
 
 @Controller
 @RequestMapping("/hr/person")
@@ -39,6 +38,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	private static final ViewContextKey<MissionDisplay> missionsKey = ViewContextKey.of("missions");
 	private static final ViewContextKey<Tag> tagsKey = ViewContextKey.of("tags");
 	private static final ViewContextKey<Groups> groupsKey = ViewContextKey.of("groups");
+	private static final ViewContextKey<FileInfoURI> personPictureUri = ViewContextKey.of("personPictureUri");
 
 	@Inject
 	private PersonServices personServices;
@@ -50,6 +50,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		viewContext.publishMdl(tagsKey, Tag.class, null); //all
 		viewContext.publishDto(personKey, personServices.getPerson(personId));
 		viewContext.publishDtList(missionsKey, MissionDisplayFields.missionId, missionServices.getMissionsByPersonId(personId));
+		viewContext.publishFileInfoURI(personPictureUri, null);
 
 		final PersonInput personInput = new PersonInput();
 		personInput.setGroups(Arrays.asList(1000L));
@@ -85,7 +86,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_create")
-	public String doCreate(@ViewAttribute("person") final Person person, @QueryParam("personTmpPictureUri") final Optional<FileInfoURI> personPictureFile) {
+	public String doCreate(@ViewAttribute("person") final Person person, @ViewAttribute("personPictureUri") final Optional<FileInfoURI> personPictureFile) {
 		personServices.createPerson(person);
 		if (personPictureFile.isPresent()) {
 			personServices.savePersonPicture(person.getPersonId(), personPictureFile.get());
@@ -94,7 +95,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_save")
-	public String doSave(@ViewAttribute("person") final Person person, @ViewAttribute("personInput") final PersonInput personInput, @QueryParam("personTmpPictureUri") final Optional<FileInfoURI> personPictureFile) {
+	public String doSave(@ViewAttribute("person") final Person person, @ViewAttribute("personInput") final PersonInput personInput, @ViewAttribute("personPictureUri") final Optional<FileInfoURI> personPictureFile) {
 		personServices.updatePerson(person);
 		if (personPictureFile.isPresent()) {
 			personServices.savePersonPicture(person.getPersonId(), personPictureFile.get());
