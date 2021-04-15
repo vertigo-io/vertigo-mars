@@ -49,10 +49,11 @@ public final class HrPAO implements StoreServices {
 			name = "TkGetMissionsDisplayByPersonId",
 			request = "select " + 
  "            		mis.mission_id as MISSION_ID," + 
- "            		mis.role as ROLE," + 
+ "            		rol.label as ROLE," + 
  "            		bas.name as BASE_NAME," + 
  "            		bus.name as BUSINESS_NAME" + 
  "            	from mission mis" + 
+ "                left join role rol on mis.role_id = rol.role_id" + 
  "            	left join base bas on mis.base_id = bas.base_id" + 
  "				left join business bus on mis.business_id = bus.business_id" + 
  "            	where mis.person_id = #personId#;",

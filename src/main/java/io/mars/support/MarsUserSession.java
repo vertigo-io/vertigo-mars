@@ -20,6 +20,7 @@ package io.mars.support;
 
 import java.util.Locale;
 
+import io.mars.hr.domain.MissionDisplay;
 import io.mars.hr.domain.Person;
 import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
@@ -27,6 +28,7 @@ import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.account.security.UserSession;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.Node;
+import io.vertigo.datamodel.structure.model.DtList;
 
 /**
  * UserSession.
@@ -38,7 +40,8 @@ public class MarsUserSession extends UserSession {
 
 	private static final long serialVersionUID = 1782541593145943505L;
 	private Person loggedPerson;
-	private String currentProfile;
+	private DtList<MissionDisplay> availableProfiles;
+	private MissionDisplay currentProfile;
 
 	/** {@inheritDoc} */
 	@Override
@@ -54,17 +57,25 @@ public class MarsUserSession extends UserSession {
 		this.loggedPerson = loggedPerson;
 	}
 
-	public final String getCurrentProfile() {
+	public final MissionDisplay getCurrentProfile() {
 		return currentProfile;
 	}
 
-	public final void setCurrentProfile(final String currentProfile) {
+	public final void setCurrentProfile(final MissionDisplay currentProfile) {
 		this.currentProfile = currentProfile;
 	}
 
 	public final Account getLoggedAccount() {
 		return Node.getNode().getComponentSpace().resolve(AuthenticationManager.class).getLoggedAccount()
 				.orElseThrow(() -> new VSecurityException(MessageText.of("No account logged in")));
+	}
+
+	public final DtList<MissionDisplay> getAvailableProfiles() {
+		return availableProfiles;
+	}
+
+	public void setAvailableProfiles(final DtList<MissionDisplay> availableProfiles) {
+		this.availableProfiles = availableProfiles;
 	}
 
 }

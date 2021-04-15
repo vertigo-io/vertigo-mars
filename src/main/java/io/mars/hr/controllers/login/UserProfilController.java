@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import io.mars.hr.domain.MissionDisplay;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.login.LoginServices;
 import io.vertigo.ui.core.ViewContext;
@@ -38,7 +39,8 @@ import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 @ControllerAdvice(assignableTypes = { AbstractVSpringMvcController.class })
 public final class UserProfilController extends AbstractVSpringMvcController {
 	private static final ViewContextKey<Person> connectedUserKey = ViewContextKey.of("connectedUser");
-	private static final ViewContextKey<String> activeProfileKey = ViewContextKey.of("activeProfile");
+	private static final ViewContextKey<MissionDisplay> availableProfilesKey = ViewContextKey.of("availableProfiles");
+	private static final ViewContextKey<MissionDisplay> activeProfileKey = ViewContextKey.of("activeProfile");
 
 	@Inject
 	private LoginServices loginServices;
@@ -47,13 +49,14 @@ public final class UserProfilController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext) {
 		if (isNewContext() && loginServices.isAuthenticated()) { //must support all cases
 			viewContext.publishDto(connectedUserKey, loginServices.getLoggedPerson());
-			viewContext.publishRef(activeProfileKey, loginServices.getActiveProfile());
+			viewContext.publishDtList(availableProfilesKey, loginServices.getAvailableProfiles());
+			viewContext.publishDto(activeProfileKey, loginServices.getActiveProfile());
 		}
 	}
 
 	@GetMapping("/_changeProfile")
-	public String doCreate(@RequestParam("profile") final String profile) {
-		loginServices.changeProfile(profile);
+	public String doCreate(@RequestParam("profileId") final long profileId) {
+		loginServices.changeProfile(profileId);
 		return "redirect:/home/";
 	}
 	/*

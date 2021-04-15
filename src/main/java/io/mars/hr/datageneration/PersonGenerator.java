@@ -11,6 +11,7 @@ import io.mars.datageneration.DataGenerator;
 import io.mars.hr.dao.PersonDAO;
 import io.mars.hr.domain.Mission;
 import io.mars.hr.domain.Person;
+import io.mars.hr.domain.RoleEnum;
 import io.mars.hr.services.mission.MissionServices;
 import io.mars.support.fileinfo.FileInfoStd;
 import io.mars.support.util.CSVReaderUtil;
@@ -101,7 +102,7 @@ public class PersonGenerator implements Component {
 		final Mission mission = new Mission();
 		mission.setPersonId(person.getPersonId());
 		mission.setBaseId(bases.get(DataGenerator.RND.nextInt(bases.size())).getBaseId());
-		mission.setRole("Base Manager");
+		mission.role().setEnumValue(RoleEnum.manager);
 		return mission;
 	}
 

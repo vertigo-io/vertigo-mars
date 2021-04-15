@@ -13,6 +13,7 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.Business;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.hr.domain.Mission;
+import io.mars.hr.domain.Role;
 import io.mars.hr.services.mission.MissionServices;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
@@ -59,6 +60,7 @@ public class MissionDetailController extends AbstractVSpringMvcController {
 	}
 
 	private void loadLists(final ViewContext viewContext) {
+		viewContext.publishMdl(ViewContextKey.of("roles"), Role.class, null);
 		viewContext.publishDtList(ViewContextKey.of("bases"), baseServices.getBases(DtListState.defaultOf(Base.class)));
 		viewContext.publishMdl(ViewContextKey.of("businesses"), Business.class, null);
 	}

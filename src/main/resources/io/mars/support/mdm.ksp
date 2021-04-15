@@ -35,6 +35,11 @@ alter DtDefinition DtBusiness {
  	displayField : "name"
 }
 
+alter DtDefinition DtRole {
+    sortField : "label"
+    displayField : "label"
+}
+
 alter DtDefinition DtTicketStatus {
 	sortField : "label"
  	displayField : "label"

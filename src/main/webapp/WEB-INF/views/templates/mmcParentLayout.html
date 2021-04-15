@@ -44,18 +44,12 @@
 						<q-btn flat icon-right="arrow_drop_down" class="on-left gt-md">
 							<vu:include-data object="connectedUser" field="personId"/>
 							<q-avatar><img th::src="|'@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo'|" alt="user avatar"/></q-avatar>
-							<div class="on-right"><span vu:text="${model.vContext['connectedUser']['firstName']+' '+model.vContext['connectedUser']['lastName']}"></span><br/><small><span vu:text="${model.vContext['activeProfile']}"></span></small></div>
+							<div class="on-right"><span vu:text="${model.vContext['connectedUser']['firstName']+' '+model.vContext['connectedUser']['lastName']}"></span><br/><small><span vu:text="${model.vContext['activeProfile']['role']}"></span> - <span vu:text="${model.vContext['activeProfile']['baseName']}"></span></small></div>
 							<q-menu fit>
 							  <q-list>
 							  	<q-item-label header dense>Change current profil</q-item-label>
-							  	<q-item dense>
-							    	<q-btn type="a" flat label="Viewer" th:href="@{/userProfil/_changeProfile?profile=Viewer}" />
-							    </q-item>
-							    <q-item dense>
-							    	<q-btn type="a" flat label="Editor" th:href="@{/userProfil/_changeProfile?profile=Editor}" />
-							    </q-item>
-							    <q-item dense>
-							    	<q-btn type="a" flat label="Administrator" th:href="@{/userProfil/_changeProfile?profile=Administrator}" />
+							  	<q-item dense th:each="item : ${model.availableProfiles}" >
+							    	<q-btn type="a" flat th:label="|${item.role} - ${item.baseName}|" th:href="@{/userProfil/_changeProfile?profileId=__${item.missionId}__}" />
 							    </q-item>
 							    <q-separator></q-separator>
 							  	<q-item>

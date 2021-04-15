@@ -65,6 +65,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		PersonInput(io.mars.hr.domain.PersonInput.class),
 		/** Objet de données Picture. */
 		Picture(io.mars.basemanagement.domain.Picture.class),
+		/** Objet de données Role. */
+		Role(io.mars.hr.domain.Role.class),
 		/** Objet de données Supplier. */
 		Supplier(io.mars.catalog.domain.Supplier.class),
 		/** Objet de données Tag. */
@@ -364,14 +366,14 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	public enum MissionFields implements DtFieldName<io.mars.hr.domain.Mission> {
 		/** Propriété 'Id'. */
 		missionId,
-		/** Propriété 'Role'. */
-		role,
 		/** Propriété 'Person'. */
 		personId,
 		/** Propriété 'Base'. */
 		baseId,
 		/** Propriété 'Business'. */
-		businessId	}
+		businessId,
+		/** Propriété 'Role'. */
+		roleId	}
 
 	/**
 	 * Enumération des champs de MissionDisplay.
@@ -458,6 +460,15 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		picturefileId,
 		/** Propriété 'Base'. */
 		baseId	}
+
+	/**
+	 * Enumération des champs de Role.
+	 */
+	public enum RoleFields implements DtFieldName<io.mars.hr.domain.Role> {
+		/** Propriété 'Id'. */
+		roleId,
+		/** Propriété 'Role Label'. */
+		label	}
 
 	/**
 	 * Enumération des champs de Supplier.

@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import org.keycloak.KeycloakPrincipal;
 
+import io.mars.hr.domain.MissionDisplay;
 import io.mars.hr.domain.Person;
+import io.mars.hr.services.mission.MissionServices;
 import io.mars.hr.services.person.PersonServices;
 import io.mars.support.MarsUserSession;
 import io.vertigo.account.account.Account;
@@ -32,6 +34,7 @@ import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
+import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.social.notification.Notification;
@@ -49,6 +52,8 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 	private NotificationManager notificationManager;
 	@Inject
 	private PersonServices personServices;
+	@Inject
+	private MissionServices missionServices;
 	@Inject
 	private List<KeycloakDeploymentConnector> keycloakDeploymentConnectors;
 
@@ -115,8 +120,10 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 		}
 		final Account account = loggedAccount.get();
 		final Person person = personServices.getPerson(Long.valueOf(account.getId()));
+		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
-		getUserSession().setCurrentProfile("Administrator");
+		getUserSession().setAvailableProfiles(availableProfiles);
+		getUserSession().setCurrentProfile(availableProfiles.get(0));
 
 		sendNotificationToAll(Notification.builder()
 				.withSender(account.getDisplayName())
@@ -146,9 +153,10 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 
 				});
 		final Person person = personServices.getPerson(Long.valueOf(loggedAccount.getId()));
+		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
-		getUserSession().setCurrentProfile("Administrator");
-
+		getUserSession().setAvailableProfiles(availableProfiles);
+		getUserSession().setCurrentProfile(availableProfiles.get(0));
 	}
 
 	private void sendNotificationToAll(final Notification notification) {
@@ -173,13 +181,20 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 		httpSession.invalidate();
 	}
 
-	public String changeProfile(final String profile) {
-		//TODO
-		getUserSession().setCurrentProfile(profile);
-		return profile;
+	public DtList<MissionDisplay> getAvailableProfiles() {
+		return getUserSession().getAvailableProfiles();
 	}
 
-	public String getActiveProfile() {
+	public MissionDisplay changeProfile(final long profileId) {
+		//may check profile is available is IPD (don't trust session for ever)
+		final MissionDisplay activeProfile = getUserSession().getAvailableProfiles().stream()
+				.filter(m -> m.getMissionId() == profileId)
+				.findFirst().get();
+		getUserSession().setCurrentProfile(activeProfile);
+		return activeProfile;
+	}
+
+	public MissionDisplay getActiveProfile() {
 		return getUserSession().getCurrentProfile();
 	}
 

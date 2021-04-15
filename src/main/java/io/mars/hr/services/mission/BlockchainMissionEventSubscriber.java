@@ -40,7 +40,7 @@ public class BlockchainMissionEventSubscriber implements Component {
 				.append(" has been affected to base ")
 				.append(base.getName())
 				.append(" with the role ")
-				.append(mission.getRole())
+				.append(mission.role().get().getLabel())
 				.append(" for the company ")
 				.append(business.getName());
 

@@ -22,12 +22,29 @@ create DtDefinition DtGroups {
 
 create DtDefinition DtMission {
 	id missionId {domain: DoId label:"Id"}
-	field role {domain: DoCode label:"Role" }
+}
+
+create Association AMissionRole {
+    fkFieldName : "roleId"    
+    dtDefinitionA : DtMission
+    type : "*>1"
+    dtDefinitionB : DtRole    
+    labelB : "Role"
+}
+
+create DtDefinition DtRole {
+    stereotype : "StaticMasterData"
+    id roleId {domain: DoCode label:"Id"}
+    field label {domain: DoLabel label:"Role Label" }  
+    values : `{ "admin" :       { "roleId" : "ADMIN", "label" : "Base Administrator"},
+                "manager" :     { "roleId" : "MANAG", "label" : "Base Manager" },
+                "engineer" :    { "roleId" : "ENGIN", "label" : "Base Engineer"},
+                "trainee" :     { "roleId" : "WORKE", "label" : "Base Worker"}  }`
 }
 
 create DtDefinition DtMissionDisplay {
 	field missionId {domain: DoId label:"Id" }
-	field role {domain: DoCode label:"Role" }
+	field role {domain: DoLabel label:"Role" }
 	field baseName {domain: DoLabel label:"Base" }
 	field businessName {domain: DoLabel label:"Business" }
 }

@@ -6,7 +6,7 @@ create Task TkGetBaseManager {
             select per.*
             	from mission mis
             	join person per on mis.person_id = per.person_id
-            	where mis.base_id = #baseId# and mis.role= 'Base Manager'
+            	where mis.base_id = #baseId# and mis.role_id= 'MANAG'
             	limit 1;
              "
     in 	baseId   {domain : DoId         cardinality: "1"}
@@ -19,10 +19,11 @@ create Task TkGetMissionsDisplayByPersonId {
     request : "
            select 
             		mis.mission_id as MISSION_ID,
-            		mis.role as ROLE,
+            		rol.label as ROLE,
             		bas.name as BASE_NAME,
             		bus.name as BUSINESS_NAME
             	from mission mis
+                left join role rol on mis.role_id = rol.role_id
             	left join base bas on mis.base_id = bas.base_id
 				left join business bus on mis.business_id = bus.business_id
             	where mis.person_id = #personId#;

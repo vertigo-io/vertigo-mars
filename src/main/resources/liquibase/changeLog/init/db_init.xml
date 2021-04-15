@@ -5,7 +5,7 @@
 
 	<!-- Création de la BDD -->
 	<changeSet author="vertigo" id="init">
-		<sqlFile encoding="utf8" path="/sqlgen/crebas.sql" />
+		<sqlFile encoding="utf8" path="/sql/init_crebas.sql" /> <!--  initial crebas.sql -->
 		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_base_type.sql" />
 		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_ticket_status.sql" />
 		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_work_order_status.sql" />

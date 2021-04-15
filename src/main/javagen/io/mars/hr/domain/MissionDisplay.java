@@ -42,7 +42,7 @@ public final class MissionDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Role'.
 	 * @return String role
 	 */
-	@Field(smartType = "STyCode", label = "Role")
+	@Field(smartType = "STyLabel", label = "Role")
 	public String getRole() {
 		return role;
 	}

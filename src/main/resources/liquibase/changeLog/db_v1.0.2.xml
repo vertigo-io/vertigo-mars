@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<!-- Création de la BDD -->
+	<changeSet author="vertigo" id="v1.0.2">
+		 <createTable tableName="ROLE">
+		   <column name="role_id" type="VARCHAR(100)">
+            <constraints primaryKey="true" nullable="false"/>
+           </column>
+           <column name="label" type="varchar(100)"/>
+         </createTable>
+         <sqlFile encoding="utf8" path="/sqlgen/init_masterdata_role.sql" />
+         <renameColumn tableName="MISSION"
+            oldColumnName="ROLE" 
+            newColumnName="ROLE_ID"  
+            columnDataType="varchar(100)"
+         /> 
+         <update tableName="MISSION">
+            <column name="ROLE_ID" value="MANAG" />
+            <where>ROLE_ID = 'Base Manager'</where>
+         </update>
+         <update tableName="MISSION">
+            <column name="ROLE_ID" value="ENGINE" />
+            <where>ROLE_ID != 'MANAG'</where>
+         </update>
+         <addForeignKeyConstraint constraintName="A_MISSION_ROLE_ROLE_FK"   
+            baseTableName="MISSION"
+            baseColumnNames="ROLE_ID"  
+            referencedColumnNames="ROLE_ID"   
+            referencedTableName="ROLE"/>  
+         <createIndex indexName="A_MISSION_ROLE_ROLE_FK" tableName="MISSION">
+	        <column name="ROLE_ID"/>
+		 </createIndex>
+	</changeSet>
+</databaseChangeLog>

@@ -2,6 +2,7 @@ package io.mars.hr.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
 import io.vertigo.datamodel.structure.stereotype.Field;
@@ -16,7 +17,6 @@ public final class Mission implements Entity {
 	private static final long serialVersionUID = 1L;
 
 	private Long missionId;
-	private String role;
 
 	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "APersonMission",
@@ -63,6 +63,21 @@ public final class Mission implements Entity {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.basemanagement.domain.Business> businessIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Business.class, "Business");
 
+	@io.vertigo.datamodel.structure.stereotype.Association(
+			name = "AMissionRole",
+			fkFieldName = "roleId",
+			primaryDtDefinitionName = "DtRole",
+			primaryIsNavigable = true,
+			primaryRole = "Role",
+			primaryLabel = "Role",
+			primaryMultiplicity = "1..1",
+			foreignDtDefinitionName = "DtMission",
+			foreignIsNavigable = false,
+			foreignRole = "Mission",
+			foreignLabel = "Mission",
+			foreignMultiplicity = "0..*")
+	private final EnumStoreVAccessor<io.mars.hr.domain.Role, io.mars.hr.domain.RoleEnum> roleIdAccessor = new EnumStoreVAccessor<>(io.mars.hr.domain.Role.class, "Role", io.mars.hr.domain.RoleEnum.class);
+
 	/** {@inheritDoc} */
 	@Override
 	public UID<Mission> getUID() {
@@ -86,25 +101,6 @@ public final class Mission implements Entity {
 	 */
 	public void setMissionId(final Long missionId) {
 		this.missionId = missionId;
-	}
-	
-	/**
-	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Role'.
-	 * @return String role
-	 */
-	@Field(smartType = "STyCode", label = "Role")
-	public String getRole() {
-		return role;
-	}
-
-	/**
-	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Role'.
-	 * @param role String
-	 */
-	public void setRole(final String role) {
-		this.role = role;
 	}
 	
 	/**
@@ -163,6 +159,25 @@ public final class Mission implements Entity {
 	public void setBusinessId(final Long businessId) {
 		businessIdAccessor.setId(businessId);
 	}
+	
+	/**
+	 * Champ : FOREIGN_KEY.
+	 * Récupère la valeur de la propriété 'Role'.
+	 * @return String roleId <b>Obligatoire</b>
+	 */
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Role", fkDefinition = "DtRole", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	public String getRoleId() {
+		return (String) roleIdAccessor.getId();
+	}
+
+	/**
+	 * Champ : FOREIGN_KEY.
+	 * Définit la valeur de la propriété 'Role'.
+	 * @param roleId String <b>Obligatoire</b>
+	 */
+	public void setRoleId(final String roleId) {
+		roleIdAccessor.setId(roleId);
+	}
 
  	/**
 	 * Association : Business.
@@ -178,6 +193,14 @@ public final class Mission implements Entity {
 	 */
 	public StoreVAccessor<io.mars.basemanagement.domain.Base> base() {
 		return baseIdAccessor;
+	}
+
+ 	/**
+	 * Association : Role.
+	 * @return l'accesseur vers la propriété 'Role'
+	 */
+	public EnumStoreVAccessor<io.mars.hr.domain.Role, io.mars.hr.domain.RoleEnum> role() {
+		return roleIdAccessor;
 	}
 
  	/**

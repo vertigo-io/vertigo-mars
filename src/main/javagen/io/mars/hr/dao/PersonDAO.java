@@ -54,7 +54,7 @@ public final class PersonDAO extends DAO<Person, java.lang.Long> implements Stor
 			request = "select per.*" + 
  "            	from mission mis" + 
  "            	join person per on mis.person_id = per.person_id" + 
- "            	where mis.base_id = #baseId# and mis.role= 'Base Manager'" + 
+ "            	where mis.base_id = #baseId# and mis.role_id= 'MANAG'" + 
  "            	limit 1;",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtPerson")
