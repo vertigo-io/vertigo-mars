@@ -33,6 +33,7 @@ drop table IF EXISTS PERSON cascade;
 drop sequence IF EXISTS SEQ_PERSON;
 drop table IF EXISTS PICTURE cascade;
 drop sequence IF EXISTS SEQ_PICTURE;
+drop table IF EXISTS ROLE cascade;
 drop table IF EXISTS SUPPLIER cascade;
 drop table IF EXISTS TAG cascade;
 drop sequence IF EXISTS SEQ_TAG;
@@ -91,6 +92,7 @@ create sequence SEQ_PICTURE
 	start with 1000 cache 20; 
 
 
+
 create sequence SEQ_TAG
 	start with 1000 cache 20; 
 
@@ -118,7 +120,7 @@ create table BASE
     ASSETS_VALUE	 NUMERIC(12,2)	,
     RENTING_FEE 	 NUMERIC(12,2)	,
     TAGS        	 TEXT        	,
-    BASE_TYPE_ID	 VARCHAR(100)	,
+    BASE_TYPE_ID	 VARCHAR(100)	not null,
     GEOSECTOR_ID	 NUMERIC     	,
     constraint PK_BASE primary key (BASE_ID)
 );
@@ -210,10 +212,10 @@ create table EQUIPMENT
     GEO_LOCATION	 TEXT        	,
     RENTING_FEE 	 NUMERIC(12,2)	,
     EQUIPMENT_VALUE	 NUMERIC(12,2)	,
-    BASE_ID     	 NUMERIC     	,
+    BASE_ID     	 NUMERIC     	not null,
     GEOSECTOR_ID	 NUMERIC     	,
     BUSINESS_ID 	 NUMERIC     	,
-    EQUIPMENT_TYPE_ID	 NUMERIC     	,
+    EQUIPMENT_TYPE_ID	 NUMERIC     	not null,
     constraint PK_EQUIPMENT primary key (EQUIPMENT_ID)
 );
 
@@ -397,18 +399,15 @@ comment on column MEDIA_FILE_INFO.FILE_DATA is
 create table MISSION
 (
     MISSION_ID  	 NUMERIC     	not null,
-    ROLE        	 VARCHAR(100)	,
     PERSON_ID   	 NUMERIC     	,
     BASE_ID     	 NUMERIC     	,
     BUSINESS_ID 	 NUMERIC     	,
+    ROLE_ID     	 VARCHAR(100)	not null,
     constraint PK_MISSION primary key (MISSION_ID)
 );
 
 comment on column MISSION.MISSION_ID is
 'Id';
-
-comment on column MISSION.ROLE is
-'Role';
 
 comment on column MISSION.PERSON_ID is
 'Person';
@@ -418,6 +417,9 @@ comment on column MISSION.BASE_ID is
 
 comment on column MISSION.BUSINESS_ID is
 'Business';
+
+comment on column MISSION.ROLE_ID is
+'Role';
 
 -- ============================================================
 --   Table : OPENDATA_SET                                        
@@ -534,6 +536,22 @@ comment on column PICTURE.PICTUREFILE_ID is
 
 comment on column PICTURE.BASE_ID is
 'Base';
+
+-- ============================================================
+--   Table : ROLE                                        
+-- ============================================================
+create table ROLE
+(
+    ROLE_ID     	 VARCHAR(100)	not null,
+    LABEL       	 VARCHAR(100)	,
+    constraint PK_ROLE primary key (ROLE_ID)
+);
+
+comment on column ROLE.ROLE_ID is
+'Id';
+
+comment on column ROLE.LABEL is
+'Role Label';
 
 -- ============================================================
 --   Table : SUPPLIER                                        
@@ -827,6 +845,12 @@ alter table MISSION
 	references BASE (BASE_ID);
 
 create index A_MISSION_BASE_BASE_FK on MISSION (BASE_ID asc);
+
+alter table MISSION
+	add constraint FK_A_MISSION_ROLE_ROLE foreign key (ROLE_ID)
+	references ROLE (ROLE_ID);
+
+create index A_MISSION_ROLE_ROLE_FK on MISSION (ROLE_ID asc);
 
 alter table OPENDATA_SET
 	add constraint FK_A_OPENDATA_SET_OPENDATA_SET_STATUS_OPENDATA_SET_STATUS foreign key (OPENDATA_SET_STATUS_ID)

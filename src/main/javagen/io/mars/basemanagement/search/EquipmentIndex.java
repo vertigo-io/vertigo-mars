@@ -21,6 +21,7 @@ public final class EquipmentIndex implements DtObject {
 	private String tags;
 	private String equipmentTypeName;
 	private String equipmentCategoryName;
+	private String baseName;
 	private io.mars.support.smarttypes.GeoPoint geoLocation;
 	
 	/**
@@ -173,6 +174,25 @@ public final class EquipmentIndex implements DtObject {
 	 */
 	public void setEquipmentCategoryName(final String equipmentCategoryName) {
 		this.equipmentCategoryName = equipmentCategoryName;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Base Name'.
+	 * @return String baseName
+	 */
+	@Field(smartType = "STyLabel", label = "Base Name")
+	public String getBaseName() {
+		return baseName;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Base Name'.
+	 * @param baseName String
+	 */
+	public void setBaseName(final String baseName) {
+		this.baseName = baseName;
 	}
 	
 	/**

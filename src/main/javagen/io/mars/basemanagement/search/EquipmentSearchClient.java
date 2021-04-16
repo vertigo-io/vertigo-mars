@@ -128,7 +128,7 @@ public final class EquipmentSearchClient implements Component, DefinitionProvide
 				.add(new SearchIndexDefinitionSupplier("IdxEquipment")
 						.withIndexDtDefinition("DtEquipmentIndex")
 						.withKeyConcept("DtEquipment")
-						.withCopyToFields("allText", "name", "code", "description", "tags", "equipmentTypeName", "equipmentCategoryName")
+						.withCopyToFields("allText", "name", "code", "description", "tags", "equipmentTypeName", "equipmentCategoryName", "baseName")
 						.withLoaderId("EquipmentSearchLoader"))
 
 				//---

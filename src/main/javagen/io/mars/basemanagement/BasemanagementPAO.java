@@ -175,9 +175,11 @@ public final class BasemanagementPAO implements StoreServices {
  "						equ.TAGS, " + 
  "						equ.GEO_LOCATION,  " + 
  "						equipmentType.LABEL as EQUIPMENT_TYPE_NAME," + 
- "						equipmentCategory.LABEL as EQUIPMENT_CATEGORY_NAME" + 
+ "						equipmentCategory.LABEL as EQUIPMENT_CATEGORY_NAME," + 
+ "                        bas.NAME as BASE_NAME" + 
  "				from EQUIPMENT equ" + 
- "				join EQUIPMENT_TYPE equipmentType on equipmentType.equipment_type_id = equ.equipment_type_id" + 
+ "                join BASE bas on bas.base_id = equ.base_id" + 
+ "                join EQUIPMENT_TYPE equipmentType on equipmentType.equipment_type_id = equ.equipment_type_id" + 
  "				join EQUIPMENT_CATEGORY equipmentCategory on equipmentCategory.equipment_category_id = equipmentType.equipment_category_id" + 
  "				where EQUIPMENT_ID in (#equipmentIds.rownum#);",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)

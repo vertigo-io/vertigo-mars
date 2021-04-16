@@ -473,27 +473,27 @@ class Tag:::keyConcept {
 		<script>
 			function zoomAndPan() {
 				var div = d3.selectAll("div.mermaid");
+				var svg = div.select("svg");
 				
 				//remove listeners
 				div.on(".zoom", null);
 				div.on(".drag", null);
 				
 				//reset zoom
-				div.select("svg").attr("transform", d3.zoomIdentity.toString())
+				svg.attr("transform", d3.zoomIdentity.toString())
 				// can't find any better solution
-				div.select("svg").node().__zoom = d3.zoomIdentity
+				svg.node().__zoom = d3.zoomIdentity
 				
 				// add new ones
 				var drag = d3.drag()
 				.on("drag", function(event) {
-					let svg = d3.select(this).select("svg")
 					let zoomTransform = d3.zoomTransform(svg.node())
 					d3.zoom().translateBy(svg, event.dx/zoomTransform.k, event.dy/zoomTransform.k)
 					svg.attr("transform", d3.zoomTransform(svg.node()).toString());
 				})
 				var zoom = d3.zoom()
 				.on("zoom", function(event) {
-					let maxX = parseInt(svg.style("width"), 10)-20; //-20 from margin svg to g
+					let maxX = parseInt(svg.style("width"), 10)-20; //-20 from margin svg to inner g g
 					let maxY = parseInt(svg.style("height"), 10)-20;
 					let zoomTransform = d3.zoomTransform(svg.node())
 					var mousePos = d3.pointer(event);

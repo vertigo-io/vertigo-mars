@@ -3,7 +3,7 @@ package io.mars.basemanagement.search
 create IndexDefinition IdxEquipment {  
   keyConcept : DtEquipment
   dtIndex : DtEquipmentIndex 
-  indexCopyTo allText { from: "name,code,description,tags,equipmentTypeName,equipmentCategoryName" }
+  indexCopyTo allText { from: "name,code,description,tags,equipmentTypeName,equipmentCategoryName,baseName" }
   loaderId : "EquipmentSearchLoader"
 } 
 
