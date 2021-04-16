@@ -1,0 +1,103 @@
+{
+	"globalAuthorizations": [{
+        "name": "ViewBases",
+        "label": "View bases list"
+    }],
+	"securedEntities": [
+	{
+        "entity": "Base",
+        "securityFields" : ["baseId","assetsValue" ],
+        "securityDimensions": [],
+        "operations": [  {
+            "__comment": "Visibilité pour les membres",
+            "name": "read", "label" : "Read",
+            "rules": [
+                "baseId<=${baseId}"
+            ]
+        }, {
+            "__comment": "Visibilité pour les managers",
+            "name": "readConf", "overrides": ["read"], "label" : "Lecture des bases sur un seuil de confidentialité",
+            "rules": ["baseId<=${baseId}", "assetsValue<=${assetsValue}" ]
+        }, {
+            "__comment": "Visibilité pour les admin.",
+            "name": "readAll", "overrides": ["read"], "label" : "Lecture sans périmètre",
+            "rules": ["true"]
+        }, 
+        {
+            "__comment": "Edition information base",
+            "name": "write", "label" : "Edition information base",
+            "grant" : "read",
+            "rules": [
+                "baseId<=${baseId}"
+            ]
+        },{
+            "__comment": "Edition information base",
+            "name": "writeAll", "overrides" : ["write"], "label" : "Edition information base",            
+            "rules": ["true"]
+        },
+        {
+            "__comment": "Ajout d'équipement à la base",
+            "name": "addEqui", "label" : "Ajout d'équipement à la base",
+            "grant" : "read",
+            "rules": [
+                "baseId<=${baseId}"
+            ]
+        },{
+            "__comment": "Ajout d'équipement à la base",
+            "name": "addEquiAdm", "overrides" : ["addEqui"], "label" : "Ajout d'équipement à la base",            
+            "rules": ["true"]
+        },
+        {
+            "__comment": "Create, Archive or delete base",
+            "name": "admin", "label" : "Administration des bases",
+            "grant" : ["readAll", "writeAll", "addEquiAdm"],
+            "rules": ["true"]
+        }]
+    },
+    {
+        "entity": "Equipment",
+        "securityFields" : ["baseId","equipmentValue","purchaseDate"],
+        "securityDimensions": [],
+        "operations": [  {
+            "__comment": "Visibilité pour les membres",
+            "name": "read", "label" : "Read",
+            "rules": [
+                "baseId<=${baseId}"
+            ]
+        }, {
+            "__comment": "Visibilité pour les managers",
+            "name": "readConf", "overrides": ["read"], "label" : "Lecture des bases sur un seuil de coût",
+            "rules": ["baseId<=${baseId}", "equipmentValue<=${equipmentValue}" ]
+        }, {
+            "__comment": "Visibilité pour les admin.",
+            "name": "readAll", "overrides": ["read"], "label" : "Lecture sans périmètre",
+            "rules": ["true"]
+        }, 
+        {
+            "__comment": "Edition information",
+            "name": "write", "label" : "Edition information",
+            "grant" : "read",
+            "rules": [
+                "baseId<=${baseId}"
+            ]
+        },{
+            "__comment": "Edition information",
+            "name": "writeAll", "overrides" : ["write"], "label" : "Edition information",            
+            "rules": ["true"]
+        },
+        {
+            "__comment": "Lecture des tickets",
+            "name": "readTickets", "label" : "Lecture des tickets",
+            "rules": [
+                "baseId<=${baseId}"
+            ]
+        },{
+            "__comment": "Gestion des tickets",
+            "name": "editTickets", "label" : "Gestion des tickets",
+            "rules": [
+                "baseId<=${baseId}"
+            ]
+        }]
+    }
+	]
+}

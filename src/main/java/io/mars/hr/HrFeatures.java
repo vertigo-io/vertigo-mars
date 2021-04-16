@@ -18,7 +18,11 @@
  */
 package io.mars.hr;
 
+import io.vertigo.account.plugins.authorization.loaders.JsonSecurityDefinitionProvider;
+import io.vertigo.core.node.config.DefinitionProviderConfig;
+import io.vertigo.core.node.config.Feature;
 import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.param.Param;
 
 public class HrFeatures extends ModuleDiscoveryFeatures {
 
@@ -31,4 +35,12 @@ public class HrFeatures extends ModuleDiscoveryFeatures {
 		return this.getClass().getPackage().getName();
 	}
 
+	@Feature("auth")
+	public HrFeatures withAuth(final Param... params) {
+		getModuleConfigBuilder()
+				.addDefinitionProvider(DefinitionProviderConfig.builder(JsonSecurityDefinitionProvider.class)
+						.addDefinitionResource("security", "io/mars/hr/hr-auth-config.json")
+						.build());
+		return this;
+	}
 }

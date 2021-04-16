@@ -230,8 +230,11 @@ modules:
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:
   io.mars.hr.HrFeatures:
+    features:
+      - auth:
   io.mars.basemanagement.BasemanagementFeatures:
     features:
+      - auth:
       - mqtt:
           __flags__: ["klee"]
   io.mars.maintenance.MaintenanceFeatures:

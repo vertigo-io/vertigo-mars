@@ -1,0 +1,13 @@
+{
+	"globalAuthorizations": [{
+        "name": "ViewAcademy",
+        "label": "Academy access"
+    }, {
+		"name": "AdmUser",
+		"label": "Users administration"
+	}, {
+		"name": "AdmProfil",
+		"label": "Profils administration"
+	}],
+	"securedEntities": []
+}

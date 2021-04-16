@@ -19,6 +19,8 @@
 package io.mars.basemanagement;
 
 import io.mars.basemanagement.services.equipment.iot.MqttShield;
+import io.vertigo.account.plugins.authorization.loaders.JsonSecurityDefinitionProvider;
+import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Feature;
 import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 import io.vertigo.core.param.Param;
@@ -32,6 +34,15 @@ public class BasemanagementFeatures extends ModuleDiscoveryFeatures<Basemanageme
 	@Feature("mqtt")
 	public BasemanagementFeatures withMqtt(final Param... params) {
 		getModuleConfigBuilder().addComponent(MqttShield.class, params);
+		return this;
+	}
+
+	@Feature("auth")
+	public BasemanagementFeatures withAuth(final Param... params) {
+		getModuleConfigBuilder()
+				.addDefinitionProvider(DefinitionProviderConfig.builder(JsonSecurityDefinitionProvider.class)
+						.addDefinitionResource("security", "io/mars/basemanagement/base-auth-config.json")
+						.build());
 		return this;
 	}
 

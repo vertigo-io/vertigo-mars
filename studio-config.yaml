@@ -1,5 +1,7 @@
 resources: 
   - { type: kpr, path: src/main/resources/io/mars/application.kpr}
+  - { type: security, path: src/main/resources/io/mars/basemanagement/base-auth-config.json}
+  - { type: security, path: src/main/resources/io/mars/hr/hr-auth-config.json}
 mdaConfig:
   projectPackageName: io.mars
   targetGenDir : src/main/
@@ -13,4 +15,5 @@ mdaConfig:
     vertigo.domain.sql.generateMasterData: true
     vertigo.task: true
     vertigo.search: true
+    vertigo.authorization: true
     mermaid: true
