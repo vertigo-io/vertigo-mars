@@ -50,7 +50,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	private static final ViewContextKey<Tag> tagsKey = ViewContextKey.of("tags");
 	private static final ViewContextKey<BaseOverview> baseOverview = ViewContextKey.of("baseOverview");
 	private static final ViewContextKey<Picture> basePictures = ViewContextKey.of("basePictures");
-	public static final ViewContextKey<ArrayList<FileInfoURI>> fileUrisKey = ViewContextKey.of("baseTmpPictureUris");
+	private static final ViewContextKey<FileInfoURI> fileUrisKey = ViewContextKey.of("baseTmpPictureUris");
 
 	@GetMapping("/{baseId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId) {
