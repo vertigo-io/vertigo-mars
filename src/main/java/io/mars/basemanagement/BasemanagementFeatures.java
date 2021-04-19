@@ -19,6 +19,7 @@
 package io.mars.basemanagement;
 
 import io.mars.basemanagement.services.equipment.iot.MqttShield;
+import io.mars.support.boot.MarsRoleDefinitionProvider;
 import io.vertigo.account.plugins.authorization.loaders.JsonSecurityDefinitionProvider;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Feature;
@@ -42,7 +43,8 @@ public class BasemanagementFeatures extends ModuleDiscoveryFeatures<Basemanageme
 		getModuleConfigBuilder()
 				.addDefinitionProvider(DefinitionProviderConfig.builder(JsonSecurityDefinitionProvider.class)
 						.addDefinitionResource("security", "io/mars/basemanagement/base-auth-config.json")
-						.build());
+						.build())
+				.addDefinitionProvider(MarsRoleDefinitionProvider.class);//TODO load roles after all authorizations
 		return this;
 	}
 

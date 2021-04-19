@@ -12,13 +12,13 @@ import io.vertigo.core.node.Node;
 public enum GlobalAuthorizations implements AuthorizationName {
 
 	/**
-	 * AdmProfil.
+	 * AdmMissions.
 	 */
-	AtzAdmProfil,
+	AtzAdmMissions,
 	/**
-	 * AdmUser.
+	 * AdmUsers.
 	 */
-	AtzAdmUser,
+	AtzAdmUsers,
 	/**
 	 * ViewAcademy.
 	 */

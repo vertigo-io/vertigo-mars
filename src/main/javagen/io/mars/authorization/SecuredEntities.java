@@ -28,6 +28,8 @@ public final class SecuredEntities {
 		AtzEquipment$read,
 		/** Visibilité pour les admin.. */
 		AtzEquipment$readAll,
+		/** Lecture de tous les tickets. */
+		AtzEquipment$readAllTickets,
 		/** Visibilité pour les managers. */
 		AtzEquipment$readConf,
 		/** Lecture des tickets. */
@@ -67,6 +69,8 @@ public final class SecuredEntities {
 		read,
 		/** Visibilité pour les admin.. */
 		readAll,
+		/** Lecture de tous les tickets. */
+		readAllTickets,
 		/** Visibilité pour les managers. */
 		readConf,
 		/** Lecture des tickets. */

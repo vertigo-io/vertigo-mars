@@ -82,18 +82,23 @@
             ]
         },{
             "__comment": "Edition information",
-            "name": "writeAll", "overrides" : ["write"], "label" : "Edition information",            
+            "name": "writeAll", "overrides" : ["write"], "label" : "Edition information", 
+            "grant" : "readAll",  
             "rules": ["true"]
-        },
-        {
+        }, {
             "__comment": "Lecture des tickets",
             "name": "readTickets", "label" : "Lecture des tickets",
             "rules": [
                 "baseId<=${baseId}"
             ]
+        },  {
+            "__comment": "Lecture de tous les tickets",
+            "name": "readAllTickets", "label" : "Lecture de tous les tickets",
+            "rules": ["true"]
         },{
             "__comment": "Gestion des tickets",
             "name": "editTickets", "label" : "Gestion des tickets",
+            "grant" : "readTickets",
             "rules": [
                 "baseId<=${baseId}"
             ]

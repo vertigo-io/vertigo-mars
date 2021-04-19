@@ -3,11 +3,11 @@
         "name": "ViewAcademy",
         "label": "Academy access"
     }, {
-		"name": "AdmUser",
+		"name": "AdmUsers",
 		"label": "Users administration"
 	}, {
-		"name": "AdmProfil",
-		"label": "Profils administration"
+		"name": "AdmMissions",
+		"label": "Missions administration"
 	}],
 	"securedEntities": []
 }

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import org.keycloak.KeycloakPrincipal;
 
+import io.mars.basemanagement.domain.Base;
+import io.mars.hr.domain.Mission;
 import io.mars.hr.domain.MissionDisplay;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.mission.MissionServices;
@@ -21,7 +23,9 @@ import io.mars.hr.services.person.PersonServices;
 import io.mars.support.MarsUserSession;
 import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
+import io.vertigo.account.authorization.AuthorizationManager;
 import io.vertigo.account.authorization.VSecurityException;
+import io.vertigo.account.authorization.definitions.Role;
 import io.vertigo.account.impl.authentication.UsernameAuthenticationToken;
 import io.vertigo.account.impl.authentication.UsernamePasswordAuthenticationToken;
 import io.vertigo.account.security.VSecurityManager;
@@ -32,8 +36,10 @@ import io.vertigo.core.lang.Tuple;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
@@ -48,6 +54,8 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 	private AuthenticationManager authenticationManager;
 	@Inject
 	private VSecurityManager securityManager;
+	@Inject
+	private AuthorizationManager authorizationManager;
 	@Inject
 	private NotificationManager notificationManager;
 	@Inject
@@ -123,7 +131,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);
-		getUserSession().setCurrentProfile(availableProfiles.get(0));
+		changeProfile(availableProfiles.get(0).getMissionId());
 
 		sendNotificationToAll(Notification.builder()
 				.withSender(account.getDisplayName())
@@ -156,7 +164,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);
-		getUserSession().setCurrentProfile(availableProfiles.get(0));
+		changeProfile(availableProfiles.get(0).getMissionId());
 	}
 
 	private void sendNotificationToAll(final Notification notification) {
@@ -191,7 +199,20 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 				.filter(m -> m.getMissionId() == profileId)
 				.findFirst().get();
 		getUserSession().setCurrentProfile(activeProfile);
+		final Mission mission = missionServices.get(activeProfile.getMissionId());
+		final Base base = mission.base().get();
+		authorizationManager.obtainUserAuthorizations()
+				.clearRoles()
+				.clearSecurityKeys()
+				.addRole(getRole(mission.getRoleId()))
+				.withSecurityKeys("baseId", mission.getBaseId())
+				.withSecurityKeys("assetsValue", base.getAssetsValue());
 		return activeProfile;
+	}
+
+	private Role getRole(final String roleId) {
+		final DefinitionSpace definitionSpace = Node.getNode().getDefinitionSpace();
+		return definitionSpace.resolve(roleId, Role.class);
 	}
 
 	public MissionDisplay getActiveProfile() {
