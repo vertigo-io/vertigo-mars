@@ -200,6 +200,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 				.findFirst().get();
 		getUserSession().setCurrentProfile(activeProfile);
 		final Mission mission = missionServices.get(activeProfile.getMissionId());
+		mission.base().load();
 		final Base base = mission.base().get();
 		authorizationManager.obtainUserAuthorizations()
 				.clearRoles()
@@ -212,7 +213,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 
 	private Role getRole(final String roleId) {
 		final DefinitionSpace definitionSpace = Node.getNode().getDefinitionSpace();
-		return definitionSpace.resolve(roleId, Role.class);
+		return definitionSpace.resolve("R" + roleId, Role.class);
 	}
 
 	public MissionDisplay getActiveProfile() {
