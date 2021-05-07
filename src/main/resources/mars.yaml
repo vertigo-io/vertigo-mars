@@ -248,7 +248,6 @@ modules:
   io.mars.command.CommandFeatures:
 initializers:
   - io.mars.support.boot.InitialDataInitializer:
-      __flags__: ["initialData"]
   - io.mars.support.boot.I18nResourcesInitializer:
   - io.mars.support.boot.SearchInitializer:
   - io.mars.support.boot.OrchestraInitializer:

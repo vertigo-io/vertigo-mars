@@ -18,9 +18,13 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.hr.datageneration.PersonGenerator;
 import io.mars.maintenance.datageneration.TicketGenerator;
 import io.mars.opendata.datageneration.OpendataSetGenerator;
+import io.vertigo.commons.transaction.VTransactionManager;
+import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.param.ParamValue;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
 
 public class DataGenerator implements Component {
 
@@ -43,6 +47,11 @@ public class DataGenerator implements Component {
 	@Inject
 	private OpendataSetGenerator opendataSetGenerator;
 
+	@Inject
+	private EntityStoreManager entityStoreManager;
+	@Inject
+	private VTransactionManager transactionManager;
+
 	private final int initialEquipmentUnits;
 
 	@Inject
@@ -54,12 +63,19 @@ public class DataGenerator implements Component {
 	}
 
 	public void generateInitialData() {
-		generateReferenceData();
-		final List<Base> bases = generateInitialBases();
-		generateInitialEquipments(bases);
-		generateInitialPersons(bases);
-		generateInitialOpendataSets();
-		generatePastData(ZonedDateTime.of(LocalDate.of(2018, 11, 19), LocalTime.of(0, 0), ZoneOffset.UTC).toInstant(), Instant.now());
+		final int baseCount;
+		try (VTransactionWritable transaction = transactionManager.createCurrentTransaction()) {
+			baseCount = entityStoreManager.count(DtObjectUtil.findDtDefinition(Base.class));
+		}
+
+		if (baseCount == 0) {
+			generateReferenceData();
+			final List<Base> bases = generateInitialBases();
+			generateInitialEquipments(bases);
+			generateInitialPersons(bases);
+			generateInitialOpendataSets();
+			generatePastData(ZonedDateTime.of(LocalDate.of(2018, 11, 19), LocalTime.of(0, 0), ZoneOffset.UTC).toInstant(), Instant.now());
+		}
 	}
 
 	private void generateInitialOpendataSets() {
