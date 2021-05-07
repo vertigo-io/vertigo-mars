@@ -35,8 +35,8 @@ public class EquipmentEnvironmentServices implements Component {
 		return timeSeriesManager.getClusteredTimeSeries(APP_NAME, clusteredMeasure, dataFilter, timeFilter);
 	}
 
-	public TimedDatas getTabularTimedData(final List<String> measures, final DataFilter dataFilter, final TimeFilter timeFilter, final String... groupBy) {
-		return timeSeriesManager.getTabularTimedData(APP_NAME, measures, dataFilter, timeFilter, groupBy);
+	public TimedDatas getLastTabularDatas(final List<String> measures, final DataFilter dataFilter, final TimeFilter timeFilter, final String... groupBy) {
+		return timeSeriesManager.getLastTabularDatas(APP_NAME, measures, dataFilter, timeFilter, groupBy);
 	}
 
 	public TabularDatas getTabularData(final List<String> measures, final DataFilter dataFilter, final TimeFilter timeFilter, final String... groupBy) {
