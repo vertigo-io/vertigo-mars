@@ -53,7 +53,7 @@
 						<vu:label-edit object="person" field="picturefileId" th:if="${viewMode=='edit'}"  >
 							<vu:fileupload th:url="'@{/commons/upload}'" key="personPictureUri" />
 						</vu:label-edit>
-						<vu:checkbox-multiple object="personInput" field="groups" list="groups" labelField="name" layout="horizontal"/>
+						<vu:select-multiple object="personInput" field="groups" list="groups" labelField="name" layout="horizontal"/>
 					</vu:grid>
 				</vu:block>
 				<vu:block th:if="${!model.modeCreate}" id="contact" title="Contact actions">
