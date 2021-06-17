@@ -6,10 +6,10 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import io.mars.basemanagement.domain.Base;
+import io.mars.basemanagement.domain.BaseIndex;
 import io.mars.basemanagement.domain.Equipment;
+import io.mars.basemanagement.domain.EquipmentIndex;
 import io.mars.basemanagement.domain.Picture;
-import io.mars.basemanagement.search.BaseIndex;
-import io.mars.basemanagement.search.EquipmentIndex;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.catalog.domain.EquipmentType;

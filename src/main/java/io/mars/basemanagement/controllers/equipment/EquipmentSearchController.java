@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.mars.basemanagement.domain.Equipment;
-import io.mars.basemanagement.search.EquipmentIndex;
-import io.mars.basemanagement.search.GeoSearchEquipmentCriteria;
+import io.mars.basemanagement.domain.EquipmentIndex;
+import io.mars.basemanagement.domain.GeoSearchEquipmentCriteria;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.domain.DtDefinitions.EquipmentIndexFields;
 import io.vertigo.core.lang.VUserException;

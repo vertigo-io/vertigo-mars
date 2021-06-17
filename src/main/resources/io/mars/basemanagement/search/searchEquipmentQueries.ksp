@@ -41,7 +41,7 @@ create FacetDefinition FctEquipmentGeoHash {
 }
 
 create FacetedQueryDefinition QryEquipment {
-	keyConcept : DtEquipment
+	dtIndex : DtEquipmentIndex
 	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName ]
 	domainCriteria : DoLabel
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
@@ -50,7 +50,7 @@ create FacetedQueryDefinition QryEquipment {
 
 
 create FacetedQueryDefinition QryEquipmentGeo {
-	keyConcept : DtEquipment
+	dtIndex : DtEquipmentIndex
 	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentGeoHash]
 	domainCriteria : DoDtGeoSearchEquipmentCriteria
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
@@ -59,7 +59,7 @@ create FacetedQueryDefinition QryEquipmentGeo {
 }
 
 create FacetedQueryDefinition QryEquipmentGeoDistance {
-	keyConcept : DtEquipment
+	dtIndex : DtEquipmentIndex
 	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentGeoDistance, FctEquipmentGeoHash]
 	domainCriteria : DoDtGeoSearchEquipmentCriteria
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  

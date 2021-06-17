@@ -8,11 +8,11 @@ import javax.inject.Inject;
 import io.mars.basemanagement.BasemanagementPAO;
 import io.mars.basemanagement.dao.EquipmentDAO;
 import io.mars.basemanagement.domain.Equipment;
+import io.mars.basemanagement.domain.EquipmentIndex;
 import io.mars.basemanagement.domain.EquipmentMaintenanceOverview;
 import io.mars.basemanagement.domain.EquipmentOverview;
-import io.mars.basemanagement.search.EquipmentIndex;
-import io.mars.basemanagement.search.EquipmentSearchClient;
-import io.mars.basemanagement.search.GeoSearchEquipmentCriteria;
+import io.mars.basemanagement.domain.GeoSearchEquipmentCriteria;
+import io.mars.basemanagement.search.EquipmentIndexSearchClient;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
@@ -42,7 +42,7 @@ public class EquipmentServices implements Component {
 	@Inject
 	private EquipmentDAO equipmentDAO;
 	@Inject
-	private EquipmentSearchClient equipmentSearchClient;
+	private EquipmentIndexSearchClient equipmentIndexSearchClient;
 	@Inject
 	private CommentManager commentManager;
 	@Inject
@@ -68,18 +68,18 @@ public class EquipmentServices implements Component {
 	}
 
 	public FacetedQueryResult<EquipmentIndex, SearchQuery> searchEquipments(final String criteria, final SelectedFacetValues selectedFacetValues, final DtListState dtListState) {
-		final SearchQuery searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipment(criteria, selectedFacetValues).build();
-		return equipmentSearchClient.loadList(searchQuery, dtListState);
+		final SearchQuery searchQuery = equipmentIndexSearchClient.createSearchQueryBuilderEquipment(criteria, selectedFacetValues).build();
+		return equipmentIndexSearchClient.loadList(searchQuery, dtListState);
 	}
 
 	public FacetedQueryResult<EquipmentIndex, SearchQuery> searchGeoEquipments(final GeoSearchEquipmentCriteria criteria, final SelectedFacetValues selectedFacetValues, final DtListState dtListState) {
 		final SearchQuery searchQuery;
 		if (criteria.getGeoLocation() != null) {
-			searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipmentGeoDistance(criteria, selectedFacetValues).build();
+			searchQuery = equipmentIndexSearchClient.createSearchQueryBuilderEquipmentGeoDistance(criteria, selectedFacetValues).build();
 		} else {
-			searchQuery = equipmentSearchClient.createSearchQueryBuilderEquipmentGeo(criteria, selectedFacetValues).build();
+			searchQuery = equipmentIndexSearchClient.createSearchQueryBuilderEquipmentGeo(criteria, selectedFacetValues).build();
 		}
-		return equipmentSearchClient.loadList(searchQuery, dtListState);
+		return equipmentIndexSearchClient.loadList(searchQuery, dtListState);
 	}
 
 	private static final double[] AREA_PER_GEOHASH_PRECISION = { 2025.0, 63.28125, 1.9775390625, 0.061798095703125, 0.0019311904907226562, 6.034970283508301e-05, 1.885928213596344e-06, 5.893525667488575e-08 };
@@ -109,14 +109,14 @@ public class EquipmentServices implements Component {
 		final SearchQueryBuilder searchQueryBuilder;
 		criteria.setGeoPrecision(obtainBestPrecision(criteria.getGeoUpperLeft(), criteria.getGeoLowerRight()));
 		if (criteria.getGeoLocation() != null) {
-			searchQueryBuilder = equipmentSearchClient.createSearchQueryBuilderEquipmentGeoDistance(criteria, selectedFacetValues);
+			searchQueryBuilder = equipmentIndexSearchClient.createSearchQueryBuilderEquipmentGeoDistance(criteria, selectedFacetValues);
 		} else {
-			searchQueryBuilder = equipmentSearchClient.createSearchQueryBuilderEquipmentGeo(criteria, selectedFacetValues);
+			searchQueryBuilder = equipmentIndexSearchClient.createSearchQueryBuilderEquipmentGeo(criteria, selectedFacetValues);
 		}
 		final FacetDefinition clusteringFacetDefinition = Node.getNode().getDefinitionSpace().resolve("FctEquipmentGeoHash", FacetDefinition.class);
 		searchQueryBuilder.withFacetClustering(clusteringFacetDefinition);
 
-		return equipmentSearchClient.loadList(searchQueryBuilder.build(), dtListState);
+		return equipmentIndexSearchClient.loadList(searchQueryBuilder.build(), dtListState);
 	}
 
 	public DtList<EquipmentOverview> getEquipmentOverviewByBaseId(final Long baseId) {
