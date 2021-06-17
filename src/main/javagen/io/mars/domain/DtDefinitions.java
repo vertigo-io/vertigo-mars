@@ -20,7 +20,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Objet de données Base. */
 		Base(io.mars.basemanagement.domain.Base.class),
 		/** Objet de données BaseIndex. */
-		BaseIndex(io.mars.basemanagement.search.BaseIndex.class),
+		BaseIndex(io.mars.basemanagement.domain.BaseIndex.class),
 		/** Objet de données BaseOverview. */
 		BaseOverview(io.mars.basemanagement.domain.BaseOverview.class),
 		/** Objet de données BaseType. */
@@ -36,7 +36,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Objet de données EquipmentFeature. */
 		EquipmentFeature(io.mars.basemanagement.domain.EquipmentFeature.class),
 		/** Objet de données EquipmentIndex. */
-		EquipmentIndex(io.mars.basemanagement.search.EquipmentIndex.class),
+		EquipmentIndex(io.mars.basemanagement.domain.EquipmentIndex.class),
 		/** Objet de données EquipmentMaintenanceOverview. */
 		EquipmentMaintenanceOverview(io.mars.basemanagement.domain.EquipmentMaintenanceOverview.class),
 		/** Objet de données EquipmentOverview. */
@@ -44,7 +44,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Objet de données EquipmentType. */
 		EquipmentType(io.mars.catalog.domain.EquipmentType.class),
 		/** Objet de données GeoSearchEquipmentCriteria. */
-		GeoSearchEquipmentCriteria(io.mars.basemanagement.search.GeoSearchEquipmentCriteria.class),
+		GeoSearchEquipmentCriteria(io.mars.basemanagement.domain.GeoSearchEquipmentCriteria.class),
 		/** Objet de données Geosector. */
 		Geosector(io.mars.basemanagement.domain.Geosector.class),
 		/** Objet de données Groups. */
@@ -129,7 +129,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	/**
 	 * Enumération des champs de BaseIndex.
 	 */
-	public enum BaseIndexFields implements DtFieldName<io.mars.basemanagement.search.BaseIndex> {
+	public enum BaseIndexFields implements DtFieldName<io.mars.basemanagement.domain.BaseIndex> {
 		/** Propriété 'id'. */
 		baseId,
 		/** Propriété 'Name'. */
@@ -247,7 +247,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	/**
 	 * Enumération des champs de EquipmentIndex.
 	 */
-	public enum EquipmentIndexFields implements DtFieldName<io.mars.basemanagement.search.EquipmentIndex> {
+	public enum EquipmentIndexFields implements DtFieldName<io.mars.basemanagement.domain.EquipmentIndex> {
 		/** Propriété 'Id'. */
 		equipmentId,
 		/** Propriété 'Name'. */
@@ -313,7 +313,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	/**
 	 * Enumération des champs de GeoSearchEquipmentCriteria.
 	 */
-	public enum GeoSearchEquipmentCriteriaFields implements DtFieldName<io.mars.basemanagement.search.GeoSearchEquipmentCriteria> {
+	public enum GeoSearchEquipmentCriteriaFields implements DtFieldName<io.mars.basemanagement.domain.GeoSearchEquipmentCriteria> {
 		/** Propriété 'Criteria'. */
 		criteria,
 		/** Propriété 'geoUpperLeft'. */

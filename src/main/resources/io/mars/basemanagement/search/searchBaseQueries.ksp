@@ -6,6 +6,12 @@ create IndexDefinition IdxBase {
   loaderId : "BaseSearchLoader"
 }
 
+create IndexDefinition IdxTag {  
+  keyConcept : DtTag
+  dtIndex : DtBaseIndex
+  loaderId : "BaseSearchLoader"
+}
+
 
 create FacetDefinition FctBaseBaseTypeLabel {
 	dtDefinition:DtBaseIndex, fieldName:"baseTypeLabel", label:"Base Type"
@@ -19,7 +25,7 @@ create FacetDefinition FctBaseCreationDate {
 }
 
 create FacetedQueryDefinition QryBase {
-	keyConcept : DtBase
+	dtIndex : DtBaseIndex
 	facets : [FctBaseBaseTypeLabel,  FctBaseCreationDate ]
 	domainCriteria : DoLabel
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  

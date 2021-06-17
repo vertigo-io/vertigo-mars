@@ -33,7 +33,7 @@ create FacetDefinition FctSupplierDateCreation {
 }
 
 create FacetedQueryDefinition QrySupplier {
-	keyConcept : DtSupplier
+	dtIndex : DtSupplier
 	facets : [FctSupplierTrancheEffectifs, FctSupplierCategorieEntreprise, FctSupplierCategorieJuridique, FctSupplierActivitePrincipale, FctSupplierDateCreation ]
 	domainCriteria : DoLabel
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  

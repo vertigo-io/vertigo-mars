@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.mars.basemanagement.domain.Equipment;
+import io.mars.basemanagement.domain.EquipmentIndex;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.node.Node;

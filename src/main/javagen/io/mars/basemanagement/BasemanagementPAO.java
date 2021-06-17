@@ -152,7 +152,7 @@ public final class BasemanagementPAO implements StoreServices {
  "				where BASE_ID in (#baseIds.rownum#);",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseIndex")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.search.BaseIndex> loadBaseIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseIds", smartType = "STyId") final java.util.List<Long> baseIds) {
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.BaseIndex> loadBaseIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseIds", smartType = "STyId") final java.util.List<Long> baseIds) {
 		final Task task = createTaskBuilder("TkLoadBaseIndex")
 				.addValue("baseIds", baseIds)
 				.build();
@@ -184,7 +184,7 @@ public final class BasemanagementPAO implements StoreServices {
  "				where EQUIPMENT_ID in (#equipmentIds.rownum#);",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentIndex")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.search.EquipmentIndex> loadEquipmentIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentIds", smartType = "STyId") final java.util.List<Long> equipmentIds) {
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentIndex> loadEquipmentIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentIds", smartType = "STyId") final java.util.List<Long> equipmentIds) {
 		final Task task = createTaskBuilder("TkLoadEquipmentIndex")
 				.addValue("equipmentIds", equipmentIds)
 				.build();
