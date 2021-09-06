@@ -15,7 +15,8 @@ private String printException(Throwable t) throws Exception {
             sw.append("\n\t").append(stack[i]);
         }
         String res = sw.toString();
-		for (i = 0; (i = res.indexOf('&', i)) >= 0; i++) res = res.substring(0, i) + "&amp;" + res.substring(i + 1);
+        for (i = 0; (i = res.indexOf('à', i)) >= 0; i++) res = res.substring(0, i) + "&agrave;" + res.substring(i + 1);
+        for (i = 0; (i = res.indexOf('&', i)) >= 0; i++) res = res.substring(0, i) + "&amp;" + res.substring(i + 1);
 	   	for (i = 0; (i = res.indexOf('\"', i)) >= 0;) res = res.substring(0, i) + "&quot;" + res.substring(i + 1);
     	for (i = 0; (i = res.indexOf('<', i)) >= 0;) res = res.substring(0, i) + "&lt;" + res.substring(i + 1);
     	for (i = 0; (i = res.indexOf('>', i)) >= 0;) res = res.substring(0, i) + "&gt;" + res.substring(i + 1);
@@ -34,22 +35,30 @@ private String printException(Throwable t) throws Exception {
 		String errorMessage = (String) request.getAttribute("javax.servlet.error.message");
 		Integer errorCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 		//Throwable e = (Throwable)pageContext.getAttribute("ex"), t;
-        List list = new ArrayList();
+        List exceptionList = new ArrayList();
         String message = null;
         boolean sessionException = false;
         boolean contextException = false;
         boolean securityException = false;
         boolean noObjectFoundException = false;
-       	
-        if (errorCode!=null && errorCode.equals(401)) {
-        	response.sendRedirect(baseUrl+"login/?code=401");
+       
+        if (errorCode!=null) {
+	        switch(errorCode.intValue()) {
+	        	case 401:
+	        		response.sendRedirect(baseUrl+"login/?code=401");//disconnected
+	        		break;
+	        	case 403:
+	        		securityException = true;
+	        		break;
+	        	default:
+	        }
         }
         
         for (; e != null;) {
-            list.add(e);
+            exceptionList.add(e);
             if (e instanceof io.vertigo.vega.webservice.exception.SessionException) {
             	sessionException = true;
-            	response.sendRedirect(baseUrl+"login/?code=400");
+            	response.sendRedirect(baseUrl+"login/?code=400");//session expired
             	%>
             	<%-- jsp:forward page="noSession-error.jsp" / --%>
             <%}
@@ -61,7 +70,7 @@ private String printException(Throwable t) throws Exception {
             if (t == null && (e instanceof io.vertigo.core.lang.WrappedException)) t = ((io.vertigo.core.lang.WrappedException) e).getCause();
             e = t;
         }
-        Collections.reverse(list);
+        Collections.reverse(exceptionList);
        
        StringBuilder sbHome = new StringBuilder("");
  	   sbHome.append("<a class=\"lien\" href=\"home/\">");
@@ -90,7 +99,7 @@ private String printException(Throwable t) throws Exception {
 	<meta http-equiv="Content-Script-Type" content="text/javascript"/>
 	
 	<base href="<%=baseUrl%>"></base>	
-    <script th:src="@{/vertigo-ui/static/3rdParty/cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js}"></script>	
+    <script src="<%=baseUrl%>vertigo-ui/static/3rdParty/cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>	
 	<link href="static/css/error.css" type="text/css" rel="stylesheet"/>
 	<title>Vertigo - <%=errorCode%></title>
 </head>
@@ -125,11 +134,11 @@ private String printException(Throwable t) throws Exception {
 		<h2>Le contexte de cet &eacute;cran n'est plus disponible</h2>
 		<p>
 		L'action que vous avez demand&eacute;e ne peut se poursuivre car le contexte de cet &eacute;cran n'est plus disponible.<br/>
-		Vous pouvez continuer votre travail &eacute; partir de <%=sbPrevious.toString()%> ou <%=sbHome.toString()%>.<br/>
+		Vous pouvez continuer votre travail &agrave; partir de <%=sbPrevious.toString()%> ou <%=sbHome.toString()%>.<br/>
 		Ce cas de figure peut se produire si vous avez cliqu&eacute; un trop grand nombre de fois de suite sur la fl&eacute;che "retour arri&eacute;re" de votre navigateur, ou si vous avez attendu trop longtemps avant de cliquer sur une action.
 		</p>
 	<% } else if (securityException) { %>
-		<h2>Vous n'&eacute;tes pas habilit&eacute; &eacute; effectuer cette action</h2>
+		<h2>Vous n'&eacute;tes pas habilit&eacute; &agrave; effectuer cette action</h2>
 		<p>
 		L'action que vous avez demand&eacute;e ne peut se poursuivre car vous n'avez pas les habilitations suffisantes.<br/>
 		Vous pouvez continuer votre travail &eacute; partir de <%=sbPrevious.toString()%> ou <%=sbHome.toString()%>.<br/>
@@ -154,8 +163,8 @@ communiquer l'heure &agrave; laquelle s'est produite l'erreur ainsi que les info
 		</div>
 		<div id="errordetail" style="display:none;">
 		<h2><%="HTTP (" + errorCode + ") : " + errorMessage %></h2>
-		<% for (int i = 0; i < list.size(); i++) { %>
-			<% t = (Throwable)list.get(i); %>
+		<% for (int i = 0; i < exceptionList.size(); i++) { %>
+			<% t = (Throwable)exceptionList.get(i); %>
 			<h4><%= i > 0 ? "Cons&eacute;quence (" + i + ")" : "Cause racine" %></h4>
 			<div class="code">
 				<%= printException(t)%>
