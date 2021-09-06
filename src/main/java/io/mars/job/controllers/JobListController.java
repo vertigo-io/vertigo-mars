@@ -17,7 +17,7 @@ public class JobListController extends AbstractVSpringMvcController {
 	//	private static final ViewContextKey<OProcessUi> jobs = ViewContextKey.of("jobs");
 	//	private static final ViewContextKey<OExecutionSummary> summaries = ViewContextKey.of("summaries");
 
-	@Inject
+	//@Inject
 	//	private JobServices jobServices;
 
 	@GetMapping("/")
