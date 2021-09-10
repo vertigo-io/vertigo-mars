@@ -156,6 +156,7 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 						.withDtDefinition("DtEquipmentIndex")
 						.withFieldName("equipmentTypeName")
 						.withLabel("Equipment Type")
+						.withMultiSelectable()
 						.withOrder(FacetOrder.count))
 				.add(new FacetRangeDefinitionSupplier("FctEquipmentGeoDistance")
 						.withDtDefinition("DtEquipmentIndex")
