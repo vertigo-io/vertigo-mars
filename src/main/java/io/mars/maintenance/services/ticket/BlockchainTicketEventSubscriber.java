@@ -1,19 +1,14 @@
 package io.mars.maintenance.services.ticket;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import io.mars.hr.services.person.PersonServices;
 import io.mars.maintenance.domain.Ticket;
-import io.vertigo.account.account.Account;
 import io.vertigo.audit.ledger.LedgerManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
 
@@ -71,11 +66,7 @@ public class BlockchainTicketEventSubscriber implements Component {
 	}
 
 	private void sendNotificationToAll(final Notification notification) {
-		final Set<UID<Account>> accountUIDs = personServices.getPersons(DtListState.of(null))
-				.stream()
-				.map((person) -> UID.of(Account.class, String.valueOf(person.getPersonId())))
-				.collect(Collectors.toSet());
-		notificationManager.send(notification, accountUIDs);
+		notificationManager.send(notification, personServices.getAllPersonsUID());
 	}
 
 }

@@ -1,8 +1,5 @@
 package io.mars.hr.services.mission;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import javax.inject.Inject;
 
 import io.mars.basemanagement.domain.Base;
@@ -10,12 +7,9 @@ import io.mars.basemanagement.domain.Business;
 import io.mars.hr.domain.Mission;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.person.PersonServices;
-import io.vertigo.account.account.Account;
 import io.vertigo.audit.ledger.LedgerManager;
 import io.vertigo.commons.eventbus.EventBusSubscribed;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
 
@@ -27,7 +21,7 @@ public class BlockchainMissionEventSubscriber implements Component {
 	@Inject
 	private PersonServices personServices;
 	@Inject
-	private NotificationManager NotificationManager;
+	private NotificationManager notificationManager;
 
 	@EventBusSubscribed
 	public void onTicketEvent(final MissionEvent missionEvent) {
@@ -69,11 +63,7 @@ public class BlockchainMissionEventSubscriber implements Component {
 	}
 
 	private void sendNotificationToAll(final Notification notification) {
-		final Set<UID<Account>> accountUIDs = personServices.getPersons(DtListState.of(null))
-				.stream()
-				.map((person) -> UID.of(Account.class, String.valueOf(person.getPersonId())))
-				.collect(Collectors.toSet());
-		NotificationManager.send(notification, accountUIDs);
+		notificationManager.send(notification, personServices.getAllPersonsUID());
 	}
 
 }
