@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.mars.domain.DtDefinitions.PersonFields;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.person.PersonServices;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("AdmUsers")
 @RequestMapping("/hr/persons")
 public class PersonListController extends AbstractVSpringMvcController {
 

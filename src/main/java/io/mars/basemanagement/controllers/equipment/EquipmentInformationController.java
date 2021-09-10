@@ -16,6 +16,7 @@ import io.mars.basemanagement.domain.Tag;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.catalog.domain.EquipmentType;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
@@ -23,6 +24,7 @@ import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("Equipment$read")
 @RequestMapping("/basemanagement/equipment/")
 public class EquipmentInformationController extends AbstractVSpringMvcController {
 

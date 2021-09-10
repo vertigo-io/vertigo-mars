@@ -20,7 +20,7 @@
 
 <body class="mat desktop no-touch platform-mat">
 
-	<vu:page vuiSsr="false" > 
+	<vu:page vuiSsr="false"  > 
       <q-layout view="hHh LpR fff" v-cloak>
 			<!-- BEGIN HEADER-->
 			<q-header elevated>
@@ -62,6 +62,7 @@
 							  </q-list>
 							 </q-menu>
 						</q-btn>
+                            
 						<q-btn flat round dense icon="apps" size="lg" aria-label="Toggle apps">
 							<q-menu>
 								<div class="row q-col-gutter-sm q-pa-md" style="width: 300px;">
@@ -73,7 +74,7 @@
 											</div>
 										</q-btn>
 									</div>
-									<div class="col-6" >
+									<div class="col-6" th:if="${authz.hasAuthorization('ViewAcademy')}">
 										<q-btn type="a" href="https://kleeacademy.360learning.com/" target="_blank" class="full-width" style="height:68px">
 											<div class="column items-center">
 												<div class="col-12"><img th:src="@{/static/img/logo_360Learning.png}" width="100%" alt="logo 360 learning"></img></div>
@@ -143,7 +144,7 @@
 			        </q-item>
 			        <q-separator></q-separator>
 			       	<component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'"  label="Base managment" default-opened >
-					        <q-item tag="a" th:href="@{/basemanagement/bases/}" >
+					        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/basemanagement/bases/}" >
 					          <q-item-section avatar>
 					          	<q-icon name="fas fa-dice-d20" title="Bases"></q-icon>
 					          </q-item-section>
@@ -163,9 +164,10 @@
 					          </q-item-section>
 					        </q-item>
 				    </component>
-				    <q-separator></q-separator>
-			       	<component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'" label="People" default-opened >
-				        <q-item tag="a" th:href="@{/hr/persons/}">
+				    <q-separator th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
+			       	<component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'" label="People" default-opened 
+			       	 th:if="${authz.hasAuthorization('AdmUser','ViewAcademy')}">
+				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}">
 				          <q-item-section avatar>
 				          	<q-icon name="fas fa-user-friends" title="Teams"></q-icon>
 				          </q-item-section>
@@ -174,7 +176,7 @@
 				           <q-item-label caption>Base managers, Workers,...</q-item-label>
 				          </q-item-section>
 				        </q-item>
-				        <q-item tag="a" th:href="@{/academy/}">
+				        <q-item th:if="${authz.hasAuthorization()}" tag="a" th:href="@{/academy/}">
 				          <q-item-section avatar>
 				          	<q-icon name="fas fa-graduation-cap"></q-icon>
 				          </q-item-section>

@@ -20,6 +20,7 @@ import io.mars.hr.domain.Person;
 import io.mars.hr.domain.PersonInput;
 import io.mars.hr.services.mission.MissionServices;
 import io.mars.hr.services.person.PersonServices;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;
@@ -30,6 +31,7 @@ import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+//@Secured("AdmUsers") not here : can edit my profil
 @RequestMapping("/hr/person")
 public class PersonDetailController extends AbstractVSpringMvcController {
 
@@ -59,6 +61,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		toModeReadOnly();
 	}
 
+	@Secured("AdmUsers")
 	@GetMapping("/new")
 	public void initContext(final ViewContext viewContext) {
 		viewContext.publishDto(personKey, personServices.initPerson());
@@ -85,6 +88,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		toModeReadOnly();
 	}
 
+	@Secured("AdmUsers")
 	@PostMapping("/_create")
 	public String doCreate(@ViewAttribute("person") final Person person, @ViewAttribute("personPictureUri") final Optional<FileInfoURI> personPictureFile) {
 		personServices.createPerson(person);

@@ -26,14 +26,14 @@
 		<div layout:fragment="content-header-actions">
 			<vu:button-link th:if="${model.modeEdit}" class="text-accent-inverted on-left" flat round size="lg" icon="fas fa-ban"
 				url="@{/basemanagement/base/information/} + ${model.base.baseId}" ariaLabel="Cancel" />
-			<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" round size="lg" color="primary" icon="edit" ariaLabel="Edit" class="on-left" />
+			<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.base,'write')}" action="@{_edit}" round size="lg" color="primary" icon="edit" ariaLabel="Edit" class="on-left" />
 			<th:block id="baseActions">
 				<vu:buttons-group sm="0" md="2" moreLabel="More actions">
-					<vu:button-link url="@{/basemanagement/equipments/}" ariaLabel="See all equipments" icon="fas fa-rocket" color="primary" round size="lg" class="on-left" />
-					<vu:button-link url="@{/basemanagement/equipment/new}" ariaLabel="Add equipment" icon="fas fa-rocket" color="primary" round size="lg" class="on-left">+</vu:button-link>
-					<vu:button-link url="@{/basemanagement/newPicture}" ariaLabel="Add photo" icon="fas fa-image" color="primary" round size="lg" class="on-left">+</vu:button-link>
-					<vu:button-submit action="_archive" ariaLabel="Archive base" icon="fas fa-archive" color="primary" round size="lg" class="on-left"/>
-					<vu:button-submit action="_delete" ariaLabel="Delete base" icon="fas fa-trash-alt" color="primary" round size="lg" class="on-left"/>
+					<vu:button-link th:if="${authz.hasAuthorization('Equipment$read')}" url="@{/basemanagement/equipments/}" ariaLabel="See all equipments" icon="fas fa-rocket" color="primary" round size="lg" class="on-left" />
+					<vu:button-link th:if="${authz.hasOperation(model.base,'addEqui')}" url="@{/basemanagement/equipment/new}" ariaLabel="Add equipment" icon="fas fa-rocket" color="primary" round size="lg" class="on-left">+</vu:button-link>
+					<vu:button-link th:if="${authz.hasOperation(model.base,'write')}" url="@{/basemanagement/newPicture}" ariaLabel="Add photo" icon="fas fa-image" color="primary" round size="lg" class="on-left">+</vu:button-link>
+					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_archive" ariaLabel="Archive base" icon="fas fa-archive" color="primary" round size="lg" class="on-left"/>
+					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_delete" ariaLabel="Delete base" icon="fas fa-trash-alt" color="primary" round size="lg" class="on-left"/>
 				</vu:buttons-group>
 			</th:block>
 		</div>

@@ -22,6 +22,7 @@ import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.domain.DtDefinitions.PictureFields;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.mission.MissionServices;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.ui.core.BasicUiListModifiable;
@@ -35,6 +36,7 @@ import io.vertigo.vega.webservice.validation.DefaultDtObjectValidator;
 import io.vertigo.vega.webservice.validation.UiMessageStack;
 
 @Controller
+@Secured("ViewBases")
 @RequestMapping("/basemanagement/base/information")
 public class BaseInformationController extends AbstractVSpringMvcController {
 

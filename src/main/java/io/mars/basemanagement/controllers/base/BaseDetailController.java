@@ -29,6 +29,7 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseType;
 import io.mars.basemanagement.domain.Picture;
 import io.mars.basemanagement.services.base.BaseServices;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datastore.filestore.model.VFile;
 import io.vertigo.ui.core.ProtectedValueUtil;
 import io.vertigo.ui.core.ViewContext;
@@ -36,6 +37,7 @@ import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("ViewBases")
 @RequestMapping("/basemanagement/base/")
 public final class BaseDetailController extends AbstractVSpringMvcController {
 	public static final ViewContextKey<Base> baseKey = ViewContextKey.of("base");
