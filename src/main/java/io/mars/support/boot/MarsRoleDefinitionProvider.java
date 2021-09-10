@@ -25,13 +25,13 @@ public final class MarsRoleDefinitionProvider implements SimpleDefinitionProvide
 	public List<Definition> provideDefinitions(final DefinitionSpace definitionSpace) {
 		return List.of(
 				createRole(RoleEnum.admin,
-						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzAdmUsers, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
+						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzAdmUsers, GlobalAuthorizations.AtzViewBases,
 						EquipmentAuthorizations.AtzEquipment$writeAll, EquipmentAuthorizations.AtzEquipment$editTickets,
 						BaseAuthorizations.AtzBase$admin, BaseAuthorizations.AtzBase$addEquiAdm),
 				createRole(RoleEnum.manager,
 						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
-						EquipmentAuthorizations.AtzEquipment$readConf, EquipmentAuthorizations.AtzEquipment$editTickets,
-						BaseAuthorizations.AtzBase$readConf, BaseAuthorizations.AtzBase$addEqui),
+						EquipmentAuthorizations.AtzEquipment$readConf, EquipmentAuthorizations.AtzEquipment$write, EquipmentAuthorizations.AtzEquipment$editTickets,
+						BaseAuthorizations.AtzBase$write, BaseAuthorizations.AtzBase$readConf, BaseAuthorizations.AtzBase$addEqui),
 				createRole(RoleEnum.engineer,
 						GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
 						EquipmentAuthorizations.AtzEquipment$write, EquipmentAuthorizations.AtzEquipment$editTickets,
