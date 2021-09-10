@@ -5,6 +5,12 @@ package io.mars
 /********************************* Domains ********************************************************/
 /**************************************************************************************************/
 
+/*SecuredFrom : use only in Task with securedEntities*/
+create Domain DoAuthorizationCriteria {
+    dataType : ValueObject
+    type : "io.vertigo.account.authorization.AuthorizationCriteria"
+}
+
 create Domain DoId {
 	dataType : Long
 	storeType : "NUMERIC"
@@ -14,7 +20,6 @@ create Domain DoMultipleIds {
 	dataType : String
     storeType : "TEXT"
 }
-
 
 
 create Domain DoInstant {

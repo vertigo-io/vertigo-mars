@@ -194,23 +194,6 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TkSelectBaseId.
-	 * @return List de Long baseIdList
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkSelectBaseId",
-			request = "select BASE_ID from BASE",
-			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
-	public java.util.List<Long> selectBaseId() {
-		final Task task = createTaskBuilder("TkSelectBaseId")
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
-	}
-
-	/**
 	 * Execute la tache TkSelectBusinessId.
 	 * @return List de Long businessIdList
 	*/

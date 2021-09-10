@@ -68,6 +68,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	/**
 	 * Execute la tache TkGetEquipmentsByBaseCode.
 	 * @param code String
+	 * @param securedEquipment AuthorizationCriteria
 	 * @return DtList de Equipment equipments
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
@@ -76,12 +77,13 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
  "            	equ.*" + 
  "			from equipment equ" + 
  "				join base bas on bas.base_id = equ.base_id" + 
- "			where bas.code = #code#",
+ "			where bas.code = #code# and <%=securedEquipment.asSqlWhere('equ', ctx_connectionName)%>",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.datamodel.task.proxy.TaskInput(name = "code", smartType = "STyCode") final String code) {
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.datamodel.task.proxy.TaskInput(name = "code", smartType = "STyCode") final String code, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetEquipmentsByBaseCode")
 				.addValue("code", code)
+				.addValue("securedEquipment", securedEquipment)
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -91,21 +93,23 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	/**
 	 * Execute la tache TkGetLastPurchasedEquipmentsByBaseId.
 	 * @param baseId Long
+	 * @param securedEquipment AuthorizationCriteria
 	 * @return DtList de Equipment equipments
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetLastPurchasedEquipmentsByBaseId",
 			request = "select " + 
  "            	equ.*" + 
- "			from equipment equ" + 
+ "			from (<%=securedEquipment.asSqlFrom('equipment', ctx_connectionName)%>) equ" + 
  "			where equ.base_id = #baseId#" + 
  "			order by equ.purchase_date desc" + 
  "			limit 50",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetLastPurchasedEquipmentsByBaseId")
 				.addValue("baseId", baseId)
+				.addValue("securedEquipment", securedEquipment)
 				.build();
 		return getTaskManager()
 				.execute(task)
