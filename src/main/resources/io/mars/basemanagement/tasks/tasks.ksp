@@ -16,16 +16,6 @@ create Task TkSelectBusiness {
     out dtcBusiness     {domain : DoDtBusiness cardinality: "*" } 
 }
 
-
-create Task TkSelectBaseId {
-   className : "io.vertigo.basics.task.TaskEngineSelect"
-   request : "
-            select BASE_ID from BASE
-             "
-    out baseIdList     {domain : DoId         cardinality: "*"}
-
-}
-
 create Task TkSelectGeosectorId {
    className : "io.vertigo.basics.task.TaskEngineSelect"
    request : "
