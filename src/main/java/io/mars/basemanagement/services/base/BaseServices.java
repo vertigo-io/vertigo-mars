@@ -13,12 +13,14 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseIndex;
 import io.mars.basemanagement.domain.BaseOverview;
 import io.mars.basemanagement.domain.BasesSummary;
+import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.domain.Geosector;
 import io.mars.basemanagement.domain.Picture;
 import io.mars.domain.DtDefinitions.PictureFields;
 import io.mars.hr.services.person.PersonServices;
 import io.mars.support.fileinfo.FileInfoStd;
 import io.mars.support.services.MarsFileServices;
+import io.vertigo.account.authorization.AuthorizationCriteria;
 import io.vertigo.account.authorization.AuthorizationManager;
 import io.vertigo.account.authorization.AuthorizationUtil;
 import io.vertigo.commons.transaction.Transactional;
@@ -85,7 +87,10 @@ public class BaseServices implements Component, Activeable {
 	}
 
 	public BaseOverview getBaseOverview(final Long baseId) {
-		return basemanagementPAO.getBaseOverview(baseId);
+		//Sometimes we must load the entity to check security filter
+		AuthorizationUtil.assertOperations(baseDAO.get(baseId), SecuredEntities.BaseOperations.read);
+		final AuthorizationCriteria<Equipment> securityEquipmentFilter = AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read);
+		return basemanagementPAO.getBaseOverview(baseId, securityEquipmentFilter);
 	}
 
 	public void save(final Base base, final List<FileInfoURI> addedPictureFile, final DtList<Picture> deletedPictures) {
@@ -132,11 +137,14 @@ public class BaseServices implements Component, Activeable {
 	}
 
 	public DtList<BaseIndex> getBaseIndex(final List<Long> baseIds) {
+		//use for search indexation : no security filter
 		return basemanagementPAO.loadBaseIndex(baseIds);
 	}
 
 	public BasesSummary getBaseSummary() {
-		return basemanagementPAO.getBasesSummary();
+		final AuthorizationCriteria<Base> securityBaseFilter = AuthorizationUtil.authorizationCriteria(Base.class, SecuredEntities.BaseOperations.read);
+		final AuthorizationCriteria<Equipment> securityEquipmentFilter = AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read);
+		return basemanagementPAO.getBasesSummary(securityBaseFilter, securityEquipmentFilter);
 	}
 
 	public VFile getBaseMainPicture(final Long baseId) {

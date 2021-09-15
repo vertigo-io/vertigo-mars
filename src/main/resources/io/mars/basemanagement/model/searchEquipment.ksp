@@ -14,8 +14,12 @@ create DtDefinition DtEquipmentIndex {
 	field tags {domain: DoTags label: "Tags" }
 	field equipmentTypeName {domain: DoLabel label:"Type" }
 	field equipmentCategoryName {domain: DoLabel label:"Category" }
+    field equipmentValue {domain: DoCurrency label:"Current equipment value" }
+    field baseId {domain: DoId label: "Base Id" }
     field baseName {domain: DoLabel label: "Base Name" }
 	field geoLocation {domain: DoGeoPoint label:"Geographic Location" }
+	
+	/* Must contains security fields */
 }
 
 create DtDefinition DtGeoSearchEquipmentCriteria {

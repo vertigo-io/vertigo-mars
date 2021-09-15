@@ -21,6 +21,8 @@ public final class EquipmentIndex implements DtObject {
 	private String tags;
 	private String equipmentTypeName;
 	private String equipmentCategoryName;
+	private java.math.BigDecimal equipmentValue;
+	private Long baseId;
 	private String baseName;
 	private io.mars.support.smarttypes.GeoPoint geoLocation;
 	
@@ -174,6 +176,44 @@ public final class EquipmentIndex implements DtObject {
 	 */
 	public void setEquipmentCategoryName(final String equipmentCategoryName) {
 		this.equipmentCategoryName = equipmentCategoryName;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Current equipment value'.
+	 * @return BigDecimal equipmentValue
+	 */
+	@Field(smartType = "STyCurrency", label = "Current equipment value")
+	public java.math.BigDecimal getEquipmentValue() {
+		return equipmentValue;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Current equipment value'.
+	 * @param equipmentValue BigDecimal
+	 */
+	public void setEquipmentValue(final java.math.BigDecimal equipmentValue) {
+		this.equipmentValue = equipmentValue;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Base Id'.
+	 * @return Long baseId
+	 */
+	@Field(smartType = "STyId", label = "Base Id")
+	public Long getBaseId() {
+		return baseId;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Base Id'.
+	 * @param baseId Long
+	 */
+	public void setBaseId(final Long baseId) {
+		this.baseId = baseId;
 	}
 	
 	/**

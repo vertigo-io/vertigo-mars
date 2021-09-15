@@ -7,12 +7,13 @@ create Task TkGetLastTicketsByBaseId {
             select 
             	tic.*
 			from ticket tic
-			join equipment equ on equ.equipment_id = tic.equipment_id
+			join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id
 			where equ.base_id = #baseId#
 			order by tic.date_created desc
 			limit 50
              "
     in 	baseId 	{domain : DoId         	cardinality: "1" }
+    in  securedEquipment {domain : DoAuthorizationCriteria    cardinality: "1"}
     out tickets {domain : DoDtTicket    cardinality: "*" }
 }
 
@@ -22,9 +23,11 @@ create Task TkGetLastTickets {
             select 
             	tic.*
 			from ticket tic
+            join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id
 			order by tic.date_created desc
 			limit 50
              "
+    in  securedEquipment {domain : DoAuthorizationCriteria    cardinality: "1"}
     out  tickets     {domain : DoDtTicket    cardinality: "*"}
 }
 

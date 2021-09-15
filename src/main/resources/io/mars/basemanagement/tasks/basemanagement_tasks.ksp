@@ -5,7 +5,7 @@ create Task TkGetLastPurchasedEquipmentsByBaseId {
     request : "
             select 
             	equ.*
-			from (<%=securedEquipment.asSqlFrom('equipment', ctx_connectionName)%>) equ
+			from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ
 			where equ.base_id = #baseId#
 			order by equ.purchase_date desc
 			limit 50
@@ -22,7 +22,7 @@ create Task TkGetEquipmentsByBaseCode {
             	equ.*
 			from equipment equ
 				join base bas on bas.base_id = equ.base_id
-			where bas.code = #code# and <%=securedEquipment.asSqlWhere('equ', ctx_connectionName)%>
+			where bas.code = #code# and <%=securedEquipment.asSqlWhere(\"equ\", ctx)%>
              "
     in 	code     	 {domain : DoCode         cardinality: "1" }
     in  securedEquipment {domain : DoAuthorizationCriteria    cardinality: "1"}

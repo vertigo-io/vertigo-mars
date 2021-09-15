@@ -45,6 +45,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 
 	/**
 	 * Execute la tache TkGetLastTickets.
+	 * @param securedEquipment AuthorizationCriteria
 	 * @return DtList de Ticket tickets
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
@@ -52,12 +53,14 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 			request = "select " + 
  "            	tic.*" + 
  "			from ticket tic" + 
+ "            join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id" + 
  "			order by tic.date_created desc" + 
  "			limit 50",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtTicket")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTickets() {
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTickets(@io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetLastTickets")
+				.addValue("securedEquipment", securedEquipment)
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -67,6 +70,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 	/**
 	 * Execute la tache TkGetLastTicketsByBaseId.
 	 * @param baseId Long
+	 * @param securedEquipment AuthorizationCriteria
 	 * @return DtList de Ticket tickets
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
@@ -74,15 +78,16 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 			request = "select " + 
  "            	tic.*" + 
  "			from ticket tic" + 
- "			join equipment equ on equ.equipment_id = tic.equipment_id" + 
+ "			join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id" + 
  "			where equ.base_id = #baseId#" + 
  "			order by tic.date_created desc" + 
  "			limit 50",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtTicket")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetLastTicketsByBaseId")
 				.addValue("baseId", baseId)
+				.addValue("securedEquipment", securedEquipment)
 				.build();
 		return getTaskManager()
 				.execute(task)

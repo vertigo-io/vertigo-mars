@@ -77,7 +77,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
  "            	equ.*" + 
  "			from equipment equ" + 
  "				join base bas on bas.base_id = equ.base_id" + 
- "			where bas.code = #code# and <%=securedEquipment.asSqlWhere('equ', ctx_connectionName)%>",
+ "			where bas.code = #code# and <%=securedEquipment.asSqlWhere(\"equ\", ctx)%>",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.datamodel.task.proxy.TaskInput(name = "code", smartType = "STyCode") final String code, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
@@ -100,7 +100,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 			name = "TkGetLastPurchasedEquipmentsByBaseId",
 			request = "select " + 
  "            	equ.*" + 
- "			from (<%=securedEquipment.asSqlFrom('equipment', ctx_connectionName)%>) equ" + 
+ "			from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ" + 
  "			where equ.base_id = #baseId#" + 
  "			order by equ.purchase_date desc" + 
  "			limit 50",

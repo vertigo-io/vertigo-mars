@@ -43,19 +43,21 @@ public final class BasemanagementPAO implements StoreServices {
 	/**
 	 * Execute la tache TkGetBaseOverview.
 	 * @param baseId Long
+	 * @param securedEquipment AuthorizationCriteria
 	 * @return BaseOverview baseOverview
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetBaseOverview",
 			request = "select " + 
- "				(select count(*) from equipment equ where equ.base_id = #baseId#) as equipment_count," + 
- "				(select count(*) from ticket tic join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
- "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
+ "				(select count(*) from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ where equ.base_id = #baseId#) as equipment_count," + 
+ "				(select count(*) from ticket tic join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
+ "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseOverview")
-	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
+	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetBaseOverview")
 				.addValue("baseId", baseId)
+				.addValue("securedEquipment", securedEquipment)
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -64,19 +66,23 @@ public final class BasemanagementPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkGetBasesSummary.
+	 * @param securedBase AuthorizationCriteria
+	 * @param securedEquipment AuthorizationCriteria
 	 * @return BasesSummary basesSummary
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetBasesSummary",
 			request = "select " + 
- "				(select count(*) from base) as base_count," + 
- "				(select avg(health_level) from base) as base_mean_health," + 
+ "				(select count(*) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_count," + 
+ "				(select avg(health_level) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_mean_health," + 
  "				(select count(*) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets," + 
- "				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from equipment) as online_equipment_percent;",
+ "				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>)) as online_equipment_percent;",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBasesSummary")
-	public io.mars.basemanagement.domain.BasesSummary getBasesSummary() {
+	public io.mars.basemanagement.domain.BasesSummary getBasesSummary(@io.vertigo.datamodel.task.proxy.TaskInput(name = "securedBase", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedBase, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetBasesSummary")
+				.addValue("securedBase", securedBase)
+				.addValue("securedEquipment", securedEquipment)
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -92,7 +98,7 @@ public final class BasemanagementPAO implements StoreServices {
 			name = "TkGetEquipmentMaintenanceOverview",
 			request = "select " + 
  "				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets," + 
- "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = #equipmentId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
+ "				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id and tic.equipment_id = #equipmentId# and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentMaintenanceOverview")
 	public io.mars.basemanagement.domain.EquipmentMaintenanceOverview getEquipmentMaintenanceOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId) {
@@ -107,6 +113,7 @@ public final class BasemanagementPAO implements StoreServices {
 	/**
 	 * Execute la tache TkGetEquipmentsOverview.
 	 * @param baseId Long
+	 * @param securedEquipment AuthorizationCriteria
 	 * @return DtList de EquipmentOverview overview
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
@@ -118,15 +125,16 @@ public final class BasemanagementPAO implements StoreServices {
  "            	bus.icon as business_icon," + 
  "            	sum(case when equ.health_level >= 30 then 1 else 0 end) as ok_count," + 
  "            	sum(case when equ.health_level < 30 then 1 else 0 end) as down_count" + 
- "			from equipment equ" + 
+ "			from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ" + 
  "				join business bus on bus.business_id = equ.business_id " + 
  "			where equ.base_id = #baseId#" + 
  "			group by business_name, bus.business_id",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentOverview")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId) {
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetEquipmentsOverview")
 				.addValue("baseId", baseId)
+				.addValue("securedEquipment", securedEquipment)
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -172,10 +180,12 @@ public final class BasemanagementPAO implements StoreServices {
  "						equ.NAME, " + 
  "						equ.CODE, " + 
  "						equ.PURCHASE_DATE, " + 
+ "                        equ.EQUIPMENT_VALUE, " + 
  "						equ.TAGS, " + 
  "						equ.GEO_LOCATION,  " + 
  "						equipmentType.LABEL as EQUIPMENT_TYPE_NAME," + 
  "						equipmentCategory.LABEL as EQUIPMENT_CATEGORY_NAME," + 
+ "                        bas.BASE_ID as BASE_ID," + 
  "                        bas.NAME as BASE_NAME" + 
  "				from EQUIPMENT equ" + 
  "                join BASE bas on bas.base_id = equ.base_id" + 

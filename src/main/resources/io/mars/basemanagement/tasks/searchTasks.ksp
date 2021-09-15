@@ -23,10 +23,12 @@ create Task TkLoadEquipmentIndex {
 						equ.NAME, 
 						equ.CODE, 
 						equ.PURCHASE_DATE, 
+                        equ.EQUIPMENT_VALUE, 
 						equ.TAGS, 
 						equ.GEO_LOCATION,  
 						equipmentType.LABEL as EQUIPMENT_TYPE_NAME,
 						equipmentCategory.LABEL as EQUIPMENT_CATEGORY_NAME,
+                        bas.BASE_ID as BASE_ID,
                         bas.NAME as BASE_NAME
 				from EQUIPMENT equ
                 join BASE bas on bas.base_id = equ.base_id

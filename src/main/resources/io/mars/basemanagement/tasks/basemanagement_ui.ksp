@@ -12,12 +12,13 @@ create Task TkGetEquipmentsOverview {
             	bus.icon as business_icon,
             	sum(case when equ.health_level >= 30 then 1 else 0 end) as ok_count,
             	sum(case when equ.health_level < 30 then 1 else 0 end) as down_count
-			from equipment equ
+			from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ
 				join business bus on bus.business_id = equ.business_id 
 			where equ.base_id = #baseId#
 			group by business_name, bus.business_id
              "
     in 	baseId     {domain : DoId         			cardinality: "1"  }
+    in  securedEquipment {domain : DoAuthorizationCriteria    cardinality: "1"}
     out overview   {domain : DoDtEquipmentOverview  cardinality: "*"  }
 }
 
@@ -25,11 +26,13 @@ create Task TkGetBasesSummary {
     className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
             select 
-				(select count(*) from base) as base_count,
-				(select avg(health_level) from base) as base_mean_health,
+				(select count(*) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_count,
+				(select avg(health_level) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_mean_health,
 				(select count(*) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,
-				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from equipment) as online_equipment_percent;
+				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>)) as online_equipment_percent;
              "
+    in  securedBase {domain : DoAuthorizationCriteria    cardinality: "1"}
+    in  securedEquipment {domain : DoAuthorizationCriteria    cardinality: "1"}
     out basesSummary     {domain : DoDtBasesSummary    cardinality: "1" }
 }
 
@@ -37,11 +40,12 @@ create Task TkGetBaseOverview {
     className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
            select 
-				(select count(*) from equipment equ where equ.base_id = #baseId#) as equipment_count,
-				(select count(*) from ticket tic join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,
-				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress
+				(select count(*) from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ where equ.base_id = #baseId#) as equipment_count,
+				(select count(*) from ticket tic join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,
+				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress
              "
     in 	baseId     		{domain : DoId    				cardinality: "1"  }
+    in  securedEquipment {domain : DoAuthorizationCriteria    cardinality: "1"}
     out baseOverview    {domain : DoDtBaseOverview    	cardinality: "1"  }
 }
 
@@ -51,7 +55,7 @@ create Task TkGetEquipmentMaintenanceOverview {
     request : "
            select 
 				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,
-				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join equipment equ on equ.equipment_id = #equipmentId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress
+				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id and tic.equipment_id = #equipmentId# and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress
              "
     in 	equipmentId     				{domain : DoId    							cardinality: "1" }
     out equipmentMaintenanceOverview    {domain : DoDtEquipmentMaintenanceOverview  cardinality: "1" }

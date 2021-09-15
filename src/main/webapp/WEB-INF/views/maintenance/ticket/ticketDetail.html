@@ -21,10 +21,10 @@
 			</div>
 			<div layout:fragment="content-header-actions">
 				<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" :round size="lg" color="primary" icon="cancel" :flat aria-label="Cancel" title="Cancel" class="on-left"  />
-				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>
-				<vu:button-submit th:if="${model.modeReadOnly && model.ticket.ticketStatusId != 'CLOSED'}" action="@{_closeTicket}" :round size="lg" color="primary" icon="check" aria-label="Close ticket" title="Close ticket" class="on-left"  />
+				<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.equipment,'readTickets')}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>
+				<vu:button-submit th:if="${model.modeReadOnly && model.ticket.ticketStatusId != 'CLOSED' && authz.hasOperation(model.equipment,'readTickets')}" action="@{_closeTicket}" :round size="lg" color="primary" icon="check" aria-label="Close ticket" title="Close ticket" class="on-left"  />
 				<q-btn th:if="${!model.modeCreate}" round size="lg" color="primary" icon="add" aria-label="Add work order" title="Add work order" class="on-left" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/new}', { 'ticketId' : vueData.ticket.ticketId, 'successCallback' : 'onWorkOrderSuccess' })|"></q-btn>
-				<vu:button-link th:if="${!model.modeCreate}" icon="fas fa-rocket" url="@{/basemanagement/equipment/} + ${model.ticket.equipmentId}" ariaLabel="Go to equipment" round size="lg" color="primary" class="on-left" />
+				<vu:button-link th:if="${!model.modeCreate && authz.hasOperation(model.equipment,'read')}" icon="fas fa-rocket" url="@{/basemanagement/equipment/} + ${model.ticket.equipmentId}" ariaLabel="Go to equipment" round size="lg" color="primary" class="on-left" />
 			</div>
 		</section>
 		

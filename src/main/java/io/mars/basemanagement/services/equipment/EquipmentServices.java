@@ -151,8 +151,8 @@ public class EquipmentServices implements Component {
 	public DtList<EquipmentOverview> getEquipmentOverviewByBaseId(final Long baseId) {
 		Assertion.check().isNotNull(baseId);
 		//---
-		//TODO secu
-		return basemanagementPAO.getEquipmentsOverview(baseId);
+		return basemanagementPAO.getEquipmentsOverview(baseId,
+				AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read));
 	}
 
 	public DtList<Equipment> getLastPurchasedEquipmentsByBase(final Long baseId) {
