@@ -35,7 +35,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Tuple;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
@@ -221,7 +221,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 	}
 
 	private MarsUserSession getUserSession() {
-		return securityManager.<MarsUserSession> getCurrentUserSession().orElseThrow(() -> new VSecurityException(MessageText.of("No active session found")));
+		return securityManager.<MarsUserSession> getCurrentUserSession().orElseThrow(() -> new VSecurityException(LocaleMessageText.of("No active session found")));
 	}
 
 }

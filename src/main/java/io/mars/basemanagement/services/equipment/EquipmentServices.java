@@ -19,7 +19,7 @@ import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datafactory.collections.definitions.FacetDefinition;
@@ -147,7 +147,7 @@ public class EquipmentServices implements Component {
 		Assertion.check().isNotNull(equipmentId);
 		//
 
-		final Account currentAccount = authenticationManager.getLoggedAccount().orElseThrow(() -> new VSecurityException(MessageText.of("No user currently logged in")));
+		final Account currentAccount = authenticationManager.getLoggedAccount().orElseThrow(() -> new VSecurityException(LocaleMessageText.of("No user currently logged in")));
 		final UID<Account> currentAccountUID = currentAccount.getUID();
 
 		final Comment comment = Comment.builder()

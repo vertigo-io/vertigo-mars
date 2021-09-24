@@ -28,7 +28,7 @@ import io.mars.command.services.bot.generation.model.CommandModel;
 import io.mars.command.services.bot.generation.model.CommandTrainingModel;
 import io.vertigo.commons.command.definitions.CommandDefinition;
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
@@ -101,7 +101,7 @@ public class BotCommandGenerationServices implements Component {
 					if (trainSet.isEmpty() && commandDefinition.getParams().isEmpty()) {
 						return Collections.singletonList(question).stream();
 					}
-					return trainSet.stream().map(args -> MessageText.of(question, (Serializable[]) transformParamsForNlu(commandDefinition, args)).getDisplay());
+					return trainSet.stream().map(args -> LocaleMessageText.of(question, (Serializable[]) transformParamsForNlu(commandDefinition, args)).getDisplay());
 				})
 				.collect(Collectors.toList());
 	}

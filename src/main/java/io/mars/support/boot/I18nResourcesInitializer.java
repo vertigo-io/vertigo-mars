@@ -9,7 +9,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.vertigo.core.locale.LocaleManager;
-import io.vertigo.core.locale.MessageKey;
+import io.vertigo.core.locale.LocaleMessageKey;
 import io.vertigo.core.node.component.ComponentInitializer;
 
 /**
@@ -18,7 +18,7 @@ import io.vertigo.core.node.component.ComponentInitializer;
  */
 public class I18nResourcesInitializer implements ComponentInitializer {
 
-	private static final Set<Class<? extends MessageKey>> REGISTRED_RESOURCES = new HashSet<>();
+	private static final Set<Class<? extends LocaleMessageKey>> REGISTRED_RESOURCES = new HashSet<>();
 
 	@Inject
 	private LocaleManager localeManager;
@@ -37,7 +37,7 @@ public class I18nResourcesInitializer implements ComponentInitializer {
 	 * @param baseName Emplacement fichier de ressources
 	 * @param clazz Enum associ� au fichier de ressources
 	 */
-	private static void registerMessageKey(final LocaleManager component, final String baseName, final Class<? extends MessageKey> clazz) {
+	private static void registerMessageKey(final LocaleManager component, final String baseName, final Class<? extends LocaleMessageKey> clazz) {
 		component.add(baseName, clazz.getEnumConstants());
 		REGISTRED_RESOURCES.add(clazz);
 	}
@@ -47,8 +47,8 @@ public class I18nResourcesInitializer implements ComponentInitializer {
 	 *
 	 * @return la valeur de registredRessources.
 	 */
-	public static Set<Class<? extends MessageKey>> getRegistredRessources() {
-		final Set<Class<? extends MessageKey>> cloneSet = new HashSet<>();
+	public static Set<Class<? extends LocaleMessageKey>> getRegistredRessources() {
+		final Set<Class<? extends LocaleMessageKey>> cloneSet = new HashSet<>();
 		cloneSet.addAll(REGISTRED_RESOURCES);
 		return cloneSet;
 	}

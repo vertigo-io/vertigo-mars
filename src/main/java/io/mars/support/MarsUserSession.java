@@ -26,7 +26,7 @@ import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.account.security.UserSession;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.node.Node;
 import io.vertigo.datamodel.structure.model.DtList;
 
@@ -67,7 +67,7 @@ public class MarsUserSession extends UserSession {
 
 	public final Account getLoggedAccount() {
 		return Node.getNode().getComponentSpace().resolve(AuthenticationManager.class).getLoggedAccount()
-				.orElseThrow(() -> new VSecurityException(MessageText.of("No account logged in")));
+				.orElseThrow(() -> new VSecurityException(LocaleMessageText.of("No account logged in")));
 	}
 
 	public final DtList<MissionDisplay> getAvailableProfiles() {
