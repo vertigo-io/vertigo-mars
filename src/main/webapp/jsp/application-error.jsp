@@ -141,7 +141,7 @@ private String printException(Throwable t) throws Exception {
 		<h2>Vous n'&eacute;tes pas habilit&eacute; &agrave; effectuer cette action</h2>
 		<p>
 		L'action que vous avez demand&eacute;e ne peut se poursuivre car vous n'avez pas les habilitations suffisantes.<br/>
-		Vous pouvez continuer votre travail &eacute; partir de <%=sbPrevious.toString()%> ou <%=sbHome.toString()%>.<br/>
+		Vous pouvez continuer votre travail &agrave; partir de <%=sbPrevious.toString()%> ou <%=sbHome.toString()%>.<br/>
 		Vous pouvez &eacute;galement vous <%=sbReconnect.toString()%>.
 		</p>
 	<% } else if (noObjectFoundException) { %>
