@@ -57,8 +57,8 @@ public class EquipmentEnvironmentServices implements Component {
 				Collections.singletonList("value:last"),
 				DataFilter.builder("temperature").build(),
 				TimeFilter.builder("now() - 3d", "now() + 3d").build());
-		if (!lastTemperatures.getTabularDataSeries().isEmpty()) {
-			return Math.round((Double) lastTemperatures.getTabularDataSeries().get(0).getValues().get("value:last") * 10.0) / 10.0;
+		if (!lastTemperatures.tabularDataSeries().isEmpty()) {
+			return Math.round((Double) lastTemperatures.tabularDataSeries().get(0).getValues().get("value:last") * 10.0) / 10.0;
 		}
 		return 0.0;
 	}
@@ -69,8 +69,8 @@ public class EquipmentEnvironmentServices implements Component {
 				Collections.singletonList("value:last"),
 				DataFilter.builder("humidite").build(),
 				TimeFilter.builder("now() - 3d", "now() + 3d").build());
-		if (!lastHumidities.getTabularDataSeries().isEmpty()) {
-			return Math.round((Double) lastHumidities.getTabularDataSeries().get(0).getValues().get("value:last") * 10.0) / 10.0;
+		if (!lastHumidities.tabularDataSeries().isEmpty()) {
+			return Math.round((Double) lastHumidities.tabularDataSeries().get(0).getValues().get("value:last") * 10.0) / 10.0;
 		}
 		return 0.0;
 	}
@@ -83,8 +83,8 @@ public class EquipmentEnvironmentServices implements Component {
 				DataFilter.builder("temperature").build(),
 				TimeFilter.builder("now() - 365d", "now()").build());
 
-		if (!totalMeasure.getTabularDataSeries().isEmpty()) {
-			return ((Double) totalMeasure.getTabularDataSeries().get(0).getValues().get("value:count")).intValue();
+		if (!totalMeasure.tabularDataSeries().isEmpty()) {
+			return ((Double) totalMeasure.tabularDataSeries().get(0).getValues().get("value:count")).intValue();
 		}
 		return 0;
 	}
@@ -125,8 +125,8 @@ public class EquipmentEnvironmentServices implements Component {
 				Collections.singletonList("value:sum"),
 				DataFilter.builder("fireAlarm").build(),
 				TimeFilter.builder("now() - 15d", "now() + 1h").build());
-		if (!totalAlerts.getTabularDataSeries().isEmpty()) {
-			return ((Double) totalAlerts.getTabularDataSeries().get(0).getValues().get("value:sum")).intValue();
+		if (!totalAlerts.tabularDataSeries().isEmpty()) {
+			return ((Double) totalAlerts.tabularDataSeries().get(0).getValues().get("value:sum")).intValue();
 		}
 		return 0;
 	}
@@ -137,9 +137,9 @@ public class EquipmentEnvironmentServices implements Component {
 				Arrays.asList("value:last", "equipment:last"),
 				DataFilter.builder("moisture").build(),
 				TimeFilter.builder("now() - 365d", "now() + 1d").build());
-		if (!lastMoistureValue.getTabularDataSeries().isEmpty()) {
-			if ((double) Math.round((Double) lastMoistureValue.getTabularDataSeries().get(0).getValues().get("value:last") * 10) / 10 <= 40) {
-				return lastMoistureValue.getTabularDataSeries().get(0).getValues().get("equipment:last").toString();
+		if (!lastMoistureValue.tabularDataSeries().isEmpty()) {
+			if ((double) Math.round((Double) lastMoistureValue.tabularDataSeries().get(0).getValues().get("value:last") * 10) / 10 <= 40) {
+				return lastMoistureValue.tabularDataSeries().get(0).getValues().get("equipment:last").toString();
 			}
 		}
 		return "No Farms to Water";

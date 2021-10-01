@@ -1,7 +1,5 @@
 package io.mars.job.controllers;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,10 +34,10 @@ public class JobListController extends AbstractVSpringMvcController {
 			// and add seven days to the end date
 			final Calendar last = (Calendar) first.clone();
 			last.add(Calendar.DAY_OF_YEAR, WEEK_DAYS);
-	
+
 			return last.toInstant();
 		}
-	
+
 		private static Calendar getFirstDayOfWeek() {
 			final Calendar cal = new GregorianCalendar(Locale.FRANCE);
 			// "calculate" the start date of the week
@@ -48,11 +46,11 @@ public class JobListController extends AbstractVSpringMvcController {
 			first.set(Calendar.HOUR_OF_DAY, 0);
 			first.set(Calendar.MINUTE, 0);
 			first.set(Calendar.SECOND, 0);
-	
+
 			first.set(Calendar.MILLISECOND, 0);
-	
+
 			return first;
-	
+
 		}
 	*/
 }

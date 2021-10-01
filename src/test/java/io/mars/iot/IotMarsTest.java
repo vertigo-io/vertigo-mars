@@ -127,7 +127,7 @@ public final class IotMarsTest {
 				Collections.singletonList("value:last"),
 				DataFilter.builder("temperature").build(),
 				TimeFilter.builder("now() - 1h", "now() + 1h").build());
-		Assertions.assertEquals(32.0, lastTemperature.getTabularDataSeries().get(0).getValues().get("value:last"));
+		Assertions.assertEquals(32.0, lastTemperature.tabularDataSeries().get(0).getValues().get("value:last"));
 	}
 
 }
