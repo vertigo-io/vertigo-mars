@@ -43,17 +43,11 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 		viewContext.publishDto(criteriaKey, geoCriteria);
 		viewContext.publishRef(listRenderer, renderer.orElse("table"));
 		final String listRendererValue = viewContext.getString(listRenderer);
-		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult;
-		switch (listRendererValue) {
-			case "table":
-				facetedQueryResult = equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
-				break;
-			case "map":
-				facetedQueryResult = equipmentServices.searchGeoClusterEquipments(geoCriteria, SelectedFacetValues.empty().build(), DtListState.of(3));
-				break;
-			default:
-				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
-		}
+		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
+			case "table" -> equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
+			case "map" -> equipmentServices.searchGeoClusterEquipments(geoCriteria, SelectedFacetValues.empty().build(), DtListState.of(3));
+			default -> throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		};
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 
 	}
@@ -65,17 +59,11 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 			@ViewAttribute("equipments") final SelectedFacetValues selectedFacetValues,
 			final DtListState dtListState) {
 		final String listRendererValue = viewContext.getString(listRenderer);
-		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult;
-		switch (listRendererValue) {
-			case "table":
-				facetedQueryResult = equipmentServices.searchEquipments(Optional.ofNullable(criteria.getCriteria()).orElse(""), selectedFacetValues, dtListState);
-				break;
-			case "map":
-				facetedQueryResult = equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(3));
-				break;
-			default:
-				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
-		}
+		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
+			case "table" -> equipmentServices.searchEquipments(Optional.ofNullable(criteria.getCriteria()).orElse(""), selectedFacetValues, dtListState);
+			case "map" -> equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(3));
+			default -> throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		};
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 		return viewContext;
 	}
@@ -87,17 +75,11 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 			@ViewAttribute("equipments") final SelectedFacetValues selectedFacetValues,
 			final DtListState dtListState) {
 		final String listRendererValue = viewContext.getString(listRenderer);
-		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult;
-		switch (listRendererValue) {
-			case "table":
-				facetedQueryResult = equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
-				break;
-			case "map":
-				facetedQueryResult = equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(250));
-				break;
-			default:
-				throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
-		}
+		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
+			case "table" -> equipmentServices.searchEquipments(criteria.getCriteria(), selectedFacetValues, dtListState);
+			case "map" -> equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(250));
+			default -> throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		};
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 		return viewContext;
 	}
