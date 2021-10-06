@@ -155,16 +155,12 @@ public class FakeEquipmentListBuilder implements Builder {
 	}
 
 	private static Double getEquipmentTypeDeviation(final EquipmentType equipmentType) {
-		switch (equipmentType.equipmentCategory().get().getLabel()) {
-			case "Bot":
-				return 0.5;
-			case "Building":
-				return 0.1;
-			case "Vehicle":
-				return 2.0;
-			default:
-				return 0.0;// no change by default
-		}
+		return switch (equipmentType.equipmentCategory().get().getLabel()) {
+			case "Bot" -> 0.5;
+			case "Building" -> 0.1;
+			case "Vehicle" -> 2.0;
+			default -> 0.0;// no change by default
+		};
 	}
 
 	@Override
