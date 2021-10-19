@@ -41,9 +41,10 @@ public class MissionDetailController extends AbstractVSpringMvcController {
 		final Mission mission = new Mission();
 		mission.person().setId(personId);
 		//---
-		viewContext.publishDto(missionKey, mission);
-		viewContext.publishRef(successCallbackKey, successCallback);
-		viewContext.publishRef(closeSuccessKey, Boolean.FALSE);
+		viewContext
+				.publishDto(missionKey, mission)
+				.publishRef(successCallbackKey, successCallback)
+				.publishRef(closeSuccessKey, false);
 		//---
 		toModeCreate();
 	}
@@ -52,29 +53,31 @@ public class MissionDetailController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext, @PathVariable("missionId") final Long missionId, @RequestParam("successCallback") final String successCallback) {
 		loadLists(viewContext);
 		//---
-		viewContext.publishDto(missionKey, missionServices.get(missionId));
-		viewContext.publishRef(successCallbackKey, successCallback);
-		viewContext.publishRef(closeSuccessKey, Boolean.FALSE);
+		viewContext
+				.publishDto(missionKey, missionServices.get(missionId))
+				.publishRef(successCallbackKey, successCallback)
+				.publishRef(closeSuccessKey, false);
 		//---
 		toModeEdit();
 	}
 
 	private void loadLists(final ViewContext viewContext) {
-		viewContext.publishMdl(ViewContextKey.of("roles"), Role.class, null);
-		viewContext.publishDtList(ViewContextKey.of("bases"), baseServices.getBases(DtListState.defaultOf(Base.class)));
-		viewContext.publishMdl(ViewContextKey.of("businesses"), Business.class, null);
+		viewContext
+				.publishMdl(ViewContextKey.of("roles"), Role.class, null)
+				.publishDtList(ViewContextKey.of("bases"), baseServices.getBases(DtListState.defaultOf(Base.class)))
+				.publishMdl(ViewContextKey.of("businesses"), Business.class, null);
 	}
 
 	@PostMapping("/_save")
 	public void doSave(final ViewContext viewContext, @ViewAttribute("mission") final Mission mission) {
 		missionServices.save(mission);
-		viewContext.publishRef(closeSuccessKey, Boolean.TRUE);
+		viewContext.publishRef(closeSuccessKey, true);
 	}
 
 	@PostMapping("/_create")
 	public void doCreate(final ViewContext viewContext, @ViewAttribute("mission") final Mission mission) {
 		missionServices.createMission(mission);
-		viewContext.publishRef(closeSuccessKey, Boolean.TRUE);
+		viewContext.publishRef(closeSuccessKey, true);
 	}
 
 }

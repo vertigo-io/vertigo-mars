@@ -26,10 +26,11 @@ public class EnvironmentController extends AbstractVSpringMvcController {
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishRef(lastTemperature, equipmentEnvironmentServices.getLastTemperature());
-		viewContext.publishRef(lastHumidity, equipmentEnvironmentServices.getLastHumidity());
-		viewContext.publishRef(totalAlert, equipmentEnvironmentServices.getWeeklyTriggeredAlarm());
-		viewContext.publishRef(farmsToWater, equipmentEnvironmentServices.actionMoistureLevel());
+		viewContext
+				.publishRef(lastTemperature, equipmentEnvironmentServices.getLastTemperature())
+				.publishRef(lastHumidity, equipmentEnvironmentServices.getLastHumidity())
+				.publishRef(totalAlert, equipmentEnvironmentServices.getWeeklyTriggeredAlarm())
+				.publishRef(farmsToWater, equipmentEnvironmentServices.actionMoistureLevel());
 
 		toModeReadOnly();
 	}

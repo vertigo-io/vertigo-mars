@@ -33,10 +33,11 @@ public class HomeController extends AbstractVSpringMvcController {
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishMdl(workOrderStatus, WorkOrderStatus.class, null); //all
-		viewContext.publishDtList(basesKey, baseServices.getBases(DtListState.defaultOf(Base.class)));
-		viewContext.publishDto(summaryKey, baseServices.getBaseSummary());
-		viewContext.publishDtList(lastWorkOrdersKey, workOrderServices.getLastWorkOrders());
+		viewContext
+				.publishMdl(workOrderStatus, WorkOrderStatus.class, null) //all
+				.publishDtList(basesKey, baseServices.getBases(DtListState.defaultOf(Base.class)))
+				.publishDto(summaryKey, baseServices.getBaseSummary())
+				.publishDtList(lastWorkOrdersKey, workOrderServices.getLastWorkOrders());
 	}
 
 }

@@ -41,13 +41,15 @@ public class ShowcaseController extends AbstractVSpringMvcController {
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext, final UiMessageStack uiMessageStack) {
 		final Base base = baseServices.getBases(DtListState.of(1)).get(0);
-		viewContext.publishDto(baseKey, base);
-		viewContext.publishDtList(basesKey, baseServices.getBases(DtListState.of(20)));
+		viewContext
+				.publishDto(baseKey, base)
+				.publishDtList(basesKey, baseServices.getBases(DtListState.of(20)));
 		final Base emptyBase = new Base();
-		viewContext.publishDto(emptyBaseKey, emptyBase);
-		viewContext.publishMdl(baseTypesKey, BaseType.class, null); //all
-		viewContext.publishDtList(geosectorsKey, baseServices.getAllGeosectors());
-		viewContext.publishMdl(tagsKey, Tag.class, null); //all
+		viewContext
+				.publishDto(emptyBaseKey, emptyBase)
+				.publishMdl(baseTypesKey, BaseType.class, null) //all
+				.publishDtList(geosectorsKey, baseServices.getAllGeosectors())
+				.publishMdl(tagsKey, Tag.class, null); //all
 
 		final OProcessUi processUi = new OProcessUi();
 		processUi.setActive(Boolean.TRUE);

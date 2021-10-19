@@ -74,7 +74,7 @@ public class CommandWebServices implements WebServices {
 		final CommandDefinition commandDefinition = commandManager.findCommand(command);
 		final String[] evaluatedParams = IntStream.range(0, commandDefinition.getParams().size())
 				.mapToObj(i -> {
-					final Type paramType = commandDefinition.getParams().get(i).getType();
+					final Type paramType = commandDefinition.getParams().get(i).type();
 					if (paramType instanceof ParameterizedType) {
 						return evaluateParam(params[i], (Class) ((ParameterizedType) paramType).getActualTypeArguments()[0]);
 					}

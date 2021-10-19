@@ -54,17 +54,19 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 
 		final PersonInput personInput = new PersonInput();
 		personInput.setGroups(Arrays.asList(1000L));
-		viewContext.publishDto(personInputKey, personInput);
-		viewContext.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
+		viewContext
+		.publishDto(personInputKey, personInput)
+		.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
 		toModeReadOnly();
 	}
 
 	@GetMapping("/new")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishDto(personKey, personServices.initPerson());
-		viewContext.publishMdl(tagsKey, Tag.class, null); //all
-		viewContext.publishDto(personInputKey, new PersonInput());
-		viewContext.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
+		viewContext
+				.publishDto(personKey, personServices.initPerson())
+				.publishMdl(tagsKey, Tag.class, null) //all
+				.publishDto(personInputKey, new PersonInput())
+				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
 		toModeCreate();
 	}
 
