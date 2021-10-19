@@ -48,9 +48,10 @@ public final class UserProfilController extends AbstractVSpringMvcController {
 	@ModelAttribute
 	public void initContext(final ViewContext viewContext) {
 		if (isNewContext() && loginServices.isAuthenticated()) { //must support all cases
-			viewContext.publishDto(connectedUserKey, loginServices.getLoggedPerson());
-			viewContext.publishDtList(availableProfilesKey, loginServices.getAvailableProfiles());
-			viewContext.publishDto(activeProfileKey, loginServices.getActiveProfile());
+			viewContext
+					.publishDto(connectedUserKey, loginServices.getLoggedPerson())
+					.publishDtList(availableProfilesKey, loginServices.getAvailableProfiles())
+					.publishDto(activeProfileKey, loginServices.getActiveProfile());
 		}
 	}
 
@@ -64,7 +65,7 @@ public final class UserProfilController extends AbstractVSpringMvcController {
 		private VSecurityManager securityManager;
 		@Inject
 		private AccountManager identityManager;
-
+	
 		@GetMapping("/userInfo")
 		public Person getUserInfo() {
 			final Optional<MarsUserSession> userSession = securityManager.getCurrentUserSession();
@@ -73,7 +74,7 @@ public final class UserProfilController extends AbstractVSpringMvcController {
 			}
 			return null;
 		}
-
+	
 		@GetMapping("/userPhoto")
 		public VFile getUserPhoto() {
 			final Optional<MarsUserSession> userSession = securityManager.getCurrentUserSession();

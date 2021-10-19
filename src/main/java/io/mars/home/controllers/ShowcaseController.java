@@ -41,23 +41,23 @@ public class ShowcaseController extends AbstractVSpringMvcController {
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext, final UiMessageStack uiMessageStack) {
 		final Base base = baseServices.getBases(DtListState.of(1)).get(0);
-		viewContext
-				.publishDto(baseKey, base)
-				.publishDtList(basesKey, baseServices.getBases(DtListState.of(20)));
 		final Base emptyBase = new Base();
-		viewContext
-				.publishDto(emptyBaseKey, emptyBase)
-				.publishMdl(baseTypesKey, BaseType.class, null) //all
-				.publishDtList(geosectorsKey, baseServices.getAllGeosectors())
-				.publishMdl(tagsKey, Tag.class, null); //all
 
 		final OProcessUi processUi = new OProcessUi();
 		processUi.setActive(Boolean.TRUE);
-		viewContext.publishDto(jobKey, processUi);
 
 		final OProcessExecutionUi processExecutionUi = new OProcessExecutionUi();
 		processExecutionUi.setBeginTime(Instant.now());
-		viewContext.publishDto(jobExecutionKey, processExecutionUi);
+
+		viewContext
+				.publishDto(baseKey, base)
+				.publishDtList(basesKey, baseServices.getBases(DtListState.of(20)))
+				.publishDto(emptyBaseKey, emptyBase)
+				.publishMdl(baseTypesKey, BaseType.class, null) //all
+				.publishDtList(geosectorsKey, baseServices.getAllGeosectors())
+				.publishMdl(tagsKey, Tag.class, null) //all
+				.publishDto(jobKey, processUi)
+				.publishDto(jobExecutionKey, processExecutionUi);
 
 		//add error
 		uiMessageStack.error("Some error message", emptyBase, BaseFields.assetsValue.name());

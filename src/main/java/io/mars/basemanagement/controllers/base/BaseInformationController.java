@@ -55,18 +55,19 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	@GetMapping("/{baseId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId) {
 		baseDetailController.initCommonContext(viewContext, baseId);
-		viewContext.publishMdl(tagsKey, Tag.class, null); //all
-		viewContext.publishDtList(geosectorsKey, baseServices.getAllGeosectors());
-		//---
-		viewContext.publishDto(baseOverview, baseServices.getBaseOverview(baseId));
+		viewContext
+				.publishMdl(tagsKey, Tag.class, null) //all
+				.publishDtList(geosectorsKey, baseServices.getAllGeosectors())
+				//---
+				.publishDto(baseOverview, baseServices.getBaseOverview(baseId));
 		//---
 		final Person noManagerPerson = new Person();
 		noManagerPerson.setLastName("No manager");
 		//---
-		viewContext.publishDto(baseManagerKey, missionServices.getBaseManager(baseId).orElse(noManagerPerson));
-
-		viewContext.publishDtListModifiable(basePictures, baseServices.getPictures(baseId));
-		viewContext.publishFileInfoURIs(fileUrisKey, new ArrayList<>());
+		viewContext
+				.publishDto(baseManagerKey, missionServices.getBaseManager(baseId).orElse(noManagerPerson))
+				.publishDtListModifiable(basePictures, baseServices.getPictures(baseId))
+				.publishFileInfoURIs(fileUrisKey, new ArrayList<>());
 
 		toModeReadOnly();
 	}
@@ -99,7 +100,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 		//baseServices.removeBasePicture(baseId, basePictureId);
 		final BasicUiListModifiable<Picture> pictures = viewContext.getUiListModifiable(basePictures);
 		final Long basePictureId = ProtectedValueUtil.readProtectedValue(protectedId, Long.class);
-		final boolean elementRemoved = pictures.removeIf((picture) -> basePictureId.equals(picture.getLong(PictureFields.picturefileId.name())));
+		final boolean elementRemoved = pictures.removeIf(picture -> basePictureId.equals(picture.getLong(PictureFields.picturefileId.name())));
 		if (!elementRemoved) {
 			throw new VUserException("Picture already removed");
 		}
@@ -111,8 +112,7 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	@PostMapping("/_ajaxValidation")
 	public ViewContext doAjaxValidation(final ViewContext viewContext, @ViewAttribute("base") final Base base) {
 		// do something or just validation from retrieving a view attribute
-		viewContext.publishDto(BaseDetailController.baseKey, base);
-		return viewContext;
+		return viewContext.publishDto(BaseDetailController.baseKey, base);
 	}
 
 }

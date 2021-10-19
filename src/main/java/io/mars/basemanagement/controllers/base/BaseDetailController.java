@@ -46,9 +46,10 @@ public final class BaseDetailController extends AbstractVSpringMvcController {
 	private BaseServices baseServices;
 
 	public void initCommonContext(final ViewContext viewContext, final Long baseId) {
-		viewContext.publishMdl(baseTypesKey, BaseType.class, null); //all
-		viewContext.publishDto(baseKey, baseServices.get(baseId));
-		viewContext.publishDtListModifiable(basePictures, baseServices.getPictures(baseId));
+		viewContext
+				.publishMdl(baseTypesKey, BaseType.class, null) //all
+				.publishDto(baseKey, baseServices.get(baseId))
+				.publishDtListModifiable(basePictures, baseServices.getPictures(baseId));
 	}
 
 	@GetMapping("{baseId}/mainPicture")

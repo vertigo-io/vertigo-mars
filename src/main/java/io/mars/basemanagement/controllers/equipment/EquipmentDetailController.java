@@ -43,9 +43,10 @@ public final class EquipmentDetailController extends AbstractVSpringMvcControlle
 
 	public void initCommonContext(final ViewContext viewContext, final Long equipmentId) {
 		final Equipment equipment = equipmentServices.get(equipmentId);
-		viewContext.publishDto(equipmentKey, equipment);
-		viewContext.publishDto(equipmentTypeKey, equipment.equipmentType().get());
-		viewContext.publishDto(businessKey, equipment.business().get());
+		viewContext
+				.publishDto(equipmentKey, equipment)
+				.publishDto(equipmentTypeKey, equipment.equipmentType().get())
+				.publishDto(businessKey, equipment.business().get());
 	}
 
 	/**

@@ -46,10 +46,12 @@ public class JobDetailController extends AbstractVSpringMvcController {
 
 	@GetMapping("/{jobName}")
 	public void initContext(final ViewContext viewContext, @PathVariable("jobName") final String jobName) {
-		viewContext.publishDto(jobKey, jobServices.getProcessDefinition(jobName));
 		// We take the first day of the current week
 		final Calendar firstDayOfWeek = getFirstDayOfWeek();
-		viewContext.publishDto(executionSummary, jobServices.getSummaryByDate(jobName, firstDayOfWeek.toInstant(), getFirstDayOfNextWeekDate(firstDayOfWeek)));
+
+		viewContext
+				.publishDto(jobKey, jobServices.getProcessDefinition(jobName))
+				.publishDto(executionSummary, jobServices.getSummaryByDate(jobName, firstDayOfWeek.toInstant(), getFirstDayOfNextWeekDate(firstDayOfWeek)));
 		toModeReadOnly();
 	}
 

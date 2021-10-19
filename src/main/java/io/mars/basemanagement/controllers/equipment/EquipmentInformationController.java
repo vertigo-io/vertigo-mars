@@ -50,18 +50,20 @@ public class EquipmentInformationController extends AbstractVSpringMvcController
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
 		loadLists(viewContext);
 		//---
-		viewContext.publishDto(equipmentKey, equipmentServices.get(equipmentId));
-		viewContext.publishDto(equipmentMaintenanceOverview, equipmentServices.getMaintenanceOverviewByEquipment(equipmentId));
+		viewContext
+				.publishDto(equipmentKey, equipmentServices.get(equipmentId))
+				.publishDto(equipmentMaintenanceOverview, equipmentServices.getMaintenanceOverviewByEquipment(equipmentId));
 		//---
 		toModeReadOnly();
 	}
 
 	private void loadLists(final ViewContext viewContext) {
-		viewContext.publishDtList(ViewContextKey.of("bases"), baseServices.getBases(DtListState.defaultOf(Base.class)));
-		//---
-		viewContext.publishMdl(ViewContextKey.of("businesses"), Business.class, null);
-		viewContext.publishMdl(ViewContextKey.of("equipmentTypes"), EquipmentType.class, null);
-		viewContext.publishMdl(ViewContextKey.of("tags"), Tag.class, null);
+		viewContext
+				.publishDtList(ViewContextKey.of("bases"), baseServices.getBases(DtListState.defaultOf(Base.class)))
+				//---
+				.publishMdl(ViewContextKey.of("businesses"), Business.class, null)
+				.publishMdl(ViewContextKey.of("equipmentTypes"), EquipmentType.class, null)
+				.publishMdl(ViewContextKey.of("tags"), Tag.class, null);
 	}
 
 	@PostMapping("/_edit")

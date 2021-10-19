@@ -47,16 +47,17 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 
 	@GetMapping("/{personId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("personId") final Long personId) {
-		viewContext.publishMdl(tagsKey, Tag.class, null); //all
-		viewContext.publishDto(personKey, personServices.getPerson(personId));
-		viewContext.publishDtList(missionsKey, MissionDisplayFields.missionId, missionServices.getMissionsByPersonId(personId));
-		viewContext.publishFileInfoURI(personPictureUri, null);
+		viewContext
+				.publishMdl(tagsKey, Tag.class, null)//all
+				.publishDto(personKey, personServices.getPerson(personId))
+				.publishDtList(missionsKey, MissionDisplayFields.missionId, missionServices.getMissionsByPersonId(personId))
+				.publishFileInfoURI(personPictureUri, null);
 
 		final PersonInput personInput = new PersonInput();
 		personInput.setGroups(Arrays.asList(1000L));
 		viewContext
-		.publishDto(personInputKey, personInput)
-		.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
+				.publishDto(personInputKey, personInput)
+				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
 		toModeReadOnly();
 	}
 

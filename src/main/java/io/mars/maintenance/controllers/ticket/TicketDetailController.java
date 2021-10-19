@@ -38,7 +38,8 @@ public class TicketDetailController extends AbstractVSpringMvcController {
 		//---
 		final Ticket ticket = new Ticket();
 		ticket.setEquipmentId(equipmentId);
-		viewContext.publishDto(ticketKey, ticket);
+		viewContext
+				.publishDto(ticketKey, ticket);
 		//---
 		toModeCreate();
 	}
@@ -47,21 +48,23 @@ public class TicketDetailController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext, @PathVariable("ticketId") final Long ticketId) {
 		loadLists(viewContext);
 		//---
-		viewContext.publishDto(ticketKey, ticketServices.getTicketFromId(ticketId));
-		viewContext.publishDtList(workOrdersKey, workOrderServices.getWorkOrdersByTicketId(ticketId));
+		viewContext
+				.publishDto(ticketKey, ticketServices.getTicketFromId(ticketId))
+				.publishDtList(workOrdersKey, workOrderServices.getWorkOrdersByTicketId(ticketId));
 		//---
 		toModeReadOnly();
 	}
 
 	private static void loadLists(final ViewContext viewContext) {
-		viewContext.publishMdl(ViewContextKey.of("ticketStatus"), TicketStatus.class, null);
-		viewContext.publishMdl(ViewContextKey.of("workOrderStatus"), WorkOrderStatus.class, null);
+		viewContext
+				.publishMdl(ViewContextKey.of("ticketStatus"), TicketStatus.class, null)
+				.publishMdl(ViewContextKey.of("workOrderStatus"), WorkOrderStatus.class, null);
 	}
 
 	@PostMapping("/_reloadWorkOrders")
 	public ViewContext doReloadWorkOrders(final ViewContext viewContext, @ViewAttribute("ticket") final Ticket ticket) {
-		viewContext.publishDtList(workOrdersKey, workOrderServices.getWorkOrdersByTicketId(ticket.getTicketId()));
-		return viewContext;
+		return viewContext
+				.publishDtList(workOrdersKey, workOrderServices.getWorkOrdersByTicketId(ticket.getTicketId()));
 	}
 
 	@PostMapping("/_edit")

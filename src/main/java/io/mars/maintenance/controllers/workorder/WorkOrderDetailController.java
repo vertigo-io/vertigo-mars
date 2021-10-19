@@ -34,19 +34,21 @@ public class WorkOrderDetailController extends AbstractVSpringMvcController {
 		final WorkOrder workOrder = new WorkOrder();
 		workOrder.ticket().setId(ticketId);
 		//---
-		viewContext.publishDto(workOrderKey, workOrder);
-		viewContext.publishRef(successCallbackKey, successCallback);
-		viewContext.publishRef(closeSuccessKey, Boolean.FALSE);
+		viewContext
+				.publishDto(workOrderKey, workOrder)
+				.publishRef(successCallbackKey, successCallback)
+				.publishRef(closeSuccessKey, Boolean.FALSE);
 		//---
 		toModeCreate();
 	}
 
 	@GetMapping("/{workOrderId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("workOrderId") final Long workOrderId, @RequestParam("successCallback") final String successCallback) {
-		viewContext.publishDto(workOrderKey, workOrderServices.getWorkOrderFromId(workOrderId));
-		viewContext.publishRef(successCallbackKey, successCallback);
-		viewContext.publishRef(closeSuccessKey, Boolean.FALSE);
-		viewContext.publishMdl(workOrderStatusKey, WorkOrderStatus.class, null);//all
+		viewContext
+				.publishDto(workOrderKey, workOrderServices.getWorkOrderFromId(workOrderId))
+				.publishRef(successCallbackKey, successCallback)
+				.publishRef(closeSuccessKey, Boolean.FALSE)
+				.publishMdl(workOrderStatusKey, WorkOrderStatus.class, null);//all
 		//---
 		toModeEdit();
 	}

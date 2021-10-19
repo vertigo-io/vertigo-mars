@@ -34,8 +34,9 @@ public class OpendataSetDetailController extends AbstractVSpringMvcController {
 
 	@GetMapping("/{odsId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("odsId") final Long odsId) {
-		viewContext.publishMdl(tagsKey, Tag.class, null); //all
-		viewContext.publishDto(opendataSetKey, opendataSetServices.getOpendataSet(odsId));
+		viewContext
+				.publishMdl(tagsKey, Tag.class, null) //all
+				.publishDto(opendataSetKey, opendataSetServices.getOpendataSet(odsId));
 		toModeReadOnly();
 	}
 

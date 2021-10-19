@@ -40,8 +40,9 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext, @RequestParam("renderer") final Optional<String> renderer) {
 		final GeoSearchEquipmentCriteria geoCriteria = new GeoSearchEquipmentCriteria();
 		geoCriteria.setCriteria("");
-		viewContext.publishDto(criteriaKey, geoCriteria);
-		viewContext.publishRef(listRenderer, renderer.orElse("table"));
+		viewContext
+				.publishDto(criteriaKey, geoCriteria)
+				.publishRef(listRenderer, renderer.orElse("table"));
 		final String listRendererValue = viewContext.getString(listRenderer);
 		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
 			case "table" -> equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
