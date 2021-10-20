@@ -57,8 +57,9 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		personInput.setGroups(Arrays.asList(1000L));
 		viewContext
 				.publishDto(personInputKey, personInput)
-				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
-		toModeReadOnly();
+				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups())
+				//---
+				.toModeReadOnly();
 	}
 
 	@GetMapping("/new")
@@ -67,8 +68,9 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 				.publishDto(personKey, personServices.initPerson())
 				.publishMdl(tagsKey, Tag.class, null) //all
 				.publishDto(personInputKey, new PersonInput())
-				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
-		toModeCreate();
+				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups())
+				//---
+				.toModeCreate();
 	}
 
 	@GetMapping("/picture/{protectedUrl}")
@@ -79,13 +81,14 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_edit")
-	public void doEdit() {
-		toModeEdit();
+	public void doEdit(final ViewContext viewContext) {
+		viewContext.toModeEdit();
 	}
 
 	@PostMapping("/_cancel")
-	public void doCancel() {
-		toModeReadOnly();
+	public void doCancel(final ViewContext viewContext) {
+		viewContext.toModeReadOnly();
+
 	}
 
 	@PostMapping("/_create")

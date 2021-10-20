@@ -44,9 +44,9 @@ public class MissionDetailController extends AbstractVSpringMvcController {
 		viewContext
 				.publishDto(missionKey, mission)
 				.publishRef(successCallbackKey, successCallback)
-				.publishRef(closeSuccessKey, false);
-		//---
-		toModeCreate();
+				.publishRef(closeSuccessKey, false)
+				//---
+				.toModeCreate();
 	}
 
 	@GetMapping("/{missionId}")
@@ -56,9 +56,9 @@ public class MissionDetailController extends AbstractVSpringMvcController {
 		viewContext
 				.publishDto(missionKey, missionServices.get(missionId))
 				.publishRef(successCallbackKey, successCallback)
-				.publishRef(closeSuccessKey, false);
-		//---
-		toModeEdit();
+				.publishRef(closeSuccessKey, false)
+				//---
+				.toModeEdit();
 	}
 
 	private void loadLists(final ViewContext viewContext) {

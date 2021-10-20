@@ -20,7 +20,7 @@ public class EquipmentVrViewController extends AbstractVSpringMvcController {
 	@GetMapping("/{equipmentId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId) {
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
-		toModeReadOnly();
+		viewContext.toModeReadOnly();
 	}
 
 }

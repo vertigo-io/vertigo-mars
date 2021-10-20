@@ -36,14 +36,14 @@ public class OpendataSetDetailController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext, @PathVariable("odsId") final Long odsId) {
 		viewContext
 				.publishMdl(tagsKey, Tag.class, null) //all
-				.publishDto(opendataSetKey, opendataSetServices.getOpendataSet(odsId));
-		toModeReadOnly();
+				.publishDto(opendataSetKey, opendataSetServices.getOpendataSet(odsId))
+				.toModeReadOnly();
 	}
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
 		//viewContext.publishDto(opendataSetKey, opendataSetServices.init());
-		toModeCreate();
+		viewContext.toModeCreate();
 	}
 
 	@GetMapping("/picture/{protectedUrl}")
@@ -54,13 +54,14 @@ public class OpendataSetDetailController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_edit")
-	public void doEdit() {
-		toModeEdit();
+	public void doEdit(final ViewContext viewContext) {
+		viewContext.toModeEdit();
+
 	}
 
 	@PostMapping("/_cancel")
-	public void doCancel() {
-		toModeReadOnly();
+	public void doCancel(final ViewContext viewContext) {
+		viewContext.toModeReadOnly();
 	}
 
 	@PostMapping("/_create")

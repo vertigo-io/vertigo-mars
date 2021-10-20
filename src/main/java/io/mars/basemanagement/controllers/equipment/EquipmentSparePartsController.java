@@ -21,7 +21,7 @@ public class EquipmentSparePartsController extends AbstractVSpringMvcController 
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId) {
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
 		//---
-		toModeReadOnly();
+		viewContext.toModeReadOnly();
 	}
 
 }

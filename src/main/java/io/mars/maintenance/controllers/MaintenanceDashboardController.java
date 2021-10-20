@@ -25,12 +25,13 @@ public class MaintenanceDashboardController extends AbstractVSpringMvcController
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishMdl(ViewContextKey.of("ticketStatus"), TicketStatus.class, null);
-		viewContext.publishMdl(ViewContextKey.of("workOrderStatus"), WorkOrderStatus.class, null);
-		//---
-		viewContext.publishDtList(lastTickets, ticketServices.getLastestTickets());
-		//---
-		toModeReadOnly();
+		viewContext
+				.publishMdl(ViewContextKey.of("ticketStatus"), TicketStatus.class, null)
+				.publishMdl(ViewContextKey.of("workOrderStatus"), WorkOrderStatus.class, null)
+				//---
+				.publishDtList(lastTickets, ticketServices.getLastestTickets())
+				//---
+				.toModeReadOnly();
 	}
 
 }

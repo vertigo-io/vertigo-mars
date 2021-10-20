@@ -51,13 +51,14 @@ public class JobDetailController extends AbstractVSpringMvcController {
 
 		viewContext
 				.publishDto(jobKey, jobServices.getProcessDefinition(jobName))
-				.publishDto(executionSummary, jobServices.getSummaryByDate(jobName, firstDayOfWeek.toInstant(), getFirstDayOfNextWeekDate(firstDayOfWeek)));
-		toModeReadOnly();
+				.publishDto(executionSummary, jobServices.getSummaryByDate(jobName, firstDayOfWeek.toInstant(), getFirstDayOfNextWeekDate(firstDayOfWeek)))
+				//
+				.toModeReadOnly();
 	}
 
 	@PostMapping("/_edit")
-	public void doEdit() {
-		toModeEdit();
+	public void doEdit(final ViewContext viewContext) {
+		viewContext.toModeEdit();
 	}
 
 	@PostMapping("/_cancel")

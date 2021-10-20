@@ -37,9 +37,9 @@ public class WorkOrderDetailController extends AbstractVSpringMvcController {
 		viewContext
 				.publishDto(workOrderKey, workOrder)
 				.publishRef(successCallbackKey, successCallback)
-				.publishRef(closeSuccessKey, Boolean.FALSE);
-		//---
-		toModeCreate();
+				.publishRef(closeSuccessKey, Boolean.FALSE)
+				//---
+				.toModeCreate();
 	}
 
 	@GetMapping("/{workOrderId}")
@@ -48,9 +48,9 @@ public class WorkOrderDetailController extends AbstractVSpringMvcController {
 				.publishDto(workOrderKey, workOrderServices.getWorkOrderFromId(workOrderId))
 				.publishRef(successCallbackKey, successCallback)
 				.publishRef(closeSuccessKey, Boolean.FALSE)
-				.publishMdl(workOrderStatusKey, WorkOrderStatus.class, null);//all
-		//---
-		toModeEdit();
+				.publishMdl(workOrderStatusKey, WorkOrderStatus.class, null)//all
+				//---
+				.toModeEdit();
 	}
 
 	@PostMapping("/_save")

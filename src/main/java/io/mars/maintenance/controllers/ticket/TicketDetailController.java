@@ -39,9 +39,9 @@ public class TicketDetailController extends AbstractVSpringMvcController {
 		final Ticket ticket = new Ticket();
 		ticket.setEquipmentId(equipmentId);
 		viewContext
-				.publishDto(ticketKey, ticket);
-		//---
-		toModeCreate();
+				.publishDto(ticketKey, ticket)
+				//---
+				.toModeCreate();
 	}
 
 	@GetMapping("/{ticketId}")
@@ -50,9 +50,9 @@ public class TicketDetailController extends AbstractVSpringMvcController {
 		//---
 		viewContext
 				.publishDto(ticketKey, ticketServices.getTicketFromId(ticketId))
-				.publishDtList(workOrdersKey, workOrderServices.getWorkOrdersByTicketId(ticketId));
-		//---
-		toModeReadOnly();
+				.publishDtList(workOrdersKey, workOrderServices.getWorkOrdersByTicketId(ticketId))
+				//---
+				.toModeReadOnly();
 	}
 
 	private static void loadLists(final ViewContext viewContext) {
@@ -68,13 +68,13 @@ public class TicketDetailController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_edit")
-	public void doEdit() {
-		toModeEdit();
+	public void doEdit(final ViewContext viewContext) {
+		viewContext.toModeEdit();
 	}
 
 	@PostMapping("/_cancel")
-	public void doCancel() {
-		toModeReadOnly();
+	public void doCancel(final ViewContext viewContext) {
+		viewContext.toModeReadOnly();
 	}
 
 	@PostMapping("/_closeTicket")

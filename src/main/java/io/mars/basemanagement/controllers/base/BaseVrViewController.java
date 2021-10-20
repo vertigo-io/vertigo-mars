@@ -20,7 +20,7 @@ public class BaseVrViewController extends AbstractVSpringMvcController {
 	@GetMapping("/{baseId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId) {
 		baseDetailController.initCommonContext(viewContext, baseId);
-		toModeReadOnly();
+		viewContext.toModeReadOnly();
 	}
 
 }

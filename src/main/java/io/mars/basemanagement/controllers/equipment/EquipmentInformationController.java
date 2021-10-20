@@ -40,9 +40,10 @@ public class EquipmentInformationController extends AbstractVSpringMvcController
 	public void initContext(final ViewContext viewContext) {
 		loadLists(viewContext);
 		//---
-		viewContext.publishDto(equipmentKey, new Equipment());
-		//---
-		toModeCreate();
+		viewContext
+				.publishDto(equipmentKey, new Equipment())
+				//---
+				.toModeCreate();
 	}
 
 	@GetMapping("/{equipmentId}")
@@ -52,9 +53,9 @@ public class EquipmentInformationController extends AbstractVSpringMvcController
 		//---
 		viewContext
 				.publishDto(equipmentKey, equipmentServices.get(equipmentId))
-				.publishDto(equipmentMaintenanceOverview, equipmentServices.getMaintenanceOverviewByEquipment(equipmentId));
-		//---
-		toModeReadOnly();
+				.publishDto(equipmentMaintenanceOverview, equipmentServices.getMaintenanceOverviewByEquipment(equipmentId))
+				//---
+				.toModeReadOnly();
 	}
 
 	private void loadLists(final ViewContext viewContext) {
@@ -67,13 +68,13 @@ public class EquipmentInformationController extends AbstractVSpringMvcController
 	}
 
 	@PostMapping("/_edit")
-	public void doEdit() {
-		toModeEdit();
+	public void doEdit(final ViewContext viewContext) {
+		viewContext.toModeEdit();
 	}
 
 	@PostMapping("/_cancel")
-	public void doCancel() {
-		toModeReadOnly();
+	public void doCancel(final ViewContext viewContext) {
+		viewContext.toModeReadOnly();
 	}
 
 	@PostMapping("/_save")

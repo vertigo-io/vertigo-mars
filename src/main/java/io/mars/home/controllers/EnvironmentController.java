@@ -30,9 +30,8 @@ public class EnvironmentController extends AbstractVSpringMvcController {
 				.publishRef(lastTemperature, equipmentEnvironmentServices.getLastTemperature())
 				.publishRef(lastHumidity, equipmentEnvironmentServices.getLastHumidity())
 				.publishRef(totalAlert, equipmentEnvironmentServices.getWeeklyTriggeredAlarm())
-				.publishRef(farmsToWater, equipmentEnvironmentServices.actionMoistureLevel());
-
-		toModeReadOnly();
+				.publishRef(farmsToWater, equipmentEnvironmentServices.actionMoistureLevel())
+				.toModeReadOnly();
 	}
 
 	@PostMapping("/_alert")

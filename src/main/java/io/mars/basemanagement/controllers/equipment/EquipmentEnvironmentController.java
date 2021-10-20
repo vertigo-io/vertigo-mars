@@ -27,9 +27,10 @@ public class EquipmentEnvironmentController extends AbstractVSpringMvcController
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId) {
 		//--
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
-		viewContext.publishRef(TemperatureTotalMeasured, equipmentEnvironmentServices.getTotalTemperatureMeasured());
-		//---
-		toModeReadOnly();
+		viewContext
+				.publishRef(TemperatureTotalMeasured, equipmentEnvironmentServices.getTotalTemperatureMeasured())
+				//---
+				.toModeReadOnly();
 	}
 
 }

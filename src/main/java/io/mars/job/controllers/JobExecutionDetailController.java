@@ -29,9 +29,9 @@ public class JobExecutionDetailController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext, @PathVariable("preId") final Long preId) {
 		viewContext
 				.publishDto(jobExecution, jobServices.getProcessExecution(preId))
-				.publishDtList(activityExecutions, OActivityExecutionUiFields.aceId, jobServices.getActivityExecutionsByProcessExecution(preId));
-		//---
-		toModeEdit();
+				.publishDtList(activityExecutions, OActivityExecutionUiFields.aceId, jobServices.getActivityExecutionsByProcessExecution(preId))
+				//---
+				.toModeEdit();
 	}
 
 }

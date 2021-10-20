@@ -67,19 +67,19 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 		viewContext
 				.publishDto(baseManagerKey, missionServices.getBaseManager(baseId).orElse(noManagerPerson))
 				.publishDtListModifiable(basePictures, baseServices.getPictures(baseId))
-				.publishFileInfoURIs(fileUrisKey, new ArrayList<>());
-
-		toModeReadOnly();
+				.publishFileInfoURIs(fileUrisKey, new ArrayList<>())
+				//
+				.toModeReadOnly();
 	}
 
 	@PostMapping("/_edit")
-	public void doEdit() {
-		toModeEdit();
+	public void doEdit(final ViewContext viewContext) {
+		viewContext.toModeEdit();
 	}
 
 	@PostMapping("/_cancel")
-	public void doCancel() {
-		toModeReadOnly();
+	public void doCancel(final ViewContext viewContext) {
+		viewContext.toModeReadOnly();
 	}
 
 	@PostMapping("/_save")

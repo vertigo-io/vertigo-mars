@@ -57,12 +57,12 @@ public class ShowcaseController extends AbstractVSpringMvcController {
 				.publishDtList(geosectorsKey, baseServices.getAllGeosectors())
 				.publishMdl(tagsKey, Tag.class, null) //all
 				.publishDto(jobKey, processUi)
-				.publishDto(jobExecutionKey, processExecutionUi);
+				.publishDto(jobExecutionKey, processExecutionUi)
+				.toModeEdit();
 
 		//add error
 		uiMessageStack.error("Some error message", emptyBase, BaseFields.assetsValue.name());
 
-		toModeEdit();
 	}
 
 }

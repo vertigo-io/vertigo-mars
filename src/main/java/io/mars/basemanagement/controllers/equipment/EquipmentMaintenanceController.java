@@ -32,11 +32,12 @@ public class EquipmentMaintenanceController extends AbstractVSpringMvcController
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId) {
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
 		//---
-		viewContext.publishMdl(ticketStatusKey, TicketStatus.class, null); //all
-		viewContext.publishDtList(openedTicketsKey, ticketServices.getOpenedTicketsByEquipment(equipmentId));
-		viewContext.publishDtList(closedTicketsKey, ticketServices.getClosedTicketsByEquipment(equipmentId));
-		//---
-		toModeReadOnly();
+		viewContext
+				.publishMdl(ticketStatusKey, TicketStatus.class, null) //all
+				.publishDtList(openedTicketsKey, ticketServices.getOpenedTicketsByEquipment(equipmentId))
+				.publishDtList(closedTicketsKey, ticketServices.getClosedTicketsByEquipment(equipmentId))
+				//---
+				.toModeReadOnly();
 	}
 
 }
