@@ -12,6 +12,11 @@ create FacetDefinition FctEquipmentEquipmentTypeName {
 	multiselectable: "true"
 }
 
+create FacetDefinition FctEquipmentEquipmentTags {
+    dtDefinition:DtEquipmentIndex, fieldName:"tags", label:"Equipment Tags"
+    multiselectable: "true"
+} 
+
 create FacetDefinition FctEquipmentEquipmentCategoryName {
 	dtDefinition:DtEquipmentIndex, fieldName:"equipmentCategoryName", label:"Equipment Category"
 } 
@@ -43,7 +48,7 @@ create FacetDefinition FctEquipmentGeoHash {
 
 create FacetedQueryDefinition QryEquipment {
 	dtIndex : DtEquipmentIndex
-	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName ]
+	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentEquipmentTags ]
 	domainCriteria : DoLabel
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
 	listFilterBuilderQuery : "allText:#+query*#"

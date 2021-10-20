@@ -16,7 +16,7 @@ index :
         tokenizer :
             piped_keywords :
                 type : pattern
-                pattern : '([|,] *)'
+                pattern : '([|,;] *)'
         filter :
             snowball:
                 type : snowball
