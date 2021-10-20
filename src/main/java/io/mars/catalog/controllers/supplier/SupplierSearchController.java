@@ -30,10 +30,12 @@ public class SupplierSearchController extends AbstractVSpringMvcController {
 	private SupplierServices supplierServices;
 
 	@GetMapping("/")
-	public void initContext(final ViewContext viewContext) {
-		viewContext.publishRef(criteriaKey, "");
+	public void initContext(
+			final ViewContext viewContext) {
 		final FacetedQueryResult<Supplier, SearchQuery> facetedQueryResult = supplierServices.searchSuppliers("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Supplier.class));
-		viewContext.publishFacetedQueryResult(supliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
+		viewContext
+				.publishRef(criteriaKey, "")
+				.publishFacetedQueryResult(supliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
 	}
 
 	@PostMapping("/_search")
@@ -42,10 +44,8 @@ public class SupplierSearchController extends AbstractVSpringMvcController {
 			@ViewAttribute("criteria") final String criteria,
 			@ViewAttribute("suppliers") final SelectedFacetValues selectedFacetValues,
 			final DtListState dtListState) {
-
 		final FacetedQueryResult<Supplier, SearchQuery> facetedQueryResult = supplierServices.searchSuppliers(criteria, selectedFacetValues, dtListState);
-		viewContext.publishFacetedQueryResult(supliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
-		return viewContext;
+		return viewContext.publishFacetedQueryResult(supliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
 	}
 
 }

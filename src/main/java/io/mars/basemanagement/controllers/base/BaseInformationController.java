@@ -55,16 +55,14 @@ public class BaseInformationController extends AbstractVSpringMvcController {
 	@GetMapping("/{baseId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId) {
 		baseDetailController.initCommonContext(viewContext, baseId);
+		final Person noManagerPerson = new Person();
+		noManagerPerson.setLastName("No manager");
+
 		viewContext
 				.publishMdl(tagsKey, Tag.class, null) //all
 				.publishDtList(geosectorsKey, baseServices.getAllGeosectors())
 				//---
-				.publishDto(baseOverview, baseServices.getBaseOverview(baseId));
-		//---
-		final Person noManagerPerson = new Person();
-		noManagerPerson.setLastName("No manager");
-		//---
-		viewContext
+				.publishDto(baseOverview, baseServices.getBaseOverview(baseId))
 				.publishDto(baseManagerKey, missionServices.getBaseManager(baseId).orElse(noManagerPerson))
 				.publishDtListModifiable(basePictures, baseServices.getPictures(baseId))
 				.publishFileInfoURIs(fileUrisKey, new ArrayList<>())
