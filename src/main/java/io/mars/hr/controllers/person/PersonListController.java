@@ -30,9 +30,10 @@ public class PersonListController extends AbstractVSpringMvcController {
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext, @RequestParam("renderer") final Optional<String> renderer) {
-		viewContext.publishRef(listRenderer, renderer.orElse("table"));
 		final DtListState dtListState = DtListState.of(200, 0, PersonFields.lastName.name(), false);
-		viewContext.publishDtList(persons, personServices.getPersons(dtListState));
+		viewContext
+				.publishRef(listRenderer, renderer.orElse("table"))
+				.publishDtList(persons, personServices.getPersons(dtListState));
 	}
 
 	@PostMapping("/_sort")
