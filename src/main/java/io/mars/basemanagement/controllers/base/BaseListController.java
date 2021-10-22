@@ -30,16 +30,17 @@ public class BaseListController extends AbstractVSpringMvcController {
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishMdl(geosectors, Geosector.class, null); //all
-		viewContext.publishMdl(baseTypes, BaseType.class, null); //all
 		final DtListState dtListState = DtListState.of(200, 0, BaseFields.code.name(), false);
-		viewContext.publishDtList(bases, baseServices.getBases(dtListState));
+		viewContext
+				.publishMdl(geosectors, Geosector.class, null) //all
+				.publishMdl(baseTypes, BaseType.class, null) //all
+				.publishDtList(bases, baseServices.getBases(dtListState));
 	}
 
 	@PostMapping("/_sort")
 	public ViewContext sort(final ViewContext viewContext, final DtListState dtListState) {
-		viewContext.publishDtList(bases, baseServices.getBases(dtListState));
-		return viewContext;
+		return viewContext
+				.publishDtList(bases, baseServices.getBases(dtListState));
 	}
 
 }

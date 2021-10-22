@@ -17,12 +17,10 @@ final class RangeMap<T extends Comparable<T>, V> {
 				.isNotNull(value);
 		//
 		final MyRange<T> myRange = new MyRange<>(minValue, maxValue);
-		if (!isOverlappingExistingSegments(myRange)) {
-			myMap.put(myRange, value);
-		} else {
+		if (isOverlappingExistingSegments(myRange)) {
 			throw new IllegalArgumentException("Range " + minValue + "-" + maxValue + " is overlapping previously added segments");
 		}
-
+		myMap.put(myRange, value);
 	}
 
 	public V getValue(final T pointInKey) {
