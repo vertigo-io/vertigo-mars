@@ -24,7 +24,7 @@ import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 public class SupplierSearchController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<String> criteriaKey = ViewContextKey.of("criteria");
-	private static final ViewContextKey<FacetedQueryResult<Supplier, SearchQuery>> supliers = ViewContextKey.of("suppliers");
+	private static final ViewContextKey<FacetedQueryResult<Supplier, SearchQuery>> suppliers = ViewContextKey.of("suppliers");
 
 	@Inject
 	private SupplierServices supplierServices;
@@ -35,7 +35,7 @@ public class SupplierSearchController extends AbstractVSpringMvcController {
 		final FacetedQueryResult<Supplier, SearchQuery> facetedQueryResult = supplierServices.searchSuppliers("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Supplier.class));
 		viewContext
 				.publishRef(criteriaKey, "")
-				.publishFacetedQueryResult(supliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
+				.publishFacetedQueryResult(suppliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
 	}
 
 	@PostMapping("/_search")
@@ -45,7 +45,7 @@ public class SupplierSearchController extends AbstractVSpringMvcController {
 			@ViewAttribute("suppliers") final SelectedFacetValues selectedFacetValues,
 			final DtListState dtListState) {
 		final FacetedQueryResult<Supplier, SearchQuery> facetedQueryResult = supplierServices.searchSuppliers(criteria, selectedFacetValues, dtListState);
-		return viewContext.publishFacetedQueryResult(supliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
+		return viewContext.publishFacetedQueryResult(suppliers, SupplierFields.siren, facetedQueryResult, criteriaKey);
 	}
 
 }
