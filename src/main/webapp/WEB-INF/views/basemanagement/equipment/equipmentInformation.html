@@ -31,7 +31,7 @@
 		</div>
 		<div th:if="${!model.modeCreate}" layout:fragment="content-header-tabs">
 			<vu:button-link class="active" flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}" />
-			<vu:button-link th:if="${authz.hasOperation(model.base,'readTickets')}" flat label="Maintenance" url="@{/basemanagement/equipment/maintenance/} + ${model.equipment.equipmentId}" />
+			<vu:button-link th:if="${authz.hasOperation(model.equipment,'readTickets')}" flat label="Maintenance" url="@{/basemanagement/equipment/maintenance/} + ${model.equipment.equipmentId}" />
 			<vu:button-link flat label="Environment" url="@{/basemanagement/equipment/environment/} + ${model.equipment.equipmentId}" />
 			<vu:button-link flat label="VR View" url="@{/basemanagement/equipment/vr/} + ${model.equipment.equipmentId}" />
 			<vu:button-link flat label="Spare Parts" url="@{/basemanagement/equipment/spare/} + ${model.equipment.equipmentId}" />
