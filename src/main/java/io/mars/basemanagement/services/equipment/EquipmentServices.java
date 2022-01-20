@@ -112,7 +112,7 @@ public class EquipmentServices implements Component {
 	private static final double[] AREA_PER_GEOHASH_PRECISION = { 2025.0, 63.28125, 1.9775390625, 0.061798095703125, 0.0019311904907226562, 6.034970283508301e-05, 1.885928213596344e-06, 5.893525667488575e-08 };
 
 	private static long obtainBestPrecision(final GeoPoint geoUpperLeft, final GeoPoint geoLowerRight) {
-		if (geoUpperLeft == null || geoUpperLeft == null) {
+		if (geoUpperLeft == null || geoLowerRight == null) {
 			return 2;
 		}
 		final double y1 = geoUpperLeft.getLat();

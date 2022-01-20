@@ -1,10 +1,10 @@
 package io.mars.basemanagement.search;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.mars.basemanagement.domain.BaseIndex;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -25,7 +25,6 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.mars.basemanagement.domain.BaseIndex;
 
 /**
  * This class is automatically generated.
@@ -67,9 +66,10 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 	 * @return Résultat correspondant à la requête (de type BaseIndex)
 	 */
 	public FacetedQueryResult<BaseIndex, SearchQuery> loadListIdxBase(final SearchQuery searchQuery, final DtListState listState) {
-		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxBase",SearchIndexDefinition.class);
+		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxBase", SearchIndexDefinition.class);
 		return searchManager.loadList(indexDefinition, searchQuery, listState);
 	}
+
 	/**
 	 * Récupération du résultat issu d'une requête.
 	 * @param searchQuery critères initiaux
@@ -77,10 +77,10 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 	 * @return Résultat correspondant à la requête (de type BaseIndex)
 	 */
 	public FacetedQueryResult<BaseIndex, SearchQuery> loadListIdxTag(final SearchQuery searchQuery, final DtListState listState) {
-		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxTag",SearchIndexDefinition.class);
+		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxTag", SearchIndexDefinition.class);
 		return searchManager.loadList(indexDefinition, searchQuery, listState);
 	}
-		
+
 	/**
 	 * Récupération du résultat issu d'une requête.
 	 * @param searchQuery critères initiaux
@@ -88,9 +88,9 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 	 * @return Résultat correspondant à la requête (de type BaseIndex)
 	 */
 	public FacetedQueryResult<BaseIndex, SearchQuery> loadList(final SearchQuery searchQuery, final DtListState listState) {
-		final List<SearchIndexDefinition> indexDefinitions = List.of( 
-				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxBase",SearchIndexDefinition.class),
-				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxTag",SearchIndexDefinition.class));
+		final List<SearchIndexDefinition> indexDefinitions = List.of(
+				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxBase", SearchIndexDefinition.class),
+				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxTag", SearchIndexDefinition.class));
 		return searchManager.loadList(indexDefinitions, searchQuery, listState);
 	}
 
@@ -103,7 +103,7 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 	public void markAsDirty(final UID entityUID) {
 		transactionManager.getCurrentTransaction().addAfterCompletion((final boolean txCommitted) -> {
 			if (txCommitted) {// reindex only is tx successful
-				searchManager.markAsDirty(Arrays.asList(entityUID));
+				searchManager.markAsDirty(List.of(entityUID));
 			}
 		});
 	}
@@ -117,6 +117,7 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 	public void markAsDirty(final io.mars.basemanagement.domain.Base entity) {
 		markAsDirty(UID.of(entity));
 	}
+
 	/**
 	 * Mark an entity as dirty. Index of these elements will be reindexed if Tx commited.
 	 * Reindexation isn't synchrone, strategy is dependant of plugin's parameters.
@@ -126,7 +127,6 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 	public void markAsDirty(final io.mars.basemanagement.domain.Tag entity) {
 		markAsDirty(UID.of(entity));
 	}
-	
 
 	/** {@inheritDoc} */
 	@Override
@@ -143,7 +143,7 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 						.withIndexDtDefinition("DtBaseIndex")
 						.withKeyConcept("DtTag")
 						.withLoaderId("BaseSearchLoader"))
-				
+
 				//---
 				// FacetTermDefinition
 				//-----

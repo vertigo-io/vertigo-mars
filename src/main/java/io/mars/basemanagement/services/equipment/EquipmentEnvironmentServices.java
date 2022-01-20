@@ -1,6 +1,5 @@
 package io.mars.basemanagement.services.equipment;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -134,7 +133,7 @@ public class EquipmentEnvironmentServices implements Component {
 	public String actionMoistureLevel() {
 		final TabularDatas lastMoistureValue = timeSeriesManager.getTabularData(
 				"mars-test",
-				Arrays.asList("value:last", "equipment:last"),
+				List.of("value:last", "equipment:last"),
 				DataFilter.builder("moisture").build(),
 				TimeFilter.builder("now() - 365d", "now() + 1d").build());
 		if (!lastMoistureValue.getTabularDataSeries().isEmpty()) {

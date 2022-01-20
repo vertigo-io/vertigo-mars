@@ -1,6 +1,6 @@
 package io.mars.hr.controllers.person;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -55,7 +55,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		viewContext.publishFileInfoURI(personPictureUri, null);
 
 		final PersonInput personInput = new PersonInput();
-		personInput.setGroups(Arrays.asList(1000L));
+		personInput.setGroups(List.of(1000L));
 		viewContext.publishDto(personInputKey, personInput);
 		viewContext.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
 		toModeReadOnly();

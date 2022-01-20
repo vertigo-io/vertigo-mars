@@ -1,6 +1,5 @@
 package io.mars.command.services.bot.generation;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,7 +62,7 @@ public class TrainSetProvider implements Component {
 
 	private static List<?> binaryProduct(final List<?> a, final List<?> b) {
 		return a.stream()
-				.map(e1 -> b.stream().map(e2 -> Arrays.asList(e1, e2)).collect(Collectors.toList()))
+				.map(e1 -> b.stream().map(e2 -> List.of(e1, e2)).collect(Collectors.toList()))
 				.flatMap(List::stream)
 				.collect(Collectors.toList());
 	}

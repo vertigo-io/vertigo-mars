@@ -1,10 +1,10 @@
 package io.mars.catalog.search;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.mars.catalog.domain.Supplier;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -25,7 +25,6 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-import io.mars.catalog.domain.Supplier;
 
 /**
  * This class is automatically generated.
@@ -67,10 +66,10 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 	 * @return Résultat correspondant à la requête (de type Supplier)
 	 */
 	public FacetedQueryResult<Supplier, SearchQuery> loadListIdxSupplier(final SearchQuery searchQuery, final DtListState listState) {
-		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxSupplier",SearchIndexDefinition.class);
+		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxSupplier", SearchIndexDefinition.class);
 		return searchManager.loadList(indexDefinition, searchQuery, listState);
 	}
-		
+
 	/**
 	 * Récupération du résultat issu d'une requête.
 	 * @param searchQuery critères initiaux
@@ -78,8 +77,8 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 	 * @return Résultat correspondant à la requête (de type Supplier)
 	 */
 	public FacetedQueryResult<Supplier, SearchQuery> loadList(final SearchQuery searchQuery, final DtListState listState) {
-		final List<SearchIndexDefinition> indexDefinitions = List.of( 
-				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxSupplier",SearchIndexDefinition.class));
+		final List<SearchIndexDefinition> indexDefinitions = List.of(
+				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxSupplier", SearchIndexDefinition.class));
 		return searchManager.loadList(indexDefinitions, searchQuery, listState);
 	}
 
@@ -92,7 +91,7 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 	public void markAsDirty(final UID entityUID) {
 		transactionManager.getCurrentTransaction().addAfterCompletion((final boolean txCommitted) -> {
 			if (txCommitted) {// reindex only is tx successful
-				searchManager.markAsDirty(Arrays.asList(entityUID));
+				searchManager.markAsDirty(List.of(entityUID));
 			}
 		});
 	}
@@ -106,7 +105,6 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 	public void markAsDirty(final io.mars.catalog.domain.Supplier entity) {
 		markAsDirty(UID.of(entity));
 	}
-	
 
 	/** {@inheritDoc} */
 	@Override
@@ -119,7 +117,7 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 						.withIndexDtDefinition("DtSupplier")
 						.withKeyConcept("DtSupplier")
 						.withLoaderId("SupplierSearchLoader"))
-				
+
 				//---
 				// FacetTermDefinition
 				//-----
