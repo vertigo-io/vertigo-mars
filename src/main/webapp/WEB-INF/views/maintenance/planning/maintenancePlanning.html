@@ -79,17 +79,17 @@
                 for (let i = 0; i < allEvents.length; ++i) {
                   let added = false
                   allEvents[i].bgcolor = "cyan"; /* use status + person*/
-                  eventCalendar = this.toCalendarDate(allEvents[i].dateTime);
+                  var eventCalendar = this.toCalendarDate(allEvents[i].dateTime);
                   allEvents[i].eventCalendar = eventCalendar;
                   if (eventCalendar.date === dt) {
                     if (eventCalendar.time) {
                       if (selectedEvents.length > 0) {
                         // check for overlapping times
-                        const startTime = QCalendar.parsed(eventCalendar.date + ' ' + eventCalendar.time)
-                        const endTime = QCalendar.addToDate(startTime, { minute: eventCalendar.durationMinutes })
+                        const startTime = QCalendar.parsed(eventCalendar.date + ' ' + allEvents[i].eventCalendar.time)
+                        const endTime = QCalendar.addToDate(startTime, { minute: allEvents[i].durationMinutes })
                         for (let j = 0; j < selectedEvents.length; ++j) {
-                          if (selectedEvents[j].time) {
-                            const startTime2 = QCalendar.parsed(selectedEvents[j].date + ' ' + selectedEvents[j].time)
+                          if (selectedEvents[j].eventCalendar.time) {
+                            const startTime2 = QCalendar.parsed(selectedEvents[j].eventCalendar.date + ' ' + selectedEvents[j].eventCalendar.time)
                             const endTime2 = QCalendar.addToDate(startTime2, { minute: selectedEvents[j].durationMinutes })
                             if (QCalendar.isBetweenDates(startTime, startTime2, endTime2) || QCalendar.isBetweenDates(endTime, startTime2, endTime2)) {
                             	selectedEvents[j].side = 'left'
