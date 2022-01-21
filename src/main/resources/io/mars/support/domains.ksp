@@ -111,6 +111,11 @@ create Domain DoCount {
 	storeType : "NUMERIC"
 }
 
+create Domain DoMinute {
+    dataType : Integer
+    storeType : "NUMERIC"
+}
+
 create Domain DoGeoPoint {
 	dataType : ValueObject
 	type : "io.mars.support.smarttypes.GeoPoint"

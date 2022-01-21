@@ -45,6 +45,7 @@ create DtDefinition DtRole {
 create DtDefinition DtMissionDisplay {
 	field missionId {domain: DoId label:"Id" }
 	field role {domain: DoLabel label:"Role" }
+    field baseId {domain: DoId label:"BaseId" }
 	field baseName {domain: DoLabel label:"Base" }
 	field businessName {domain: DoLabel label:"Business" }
 }

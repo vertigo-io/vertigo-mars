@@ -1,0 +1,51 @@
+package io.mars.maintenance.domain
+
+
+create DtDefinition DtEvent {
+    id eventId {domain: DoId label:"Id"}
+    field dateTime {domain: DoInstant label: "dateTime" }
+    field durationMinutes {domain: DoMinute label: "duration" }
+    field affectedUrl {domain: DoUrl label: "affectedUrl" }
+    field affectedLabel {domain: DoLabel label: "affected" }
+}
+
+create DtDefinition DtEventStatus {
+    stereotype: "StaticMasterData"
+    id eventStatusId {domain: DoCode label:"Id"}
+    field label {domain: DoLabel label:"Status Label" }
+    values : ` {    "free" :        { "eventStatusId" : "FREE",         "label" : "Free"        },
+                    "pending" :  { "eventStatusId" : "PENDING",   "label" : "Waiting validation" },
+                    "reserved" :      { "eventStatusId" : "RESERVED",       "label" : "Reserved"      },
+                    "blocked" :     { "eventStatusId" : "BLOCKED",      "label" : "Not available"     }}`
+}
+
+create Association AEventEventStatus {
+    fkFieldName : "eventStatusId"
+    
+    dtDefinitionA : DtEvent
+    type : "*>?"
+    dtDefinitionB : DtEventStatus
+            
+    labelB : "Event Status"
+}
+
+create Association AEventBase {
+    fkFieldName : "baseId"
+    
+    dtDefinitionA : DtEvent
+    type : "*>?"
+    dtDefinitionB : DtBase
+            
+    labelB : "Base"
+}
+
+create Association AEventPerson {
+    fkFieldName : "personId"
+    
+    dtDefinitionA : DtEvent
+    type : "*>?"
+    dtDefinitionB : DtPerson
+            
+    labelB : "Person"
+}
+

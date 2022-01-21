@@ -18,6 +18,9 @@ drop table IF EXISTS EQUIPMENT_FEATURE cascade;
 drop sequence IF EXISTS SEQ_EQUIPMENT_FEATURE;
 drop table IF EXISTS EQUIPMENT_TYPE cascade;
 drop sequence IF EXISTS SEQ_EQUIPMENT_TYPE;
+drop table IF EXISTS EVENT cascade;
+drop sequence IF EXISTS SEQ_EVENT;
+drop table IF EXISTS EVENT_STATUS cascade;
 drop table IF EXISTS GEOSECTOR cascade;
 drop sequence IF EXISTS SEQ_GEOSECTOR;
 drop table IF EXISTS GROUPS cascade;
@@ -68,6 +71,10 @@ create sequence SEQ_EQUIPMENT_FEATURE
 
 create sequence SEQ_EQUIPMENT_TYPE
 	start with 1000 cache 20; 
+
+create sequence SEQ_EVENT
+	start with 1000 cache 20; 
+
 
 create sequence SEQ_GEOSECTOR
 	start with 1000 cache 20; 
@@ -324,6 +331,62 @@ comment on column EQUIPMENT_TYPE.ACTIVE is
 
 comment on column EQUIPMENT_TYPE.EQUIPMENT_CATEGORY_ID is
 'Equipment Category';
+
+-- ============================================================
+--   Table : EVENT                                        
+-- ============================================================
+create table EVENT
+(
+    EVENT_ID    	 NUMERIC     	not null,
+    DATE_TIME   	 TIMESTAMP   	,
+    DURATION_MINUTES	 NUMERIC     	,
+    AFFECTED_URL	 TEXT        	,
+    AFFECTED_LABEL	 VARCHAR(100)	,
+    EVENT_STATUS_ID	 VARCHAR(100)	,
+    BASE_ID     	 NUMERIC     	,
+    PERSON_ID   	 NUMERIC     	,
+    constraint PK_EVENT primary key (EVENT_ID)
+);
+
+comment on column EVENT.EVENT_ID is
+'Id';
+
+comment on column EVENT.DATE_TIME is
+'dateTime';
+
+comment on column EVENT.DURATION_MINUTES is
+'duration';
+
+comment on column EVENT.AFFECTED_URL is
+'affectedUrl';
+
+comment on column EVENT.AFFECTED_LABEL is
+'affected';
+
+comment on column EVENT.EVENT_STATUS_ID is
+'Event Status';
+
+comment on column EVENT.BASE_ID is
+'Base';
+
+comment on column EVENT.PERSON_ID is
+'Person';
+
+-- ============================================================
+--   Table : EVENT_STATUS                                        
+-- ============================================================
+create table EVENT_STATUS
+(
+    EVENT_STATUS_ID	 VARCHAR(100)	not null,
+    LABEL       	 VARCHAR(100)	,
+    constraint PK_EVENT_STATUS primary key (EVENT_STATUS_ID)
+);
+
+comment on column EVENT_STATUS.EVENT_STATUS_ID is
+'Id';
+
+comment on column EVENT_STATUS.LABEL is
+'Status Label';
 
 -- ============================================================
 --   Table : GEOSECTOR                                        
@@ -839,6 +902,24 @@ alter table EQUIPMENT_TYPE
 	references EQUIPMENT_CATEGORY (EQUIPMENT_CATEGORY_ID);
 
 create index A_EQUIPMENT_TYPE_EQUIPMENT_CATEGORY_EQUIPMENT_CATEGORY_FK on EQUIPMENT_TYPE (EQUIPMENT_CATEGORY_ID asc);
+
+alter table EVENT
+	add constraint FK_A_EVENT_BASE_BASE foreign key (BASE_ID)
+	references BASE (BASE_ID);
+
+create index A_EVENT_BASE_BASE_FK on EVENT (BASE_ID asc);
+
+alter table EVENT
+	add constraint FK_A_EVENT_EVENT_STATUS_EVENT_STATUS foreign key (EVENT_STATUS_ID)
+	references EVENT_STATUS (EVENT_STATUS_ID);
+
+create index A_EVENT_EVENT_STATUS_EVENT_STATUS_FK on EVENT (EVENT_STATUS_ID asc);
+
+alter table EVENT
+	add constraint FK_A_EVENT_PERSON_PERSON foreign key (PERSON_ID)
+	references PERSON (PERSON_ID);
+
+create index A_EVENT_PERSON_PERSON_FK on EVENT (PERSON_ID asc);
 
 alter table MISSION
 	add constraint FK_A_MISSION_BASE_BASE foreign key (BASE_ID)

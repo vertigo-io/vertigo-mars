@@ -20,6 +20,7 @@ create Task TkGetMissionsDisplayByPersonId {
            select 
             		mis.mission_id as MISSION_ID,
             		rol.label as ROLE,
+                    mis.base_id as BASE_ID,
             		bas.name as BASE_NAME,
             		bus.name as BUSINESS_NAME
             	from mission mis

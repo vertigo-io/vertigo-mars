@@ -43,6 +43,10 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		EquipmentOverview(io.mars.basemanagement.domain.EquipmentOverview.class),
 		/** Objet de données EquipmentType. */
 		EquipmentType(io.mars.catalog.domain.EquipmentType.class),
+		/** Objet de données Event. */
+		Event(io.mars.maintenance.domain.Event.class),
+		/** Objet de données EventStatus. */
+		EventStatus(io.mars.maintenance.domain.EventStatus.class),
 		/** Objet de données GeoSearchEquipmentCriteria. */
 		GeoSearchEquipmentCriteria(io.mars.basemanagement.domain.GeoSearchEquipmentCriteria.class),
 		/** Objet de données Geosector. */
@@ -78,17 +82,17 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Objet de données WorkOrder. */
 		WorkOrder(io.mars.maintenance.domain.WorkOrder.class),
 		/** Objet de données WorkOrderStatus. */
-		WorkOrderStatus(io.mars.maintenance.domain.WorkOrderStatus.class);
+		WorkOrderStatus(io.mars.maintenance.domain.WorkOrderStatus.class)		;
 
 		private final Class<?> clazz;
 
-		Definitions(final Class<?> clazz) {
+		private Definitions(final Class<?> clazz) {
 			this.clazz = clazz;
 		}
 
-		/**
+		/** 
 		 * Classe associée.
-		 * @return Class d'implémentation de l'objet
+		 * @return Class d'implémentation de l'objet 
 		 */
 		public Class<?> getDtClass() {
 			return clazz;
@@ -124,8 +128,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Base Type'. */
 		baseTypeId,
 		/** Propriété 'Base Geosector'. */
-		geosectorId
-	}
+		geosectorId	}
 
 	/**
 	 * Enumération des champs de BaseIndex.
@@ -144,8 +147,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Type'. */
 		baseTypeLabel,
 		/** Propriété 'Geographic Location'. */
-		geoLocation
-	}
+		geoLocation	}
 
 	/**
 	 * Enumération des champs de BaseOverview.
@@ -156,8 +158,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Open tickets'. */
 		openedTickets,
 		/** Propriété 'Work Orders in progress'. */
-		workOrdersInprogress
-	}
+		workOrdersInprogress	}
 
 	/**
 	 * Enumération des champs de BaseType.
@@ -166,8 +167,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		baseTypeId,
 		/** Propriété 'Base Type Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de BasesSummary.
@@ -180,8 +180,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Health Level'. */
 		openedTickets,
 		/** Propriété 'Equipment Health'. */
-		onlineEquipmentPercent
-	}
+		onlineEquipmentPercent	}
 
 	/**
 	 * Enumération des champs de Business.
@@ -192,8 +191,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Name'. */
 		name,
 		/** Propriété 'Icon'. */
-		icon
-	}
+		icon	}
 
 	/**
 	 * Enumération des champs de Equipment.
@@ -226,8 +224,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Business'. */
 		businessId,
 		/** Propriété 'Equipment Type'. */
-		equipmentTypeId
-	}
+		equipmentTypeId	}
 
 	/**
 	 * Enumération des champs de EquipmentCategory.
@@ -238,8 +235,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Equipment Category Label'. */
 		label,
 		/** Propriété 'Equipment category is active'. */
-		active
-	}
+		active	}
 
 	/**
 	 * Enumération des champs de EquipmentFeature.
@@ -250,8 +246,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Name'. */
 		name,
 		/** Propriété 'Equipment'. */
-		equipmentId
-	}
+		equipmentId	}
 
 	/**
 	 * Enumération des champs de EquipmentIndex.
@@ -282,8 +277,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Geographic Location'. */
 		geoLocation,
 		/** Propriété 'ALL_TEXT'. */
-		allText
-	}
+		allText	}
 
 	/**
 	 * Enumération des champs de EquipmentMaintenanceOverview.
@@ -292,8 +286,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Open tickets'. */
 		openedTickets,
 		/** Propriété 'Work Orders in progress'. */
-		workOrdersInprogress
-	}
+		workOrdersInprogress	}
 
 	/**
 	 * Enumération des champs de EquipmentOverview.
@@ -310,8 +303,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Ok count'. */
 		okCount,
 		/** Propriété 'Down count'. */
-		downCount
-	}
+		downCount	}
 
 	/**
 	 * Enumération des champs de EquipmentType.
@@ -324,8 +316,37 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Equipment type is active'. */
 		active,
 		/** Propriété 'Equipment Category'. */
-		equipmentCategoryId
-	}
+		equipmentCategoryId	}
+
+	/**
+	 * Enumération des champs de Event.
+	 */
+	public enum EventFields implements DtFieldName<io.mars.maintenance.domain.Event> {
+		/** Propriété 'Id'. */
+		eventId,
+		/** Propriété 'dateTime'. */
+		dateTime,
+		/** Propriété 'duration'. */
+		durationMinutes,
+		/** Propriété 'affectedUrl'. */
+		affectedUrl,
+		/** Propriété 'affected'. */
+		affectedLabel,
+		/** Propriété 'Event Status'. */
+		eventStatusId,
+		/** Propriété 'Base'. */
+		baseId,
+		/** Propriété 'Person'. */
+		personId	}
+
+	/**
+	 * Enumération des champs de EventStatus.
+	 */
+	public enum EventStatusFields implements DtFieldName<io.mars.maintenance.domain.EventStatus> {
+		/** Propriété 'Id'. */
+		eventStatusId,
+		/** Propriété 'Status Label'. */
+		label	}
 
 	/**
 	 * Enumération des champs de GeoSearchEquipmentCriteria.
@@ -340,8 +361,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'geoLocation'. */
 		geoLocation,
 		/** Propriété 'geoPrecision'. */
-		geoPrecision
-	}
+		geoPrecision	}
 
 	/**
 	 * Enumération des champs de Geosector.
@@ -350,8 +370,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		geosectorId,
 		/** Propriété 'Sector Label'. */
-		sectorLabel
-	}
+		sectorLabel	}
 
 	/**
 	 * Enumération des champs de Groups.
@@ -360,8 +379,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		groupId,
 		/** Propriété 'Name'. */
-		name
-	}
+		name	}
 
 	/**
 	 * Enumération des champs de MediaFileInfo.
@@ -380,8 +398,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'path'. */
 		filePath,
 		/** Propriété 'data'. */
-		fileData
-	}
+		fileData	}
 
 	/**
 	 * Enumération des champs de Mission.
@@ -396,8 +413,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Business'. */
 		businessId,
 		/** Propriété 'Role'. */
-		roleId
-	}
+		roleId	}
 
 	/**
 	 * Enumération des champs de MissionDisplay.
@@ -407,11 +423,12 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		missionId,
 		/** Propriété 'Role'. */
 		role,
+		/** Propriété 'BaseId'. */
+		baseId,
 		/** Propriété 'Base'. */
 		baseName,
 		/** Propriété 'Business'. */
-		businessName
-	}
+		businessName	}
 
 	/**
 	 * Enumération des champs de OpendataSet.
@@ -432,8 +449,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Tags'. */
 		tags,
 		/** Propriété 'Opendata Set Status'. */
-		opendataSetStatusId
-	}
+		opendataSetStatusId	}
 
 	/**
 	 * Enumération des champs de OpendataSetStatus.
@@ -442,8 +458,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		opendataSetStatusId,
 		/** Propriété 'Status Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de Person.
@@ -468,16 +483,14 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Full name'. */
 		fullName,
 		/** Propriété 'Group'. */
-		groupId
-	}
+		groupId	}
 
 	/**
 	 * Enumération des champs de PersonInput.
 	 */
 	public enum PersonInputFields implements DtFieldName<io.mars.hr.domain.PersonInput> {
 		/** Propriété 'Groups'. */
-		groups
-	}
+		groups	}
 
 	/**
 	 * Enumération des champs de Picture.
@@ -488,8 +501,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		picturefileId,
 		/** Propriété 'Base'. */
-		baseId
-	}
+		baseId	}
 
 	/**
 	 * Enumération des champs de Role.
@@ -498,8 +510,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		roleId,
 		/** Propriété 'Role Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de Supplier.
@@ -542,8 +553,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Nic Siege'. */
 		nicSiege,
 		/** Propriété 'Employer'. */
-		caractereEmployeur
-	}
+		caractereEmployeur	}
 
 	/**
 	 * Enumération des champs de Tag.
@@ -552,8 +562,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		tagId,
 		/** Propriété 'Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de Ticket.
@@ -574,8 +583,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Ticket Status'. */
 		ticketStatusId,
 		/** Propriété 'Equipment'. */
-		equipmentId
-	}
+		equipmentId	}
 
 	/**
 	 * Enumération des champs de TicketStatus.
@@ -584,8 +592,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		ticketStatusId,
 		/** Propriété 'Status Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de WorkOrder.
@@ -610,8 +617,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Ticket'. */
 		ticketId,
 		/** Propriété 'Work Order Status'. */
-		workOrderStatusId
-	}
+		workOrderStatusId	}
 
 	/**
 	 * Enumération des champs de WorkOrderStatus.
@@ -620,14 +626,13 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Id'. */
 		workOrderStatusId,
 		/** Propriété 'Status Label'. */
-		label
-	}
+		label	}
 
 	/** {@inheritDoc} */
 	@Override
 	public Iterator<Class<?>> iterator() {
 		return new Iterator<>() {
-			private final Iterator<Definitions> it = Arrays.asList(Definitions.values()).iterator();
+			private Iterator<Definitions> it = Arrays.asList(Definitions.values()).iterator();
 
 			/** {@inheritDoc} */
 			@Override

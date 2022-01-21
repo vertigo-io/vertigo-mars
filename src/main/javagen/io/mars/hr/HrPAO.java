@@ -47,16 +47,17 @@ public final class HrPAO implements StoreServices {
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetMissionsDisplayByPersonId",
-			request = "select " + 
- "            		mis.mission_id as MISSION_ID," + 
- "            		rol.label as ROLE," + 
- "            		bas.name as BASE_NAME," + 
- "            		bus.name as BUSINESS_NAME" + 
- "            	from mission mis" + 
- "                left join role rol on mis.role_id = rol.role_id" + 
- "            	left join base bas on mis.base_id = bas.base_id" + 
- "				left join business bus on mis.business_id = bus.business_id" + 
- "            	where mis.person_id = #personId#;",
+			request = "select \n" + 
+ "             		mis.mission_id as MISSION_ID,\n" + 
+ "             		rol.label as ROLE,\n" + 
+ "                     mis.base_id as BASE_ID,\n" + 
+ "             		bas.name as BASE_NAME,\n" + 
+ "             		bus.name as BUSINESS_NAME\n" + 
+ "             	from mission mis\n" + 
+ "                 left join role rol on mis.role_id = rol.role_id\n" + 
+ "             	left join base bas on mis.base_id = bas.base_id\n" + 
+ " 				left join business bus on mis.business_id = bus.business_id\n" + 
+ "             	where mis.person_id = #personId#;",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtMissionDisplay")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "personId", smartType = "STyId") final Long personId) {
