@@ -4,6 +4,11 @@ VUiExtensions.methods.calendarNext = function() {
             VUiExtensions.methods.calendarPrev  = function() {
                 this.$refs.calendar.prev()
             };
+            
+            VUiExtensions.methods.fromCalendarTime = function (date) {
+                return date.day+'/'+date.month+'/'+date.year+' '+date.hour+':'+date.minute;
+            }
+            
             var PARSE_REGEX = /^(\d{1,2})\/(\d{1,2})\/(\d{4})?([^\d]+(\d{1,2}))?(:(\d{1,2}))?(:(\d{1,2}))?(.(\d{1,3}))?$/;
             VUiExtensions.methods.toCalendarDate  = function(vDate) {
                  // DD/MM/YYYY hh:mm
@@ -30,7 +35,10 @@ VUiExtensions.methods.calendarNext = function() {
                 }
             };
  
-                
+            VUiExtensions.methods.onClickTime2  = function(data) {
+                console.log('click:time2:',data);
+            }
+    
             VUiExtensions.methods.isCssColor  = function(color) {
                 return !!color && !!color.match(/^(#|(rgb|hsl)a?\()/)
               };

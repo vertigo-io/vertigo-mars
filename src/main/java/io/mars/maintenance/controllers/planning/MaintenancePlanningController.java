@@ -44,6 +44,7 @@ public class MaintenancePlanningController extends AbstractVSpringMvcController 
 		final Long baseId = loginServices.getActiveProfile().getBaseId();
 		event.setBaseId(baseId);
 		event.setPersonId(personId);
+		event.setEventStatusId("FREE");
 		planningServices.addFreeEvent(event);
 		return "OK";
 	}

@@ -50,6 +50,7 @@
 		                   view="week"
 		                   :weekdays="[1, 2, 3, 4, 5]"
 		                   animated
+		                   th:@click:time2="|httpPostAjax|"
 						   transition-prev="slide-right"
 						   transition-next="slide-left"
 		                   v-model="vueData.todayDate">
