@@ -35,8 +35,10 @@ VUiExtensions.methods.calendarNext = function() {
                 }
             };
  
-            VUiExtensions.methods.onClickTime2  = function(data) {
-                console.log('click:time2:',data);
+            VUiExtensions.methods.onClickTime2  = function(url, data) {
+                console.log('click:time2:',url, data);
+                this.httpPostAjax(url, {'dateTime':this.fromCalendarTime(data.scope.timestamp), 'durationMinute':60});
+                           
             }
     
             VUiExtensions.methods.isCssColor  = function(color) {

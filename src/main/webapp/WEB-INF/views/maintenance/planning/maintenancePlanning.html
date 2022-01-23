@@ -50,8 +50,9 @@
 		                   view="week"
 		                   :weekdays="[1, 2, 3, 4, 5]"
 		                   animated
-		                   th:@click:time2="|httpPostAjax|"
-						   transition-prev="slide-right"
+		                   th:@click:time2="|onClickTime2('@{_addFree}', $event)|"
+                           
+		                   transition-prev="slide-right"
 						   transition-next="slide-left"
 		                   v-model="vueData.todayDate">
 		                   
@@ -62,8 +63,13 @@
 					            class="my-event justify-center"
 					            :class="badgeClasses(event, 'body')"
 					            :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
-					          > free
-					            <q-icon v-if="event.icon" :name="event.icon" class="q-mr-xs"></q-icon><span class="ellipsis">{{ event.title }}</span>
+					          > 
+					          <div class="row col">
+					           <q-icon v-if="event.eventStatusId=='FREE'" name="crop_free" class="q-mr-xs"></q-icon><span class="ellipsis">free</span>
+					           <div class="row self-center justify-end col showButtonOnHover">                     
+                                    <q-icon  name="event_busy" class="q-mr-xs"></q-icon>
+                               </div>
+					          </div>
 					          </q-badge>
 					        </template>
 					      </template>
