@@ -50,7 +50,7 @@
 		                   view="week"
 		                   :weekdays="[1, 2, 3, 4, 5]"
 		                   animated
-		                   th:@click:time2="|onClickCalendar('@{/api/planning/_addFree}', $event)|"
+		                   th:@click:time2="|onClickCalendar('@{/api/planning/event/my/_addFree}', $event)|"
 		                   th:@hook:mounted="|loadEvents('@{/api/planning/event/my}')|"
                            transition-prev="slide-right"
 						   transition-next="slide-left"
@@ -63,11 +63,13 @@
 					            class="my-event justify-center"
 					            :class="badgeClasses(event, 'body')"
 					            :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
+					            @click.stop.prevent="console.log('click badge')"
 					          > 
-					          <div class="row col">
-					           <q-icon v-if="event.eventStatusId=='FREE'" size="md" name="crop_free" class="q-mr-xs"></q-icon><span class="ellipsis">free</span>
+					          <div class="row col ">
+					           <q-icon v-if="event.eventStatusId=='FREE'" size="sm" name="crop_free" class="q-mr-xs"></q-icon><span class="ellipsis">free</span>
 					           <div class="row self-center justify-end col showButtonOnHover">                     
-                                    <q-btn size="md" flat icon="event_busy" class="q-mr-xs"></q-btn>
+                                    <q-btn size="md" flat icon="event_busy" class="q-mr-xs" 
+                                    th:@click.stop.prevent="|onClickRemove('@{/api/planning/event/}', event)|"></q-btn>
                                </div>
 					          </div>
 					          </q-badge>

@@ -18,7 +18,7 @@ public class PlanningServices implements Component {
 	private final Map<Long, DtList<Event>> eventStore = new HashMap<>();
 
 	public DtList<Event> getEvents(final Long baseId, final Long personId) {
-		eventStore.clear();
+		//eventStore.clear();
 		if (eventStore.isEmpty()) {
 			generateEvents(baseId);
 		}
@@ -34,7 +34,11 @@ public class PlanningServices implements Component {
 			event.setEventId(seqEvent++);
 		}
 		baseEvents.add(event);
+	}
 
+	public void removeEvent(final Long baseId, final Long eventId) {
+		final DtList<Event> baseEvents = eventStore.get(baseId);
+		baseEvents.removeIf(e -> e.getEventId().equals(eventId));
 	}
 
 	private void generateEvents(final Long baseId) {

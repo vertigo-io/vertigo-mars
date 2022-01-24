@@ -52,13 +52,28 @@ VUiExtensions.methods.calendarNext = function() {
             
             VUiExtensions.methods.onClickCalendar = function(url, data) {
                 console.log('click:time2:',url, data);
-                this.$http.post(url, {'dateTime':this.fromCalendarTime(data.scope.timestamp), 'duration':60})
+                this.$http.post(url, {'dateTime':this.fromCalendarTime(data.scope.timestamp), 'duration':59})
                 .then(function (response) {
                     this.$data.vueData.events.push(response.data);
                 }.bind(this)).catch(function (error) {
                     this.$q.notify(error.response.status + ":" + error.response.statusText + " Can't add event ");
                 }.bind(this));
-                           
+            }
+            
+            VUiExtensions.methods.onClickRemove = function(url, event) {
+                console.log('onClickRemove:',url, event);
+                this.$http.delete(url+event.baseId+'/'+event.eventId)
+                .then(function (response) {
+                    var i = this.$data.vueData.events.length;
+                    while (i--) {
+                        if (this.$data.vueData.events[i].eventId === response.data) {
+                            this.$data.vueData.events.splice(i, 1);
+                            break;
+                        }
+                    }
+                }.bind(this)).catch(function (error) {
+                    this.$q.notify(error.response.status + ":" + error.response.statusText + " Can't remove event ");
+                }.bind(this));
             }
     
             VUiExtensions.methods.isCssColor  = function(color) {
