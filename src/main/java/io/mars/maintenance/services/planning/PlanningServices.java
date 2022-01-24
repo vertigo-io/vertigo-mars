@@ -30,7 +30,11 @@ public class PlanningServices implements Component {
 
 	public void addFreeEvent(final Event event) {
 		final DtList<Event> baseEvents = eventStore.get(event.getBaseId());
+		if (event.getEventId() == null) {
+			event.setEventId(seqEvent++);
+		}
 		baseEvents.add(event);
+
 	}
 
 	private void generateEvents(final Long baseId) {

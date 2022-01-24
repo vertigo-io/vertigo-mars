@@ -388,7 +388,8 @@ tr th.dom_id:nth-child(1){
 .right-side{left:50.25%;width:49.75%}
 
 .event-FREE {
-    opacity: 1;
-    background-color: cyan;
-    border: darkcyan solid 2px;
+    opacity: 0.4;
+    color: var(--q-color-secondary-inverted);
+    background-color: var(--q-color-secondary);
+    border: var(--q-color-primary) dashed 2px;
 }

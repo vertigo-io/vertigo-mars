@@ -6,21 +6,25 @@ VUiExtensions.methods.calendarNext = function() {
             };
             
             VUiExtensions.methods.fromCalendarTime = function (date) {
-                return date.day+'/'+date.month+'/'+date.year+' '+date.hour+':'+date.minute;
+                //return date.day+'/'+date.month+'/'+date.year+' '+date.hour+':'+date.minute;
+                //2022-01-23T22:22:39.124Z
+                ;
+                return date.date+'T'+date.time+':00.000Z';
             }
             
-            var PARSE_REGEX = /^(\d{1,2})\/(\d{1,2})\/(\d{4})?([^\d]+(\d{1,2}))?(:(\d{1,2}))?(:(\d{1,2}))?(.(\d{1,3}))?$/;
-            VUiExtensions.methods.toCalendarDate  = function(vDate) {
+             //var PARSE_REGEX = /^(\d{1,2})\/(\d{1,2})\/(\d{4})?([^\d]+(\d{1,2}))?(:(\d{1,2}))?(:(\d{1,2}))?(.(\d{1,3}))?$/;
+             var PARSE_REGEX = /^(\d{1,4})-(\d{1,2})-(\d{2})?([^\d]+(\d{1,2}))?(:(\d{1,2}))?(:(\d{1,2}))?(.(\d{1,3}))Z?$/;
+             VUiExtensions.methods.toCalendarDate  = function(vDate) {
                  // DD/MM/YYYY hh:mm
                 var parts = PARSE_REGEX.exec(vDate);
                 if (!parts) { return null }
 
                 return {
-                  date: parts[3]+'-'+parts[2]+'-'+parts[1],
+                  date: parts[1]+'-'+parts[2]+'-'+parts[3],
                   time: parts[5] + ':' +  parts[7],
-                  year: parseInt(parts[3], 10),
+                  year: parseInt(parts[1], 10),
                   month: parseInt(parts[2], 10),
-                  day: parseInt(parts[1], 10) || 1,
+                  day: parseInt(parts[3], 10) || 1,
                   hour: parseInt(parts[5], 10) || 0,
                   minute: parseInt(parts[7], 10) || 0,
                   weekday: 0,
@@ -35,9 +39,25 @@ VUiExtensions.methods.calendarNext = function() {
                 }
             };
  
-            VUiExtensions.methods.onClickTime2  = function(url, data) {
+            VUiExtensions.methods.loadEvents = function(url) {
+                console.log('loadEvents:',url);
+                this.$http.get(url)
+                .then(function (response) {
+                    this.$data.vueData.events = (response.data);
+                }.bind(this)).catch(function (error) {
+                    this.$q.notify(error.response.status + ":" + error.response.statusText + " Can't load events ");
+                });
+                           
+            }
+            
+            VUiExtensions.methods.onClickCalendar = function(url, data) {
                 console.log('click:time2:',url, data);
-                this.httpPostAjax(url, {'dateTime':this.fromCalendarTime(data.scope.timestamp), 'durationMinute':60});
+                this.$http.post(url, {'dateTime':this.fromCalendarTime(data.scope.timestamp), 'duration':60})
+                .then(function (response) {
+                    this.$data.vueData.events.push(response.data);
+                }.bind(this)).catch(function (error) {
+                    this.$q.notify(error.response.status + ":" + error.response.statusText + " Can't add event ");
+                }.bind(this));
                            
             }
     
@@ -49,7 +69,7 @@ VUiExtensions.methods.calendarNext = function() {
                 const cssColor = this.isCssColor(event.bgcolor)
                 const isHeader = type === 'header'
                 return {
-                  [`text-white bg-${event.bgcolor} event-${event.eventStatusId} `]: !cssColor,
+                  [`event-${event.eventStatusId} `]: !cssColor,
                   'full-width': !isHeader && (!event.side || event.side === 'full'),
                   'left-side': !isHeader && event.side === 'left',
                   'right-side': !isHeader && event.side === 'right'                  
