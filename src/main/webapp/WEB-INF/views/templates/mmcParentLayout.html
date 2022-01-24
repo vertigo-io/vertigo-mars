@@ -166,7 +166,7 @@
 				    </component>
 				    <q-separator th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
 			       	<component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'" label="People" default-opened 
-			       	 th:if="${authz.hasAuthorization('AdmUser','ViewAcademy')}">
+			       	 th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}">
 				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}">
 				          <q-item-section avatar>
 				          	<q-icon name="fas fa-user-friends" title="Teams"></q-icon>
