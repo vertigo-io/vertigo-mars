@@ -59,16 +59,16 @@
 		                   <template #day-body="{ timestamp, timeStartPos, timeDurationHeight }">
 					        <template v-for="(event, index) in getEvents(timestamp.date, vueData.events)">
 					          <q-badge
-					            :key="index"
+					            :key="event.eventId"
 					            class="my-event justify-center"
 					            :class="badgeClasses(event, 'body')"
 					            :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
-					            @click.stop.prevent="console.log('click badge')"
+					            @click.stop.prevent=""					            
 					          > 
 					          <div class="row col ">
 					           <q-icon v-if="event.eventStatusId=='FREE'" size="sm" name="crop_free" class="q-mr-xs"></q-icon><span class="ellipsis">free</span>
 					           <div class="row self-center justify-end col showButtonOnHover">                     
-                                    <q-btn size="md" flat icon="event_busy" class="q-mr-xs" 
+                                    <q-btn size="md" flat icon="event_busy" padding="xs" :ripple="false"
                                     th:@click.stop.prevent="|onClickRemove('@{/api/planning/event/}', event)|"></q-btn>
                                </div>
 					          </div>

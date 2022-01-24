@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 
 import javax.inject.Inject;
 
+import io.mars.hr.domain.Person;
 import io.mars.hr.services.login.LoginServices;
 import io.mars.maintenance.domain.Event;
 import io.mars.maintenance.services.planning.PlanningServices;
@@ -55,6 +56,17 @@ public class PlanningWebServices implements WebServices {
 	public Long doRemoveEvent(@PathParam("baseId") final Long baseId, @PathParam("eventId") final Long eventId) {
 		planningServices.removeEvent(baseId, eventId);
 		return eventId;
+	}
+
+	@GET("/planning/event/{baseId}/free")
+	public DtList<Event> getFreeEvent(@PathParam("baseId") final Long baseId) {
+		//final DtList<Person> persons = planningServices.getPerson(baseId);
+		return planningServices.getFreeEvents(baseId);
+	}
+
+	@GET("/planning/resource/{baseId}")
+	public DtList<Person> getResource(@PathParam("baseId") final Long baseId) {
+		return planningServices.getPerson(baseId);
 	}
 
 }

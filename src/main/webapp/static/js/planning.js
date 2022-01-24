@@ -152,3 +152,8 @@ VUiExtensions.methods.calendarNext = function() {
                 }
                 return selectedEvents
               };
+
+        VUiExtensions.methods.getResourceImage  = function(resource) {
+            return (resource.icon !== undefined ? resource.icon : resource.avatar !== undefined ? 'img:' + resource.avatar : '')
+        }
+    

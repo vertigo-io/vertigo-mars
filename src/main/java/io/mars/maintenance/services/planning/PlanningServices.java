@@ -5,7 +5,12 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import io.mars.hr.domain.Person;
+import io.mars.hr.services.person.PersonServices;
 import io.mars.maintenance.domain.Event;
+import io.mars.maintenance.domain.EventStatusEnum;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.structure.model.DtList;
@@ -16,6 +21,16 @@ public class PlanningServices implements Component {
 
 	private long seqEvent = 0;
 	private final Map<Long, DtList<Event>> eventStore = new HashMap<>();
+
+	@Inject
+	private PersonServices personServices;
+
+	public DtList<Event> getFreeEvents(final Long baseId) {
+		final DtList<Event> baseEvents = eventStore.get(baseId);
+		return baseEvents.stream()
+				.filter(e -> EventStatusEnum.free == e.eventStatus().getEnumValue())
+				.collect(VCollectors.toDtList(Event.class));
+	}
 
 	public DtList<Event> getEvents(final Long baseId, final Long personId) {
 		//eventStore.clear();
@@ -53,7 +68,7 @@ public class PlanningServices implements Component {
 						event.setEventId(seqEvent++);
 						event.setBaseId(baseId);
 						event.setPersonId(1000L + p);
-						event.setEventStatusId("FREE");
+						event.eventStatus().setEnumValue(EventStatusEnum.free);
 						event.setDateTime(day.atTime(n / 2, n % 2 * 30).atZone(ZoneId.of("Europe/Paris")).toInstant());
 						//event.setDurationMinutes(Math.random() < 0.7 ? 30 : 60);
 						event.setDurationMinutes(59);
@@ -64,6 +79,17 @@ public class PlanningServices implements Component {
 			}
 		}
 
+	}
+
+	public DtList<Person> getPerson(final Long baseId) {
+		if (eventStore.isEmpty()) {
+			generateEvents(baseId);
+		}
+		final DtList<Event> baseEvents = eventStore.get(baseId);
+		return baseEvents.stream()
+				.filter(e -> "FREE".equals(e.getEventStatusId()))
+				.map(e -> personServices.getPerson(e.getPersonId()))
+				.collect(VCollectors.toDtList(Person.class));
 	}
 
 }

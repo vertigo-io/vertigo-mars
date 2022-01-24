@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/mmcParentLayout}"
+>
+	<head>
+		<title>Maintenance Planning</title>
+        <!-- qcalendar -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qcalendar@3.4.1/dist/index.min.css" type="text/css"/>
+        
+        <script th:src="@{/static/js/planning.js}"></script>
+	</head>
+	
+	<body>
+	
+		<section>
+			<div layout:fragment="content-header-title">
+				
+			</div>
+			<div layout:fragment="content-header-actions">
+			</div>
+		</section>
+		
+		<section layout:fragment="page-container">
+	 	<q-page padding class="row col-12 q-gutter-md">
+				<div class="col content-body ">
+                <div class="row q-col-gutter-md">
+                    <div class="col-12">
+                           <h6>TEST Calendar</h6>
+                            <div class="row justify-center items-center">
+                              <q-btn flat dense label="Prev" @click="calendarPrev"></q-btn>
+                              |
+                              <q-btn flat dense label="Next" @click="calendarNext"></q-btn>
+                            </div>
+		                   <vu:include-data-primitive key="todayDate" />
+		                   <vu:include-data object="events" field="eventId" />
+                           <vu:include-data object="events" field="dateTime" />
+                           <vu:include-data object="events" field="durationMinutes" />
+                           <vu:include-data object="events" field="eventStatusId" />
+                           <vu:include-data object="events" field="affectedUrl" />
+                           <vu:include-data object="events" field="affectedLabel" />
+                           <q-calendar ref="calendar" 
+		                   locale="fr"
+		                   view="week-scheduler"
+		                   :weekdays="[1, 2, 3, 4, 5]"
+		                   animated
+		                   :resources="vueData.resources"
+		                   th:@click:time2="|onClickCalendar('@{/api/planning/event/my/_addFree}', $event)|"
+		                   th:@hook:mounted="|loadResources('@{/api/planning/event/my}')|"
+                           transition-prev="slide-right"
+						   transition-next="slide-left"
+		                   v-model="vueData.todayDate">		                   
+		                   
+					      <template #scheduler-resource="{ resource/*, index*/ }">
+					        <div class="col-12">
+					          <q-btn flat class="fit" :icon="getResourceImage(resource)" :label="resource.label"/>
+					        </div>
+					      </template>
+		                   
+		                   </q-calendar>
+                    </div>
+                  </div>	 			
+	 			</div>
+		</q-page>
+	</section>
+	
+	      <section layout:fragment="javascript-footer" >
+        <script src="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qcalendar@3.4.1/dist/index.umd.js"></script>
+        </section>
+	
+	</body>
+</html>

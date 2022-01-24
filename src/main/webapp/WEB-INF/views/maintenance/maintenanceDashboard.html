@@ -31,8 +31,8 @@
 						</q-card>
 					</div>
 					<div class="col-12">
-                        <q-btn icon="edit_calendar" type="a"  label="Managed my disponibility" color="primary" th:href="@{/maintenance/planning/}"></q-btn>
-                        <q-btn icon="calendar_month" type="a" label="View Teams planning" color="primary" th:href="@{/maintenance/planning/}"></q-btn>               
+                        <q-btn icon="edit_calendar" type="a"  label="Managed my disponibility" color="primary" th:href="@{/maintenance/planning/prepare/}"></q-btn>
+                        <q-btn icon="calendar_month" type="a" label="View Teams planning" color="primary" th:href="@{/maintenance/planning/team/}"></q-btn>               
                     </div>                    
 					<vu:table title="Lastest created tickets" list="lastTickets" componentId="lastTickets" rowsPerPage="5"
 					tr_@click.native="|goTo('@{/maintenance/ticket/}'+props.row.ticketId)|" tr_class="nav">
