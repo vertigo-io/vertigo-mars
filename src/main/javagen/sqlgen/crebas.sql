@@ -342,6 +342,7 @@ create table EVENT
     DURATION_MINUTES	 NUMERIC     	,
     AFFECTED_URL	 TEXT        	,
     AFFECTED_LABEL	 VARCHAR(100)	,
+    AFFECTED_TYPE	 VARCHAR(100)	,
     EVENT_STATUS_ID	 VARCHAR(100)	,
     BASE_ID     	 NUMERIC     	,
     PERSON_ID   	 NUMERIC     	,
@@ -358,10 +359,13 @@ comment on column EVENT.DURATION_MINUTES is
 'duration';
 
 comment on column EVENT.AFFECTED_URL is
-'affectedUrl';
+'url';
 
 comment on column EVENT.AFFECTED_LABEL is
-'affected';
+'label';
+
+comment on column EVENT.AFFECTED_TYPE is
+'type';
 
 comment on column EVENT.EVENT_STATUS_ID is
 'Event Status';

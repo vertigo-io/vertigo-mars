@@ -75,6 +75,24 @@ VUiExtensions.methods.calendarNext = function() {
                     this.$q.notify(error.response.status + ":" + error.response.statusText + " Can't remove event ");
                 }.bind(this));
             }
+            
+            VUiExtensions.methods.onClickSelect = function(url, event) {
+                console.log('onClickSelect:',url, event);
+                this.$http.post(url, event)
+                .then(function (response) {
+                    var i = this.$data.vueData.events.length;
+                    while (i--) {
+                        if (this.$data.vueData.events[i].eventId === response.data.eventId) {
+                            this.$data.vueData.events[i]=response.data;
+                            break;
+                        }
+                    }
+                }.bind(this)).catch(function (error) {
+                    this.$q.notify(error.response.status + ":" + error.response.statusText + " Can't remove event ");
+                }.bind(this));
+            }
+            
+            
     
             VUiExtensions.methods.isCssColor  = function(color) {
                 return !!color && !!color.match(/^(#|(rgb|hsl)a?\()/)

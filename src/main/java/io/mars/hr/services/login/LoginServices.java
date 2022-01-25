@@ -198,7 +198,8 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 				.clearRoles()
 				.clearSecurityKeys()
 				.addRole(getRole(mission.getRoleId()))
-				.withSecurityKeys("baseId", mission.getBaseId());
+				.withSecurityKeys("baseId", mission.getBaseId())
+				.withSecurityKeys("personId", getUserSession().getLoggedPerson().getPersonId());
 		if (mission.getBaseId() != null) {
 			mission.base().load();
 			final Base base = mission.base().get();

@@ -16,8 +16,9 @@
 				<div layout:fragment="content-header-actions" th:include="basemanagement/base/baseInformation :: #baseActions"></div>				
 				<div layout:fragment="content-header-tabs">
 					<vu:button-link flat label="Base Information" url="@{/basemanagement/base/information/} + ${model.base.baseId}"/>
-					<vu:button-link flat label="Equipment" url="@{/basemanagement/base/equipment/} + ${model.base.baseId}"/>
-					<vu:button-link class="active" flat label="VR View" url="@{/basemanagement/base/vr/} + ${model.base.baseId}"/>					
+					<vu:button-link th:if="${authz.hasAuthorization('Equipment$read')}" flat label="Equipment" url="@{/basemanagement/base/equipment/} + ${model.base.baseId}" />
+                    <vu:button-link flat label="Planning" url="@{/basemanagement/base/planning/} + ${model.base.baseId}" />
+                    <vu:button-link class="active" flat label="VR View" url="@{/basemanagement/base/vr/} + ${model.base.baseId}"/>					
 				</div>
 		</section>
 		

@@ -103,6 +103,28 @@
                 "baseId<=${baseId}"
             ]
         }]
+    },
+    {
+        "entity": "Event",
+        "securityFields" : ["baseId", "personId"],
+        "securityDimensions": [{
+                "name": "eventStatusId", "type": "ENUM", "values": ["FREE", "PENDING", "RESERVED", "BLOCKED"]
+            }],
+        "operations": [  {
+            "__comment": "Choisir un creneau (tous)",
+            "name": "select", "label" : "Select",
+            "rules": ["eventStatusId=FREE"]
+        }, {
+            "__comment": "Gérer les creneaux (ajout de libre, suppression, ...)",
+            "name": "manage", "label" : "Gérer les creneaux",
+            "overrides" : ["write"], "grants" : ["select"],
+            "rules": ["baseId=${baseId}"]
+        }, {
+            "__comment": "Editer mon creneau",
+            "name": "write", "label" : "Gérer mon creneau",
+            "grants" : ["select"],
+            "rules": ["personId=${personId} and eventStatusId=PENDING"]
+        }]
     }
 	]
 }

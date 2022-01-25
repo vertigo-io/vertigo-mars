@@ -44,9 +44,9 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Objet de données EquipmentType. */
 		EquipmentType(io.mars.catalog.domain.EquipmentType.class),
 		/** Objet de données Event. */
-		Event(io.mars.maintenance.domain.Event.class),
+		Event(io.mars.basemanagement.domain.Event.class),
 		/** Objet de données EventStatus. */
-		EventStatus(io.mars.maintenance.domain.EventStatus.class),
+		EventStatus(io.mars.basemanagement.domain.EventStatus.class),
 		/** Objet de données GeoSearchEquipmentCriteria. */
 		GeoSearchEquipmentCriteria(io.mars.basemanagement.domain.GeoSearchEquipmentCriteria.class),
 		/** Objet de données Geosector. */
@@ -321,17 +321,19 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	/**
 	 * Enumération des champs de Event.
 	 */
-	public enum EventFields implements DtFieldName<io.mars.maintenance.domain.Event> {
+	public enum EventFields implements DtFieldName<io.mars.basemanagement.domain.Event> {
 		/** Propriété 'Id'. */
 		eventId,
 		/** Propriété 'dateTime'. */
 		dateTime,
 		/** Propriété 'duration'. */
 		durationMinutes,
-		/** Propriété 'affectedUrl'. */
+		/** Propriété 'url'. */
 		affectedUrl,
-		/** Propriété 'affected'. */
+		/** Propriété 'label'. */
 		affectedLabel,
+		/** Propriété 'type'. */
+		affectedType,
 		/** Propriété 'Event Status'. */
 		eventStatusId,
 		/** Propriété 'Base'. */
@@ -342,7 +344,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	/**
 	 * Enumération des champs de EventStatus.
 	 */
-	public enum EventStatusFields implements DtFieldName<io.mars.maintenance.domain.EventStatus> {
+	public enum EventStatusFields implements DtFieldName<io.mars.basemanagement.domain.EventStatus> {
 		/** Propriété 'Id'. */
 		eventStatusId,
 		/** Propriété 'Status Label'. */

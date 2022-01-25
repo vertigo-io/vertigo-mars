@@ -1,4 +1,4 @@
-package io.mars.maintenance.domain;
+package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.structure.model.DtStaticMasterData;

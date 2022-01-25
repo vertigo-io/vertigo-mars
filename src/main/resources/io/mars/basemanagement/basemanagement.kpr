@@ -2,6 +2,7 @@ model/basemanagement.ksp
 model/baseManagementUi.ksp
 model/searchBase.ksp
 model/searchEquipment.ksp
+model/planning.ksp
 
 search/searchBaseQueries.ksp
 search/searchEquipmentQueries.ksp

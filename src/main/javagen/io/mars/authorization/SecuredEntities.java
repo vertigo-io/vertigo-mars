@@ -5,6 +5,7 @@ import io.vertigo.account.authorization.definitions.AuthorizationName;
 import io.vertigo.account.authorization.definitions.OperationName;
 import io.vertigo.core.node.Node;
 import io.mars.basemanagement.domain.Equipment;
+import io.mars.basemanagement.domain.Event;
 import io.mars.basemanagement.domain.Base;
 
 /**
@@ -79,6 +80,48 @@ public final class SecuredEntities {
 		write,
 		/** Edition information. */
 		writeAll;
+	}
+	/**
+	 * Authorizations of Event.
+	 */
+	public enum EventAuthorizations implements AuthorizationName {
+		/** Gérer les creneaux (ajout de libre, suppression, ...). */
+		AtzEvent$manage,
+		/** Choisir un creneau (tous). */
+		AtzEvent$select,
+		/** Editer mon creneau. */
+		AtzEvent$write;
+
+		/**
+		 * Get the associated authorization.
+		 *
+		 * @param code authorization code
+		 * @return authorization
+		 */
+		public static Authorization of(final String code) {
+			return Node.getNode().getDefinitionSpace().resolve(code, Authorization.class);
+		}
+
+		/**
+		 * Get the associated authorization.
+		 *
+		 * @return role
+		 */
+		public Authorization getAuthorization() {
+			return of(name());
+		}
+	}
+
+	/**
+	 * Operations of Event.
+	 */
+	public enum EventOperations implements OperationName<Event> {
+		/** Gérer les creneaux (ajout de libre, suppression, ...). */
+		manage,
+		/** Choisir un creneau (tous). */
+		select,
+		/** Editer mon creneau. */
+		write;
 	}
 	/**
 	 * Authorizations of Base.

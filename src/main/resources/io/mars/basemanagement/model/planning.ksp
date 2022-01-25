@@ -1,12 +1,12 @@
-package io.mars.maintenance.domain
-
+package io.mars.basemanagement.domain
 
 create DtDefinition DtEvent {
     id eventId {domain: DoId label:"Id"}
     field dateTime {domain: DoInstant label: "dateTime" }
     field durationMinutes {domain: DoMinute label: "duration" }
-    field affectedUrl {domain: DoUrl label: "affectedUrl" }
-    field affectedLabel {domain: DoLabel label: "affected" }
+    field affectedUrl {domain: DoUrl label: "url" }
+    field affectedLabel {domain: DoLabel label: "label" }
+    field affectedType {domain: DoLabel label: "type" }
 }
 
 create DtDefinition DtEventStatus {
@@ -38,6 +38,7 @@ create Association AEventBase {
             
     labelB : "Base"
 }
+
 
 create Association AEventPerson {
     fkFieldName : "personId"

@@ -393,3 +393,13 @@ tr th.dom_id:nth-child(1){
     background-color: #00bcd433;
     border: var(--q-color-primary) dashed 2px;
 }
+.event-PENDING {
+    background-color: #0280ddaa;
+    border: var(--q-color-primary) dashed 2px;
+}
+.event-RESERVED {
+    
+}
+.event-BLOCKED {
+    background-color: #88888866;    
+}

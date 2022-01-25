@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import io.mars.authorization.GlobalAuthorizations;
 import io.mars.authorization.SecuredEntities.BaseAuthorizations;
 import io.mars.authorization.SecuredEntities.EquipmentAuthorizations;
+import io.mars.authorization.SecuredEntities.EventAuthorizations;
 import io.mars.hr.domain.RoleEnum;
 import io.vertigo.account.authorization.definitions.Authorization;
 import io.vertigo.account.authorization.definitions.AuthorizationName;
@@ -27,19 +28,19 @@ public final class MarsRoleDefinitionProvider implements SimpleDefinitionProvide
 				createRole(RoleEnum.admin,
 						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzAdmUsers, GlobalAuthorizations.AtzViewBases,
 						EquipmentAuthorizations.AtzEquipment$writeAll, EquipmentAuthorizations.AtzEquipment$editTickets,
-						BaseAuthorizations.AtzBase$admin, BaseAuthorizations.AtzBase$addEquiAdm),
+						BaseAuthorizations.AtzBase$admin, BaseAuthorizations.AtzBase$addEquiAdm, EventAuthorizations.AtzEvent$manage),
 				createRole(RoleEnum.manager,
 						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
 						EquipmentAuthorizations.AtzEquipment$readConf, EquipmentAuthorizations.AtzEquipment$write, EquipmentAuthorizations.AtzEquipment$editTickets,
-						BaseAuthorizations.AtzBase$write, BaseAuthorizations.AtzBase$readConf, BaseAuthorizations.AtzBase$addEqui),
+						BaseAuthorizations.AtzBase$write, BaseAuthorizations.AtzBase$readConf, BaseAuthorizations.AtzBase$addEqui, EventAuthorizations.AtzEvent$manage),
 				createRole(RoleEnum.engineer,
 						GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
 						EquipmentAuthorizations.AtzEquipment$write, EquipmentAuthorizations.AtzEquipment$editTickets,
-						BaseAuthorizations.AtzBase$read, BaseAuthorizations.AtzBase$addEqui),
+						BaseAuthorizations.AtzBase$read, BaseAuthorizations.AtzBase$addEqui, EventAuthorizations.AtzEvent$write),
 				createRole(RoleEnum.trainee,
 						GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
 						EquipmentAuthorizations.AtzEquipment$read, EquipmentAuthorizations.AtzEquipment$readTickets,
-						BaseAuthorizations.AtzBase$read));
+						BaseAuthorizations.AtzBase$read, EventAuthorizations.AtzEvent$write));
 	}
 
 	private Role createRole(final RoleEnum roleName, final AuthorizationName... authorizationNames) {

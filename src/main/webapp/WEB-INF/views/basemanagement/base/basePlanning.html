@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/mmcDetailLayout}"
+>
+	<head>
+		<title>Base Planning</title>
+		<!-- qcalendar -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qcalendar@3.4.1/dist/index.min.css" type="text/css"/>
+        
+        <script th:src="@{/static/js/planning.js}"></script>
+	</head>
+	
+	<body>
+	
+		<section>
+				<div layout:fragment="content-header-left" th:include="basemanagement/base/baseInformation :: #baseImg"></div>
+				<div layout:fragment="content-header-title" th:include="basemanagement/base/baseInformation :: #baseTitle"></div>
+				<div layout:fragment="content-header-actions" th:include="basemanagement/base/baseInformation :: #baseActions"></div>				
+				<div layout:fragment="content-header-tabs">
+					<vu:button-link flat label="Base Information" url="@{/basemanagement/base/information/} + ${model.base.baseId}"/>
+					<vu:button-link th:if="${authz.hasAuthorization('Equipment$read')}" flat label="Equipment" url="@{/basemanagement/base/equipment/} + ${model.base.baseId}" />
+                    <vu:button-link class="active" flat label="Planning" url="@{/basemanagement/base/planning/} + ${model.base.baseId}" />
+                    <vu:button-link flat label="VR View" url="@{/basemanagement/base/vr/} + ${model.base.baseId}"/>					
+				</div>
+		</section>
+		
+		<section layout:fragment="content" >
+			<vu:block id="planning" title="Planning">
+				<div class="row q-col-gutter-md">
+                    <div class="col-12">
+                             <div class="row justify-center items-center">
+                              <q-btn flat dense label="Prev" @click="calendarPrev"></q-btn>
+                              |
+                              <q-btn flat dense label="Next" @click="calendarNext"></q-btn>
+                            </div>
+                           <vu:include-data-primitive key="todayDate" />
+                           <vu:include-data object="events" field="eventId" />
+                           <vu:include-data object="events" field="dateTime" />
+                           <vu:include-data object="events" field="durationMinutes" />
+                           <vu:include-data object="events" field="eventStatusId" />
+                           <vu:include-data object="events" field="affectedUrl" />
+                           <vu:include-data object="events" field="affectedLabel" />
+                           <q-calendar ref="calendar" 
+                           locale="fr"
+                           hour24-format
+                           interval-minutes="30"
+                           interval-start="15"
+                           interval-count="22"
+                           interval-height="20"
+                           view="week"
+                           :weekdays="[1, 2, 3, 4, 5]"
+                           animated
+                           th:@click:time2="|onClickCalendar('@{/api/planning/event/}${model.base.baseId}/_addFree', $event)|"
+                           th:@hook:mounted="|loadEvents('@{/api/planning/event/}${model.base.baseId}')|"
+                           transition-prev="slide-right"
+                           transition-next="slide-left"
+                           v-model="vueData.todayDate">
+                           
+                           <template #day-body="{ timestamp, timeStartPos, timeDurationHeight }">
+                            <template v-for="(event, index) in getEvents(timestamp.date, vueData.events)">
+                              <q-badge
+                                :key="event.eventId"
+                                class="my-event justify-center"
+                                :class="badgeClasses(event, 'body')"
+                                :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
+                                th:@click.stop.prevent="|onClickSelect('@{/api/planning/event/}${model.base.baseId}/_select', event)|"                              
+                              > 
+                              <div class="row col ">
+                               <q-icon v-if="event.eventStatusId=='PENDING'" size="sm" name="pending_actions" class="q-mr-xs"></q-icon>
+                               <q-icon v-if="event.eventStatusId=='RESERVED'" size="sm" name="event_available" class="q-mr-xs"></q-icon>
+                               <q-icon v-if="event.eventStatusId=='BLOCKED'" size="sm" name="do_disturb" class="q-mr-xs"></q-icon>
+                               <q-avatar v-if="event.eventStatusId=='PENDING'" size="sm" class="q-mr-xs"><img th::src="|'@{/api}'+event.affectedUrl|" alt="user avatar"/></q-avatar>
+                            
+                               <span class="ellipsis">{{event.affectedLabel}}</span>
+                               <div class="row self-center justify-end col showButtonOnHover">                     
+                                    <q-btn size="md" flat icon="event_busy" padding="xs" :ripple="false"
+                                    th:@click.stop.prevent="|onClickRemove('@{/api/planning/event/}', event)|"></q-btn>
+                               </div>
+                              </div>
+                              </q-badge>
+                            </template>
+                          </template>
+                           
+                           </q-calendar>
+                    </div>
+                  </div>
+			</vu:block>			
+		</section>
+		
+		
+        <section layout:fragment="javascript-footer" >
+            <script src="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qcalendar@3.4.1/dist/index.umd.js"></script>
+        </section>
+	</body>
+</html>

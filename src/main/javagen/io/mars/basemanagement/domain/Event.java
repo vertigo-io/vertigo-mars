@@ -1,4 +1,4 @@
-package io.mars.maintenance.domain;
+package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.structure.model.Entity;
@@ -21,6 +21,7 @@ public final class Event implements Entity {
 	private Integer durationMinutes;
 	private String affectedUrl;
 	private String affectedLabel;
+	private String affectedType;
 
 	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AEventEventStatus",
@@ -35,7 +36,7 @@ public final class Event implements Entity {
 			foreignRole = "Event",
 			foreignLabel = "Event",
 			foreignMultiplicity = "0..*")
-	private final EnumStoreVAccessor<io.mars.maintenance.domain.EventStatus, io.mars.maintenance.domain.EventStatusEnum> eventStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.maintenance.domain.EventStatus.class, "EventStatus", io.mars.maintenance.domain.EventStatusEnum.class);
+	private final EnumStoreVAccessor<io.mars.basemanagement.domain.EventStatus, io.mars.basemanagement.domain.EventStatusEnum> eventStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.basemanagement.domain.EventStatus.class, "EventStatus", io.mars.basemanagement.domain.EventStatusEnum.class);
 
 	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AEventBase",
@@ -132,17 +133,17 @@ public final class Event implements Entity {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'affectedUrl'.
+	 * Récupère la valeur de la propriété 'url'.
 	 * @return String affectedUrl
 	 */
-	@Field(smartType = "STyUrl", label = "affectedUrl")
+	@Field(smartType = "STyUrl", label = "url")
 	public String getAffectedUrl() {
 		return affectedUrl;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'affectedUrl'.
+	 * Définit la valeur de la propriété 'url'.
 	 * @param affectedUrl String
 	 */
 	public void setAffectedUrl(final String affectedUrl) {
@@ -151,21 +152,40 @@ public final class Event implements Entity {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'affected'.
+	 * Récupère la valeur de la propriété 'label'.
 	 * @return String affectedLabel
 	 */
-	@Field(smartType = "STyLabel", label = "affected")
+	@Field(smartType = "STyLabel", label = "label")
 	public String getAffectedLabel() {
 		return affectedLabel;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'affected'.
+	 * Définit la valeur de la propriété 'label'.
 	 * @param affectedLabel String
 	 */
 	public void setAffectedLabel(final String affectedLabel) {
 		this.affectedLabel = affectedLabel;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'type'.
+	 * @return String affectedType
+	 */
+	@Field(smartType = "STyLabel", label = "type")
+	public String getAffectedType() {
+		return affectedType;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'type'.
+	 * @param affectedType String
+	 */
+	public void setAffectedType(final String affectedType) {
+		this.affectedType = affectedType;
 	}
 	
 	/**
@@ -237,7 +257,7 @@ public final class Event implements Entity {
 	 * Association : Event Status.
 	 * @return l'accesseur vers la propriété 'Event Status'
 	 */
-	public EnumStoreVAccessor<io.mars.maintenance.domain.EventStatus, io.mars.maintenance.domain.EventStatusEnum> eventStatus() {
+	public EnumStoreVAccessor<io.mars.basemanagement.domain.EventStatus, io.mars.basemanagement.domain.EventStatusEnum> eventStatus() {
 		return eventStatusIdAccessor;
 	}
 

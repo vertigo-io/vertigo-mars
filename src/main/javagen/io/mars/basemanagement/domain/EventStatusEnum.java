@@ -1,11 +1,11 @@
-package io.mars.maintenance.domain;
+package io.mars.basemanagement.domain;
 
 import java.io.Serializable;
 
 import io.vertigo.datamodel.structure.model.MasterDataEnum;
 import io.vertigo.datamodel.structure.model.UID;
 
-public enum EventStatusEnum implements MasterDataEnum<io.mars.maintenance.domain.EventStatus> {
+public enum EventStatusEnum implements MasterDataEnum<io.mars.basemanagement.domain.EventStatus> {
 
 	free("FREE"), //
 	pending("PENDING"), //
@@ -20,8 +20,8 @@ public enum EventStatusEnum implements MasterDataEnum<io.mars.maintenance.domain
 	}
 
 	@Override
-	public UID<io.mars.maintenance.domain.EventStatus> getEntityUID() {
-		return UID.of(io.mars.maintenance.domain.EventStatus.class, entityId);
+	public UID<io.mars.basemanagement.domain.EventStatus> getEntityUID() {
+		return UID.of(io.mars.basemanagement.domain.EventStatus.class, entityId);
 	}
 
 }

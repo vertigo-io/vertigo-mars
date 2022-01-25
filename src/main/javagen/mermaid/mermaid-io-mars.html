@@ -358,23 +358,6 @@ class Role:::dtStaticMasterData {
 								<h1 v-cloak >Module maintenance</h1>
 								<div class="mermaid">
 								classDiagram
-class Event:::entity {
-		+Long eventId
-		+java.time.Instant dateTime
-		+Integer durationMinutes
-		+String affectedUrl
-		+String affectedLabel
-		+String eventStatusId
-		+Long baseId
-		+Long personId
-}
-Event "*" --> "0..1" Base : Base
-Event "*" --> "0..1" EventStatus : EventStatus
-Event "*" --> "0..1" Person : Person
-class EventStatus:::dtStaticMasterData {
-		+String eventStatusId
-		+String label
-}
 class Ticket:::entity {
 		+Long ticketId
 		+String code
@@ -466,6 +449,24 @@ class EquipmentFeature:::entity {
 		+Long equipmentId
 }
 EquipmentFeature "*" --> "0..1" Equipment : Equipment
+class Event:::entity {
+		+Long eventId
+		+java.time.Instant dateTime
+		+Integer durationMinutes
+		+String affectedUrl
+		+String affectedLabel
+		+String affectedType
+		+String eventStatusId
+		+Long baseId
+		+Long personId
+}
+Event "*" --> "0..1" Base : Base
+Event "*" --> "0..1" EventStatus : EventStatus
+Event "*" --> "0..1" Person : Person
+class EventStatus:::dtStaticMasterData {
+		+String eventStatusId
+		+String label
+}
 class Geosector:::entity {
 		+Long geosectorId
 		+String sectorLabel
