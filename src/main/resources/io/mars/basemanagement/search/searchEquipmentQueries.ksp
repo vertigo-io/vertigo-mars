@@ -43,7 +43,7 @@ create FacetDefinition FctEquipmentGeoDistance {
 create FacetDefinition FctEquipmentGeoHash {
 	dtDefinition:DtEquipmentIndex, fieldName:"geoLocation", label:"Location"
 	params geohash_grid { value : "{\"field\" : \"geoLocation\", \"precision\" : #geoPrecision#}" }
-	params innerWriteTo { value : "writeVInt(#geoPrecision#);writeVInt(1000);writeVInt(-1)" }
+	params _innerWriteTo { value : "writeVInt(#geoPrecision#);writeVInt(1000);writeVInt(-1)" }
 }
 
 create FacetedQueryDefinition QryEquipment {
