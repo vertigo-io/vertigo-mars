@@ -44,9 +44,9 @@
 						<th:block th:if="${model.listRenderer == 'map'}">
 							<vu:include-data object="equipments_list" field="geoLocation" />
 							<th:block th:attr="objectKey=${model.vContext['componentStates'].addComponentState('equipmentsTable')}" th:remove="all" />
-							<vu:include-data object="criteria" field="geoUpperLeft" />
-							<vu:include-data object="criteria" field="geoLowerRight" />
-							<vu:include-data object="criteria" field="geoLocation" />
+							<vu:include-data object="criteria" field="geoUpperLeft" modifiable/>
+							<vu:include-data object="criteria" field="geoLowerRight"  modifiable />
+							<vu:include-data object="criteria" field="geoLocation" modifiable />
 							<vu:include-data object="equipments_cluster" field="geoLocation" />
 							<v-map ref="myMap" :initial-center="{ lat : 45.0, lon: 5.0 }" 
 								:initial-zoom-level="5"
