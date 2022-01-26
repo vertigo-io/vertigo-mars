@@ -27,13 +27,13 @@
                <div class="row q-col-gutter-md" style="width: 1080px; margin: 0 auto;">
                      <img th:src="@{/static/img/planningSelectBg.png}" ></img>
                       <div class="col-12">
-                      <div><b>Choisissez votre creneau pour la demarche <b>Naturalisation</b></div>
+                      <div><b>Choisissez votre creneau pour la démarche <b>Naturalisation</b></div>
                       <div style="position: fixed;  top: 20px; right: 18%;">
                       <v-notifications th:base-url="@{/api/}" :type-icon-map="notificationTypes()" ></v-notifications>
                       </div>
                              <div class="row justify-center items-center">
-                              <q-btn flat dense label="Prev" @click="calendarPrev"></q-btn>
-                              <q-btn flat dense label="Next" @click="calendarNext"></q-btn>
+                              <q-btn flat dense label="Précédent" @click="calendarPrev"></q-btn>
+                              <q-btn flat dense label="Suivant" @click="calendarNext"></q-btn>
                             </div>
                            <vu:include-data-primitive key="todayDate" />
                            <vu:include-data object="events" field="eventId" />
@@ -98,7 +98,7 @@
                     <vu:include-data object="selectedEvent" field="eventId" />
                     <vu:include-data object="selectedEvent" field="dateTime" />
                     <vu:include-data object="selectedEvent" field="durationMinutes" />
-	                <vu:text-field-edit object="selectedEvent" field="affectedLabel" label="Nom Prenom" />
+	                <vu:text-field-edit object="selectedEvent" field="affectedLabel" label="Nom Prenom" autofocus />
 	            </vu:grid>
 	            </q-card-section>
 	               <q-card-actions align="right">
