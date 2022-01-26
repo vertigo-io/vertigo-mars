@@ -77,6 +77,7 @@
                                <span class="ellipsis">{{event.affectedLabel}}</span>
                                <div class="row self-center justify-end col showButtonOnHover">                     
                                     <q-btn size="md" flat icon="event_busy" padding="xs" :ripple="false"
+                                    v-if="event.eventStatusId=='PENDING' || event.eventStatusId=='RESERVED'"
                                     th:@click.stop.prevent="|onClickUnReserve('@{/api/planning/event/}${model.base.baseId}/_unreserve', event)|"></q-btn>
                                </div>
                               </div>
@@ -97,7 +98,7 @@
                     <vu:include-data object="selectedEvent" field="eventId" />
                     <vu:include-data object="selectedEvent" field="dateTime" />
                     <vu:include-data object="selectedEvent" field="durationMinutes" />
-	                <vu:text-field-edit object="selectedEvent" field="affectedLabel" label="Nom Prénom" />
+	                <vu:text-field-edit object="selectedEvent" field="affectedLabel" label="Nom Prenom" />
 	            </vu:grid>
 	            </q-card-section>
 	               <q-card-actions align="right">

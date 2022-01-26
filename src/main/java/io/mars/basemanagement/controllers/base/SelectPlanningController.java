@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.basemanagement.domain.Event;
+import io.mars.basemanagement.services.planning.PlanningServices;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
@@ -24,6 +25,8 @@ public class SelectPlanningController extends AbstractVSpringMvcController {
 
 	@Inject
 	private BaseDetailController baseDetailController;
+	@Inject
+	private PlanningServices planningServices;
 
 	@GetMapping("/{baseId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId) {
@@ -32,6 +35,12 @@ public class SelectPlanningController extends AbstractVSpringMvcController {
 		viewContext.publishDtList(events, new DtList<>(Event.class));
 		viewContext.publishDto(selectedEvent, new Event());
 		toModeReadOnly();
+	}
+
+	@GetMapping("/{baseId}/validate/{eventId}")
+	public String initContext(final ViewContext viewContext, @PathVariable("baseId") final Long baseId, @PathVariable("eventId") final Long eventId) {
+		planningServices.validateEvent(baseId, eventId);
+		return "redirect:/planning/select/" + baseId;
 	}
 
 }

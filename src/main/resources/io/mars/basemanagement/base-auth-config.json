@@ -118,7 +118,7 @@
             "__comment": "Gérer les creneaux (ajout de libre, suppression, ...)",
             "name": "manage", "label" : "Gérer les creneaux",
             "overrides" : ["write"], "grants" : ["select"],
-            "rules": ["baseId=${baseId}"]
+            "rules": ["baseId=${baseId}", "personId=${personId} and (eventStatusId=PENDING or eventStatusId=RESERVED)"]
         }, {
             "__comment": "Editer mon creneau",
             "name": "write", "label" : "Gérer mon creneau",

@@ -49,6 +49,9 @@ public class PlanningServices implements Component {
 	}
 
 	public DtList<Event> getMyEvents(final Long baseId) {
+		if (!eventStore.containsKey(baseId)) {
+			generateEvents(baseId);
+		}
 		final Long personId = loginServices.getLoggedPerson().getPersonId();
 		final DtList<Event> baseEvents = eventStore.get(baseId);
 		return baseEvents.stream()
@@ -134,9 +137,9 @@ public class PlanningServices implements Component {
 				final Notification notification = Notification.builder()
 						.withTitle("Rendez vous " + dateTime)
 						.withSender("Planning")
-						.withType("calendar")
-						.withTargetUrl("/mars/api/planning/event/" + baseId + "/" + event.getEventId() + "/validate") //ajouter le lien pour valider le rendezvous
-						.withContent(event.base().get().getName())
+						.withType("Calendar")
+						.withTargetUrl("/mars/planning/select/" + baseId + "/validate/" + selectedEvent.getEventId()) //ajouter le lien pour valider le rendezvous
+						.withContent(event.getAffectedLabel() + " - " + event.base().get().getName())
 						.build();
 				notificationManager.send(notification, Collections.singleton(UID.of(Account.class, String.valueOf(personId))));
 				return event;
@@ -160,7 +163,8 @@ public class PlanningServices implements Component {
 				event.setPersonId(null);
 				event.eventStatus().setEnumValue(EventStatusEnum.free);
 
-				notificationManager.removeAll("Calendar", "/mars/api/planning/event/" + baseId + "/" + selectedEvent.getEventId() + "/validate");
+				notificationManager.removeAll("Calendar", "/mars/planning/select/" + baseId + "/validate/" + selectedEvent.getEventId());
+				notificationManager.removeAll("Calendar", "#event/" + baseId + "/" + selectedEvent.getEventId() + "/reserved");
 
 				//notification
 				final String dateTime = smartTypeManager.valueToString(DtObjectUtil.findDtDefinition(event).getField(DtDefinitions.EventFields.dateTime).getSmartTypeDefinition(), event.getDateTime());
@@ -171,6 +175,7 @@ public class PlanningServices implements Component {
 						.withType("Calendar")
 						.withTargetUrl("/mars/planning/select/" + baseId)
 						.withContent(event.base().get().getName())
+						.withTTLInSeconds(60)
 						.build();
 				notificationManager.send(notification, Collections.singleton(UID.of(Account.class, String.valueOf(personId))));
 				return event;
@@ -189,14 +194,14 @@ public class PlanningServices implements Component {
 				//notification
 				final String dateTime = smartTypeManager.valueToString(DtObjectUtil.findDtDefinition(event).getField(DtDefinitions.EventFields.dateTime).getSmartTypeDefinition(), event.getDateTime());
 				event.base().load();
-				notificationManager.removeAll("Calendar", "/mars/api/planning/event/" + baseId + "/" + eventId + "/validate");
+				notificationManager.removeAll("Calendar", "/mars/planning/select/" + baseId + "/validate/" + eventId);
 
 				final Notification notification = Notification.builder()
 						.withTitle("Rendez vous " + dateTime + " reserved")
 						.withSender("Planning")
 						.withType("Calendar")
 						.withTargetUrl("#event/" + baseId + "/" + eventId + "/reserved")
-						.withContent(event.base().get().getName())
+						.withContent(event.getAffectedLabel() + " - " + event.base().get().getName())
 						.build();
 				notificationManager.send(notification, Collections.singleton(UID.of(Account.class, String.valueOf(personId))));
 				return event;
