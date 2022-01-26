@@ -403,3 +403,7 @@ tr th.dom_id:nth-child(1){
 .event-BLOCKED {
     background-color: #88888866;    
 }
+
+.q-avatar__content, .q-avatar img:not(.q-icon) {
+    width: initial !important;
+}
