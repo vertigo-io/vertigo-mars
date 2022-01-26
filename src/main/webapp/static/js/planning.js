@@ -78,7 +78,6 @@ VUiExtensions.methods.calendarNext = function() {
             
             VUiExtensions.methods.onClickUnReserve = function(url, event) {
                 console.log('onClickUnReserve:',url, event);
-                delete event['Base'];
                 this.$http.post(url, event)
                 .then(function (response) {
                     var i = this.$data.vueData.events.length;
@@ -95,7 +94,6 @@ VUiExtensions.methods.calendarNext = function() {
             
             VUiExtensions.methods.onClickSelect = function(url, event) {
                 console.log('onClickSelect:',url, event);
-                delete event['Base'];
                 this.$http.post(url, event)
                 .then(function (response) {
                     var i = this.$data.vueData.events.length;
