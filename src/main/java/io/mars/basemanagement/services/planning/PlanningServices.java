@@ -48,6 +48,14 @@ public class PlanningServices implements Component {
 				.collect(VCollectors.toDtList(Event.class));
 	}
 
+	public DtList<Event> getMyEvents(final Long baseId) {
+		final Long personId = loginServices.getLoggedPerson().getPersonId();
+		final DtList<Event> baseEvents = eventStore.get(baseId);
+		return baseEvents.stream()
+				.filter(e -> personId.equals(e.getPersonId()))
+				.collect(VCollectors.toDtList(Event.class));
+	}
+
 	public DtList<Event> getEvents(final Long baseId) {
 		//eventStore.clear();
 		if (!eventStore.containsKey(baseId)) {
@@ -104,13 +112,17 @@ public class PlanningServices implements Component {
 	public Event selectEvent(final Long baseId, final Event selectedEvent) {
 		AuthorizationUtil.assertOperations(selectedEvent, SecuredEntities.EventOperations.select);
 		if (!selectedEvent.getBaseId().equals(baseId)) {
-			throw new VUserException("This event is already reserved", null);
+			throw new VUserException("This event is already reserved");
 		}
 		final DtList<Event> baseEvents = eventStore.get(baseId);
 		for (final Event event : baseEvents) {
 			if (event.getEventId().equals(selectedEvent.getEventId())) {
 				final Long personId = loginServices.getLoggedPerson().getPersonId();
-				event.setAffectedLabel(loginServices.getLoggedPerson().getFullName());
+				if (selectedEvent.getAffectedLabel() == null) {
+					event.setAffectedLabel(loginServices.getLoggedPerson().getFullName());
+				} else {
+					event.setAffectedLabel(selectedEvent.getAffectedLabel());
+				}
 				event.setAffectedType(selectedEvent.getAffectedType());
 				event.setAffectedUrl("/x/accounts/api/" + personId + "/photo");
 				event.setPersonId(personId);
@@ -123,7 +135,7 @@ public class PlanningServices implements Component {
 						.withTitle("Rendez vous " + dateTime)
 						.withSender("Planning")
 						.withType("calendar")
-						.withTargetUrl(event.getUID().urn())
+						.withTargetUrl("/mars/api/planning/event/" + baseId + "/" + event.getEventId() + "/validate") //ajouter le lien pour valider le rendezvous
 						.withContent(event.base().get().getName())
 						.build();
 				notificationManager.send(notification, Collections.singleton(UID.of(Account.class, String.valueOf(personId))));
@@ -131,6 +143,66 @@ public class PlanningServices implements Component {
 			}
 		}
 		return selectedEvent;
+	}
+
+	public Event unReserveEvent(final Long baseId, final Event selectedEvent) {
+		AuthorizationUtil.assertOperations(selectedEvent, SecuredEntities.EventOperations.write);
+		if (!selectedEvent.getBaseId().equals(baseId)) {
+			throw new VUserException("Event altered");
+		}
+		final DtList<Event> baseEvents = eventStore.get(baseId);
+		for (final Event event : baseEvents) {
+			if (event.getEventId().equals(selectedEvent.getEventId())) {
+				final Long personId = loginServices.getLoggedPerson().getPersonId();
+				event.setAffectedLabel(null);
+				event.setAffectedType(null);
+				event.setAffectedUrl(null);
+				event.setPersonId(null);
+				event.eventStatus().setEnumValue(EventStatusEnum.free);
+
+				notificationManager.removeAll("Calendar", "/mars/api/planning/event/" + baseId + "/" + selectedEvent.getEventId() + "/validate");
+
+				//notification
+				final String dateTime = smartTypeManager.valueToString(DtObjectUtil.findDtDefinition(event).getField(DtDefinitions.EventFields.dateTime).getSmartTypeDefinition(), event.getDateTime());
+				event.base().load();
+				final Notification notification = Notification.builder()
+						.withTitle("Rendez vous " + dateTime + " ANNULE")
+						.withSender("Planning")
+						.withType("Calendar")
+						.withTargetUrl("/mars/planning/select/" + baseId)
+						.withContent(event.base().get().getName())
+						.build();
+				notificationManager.send(notification, Collections.singleton(UID.of(Account.class, String.valueOf(personId))));
+				return event;
+			}
+		}
+		return selectedEvent;
+	}
+
+	public Event validateEvent(final Long baseId, final Long eventId) {
+		final DtList<Event> baseEvents = eventStore.get(baseId);
+		for (final Event event : baseEvents) {
+			if (event.getEventId().equals(eventId)) {
+				final Long personId = loginServices.getLoggedPerson().getPersonId();
+				event.eventStatus().setEnumValue(EventStatusEnum.reserved);
+
+				//notification
+				final String dateTime = smartTypeManager.valueToString(DtObjectUtil.findDtDefinition(event).getField(DtDefinitions.EventFields.dateTime).getSmartTypeDefinition(), event.getDateTime());
+				event.base().load();
+				notificationManager.removeAll("Calendar", "/mars/api/planning/event/" + baseId + "/" + eventId + "/validate");
+
+				final Notification notification = Notification.builder()
+						.withTitle("Rendez vous " + dateTime + " reserved")
+						.withSender("Planning")
+						.withType("Calendar")
+						.withTargetUrl("#event/" + baseId + "/" + eventId + "/reserved")
+						.withContent(event.base().get().getName())
+						.build();
+				notificationManager.send(notification, Collections.singleton(UID.of(Account.class, String.valueOf(personId))));
+				return event;
+			}
+		}
+		throw new VUserException("Event not found");
 	}
 
 }

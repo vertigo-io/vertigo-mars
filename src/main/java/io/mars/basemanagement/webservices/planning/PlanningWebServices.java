@@ -14,6 +14,7 @@ import io.mars.basemanagement.services.planning.PlanningServices;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.DELETE;
+import io.vertigo.vega.webservice.stereotype.ExcludedFields;
 import io.vertigo.vega.webservice.stereotype.GET;
 import io.vertigo.vega.webservice.stereotype.InnerBodyParam;
 import io.vertigo.vega.webservice.stereotype.POST;
@@ -25,11 +26,13 @@ public class PlanningWebServices implements WebServices {
 	private PlanningServices planningServices;
 
 	@GET("/planning/event/{baseId}")
+	@ExcludedFields({ "Base" })
 	public DtList<Event> getEvents(@PathParam("baseId") final Long baseId) {
 		return planningServices.getEvents(baseId);
 	}
 
 	@POST("/planning/event/{baseId}/_addFree")
+	@ExcludedFields({ "Base" })
 	public Event doAddFree(@PathParam("baseId") final Long baseId, @InnerBodyParam("dateTime") final Instant dateTime, @InnerBodyParam("duration") final int duration) {
 		final Event event = new Event();
 		final ZonedDateTime zDateTime = dateTime.atZone(ZoneOffset.UTC);
@@ -45,8 +48,15 @@ public class PlanningWebServices implements WebServices {
 	}
 
 	@POST("/planning/event/{baseId}/_select")
+	@ExcludedFields({ "Base" })
 	public Event doSelect(@PathParam("baseId") final Long baseId, final Event event) {
 		return planningServices.selectEvent(baseId, event);
+	}
+
+	@POST("/planning/event/{baseId}/_unreserve")
+	@ExcludedFields({ "Base" })
+	public Event doUnReserve(@PathParam("baseId") final Long baseId, final Event event) {
+		return planningServices.unReserveEvent(baseId, event);
 	}
 
 	@DELETE("/planning/event/{baseId}/{eventId}")
@@ -56,9 +66,25 @@ public class PlanningWebServices implements WebServices {
 	}
 
 	@GET("/planning/event/{baseId}/free")
+	@ExcludedFields({ "Base" })
 	public DtList<Event> getFreeEvent(@PathParam("baseId") final Long baseId) {
 		//final DtList<Person> persons = planningServices.getPerson(baseId);
 		return planningServices.getFreeEvents(baseId);
+	}
+
+	@GET("/planning/event/{baseId}/my")
+	@ExcludedFields({ "Base" })
+	public DtList<Event> getMyEvent(@PathParam("baseId") final Long baseId) {
+		//final DtList<Person> persons = planningServices.getPerson(baseId);
+		final DtList<Event> events = planningServices.getMyEvents(baseId);
+		events.addAll(planningServices.getFreeEvents(baseId));
+		return events;
+	}
+
+	@GET("/planning/event/{baseId}/{eventId}/validate")
+	@ExcludedFields({ "Base" })
+	public Event doValidateEvent(@PathParam("baseId") final Long baseId, @PathParam("eventId") final Long eventId) {
+		return planningServices.validateEvent(baseId, eventId);
 	}
 
 }

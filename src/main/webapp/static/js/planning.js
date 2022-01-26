@@ -76,14 +76,15 @@ VUiExtensions.methods.calendarNext = function() {
                 }.bind(this));
             }
             
-            VUiExtensions.methods.onClickSelect = function(url, event) {
-                console.log('onClickSelect:',url, event);
+            VUiExtensions.methods.onClickUnReserve = function(url, event) {
+                console.log('onClickUnReserve:',url, event);
+                delete event['Base'];
                 this.$http.post(url, event)
                 .then(function (response) {
                     var i = this.$data.vueData.events.length;
                     while (i--) {
                         if (this.$data.vueData.events[i].eventId === response.data.eventId) {
-                            this.$data.vueData.events[i]=response.data;
+                            this.$set(this.$data.vueData.events, i , response.data);
                             break;
                         }
                     }
@@ -92,7 +93,28 @@ VUiExtensions.methods.calendarNext = function() {
                 }.bind(this));
             }
             
-            
+            VUiExtensions.methods.onClickSelect = function(url, event) {
+                console.log('onClickSelect:',url, event);
+                delete event['Base'];
+                this.$http.post(url, event)
+                .then(function (response) {
+                    var i = this.$data.vueData.events.length;
+                    while (i--) {
+                        if (this.$data.vueData.events[i].eventId === response.data.eventId) {
+                            this.$set(this.$data.vueData.events, i , response.data);
+                            //this.$data.vueData.events[i]=response.data;
+                            break;
+                        }
+                    }
+                }.bind(this)).catch(function (error) {
+                    this.$q.notify(error.response.status + ":" + error.response.statusText + " Can't remove event ");
+                }.bind(this));
+            }
+            VUiExtensions.methods.onClickPreSelect = function(event) {
+                console.log('onClickPreSelect:',event);
+                for(var k in event) this.$data.vueData.selectedEvent[k]=event[k];
+                this.$data.dataX.selectEvent = true;
+            }            
     
             VUiExtensions.methods.isCssColor  = function(color) {
                 return !!color && !!color.match(/^(#|(rgb|hsl)a?\()/)
@@ -173,5 +195,7 @@ VUiExtensions.methods.calendarNext = function() {
 
         VUiExtensions.methods.getResourceImage  = function(resource) {
             return (resource.icon !== undefined ? resource.icon : resource.avatar !== undefined ? 'img:' + resource.avatar : '')
-        }
+        }        
+        
+        VUiExtensions.dataX = {selectEvent : false}
     
