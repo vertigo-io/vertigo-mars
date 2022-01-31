@@ -1,4 +1,5 @@
 jtkirk@mars.mmc.io	JTKirk		5NfIFw480cJ1RfnztJS_eSBboXqMapec91x04reDNTybgEr9QV_Kg= 	// Enterprise
 jlpicard@mars.mmc.io	JPicard	_lElv_D20c_FqefCF7qq55RBWq23_bViVpRIxm4d9Q1JTvnJstaiA= 	// Picard
 dvader@mars.mmc.io    DVader    9budUaQO0ezencxKfN35MrrEa-fIkytmsZCkz8fv-Ri3UI265EQYI=  // ILoveMyChilds
+hsolo@mars.mmc.io   HSolo       8bHBREsV0eXRg9b0rTzaFbZY78ESfqnEDQFgWRQK7staEFdemf9-8=  // Ben_Organa
 wone@mars.mmc.io	wone		Rs6JYWAx0cF_tE_76SRvCcEskeeZ6NYqBE-JYvuEbR5ZQgsW0C-Q4=	// wone	
