@@ -24,11 +24,11 @@
 <body class="mat desktop no-touch platform-mat" >
         <vu:page >
                
-               <div class="row q-col-gutter-md" style="width: 1080px; margin: 0 auto;">
+               <div class="row q-col-gutter-md" style="position: relative; width: 1080px; margin: 0 auto;">
                      <img th:src="@{/static/img/planningSelectBg.png}" ></img>
                       <div class="col-12">
                       <div><b>Choisissez votre creneau pour la démarche <b>Naturalisation</b></div>
-                      <div style="position: fixed;  top: 20px; right: 18%;">
+                      <div style="position: absolute;  top: 175px; right: 10px;">
                       <v-notifications th:base-url="@{/api/}" :type-icon-map="notificationTypes()" ></v-notifications>
                       </div>
                              <div class="row justify-center items-center">
