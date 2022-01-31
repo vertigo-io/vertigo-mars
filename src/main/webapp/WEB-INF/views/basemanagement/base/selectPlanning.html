@@ -27,10 +27,21 @@
                <div class="row q-col-gutter-md" style="position: relative; width: 1080px; margin: 0 auto;">
                      <img th:src="@{/static/img/planningSelectBg.png}" ></img>
                       <div class="col-12">
+                      <div th:v-if="|getMyReservedEvents(vueData.events,${model.connectedUser.personId}).length > 0|"><b>Liste de vos créneaux réservés :</b></div>
+                      <div class="row ">
+	                      <q-chip square th:v-for="|(event, index) in getMyReservedEvents(vueData.events,${model.connectedUser.personId})|">
+	                        <div class="row">
+	                            <q-avatar size="sm" class="q-mr-xs"><img th::src="|'@{/api}'+event.affectedUrl|" alt="user avatar"/></q-avatar>
+	                            {{event.affectedLabel}} - {{toCalendarDate(event.dateTime).date}} {{toCalendarDate(event.dateTime).time}}
+	                        </div>
+	                      </q-chip>
+                      </div>
+                     
                       <div><b>Choisissez votre creneau pour la démarche <b>Naturalisation</b></div>
                       <div style="position: absolute;  top: 175px; right: 10px;">
                       <v-notifications th:base-url="@{/api/}" :type-icon-map="notificationTypes()" ></v-notifications>
                       </div>
+                      
                              <div class="row justify-center items-center">
                               <q-btn flat dense label="Précédent" @click="calendarPrev"></q-btn>
                               <q-btn flat dense label="Suivant" @click="calendarNext"></q-btn>

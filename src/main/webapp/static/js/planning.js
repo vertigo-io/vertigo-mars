@@ -145,6 +145,18 @@ VUiExtensions.methods.calendarNext = function() {
                 return s
               };
               
+            VUiExtensions.methods.getMyReservedEvents = function(allEvents, personId) {
+                const selectedEvents = []
+                for (let i = 0; i < allEvents.length; ++i) {
+                  if (allEvents[i].personId===personId && allEvents[i].eventStatusId=='RESERVED') {
+                    var eventCalendar = this.toCalendarDate(allEvents[i].dateTime);
+                    allEvents[i].eventCalendar = eventCalendar;
+                    selectedEvents.push(allEvents[i]);
+                    }
+                  }
+                return selectedEvents
+            };
+              
             VUiExtensions.methods.getEvents  = function(dt, allEvents) {
                 const currentDate = QCalendar.parsed(dt)
                 const selectedEvents = []
