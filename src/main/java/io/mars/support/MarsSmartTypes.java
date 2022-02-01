@@ -65,7 +65,7 @@ public enum MarsSmartTypes {
 	@Formatter(clazz = FormatterDefault.class)
 	@Constraint(clazz = ConstraintStringLength.class, arg = "100", msg = "")
 	@SmartTypeProperty(property = "storeType", value = "VARCHAR(100)")
-	@SmartTypeProperty(property = "indexType", value = "text_fr:sortable")
+	@SmartTypeProperty(property = "indexType", value = "text_fr:facetable:sortable")
 	Label,
 
 	@SmartTypeDefinition(String.class)
