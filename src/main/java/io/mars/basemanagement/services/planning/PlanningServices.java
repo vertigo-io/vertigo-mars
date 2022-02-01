@@ -1,5 +1,6 @@
 package io.mars.basemanagement.services.planning;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import freemarker.template.utility.StringUtil;
 import io.mars.authorization.SecuredEntities;
 import io.mars.basemanagement.domain.Event;
 import io.mars.basemanagement.domain.EventStatusEnum;
@@ -90,9 +92,12 @@ public class PlanningServices implements Component {
 	private void generateEvents(final Long baseId) {
 		final DtList<Event> baseEvents = new DtList<>(Event.class);
 		eventStore.put(baseId, baseEvents);
-		for (int d = 0; d < 15; d++) {
+		for (int d = 0; d < 21; d++) {
 			final LocalDate day = LocalDate.now().plusDays(d);
-			for (int n = 15; n < 15 + 21; n++) {
+			if (day.getDayOfWeek().equals(DayOfWeek.SUNDAY) || day.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+				continue;
+			}
+			for (int n = 17; n < 17 + 19; n++) {
 				if (Math.random() < 0.2) {
 					final Event event = new Event();
 					event.setEventId(seqEvent++);
@@ -101,7 +106,17 @@ public class PlanningServices implements Component {
 					//event.setDurationMinutes(Math.random() < 0.7 ? 30 : 60);
 					event.setDurationMinutes(59);
 					if (Math.random() < 0.9) {
-						event.eventStatus().setEnumValue(EventStatusEnum.free);
+						if (Math.random() < 0.5) {
+							final long personId = Math.round(1000 + Math.random() * 10);
+							event.setAffectedLabel(generateFullName());
+							event.setAffectedType(null);
+							event.setAffectedUrl("/x/accounts/api/" + personId + "/photo");
+							event.setPersonId(personId);
+							event.eventStatus().setEnumValue(EventStatusEnum.pending);
+							event.eventStatus().setEnumValue(EventStatusEnum.reserved);
+						} else {
+							event.eventStatus().setEnumValue(EventStatusEnum.free);
+						}
 					} else {
 						event.eventStatus().setEnumValue(EventStatusEnum.blocked);
 					}
@@ -110,6 +125,18 @@ public class PlanningServices implements Component {
 				}
 			}
 		}
+	}
+
+	private static String generateFullName() {
+		final String[] names = { "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David", "Bertrand", "Morel", "Fournier", "Girard", "Bonnet", "Dupont", "Lambert", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre", "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Garcia", "Perrin", "Robin", "Clement", "Morin", "Nicolas", "Henry", "Roussel", "Mathieu", "Gautier", "Masson", "Marchand", "Duval", "Denis", "Dumont", "Marie", "Lemaire", "Noel", "Meyer", "Dufour", "Meunier", "Brun", "Blanchard", "Giraud", "Joly", "Riviere", "Lucas", "Brunet", "Gaillard", "Barbier", "Arnaud", "Martinez", "Gerard", "Roche", "Renard", "Schmitt", "Roy", "Leroux", "Colin", "Vidal", "Caron", "Picard", "Roger", "Fabre", "Aubert", "Lemoine", "Renaud", "Dumas", "Lacroix", "Olivier", "Philippe", "Bourgeois", "Pierre", "Benoit", "Rey", "Leclerc",
+				"Payet", "Rolland", "Leclercq", "Guillaume", "Lecomte", "Lopez", "Jean", "Dupuy", "Guillot", "Hubert", "Berger", "Carpentier", "Sanchez", "Dupuis", "Moulin", "Louis", "Deschamps", "Huet", "Vasseur", "Perez", "Boucher", "Fleury", "Royer", "Klein", "Jacquet", "Adam", "Paris", "Poirier", "Marty", "Aubry", "Guyot", "Carre", "Charles", "Renault", "Charpentier", "Menard", "Maillard", "Baron", "Bertin", "Bailly", "Herve", "Schneider", "Fernandez", "Le Gall", "Collet", "Leger", "Bouvier", "Julien", "Prevost", "Millet", "Perrot", "Daniel", "Le Roux", "Cousin", "Germain", "Breton", "Besson", "Langlois", "Remy", "Le Goff", "Pelletier", "Leveque", "Perrier", "Leblanc", "Barre", "Lebrun", "Marchal", "Weber", "Mallet", "Hamon", "Boulanger", "Jacob", "Monnier", "Michaud", "Rodriguez", "Guichard", "Gillet", "Etienne", "Grondin", "Poulain", "Tessier", "Chevallier", "Collin", "Chauvin", "Da Silva", "Bouchet", "Gay", "Lemaitre", "Benard", "Marechal", "Humbert", "Reynaud", "Antoine",
+				"Hoarau", "Perret", "Barthelemy", "Cordier", "Pichon", "Lejeune", "Gilbert", "Lamy", "Delaunay", "Pasquier", "Carlier", "Laporte", };
+		final String[] firstnames = { "Marie", "thomas", "camille", "nicolas", "léa", "julien", "manon", "quentin", "chloé", "maxime", "laura", "alexandre", "julie", "antoine", "sarah", "kevin", "pauline", "clement", "mathilde", "romain", "marine", "pierre", "emma", "lucas", "marion", "florian", "lucie", "guillaume", "anaïs", "valentin", "océane", "jérémy", "justine", "hugo", "morgane", "alexis", "clara", "anthony", "charlotte", "theo", "juliette", "paul", "emilie", "mathieu", "lisa", "benjamin", "mélanie", "adrien", "elodie", "vincent", "claire", "alex", "inès", "arthur", "margaux", "louis", "alice", "baptiste", "amandine", "dylan", "audrey", "corentin", "louise", "thibault", "noémie", "jordan", "clémence", "nathan", "maéva", "simon", "melissa", "axel", "amélie", "matthieu", "eva", "léo", "caroline", "sebastien", "céline", "aurélien", "célia", "victor", "fanny", "loïc", "elise", "rémi", "sophie", "arnaud", "margot", "tom", "elisa", "david", "aurélie", "jonathan", "jade", "damien",
+				"estelle", "enzo", "romane", "bastien", "jeanne", "raphael", "ophélie", "mickael", "laurine", "françois", "alexandra", "robin", "valentine", "martin", "solène", "dorian", "lola", "gabriel", "coralie", "tristan", "laëtitia", "mathis", "alexia", "samuel", "aurore", "thibaut", "cécile", "charles", "alicia", "benoit", "zoé", "fabien", "agathe", "florent", "julia", "maxence", "anna", "cédric", "emeline", "marc", "léna", "yann", "laurie", "jérôme", "lou", "steven", "nina", "mehdi", "coline", "gaëtan", "jessica", "erwan", "maëlle", "cyril", "elsa", "jean", "lucile", "max", "laure", "rémy", "salomé", "yanis", "axelle", "tony", "andréa", "jules", "charlène", "william", "gaelle", "olivier", "helene", "laurent", "clementine", "christopher", "victoria", "sylvain", "myriam", "ludovic", "éloïse", "xavier", "heloise", "stephane", "cindy", "tanguy", "marina", "mael", "cassandra", "morgan", "sara", "adam", "carla", "franck", "ambre", "grégory", "ludivine", "christophe", "anaelle",
+				"alan", "sabrina", "antonin", "angélique", "mohamed", "sandra", "philippe" };
+		final String name = names[(int) Math.floor(Math.random() * names.length)].toUpperCase();
+		final String firstname = StringUtil.capitalize(firstnames[(int) Math.floor(Math.random() * firstnames.length)]);
+		return name + " " + firstname;
 	}
 
 	public Event selectEvent(final Long baseId, final Event selectedEvent) {
