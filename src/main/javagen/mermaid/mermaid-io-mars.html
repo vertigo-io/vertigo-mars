@@ -222,7 +222,7 @@
 	<body>
 		<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-		<script>mermaid.initialize({startOnLoad:true});</script>
+		<script>mermaid.initialize({startOnLoad:true, flowchart:{useMaxWidth:false}});</script>
 		<div id="app">
 			<div class="main-content row">
 				<section class="columns fullheigth">
@@ -474,38 +474,33 @@ class Tag:::keyConcept {
 			function zoomAndPan() {
 				var div = d3.selectAll("div.mermaid");
 				var svg = div.select("svg");
+				svg.attr('width', "100%");
+				svg.attr('height',  "100%");
+				
+				var viewBoxVal = svg.node().viewBox.baseVal;
+				var initW = viewBoxVal.width;
+				var initH =  viewBoxVal.height;
+				var screenW = div.node().clientWidth;
+				var screenH = div.node().clientHeight
+				var initK = Math.min(screenW/initW,screenH/initH);
+				var g = svg.select("g");
 				
 				//remove listeners
 				div.on(".zoom", null);
 				div.on(".drag", null);
 				
-				//reset zoom
-				svg.attr("transform", d3.zoomIdentity.toString())
-				// can't find any better solution
-				svg.node().__zoom = d3.zoomIdentity
-				
-				// add new ones
-				var drag = d3.drag()
-				.on("drag", function(event) {
-					let zoomTransform = d3.zoomTransform(svg.node())
-					d3.zoom().translateBy(svg, event.dx/zoomTransform.k, event.dy/zoomTransform.k)
-					svg.attr("transform", d3.zoomTransform(svg.node()).toString());
-				})
 				var zoom = d3.zoom()
-				.on("zoom", function(event) {
-					let maxX = parseInt(svg.style("width"), 10)-20; //-20 from margin svg to inner g g
-					let maxY = parseInt(svg.style("height"), 10)-20;
-					let zoomTransform = d3.zoomTransform(svg.node())
-					var mousePos = d3.pointer(event);
-					var newTx = ((maxX-mousePos[0])/zoomTransform.k-(maxX-mousePos[0])/event.transform.k);
-					var newTy = ((maxY-mousePos[1])/zoomTransform.k-(maxY-mousePos[1])/event.transform.k);
-					d3.zoom().scaleTo(svg, event.transform.k)
-					d3.zoom().translateBy(svg, newTx, newTy)					
-					svg.attr("transform", d3.zoomTransform(svg.node()).toString());
-				});
-				div.call(drag);
-				div.call(zoom);
-				div.on("mousedown.zoom", null)
+				.scaleExtent([0.5, 2/initK])
+				//.translateExtent([[-0.5*screenW/initK, -0.5*screenH/initK], [1.5*screenW/initK, 1.5*screenH/initK]])
+				.on("zoom", 
+					function zoomed({transform}) {
+					g.attr("transform", transform);
+				});				
+				svg.call(zoom);
+				
+				//reset zoom
+			    svg.call(zoom.scaleTo, 1)
+				.call(zoom.translateTo, 0.5 * initW, 0.5 * initH);
 			}
 		</script> 
 		<script>

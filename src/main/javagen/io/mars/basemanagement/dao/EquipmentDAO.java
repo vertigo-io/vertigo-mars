@@ -73,11 +73,11 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetEquipmentsByBaseCode",
-			request = "select " + 
- "            	equ.*" + 
- "			from equipment equ" + 
- "				join base bas on bas.base_id = equ.base_id" + 
- "			where bas.code = #code# and <%=securedEquipment.asSqlWhere(\"equ\", ctx)%>",
+			request = "select \n" + 
+ "             	equ.*\n" + 
+ " 			from equipment equ\n" + 
+ " 				join base bas on bas.base_id = equ.base_id\n" + 
+ " 			where bas.code = #code# and <%=securedEquipment.asSqlWhere(\"equ\", ctx)%>",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.datamodel.task.proxy.TaskInput(name = "code", smartType = "STyCode") final String code, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
@@ -98,12 +98,12 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetLastPurchasedEquipmentsByBaseId",
-			request = "select " + 
- "            	equ.*" + 
- "			from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ" + 
- "			where equ.base_id = #baseId#" + 
- "			order by equ.purchase_date desc" + 
- "			limit 50",
+			request = "select \n" + 
+ "             	equ.*\n" + 
+ " 			from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ\n" + 
+ " 			where equ.base_id = #baseId#\n" + 
+ " 			order by equ.purchase_date desc\n" + 
+ " 			limit 50",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
@@ -122,33 +122,33 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkInsertEquipmentsBatch",
-			request = "INSERT INTO EQUIPMENT (EQUIPMENT_ID, " + 
- "        							NAME, " + 
- "        							CODE, " + 
- "        							HEALTH_LEVEL, " + 
- "        							PURCHASE_DATE, " + 
- "        							DESCRIPTION, " + 
- "        							TAGS, " + 
- "        							GEO_LOCATION, " + 
- "        							RENTING_FEE, " + 
- "        							EQUIPMENT_VALUE, " + 
- "        							BASE_ID, " + 
- "        							GEOSECTOR_ID, " + 
- "        							BUSINESS_ID, " + 
- "        							EQUIPMENT_TYPE_ID) values (nextval('SEQ_EQUIPMENT')," + 
- "        														#equipmentsList.name#," + 
- "        														#equipmentsList.code#," + 
- "        														#equipmentsList.healthLevel#," + 
- "        														#equipmentsList.purchaseDate#," + 
- "        														#equipmentsList.description#," + 
- "        														#equipmentsList.tags#," + 
- "        														#equipmentsList.geoLocation#," + 
- "        														#equipmentsList.rentingFee#," + 
- "        														#equipmentsList.equipmentValue#," + 
- "        														#equipmentsList.baseId#," + 
- "        														#equipmentsList.geosectorId#," + 
- "        														#equipmentsList.businessId#," + 
- "        														#equipmentsList.equipmentTypeId#)",
+			request = "INSERT INTO EQUIPMENT (EQUIPMENT_ID, \n" + 
+ "         							NAME, \n" + 
+ "         							CODE, \n" + 
+ "         							HEALTH_LEVEL, \n" + 
+ "         							PURCHASE_DATE, \n" + 
+ "         							DESCRIPTION, \n" + 
+ "         							TAGS, \n" + 
+ "         							GEO_LOCATION, \n" + 
+ "         							RENTING_FEE, \n" + 
+ "         							EQUIPMENT_VALUE, \n" + 
+ "         							BASE_ID, \n" + 
+ "         							GEOSECTOR_ID, \n" + 
+ "         							BUSINESS_ID, \n" + 
+ "         							EQUIPMENT_TYPE_ID) values (nextval('SEQ_EQUIPMENT'),\n" + 
+ "         														#equipmentsList.name#,\n" + 
+ "         														#equipmentsList.code#,\n" + 
+ "         														#equipmentsList.healthLevel#,\n" + 
+ "         														#equipmentsList.purchaseDate#,\n" + 
+ "         														#equipmentsList.description#,\n" + 
+ "         														#equipmentsList.tags#,\n" + 
+ "         														#equipmentsList.geoLocation#,\n" + 
+ "         														#equipmentsList.rentingFee#,\n" + 
+ "         														#equipmentsList.equipmentValue#,\n" + 
+ "         														#equipmentsList.baseId#,\n" + 
+ "         														#equipmentsList.geosectorId#,\n" + 
+ "         														#equipmentsList.businessId#,\n" + 
+ "         														#equipmentsList.equipmentTypeId#)",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineProcBatch.class)
 	public void insertEquipmentsBatch(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentsList", smartType = "STyDtEquipment") final io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> equipmentsList) {
 		final Task task = createTaskBuilder("TkInsertEquipmentsBatch")
@@ -166,11 +166,11 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkLoadEquipmentsByChunk",
-			request = "select * from EQUIPMENT " + 
- "			where EQUIPMENT_ID > #offset#" + 
- "			and PURCHASE_DATE <= #dateExist#" + 
- "        	order by EQUIPMENT_ID asc" + 
- "			limit #limit#",
+			request = "select * from EQUIPMENT \n" + 
+ " 			where EQUIPMENT_ID > #offset#\n" + 
+ " 			and PURCHASE_DATE <= #dateExist#\n" + 
+ "         	order by EQUIPMENT_ID asc\n" + 
+ " 			limit #limit#",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(@io.vertigo.datamodel.task.proxy.TaskInput(name = "limit", smartType = "STyId") final Long limit, @io.vertigo.datamodel.task.proxy.TaskInput(name = "offset", smartType = "STyId") final Long offset, @io.vertigo.datamodel.task.proxy.TaskInput(name = "dateExist", smartType = "STyInstant") final java.time.Instant dateExist) {

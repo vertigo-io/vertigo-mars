@@ -1,10 +1,10 @@
 package io.mars.basemanagement.search;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.mars.basemanagement.domain.EquipmentIndex;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.component.Component;
@@ -12,10 +12,10 @@ import io.vertigo.core.node.definition.DefinitionProvider;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.util.ListBuilder;
-import io.vertigo.datafactory.collections.definitions.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.definitions.FacetDefinition.FacetOrder;
 import io.vertigo.datafactory.collections.definitions.FacetRangeDefinitionSupplier;
 import io.vertigo.datafactory.collections.definitions.FacetTermDefinitionSupplier;
+import io.vertigo.datafactory.collections.definitions.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.definitions.FacetedQueryDefinitionSupplier;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -26,6 +26,7 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
+import io.mars.basemanagement.domain.EquipmentIndex;
 
 /**
  * This class is automatically generated.
@@ -59,7 +60,6 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
-
 	/**
 	 * Création d'une SearchQuery de type : EquipmentGeo.
 	 * @param criteria Critères de recherche
@@ -71,7 +71,6 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 				.withCriteria(criteria)
 				.withFacet(selectedFacetValues);
 	}
-
 	/**
 	 * Création d'une SearchQuery de type : EquipmentGeoDistance.
 	 * @param criteria Critères de recherche
@@ -91,10 +90,10 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 	 * @return Résultat correspondant à la requête (de type EquipmentIndex)
 	 */
 	public FacetedQueryResult<EquipmentIndex, SearchQuery> loadListIdxEquipment(final SearchQuery searchQuery, final DtListState listState) {
-		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxEquipment", SearchIndexDefinition.class);
+		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxEquipment",SearchIndexDefinition.class);
 		return searchManager.loadList(indexDefinition, searchQuery, listState);
 	}
-
+		
 	/**
 	 * Récupération du résultat issu d'une requête.
 	 * @param searchQuery critères initiaux
@@ -102,8 +101,8 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 	 * @return Résultat correspondant à la requête (de type EquipmentIndex)
 	 */
 	public FacetedQueryResult<EquipmentIndex, SearchQuery> loadList(final SearchQuery searchQuery, final DtListState listState) {
-		final List<SearchIndexDefinition> indexDefinitions = List.of(
-				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxEquipment", SearchIndexDefinition.class));
+		final List<SearchIndexDefinition> indexDefinitions = List.of( 
+				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxEquipment",SearchIndexDefinition.class));
 		return searchManager.loadList(indexDefinitions, searchQuery, listState);
 	}
 
@@ -116,7 +115,7 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 	public void markAsDirty(final UID entityUID) {
 		transactionManager.getCurrentTransaction().addAfterCompletion((final boolean txCommitted) -> {
 			if (txCommitted) {// reindex only is tx successful
-				searchManager.markAsDirty(List.of(entityUID));
+				searchManager.markAsDirty(Arrays.asList(entityUID));
 			}
 		});
 	}
@@ -130,6 +129,7 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 	public void markAsDirty(final io.mars.basemanagement.domain.Equipment entity) {
 		markAsDirty(UID.of(entity));
 	}
+	
 
 	/** {@inheritDoc} */
 	@Override
@@ -143,7 +143,7 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 						.withKeyConcept("DtEquipment")
 						.withCopyToFields("allText", "name", "code", "description", "tags", "equipmentTypeName", "equipmentCategoryName", "baseName")
 						.withLoaderId("EquipmentSearchLoader"))
-
+				
 				//---
 				// FacetTermDefinition
 				//-----
@@ -181,8 +181,8 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 						.withDtDefinition("DtEquipmentIndex")
 						.withFieldName("geoLocation")
 						.withLabel("Location")
-						.withParams("geohash_grid", "{\"field\" : \"geoLocation\", \"precision\" : #geoPrecision#}")
 						.withParams("_innerWriteTo", "writeVInt(#geoPrecision#);writeVInt(1000);writeVInt(-1)")
+						.withParams("geohash_grid", "{\"field\" : \"geoLocation\", \"precision\" : #geoPrecision#}")
 						.withOrder(FacetOrder.definition))
 				.add(new FacetRangeDefinitionSupplier("FctEquipmentPurchaseDate")
 						.withDtDefinition("DtEquipmentIndex")
