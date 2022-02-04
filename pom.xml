@@ -16,8 +16,22 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<maven.test.error.ignore>true</maven.test.error.ignore>
-		<vertigo.version>3.3.0-SNAPSHOT</vertigo.version>
+		<vertigo.version>3.3.0</vertigo.version>
 	</properties>
+	
+	
+	<repositories>
+      <repository>
+         <id>codelibs.elasticsearch-releases</id>
+         <url>https://maven.codelibs.org/</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+   	</repositories>
 
 	<dependencies>
 		<dependency>
