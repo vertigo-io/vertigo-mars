@@ -52,9 +52,9 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		final PersonInput personInput = new PersonInput();
 		personInput.setGroups(List.of(1000L));
 		viewContext
-			.publishDto(personInputKey, personInput)
-			.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups());
-		toModeReadOnly();
+				.publishDto(personInputKey, personInput)
+				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups())
+				.toModeReadOnly();
 	}
 
 	@Secured("AdmUsers")
