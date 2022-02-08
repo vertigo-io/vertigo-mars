@@ -14,11 +14,13 @@ import io.mars.catalog.domain.EquipmentType;
 import io.mars.domain.DtDefinitions.EquipmentOverviewFields;
 import io.mars.maintenance.domain.Ticket;
 import io.mars.maintenance.services.ticket.TicketServices;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("Equipment$read")
 @RequestMapping("/basemanagement/base/equipment")
 public class BaseEquipmentController extends AbstractVSpringMvcController {
 

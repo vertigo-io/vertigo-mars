@@ -1,11 +1,10 @@
 package io.mars.basemanagement.services.base;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import io.mars.authorization.SecuredEntities;
 import io.mars.basemanagement.BasemanagementPAO;
 import io.mars.basemanagement.dao.BaseDAO;
 import io.mars.basemanagement.dao.GeosectorDAO;
@@ -14,20 +13,23 @@ import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseIndex;
 import io.mars.basemanagement.domain.BaseOverview;
 import io.mars.basemanagement.domain.BasesSummary;
+import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.domain.Geosector;
 import io.mars.basemanagement.domain.Picture;
 import io.mars.domain.DtDefinitions.PictureFields;
 import io.mars.hr.services.person.PersonServices;
 import io.mars.support.fileinfo.FileInfoStd;
 import io.mars.support.services.MarsFileServices;
-import io.vertigo.account.account.Account;
+import io.vertigo.account.authorization.AuthorizationCriteria;
+import io.vertigo.account.authorization.AuthorizationManager;
+import io.vertigo.account.authorization.AuthorizationUtil;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
+import io.vertigo.datamodel.criteria.Criteria;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datastore.filestore.FileStoreManager;
 import io.vertigo.datastore.filestore.definitions.FileInfoDefinition;
 import io.vertigo.datastore.filestore.model.FileInfo;
@@ -60,6 +62,9 @@ public class BaseServices implements Component, Activeable {
 	@Inject
 	private NotificationManager notificationManager;
 
+	@Inject
+	private AuthorizationManager authorizationManager;
+
 	private VFile defaultPhoto;
 
 	@Override
@@ -76,16 +81,21 @@ public class BaseServices implements Component, Activeable {
 	}
 
 	public Base get(final Long baseId) {
-		return baseDAO.get(baseId);
+		final Base base = baseDAO.get(baseId);
+		AuthorizationUtil.assertOperations(base, SecuredEntities.BaseOperations.read);
+		return base;
 	}
 
 	public BaseOverview getBaseOverview(final Long baseId) {
-		return basemanagementPAO.getBaseOverview(baseId);
+		//Sometimes we must load the entity to check security filter
+		AuthorizationUtil.assertOperations(baseDAO.get(baseId), SecuredEntities.BaseOperations.read);
+		final AuthorizationCriteria<Equipment> securityEquipmentFilter = AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read);
+		return basemanagementPAO.getBaseOverview(baseId, securityEquipmentFilter);
 	}
 
 	public void save(final Base base, final List<FileInfoURI> addedPictureFile, final DtList<Picture> deletedPictures) {
 		//apply Security Checks
-
+		AuthorizationUtil.assertOperationsOnOriginalEntity(base, SecuredEntities.BaseOperations.write);
 		//update Base
 		baseDAO.save(base);
 
@@ -117,7 +127,8 @@ public class BaseServices implements Component, Activeable {
 	}
 
 	public DtList<Base> getBases(final DtListState dtListState) {
-		final DtList<Base> bases = baseDAO.findAll(Criterions.alwaysTrue(), dtListState);
+		final Criteria<Base> securityFilter = authorizationManager.getCriteriaSecurity(Base.class, SecuredEntities.BaseOperations.read);
+		final DtList<Base> bases = baseDAO.findAll(securityFilter, dtListState);
 		return bases;
 	}
 
@@ -126,11 +137,14 @@ public class BaseServices implements Component, Activeable {
 	}
 
 	public DtList<BaseIndex> getBaseIndex(final List<Long> baseIds) {
+		//use for search indexation : no security filter
 		return basemanagementPAO.loadBaseIndex(baseIds);
 	}
 
 	public BasesSummary getBaseSummary() {
-		return basemanagementPAO.getBasesSummary();
+		final AuthorizationCriteria<Base> securityBaseFilter = AuthorizationUtil.authorizationCriteria(Base.class, SecuredEntities.BaseOperations.read);
+		final AuthorizationCriteria<Equipment> securityEquipmentFilter = AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read);
+		return basemanagementPAO.getBasesSummary(securityBaseFilter, securityEquipmentFilter);
 	}
 
 	public VFile getBaseMainPicture(final Long baseId) {
@@ -158,10 +172,6 @@ public class BaseServices implements Component, Activeable {
 	}
 
 	private void sendNotificationToAll(final Notification notification) {
-		final Set<UID<Account>> accountUIDs = personServices.getPersons(DtListState.of(null))
-				.stream()
-				.map((person) -> UID.of(Account.class, String.valueOf(person.getPersonId())))
-				.collect(Collectors.toSet());
-		notificationManager.send(notification, accountUIDs);
+		notificationManager.send(notification, personServices.getAllPersonsUID());
 	}
 }

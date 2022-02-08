@@ -17,7 +17,7 @@
 				<div class="row q-col-gutter-md">
 					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount}} Equipments</div>
 					<div class="col-md col-sm-12">
-						<vu:include-data object="criteria" field="criteria"/>
+						<vu:include-data object="criteria" field="criteria" modifiable/>
 						<q-input placeholder="Type, Name..." v-model="vueData.criteria.criteria" @input="search('equipments')" :debounce="300"  outlined bg-color="white" dense >
 							<template v-slot:prepend><q-icon name="search" /></template>
 						</q-input>
@@ -44,16 +44,16 @@
 						<th:block th:if="${model.listRenderer == 'map'}">
 							<vu:include-data object="equipments_list" field="geoLocation" />
 							<th:block th:attr="objectKey=${model.vContext['componentStates'].addComponentState('equipmentsTable')}" th:remove="all" />
-							<vu:include-data object="criteria" field="geoUpperLeft" />
-							<vu:include-data object="criteria" field="geoLowerRight" />
-							<vu:include-data object="criteria" field="geoLocation" />
+							<vu:include-data object="criteria" field="geoUpperLeft" modifiable/>
+							<vu:include-data object="criteria" field="geoLowerRight"  modifiable />
+							<vu:include-data object="criteria" field="geoLocation" modifiable />
 							<vu:include-data object="equipments_cluster" field="geoLocation" />
 							<v-map ref="myMap" :initial-center="{ lat : 45.0, lon: 5.0 }" 
 								:initial-zoom-level="5"
 								style="width:100%; height: 800px;" 
 								tabindex="1" id="map" 
-								@moveend="function(topLeft, bottomRight) { data.vueData.criteria.geoUpperLeft = {lon:topLeft[0], lat:topLeft[1], _v_inputValue:JSON.stringify({lon:topLeft[0], lat:topLeft[1]})};data.vueData.criteria.geoLowerRight = {lon:bottomRight[0], lat:bottomRight[1], _v_inputValue:JSON.stringify({lon:bottomRight[0], lat:bottomRight[1]})};search('equipments');}"
-								@click="function(pos) { data.vueData.criteria.geoLocation = {lon:pos[0], lat:pos[1], _v_inputValue:JSON.stringify({lon:pos[0], lat:pos[1]})};search('equipments');}">
+								@moveend="function(topLeft, bottomRight) { vueData.criteria.geoUpperLeft = {lon:topLeft[0], lat:topLeft[1], _v_inputValue:JSON.stringify({lon:topLeft[0], lat:topLeft[1]})};vueData.criteria.geoLowerRight = {lon:bottomRight[0], lat:bottomRight[1], _v_inputValue:JSON.stringify({lon:bottomRight[0], lat:bottomRight[1]})};search('equipments');}"
+								@click="function(pos) { vueData.criteria.geoLocation = {lon:pos[0], lat:pos[1], _v_inputValue:JSON.stringify({lon:pos[0], lat:pos[1]})};search('equipments');}">
 								<!--  v-map-layer :list="vueData.equipments_list" field="geoLocation" name-field="geoLocation" marker-size="45" marker-color="#027BE3" ></v-map-layer  -->
                                 <v-map-layer :cluster="vueData.equipments_cluster" field="geoLocation" name-field="geoLocation" marker-size="45" marker-color="#027BE3" ></v-map-layer>
                                 <v-map-layer :object="vueData.criteria" field="geoLocation" marker-icon="my_location" marker-color="#880000"></v-map-layer>

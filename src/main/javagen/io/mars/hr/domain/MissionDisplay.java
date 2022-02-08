@@ -15,6 +15,7 @@ public final class MissionDisplay implements DtObject {
 
 	private Long missionId;
 	private String role;
+	private Long baseId;
 	private String baseName;
 	private String businessName;
 	
@@ -54,6 +55,25 @@ public final class MissionDisplay implements DtObject {
 	 */
 	public void setRole(final String role) {
 		this.role = role;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'BaseId'.
+	 * @return Long baseId
+	 */
+	@Field(smartType = "STyId", label = "BaseId")
+	public Long getBaseId() {
+		return baseId;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'BaseId'.
+	 * @param baseId Long
+	 */
+	public void setBaseId(final Long baseId) {
+		this.baseId = baseId;
 	}
 	
 	/**

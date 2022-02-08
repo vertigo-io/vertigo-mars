@@ -5,6 +5,12 @@ package io.mars
 /********************************* Domains ********************************************************/
 /**************************************************************************************************/
 
+/*SecuredFrom : use only in Task with securedEntities*/
+create Domain DoAuthorizationCriteria {
+    dataType : ValueObject
+    type : "io.vertigo.account.authorization.AuthorizationCriteria"
+}
+
 create Domain DoId {
 	dataType : Long
 	storeType : "NUMERIC"
@@ -14,7 +20,6 @@ create Domain DoMultipleIds {
 	dataType : String
     storeType : "TEXT"
 }
-
 
 
 create Domain DoInstant {
@@ -30,7 +35,6 @@ create Domain DoLocaldate {
 
 create Domain DoCurrency {
 	dataType : BigDecimal
-	unit : "$"
 	storeType: "NUMERIC(12,2)"
 }
 
@@ -43,13 +47,11 @@ create Domain DoHealth {
 create Domain DoLabel {
 	dataType : String
 	storeType : "VARCHAR(100)"
-	indexType : "text_fr:sortable"
 }
 
 create Domain DoDescription {
 	dataType : String
 	storeType : "VARCHAR(350)"
-	indexType : "text_fr"
 }
 
 create Domain DoEmail {
@@ -65,7 +67,6 @@ create Domain DoUrl {
 create Domain DoCode {
 	dataType : String
 	storeType : "VARCHAR(100)"
-	indexType : "code:keyword"
 }
 
 
@@ -92,7 +93,6 @@ create Domain DoFileData {
 create Domain DoTags {
 	dataType : String
 	storeType : "TEXT"
-	indexType : "multiple_code:facetable"
 }
 
 create Domain DoYesNo {

@@ -18,7 +18,7 @@ public class MaintenanceCommands implements Component {
 	@Command(handle = "/m/ticketStatus", description = "Gets the status of a ticket")
 	public CommandResponse<Ticket> checkTicket(final GenericUID<Ticket> ticketUID) {
 		final Long ticketId = (Long) ticketUID.getId();
-		final Ticket ticket = ticketServices.getTicketFromId(ticketId);
+		final Ticket ticket = ticketServices.getTicketFromIdWithEquipment(ticketId);
 		return CommandResponse.<Ticket> builder()
 				.withStatus(CommandResponseStatus.OK)
 				.withDisplay("Ticket is " + ticket.ticketStatus().getEnumValue().name())

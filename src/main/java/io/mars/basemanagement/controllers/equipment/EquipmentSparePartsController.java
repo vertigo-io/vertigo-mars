@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("Equipment$read")
 @RequestMapping("/basemanagement/equipment/spare")
 public class EquipmentSparePartsController extends AbstractVSpringMvcController {
 

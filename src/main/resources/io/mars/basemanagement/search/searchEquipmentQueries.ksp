@@ -8,8 +8,14 @@ create IndexDefinition IdxEquipment {
 } 
 
 create FacetDefinition FctEquipmentEquipmentTypeName {
-	dtDefinition:DtEquipmentIndex, fieldName:"equipmentTypeName", label:"Equipment Type"
+	dtDefinition:DtEquipmentIndex, fieldName:"equipmentTypeName", label:"Equipment Type",
+	multiselectable: "true"
 }
+
+create FacetDefinition FctEquipmentEquipmentTags {
+    dtDefinition:DtEquipmentIndex, fieldName:"tags", label:"Equipment Tags"
+    multiselectable: "true"
+} 
 
 create FacetDefinition FctEquipmentEquipmentCategoryName {
 	dtDefinition:DtEquipmentIndex, fieldName:"equipmentCategoryName", label:"Equipment Category"
@@ -37,12 +43,12 @@ create FacetDefinition FctEquipmentGeoDistance {
 create FacetDefinition FctEquipmentGeoHash {
 	dtDefinition:DtEquipmentIndex, fieldName:"geoLocation", label:"Location"
 	params geohash_grid { value : "{\"field\" : \"geoLocation\", \"precision\" : #geoPrecision#}" }
-	params innerWriteTo { value : "writeVInt(#geoPrecision#);writeVInt(1000);writeVInt(-1)" }
+	params _innerWriteTo { value : "writeVInt(#geoPrecision#);writeVInt(1000);writeVInt(-1)" }
 }
 
 create FacetedQueryDefinition QryEquipment {
 	dtIndex : DtEquipmentIndex
-	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName ]
+	facets : [FctEquipmentEquipmentTypeName, FctEquipmentPurchaseDate, FctEquipmentEquipmentCategoryName, FctEquipmentEquipmentTags ]
 	domainCriteria : DoLabel
 	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
 	listFilterBuilderQuery : "allText:#+query*#"
