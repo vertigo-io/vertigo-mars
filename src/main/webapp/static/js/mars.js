@@ -15,7 +15,8 @@ VUiExtensions = {
 quasarConfig = {
     loadingBar: { 'skip-hijack' : true } // disable quasar's ajaxbar
 }
-
+/*
 if(typeof VueShortkey !== 'undefined') {
 	Vue.use(VueShortkey);
 }
+*/

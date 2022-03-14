@@ -12,15 +12,13 @@
     
   	<link rel="stylesheet" th:href="@{/static/css/mars.css}"/>
 	<link rel="icon" th:href="@{/static/img/favicon.ico}"/>
-   	<script src="https://unpkg.com/vue-cookies@1.5.12/vue-cookies.js"></script> 
-	<script th:src="@{/vertigo-ui/static/3rdParty/cdn.jsdelivr.net/npm/vue-shortkey@3.1.7/dist/index.js}"></script>
    	<script th:src="@{/static/js/mars.js}"></script>
    	<link  th:href="@{/static/chatbot/chatbot.css}" rel="stylesheet"/>
 </head>
 
 <body class="mat desktop no-touch platform-mat">
 
-	<vu:page vuiSsr="false"  > 
+	<vu:page vuiSsr="false" vuiDevMode="true" > 
       <q-layout view="hHh LpR fff" v-cloak>
 			<!-- BEGIN HEADER-->
 			<q-header elevated>
@@ -131,7 +129,7 @@
 		      ref="menuDrawer"
 		      show-if-above
 		      elevated
-		      :mini="function() {var miniMenu = this.$cookies.get('miniMenu', true) === 'true';componentStates.navDrawer.mini = miniMenu;return miniMenu;}()"
+		      :mini="function() {var miniMenu = /*this.$cookies.get('miniMenu', true) === 'true'*/ false;componentStates.navDrawer.mini = miniMenu;return miniMenu;}()"
 		    >
 		      
 			    <nav class="text-no-wrap">
@@ -298,8 +296,7 @@
 				    	<img th:src="@{/static/chatbot/images/avatar/avatar_bar.png}" style="width: 60px; height: 60px" alt="avatar chatbot alan"/>
 				    </q-btn>
 				</q-page-sticky>
-	  			<q-drawer :value="componentStates.botDrawer.open" ref="botDrawer"  elevated side="right" @on-layout="function(state) {componentStates.botDrawer.open = componentStates.botDrawer.open && state; if (!componentStates.botDrawer.open) {$refs.botDrawer.hide()} }" >
-	  				<v-chatbot v-if="componentStates.botDrawer.open" class="column chatbot-container" th:bot-avatar="@{/static/chatbot/images/avatar/avatar_chat.png}" bot-name="mars-bot" th:bot-url="${model.chatbotUrl}"></v-chatbot>
+	  			<q-drawer :value="componentStates.botDrawer.open" ref="botDrawer"  elevated side="right"  >
 	  			</q-drawer>
   			</th:block>
   			<!-- 

@@ -18,7 +18,7 @@
 					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount}} Equipments</div>
 					<div class="col-md col-sm-12">
 						<vu:include-data object="criteria" field="criteria" modifiable/>
-						<q-input placeholder="Type, Name..." v-model="vueData.criteria.criteria" @input="search('equipments')" :debounce="300"  outlined bg-color="white" dense >
+						<q-input placeholder="Type, Name..." v-model="vueData.criteria.criteria" @update:model-value="search('equipments')" :debounce="300"  outlined bg-color="white" dense >
 							<template v-slot:prepend><q-icon name="search" /></template>
 						</q-input>
 					</div>
@@ -33,7 +33,7 @@
 					<div class="col">
 						<th:block th:if="${model.listRenderer == 'table'}">
 							<vu:table list="equipments_list" componentId="equipmentsTable" sortUrl="${searchUrl}" color="primary"
-							tr_@click.native="|goTo('@{/basemanagement/equipment/}'+props.row.equipmentId)|" tr_class="nav">
+							@row-click="|(evt, row) => goTo('@{/basemanagement/equipment/}'+row.equipmentId)|" tr_class="nav">
 								<vu:include-data object="equipments_list" field="equipmentId" />
 								<vu:column field="name" />
 								<vu:column field="code"/>
