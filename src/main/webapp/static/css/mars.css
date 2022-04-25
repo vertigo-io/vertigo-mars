@@ -5,11 +5,11 @@
 	/*--q-color-primary: #027be3;
 	--q-color-secondary:#fad9c2;*/
 	--q-primary: #027be3;
-	--q-primary-invert: rgba(255, 255, 255, 0.9);
+	--v-primary-invert: rgba(255, 255, 255, 0.9);
 	--q-secondary:#00BCD4;
-	--q-secondary-invert: rgba(255, 255, 255, 0.9);
+	--v-secondary-invert: rgba(255, 255, 255, 0.9);
 	--q-accent:	#B2EBF2;
-	--q-accent-invert:	rgba(60, 60, 60, 0.8);
+	--v-accent-invert:	rgba(60, 60, 60, 0.8);
 	
 	
 	/*--q-color-primary:#2196F3;
