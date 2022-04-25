@@ -72,11 +72,12 @@ public final class BasemanagementPAO implements StoreServices {
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetBasesSummary",
-			request = "select \n" + 
- " 				(select count(*) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_count,\n" + 
- " 				(select avg(health_level) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_mean_health,\n" + 
- " 				(select count(*) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,\n" + 
- " 				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>)) as online_equipment_percent;",
+			request = "with secbase as (<%=securedBase.asSqlFrom(\"base\", ctx)%>)\n" + 
+ "             select \n" + 
+ " 				(select count(1) from secbase) as base_count,\n" + 
+ " 				(select avg(health_level) from secbase) as base_mean_health,\n" + 
+ " 				(select count(1) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,\n" + 
+ " 				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(1) * 100 from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) as secequ) as online_equipment_percent;",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBasesSummary")
 	public io.mars.basemanagement.domain.BasesSummary getBasesSummary(@io.vertigo.datamodel.task.proxy.TaskInput(name = "securedBase", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedBase, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {

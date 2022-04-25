@@ -25,11 +25,12 @@ create Task TkGetEquipmentsOverview {
 create Task TkGetBasesSummary {  
     className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
+    		with secbase as (<%=securedBase.asSqlFrom(\"base\", ctx)%>)
             select 
-				(select count(*) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_count,
-				(select avg(health_level) from (<%=securedBase.asSqlFrom(\"base\", ctx)%>)) as base_mean_health,
-				(select count(*) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,
-				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(*) * 100 from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>)) as online_equipment_percent;
+				(select count(1) from secbase) as base_count,
+				(select avg(health_level) from secbase) as base_mean_health,
+				(select count(1) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,
+				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(1) * 100 from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) as secequ) as online_equipment_percent;
              "
     in  securedBase {domain : DoAuthorizationCriteria    cardinality: "1"}
     in  securedEquipment {domain : DoAuthorizationCriteria    cardinality: "1"}
