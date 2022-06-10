@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
     title: 'Accéder à la liste des bases',
     text: `Pour commencer, cliquez sur l'onglet "Bases" pour accéder à la liste de toutes les bases du centre.`,
     attachTo: {
-      element:  "a[href='/basemanagement/bases/']",
+      element:  "a[href='/mars/basemanagement/bases/']",
       on: 'auto'
     },
     advanceOn: {
-      selector: "a[href='/basemanagement/bases/']",
+      selector: "a[href='/mars/basemanagement/bases/']",
       event: 'click'
     }
   });
@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
     title: 'Ajouter un équipement à la base',
     text: `Ce bouton permet d'ajouter un équipement à votre base. Cliquez-dessus pour procéder à l'ajout.`,
     attachTo: {
-      element: "a[href='/basemanagement/equipment/new']",
+      element: "a[href='/mars/basemanagement/equipment/new']",
       on: 'auto'
     },
     advanceOn: {
-      selector: "a[href='/basemanagement/equipment/new']",
+      selector: "a[href='/mars/basemanagement/equipment/new']",
       event: 'click'
     }
   });
@@ -306,3 +306,12 @@ document.addEventListener('DOMContentLoaded', function () {
     _chatbotWrapper();
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+	Chatbot.init({
+		runnerUrl: VertigoUi.vueData.chatbotUrl,
+		botIHMBaseUrl: VertigoUi.vueData.chatbotUrl + "/static/chatbot/index.html",
+		botName: "Chatbot Mars",
+		useRating: true,
+		avatarUrl: '/mars/static/chatbot/images/avatar/avatar_bar.png'
+	})
+});

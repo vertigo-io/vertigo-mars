@@ -19,17 +19,6 @@
 	<script th:src="@{/static/chatbot/chatbot.js}"></script>
    	<link  th:href="@{/static/chatbot/chatbot.css}" rel="stylesheet"/>
 	<link  th:href="@{/static/chatbot/shepherd.css}" rel="stylesheet"/>
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			Chatbot.init({
-				runnerUrl: VertigoUi.vueData.chatbotUrl,
-				botIHMBaseUrl: VertigoUi.vueData.chatbotUrl + "/static/chatbot/index.html",
-				botName: "Chatbot Mars",
-				useRating: true,
-				avatarUrl: '/static/chatbot/images/avatar/avatar_bar.png'
-			})
-		});
-	</script>
 </head>
 
 <body class="mat desktop no-touch platform-mat">
