@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
     title: 'Accéder à la liste des bases',
     text: `Pour commencer, cliquez sur l'onglet "Bases" pour accéder à la liste de toutes les bases du centre.`,
     attachTo: {
-      element:  "a[href='/basemanagement/bases/']",
+      element:  "a[href$='/basemanagement/bases/']",
       on: 'auto'
     },
     advanceOn: {
-      selector: "a[href='/basemanagement/bases/']",
+      selector: "a[href$='/basemanagement/bases/']",
       event: 'click'
     }
   });
@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
     title: 'Ajouter un équipement à la base',
     text: `Ce bouton permet d'ajouter un équipement à votre base. Cliquez-dessus pour procéder à l'ajout.`,
     attachTo: {
-      element: "a[href='/basemanagement/equipment/new']",
+      element: "a[href$='/basemanagement/equipment/new']",
       on: 'auto'
     },
     advanceOn: {
-      selector: "a[href='/basemanagement/equipment/new']",
+      selector: "a[href$='/basemanagement/equipment/new']",
       event: 'click'
     }
   });
