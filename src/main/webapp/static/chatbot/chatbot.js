@@ -6,16 +6,67 @@ document.addEventListener('DOMContentLoaded', function () {
       cancelIcon: {
         enabled: true
       },
-      classes: 'class-1 class-2',
-      scrollTo: { behavior: 'smooth', block: 'center' }
+      highlightClass: 'shepherd-highlight',
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      when: {
+        show: function() {
+          sessionStorage.currentWelcomeTourStep = tour.getCurrentStep().id;
+        },
+        cancel: function () {
+          sessionStorage.removeItem("currentWelcomeTourStep");
+        }
+      }
     }
   });
 
   tour.addStep({
-    title: 'Welcome tour',
-    text: `Bienvenue sur notre site vertigo Mars. Nous allons vous guider !`,
+    id: 'bases',
+    title: 'Accéder à la liste des bases',
+    text: `Pour commencer, cliquez sur l'onglet "Bases" pour accéder à la liste de toutes les bases du centre.`,
     attachTo: {
-      element: 'body',
+      element:  "a[href='/basemanagement/bases/']",
+      on: 'auto'
+    },
+    advanceOn: {
+      selector: "a[href='/basemanagement/bases/']",
+      event: 'click'
+    }
+  });
+
+  tour.addStep({
+    id: 'baseDetails',
+    title: 'Consulter les informations d\'une base',
+    text: `Cliquez ensuite sur une des vignettes de la liste des bases pour affiche le détail de celle-ci.`,
+    attachTo: {
+      element: '.q-card',
+      on: 'auto'
+    },
+    advanceOn: {
+      selector: ".q-card",
+      event: 'click'
+    }
+  });
+
+  tour.addStep({
+    id: 'addEquipment',
+    title: 'Ajouter un équipement à la base',
+    text: `Ce bouton permet d'ajouter un équipement à votre base. Cliquez-dessus pour procéder à l'ajout.`,
+    attachTo: {
+      element: "a[href='/basemanagement/equipment/new']",
+      on: 'auto'
+    },
+    advanceOn: {
+      selector: "a[href='/basemanagement/equipment/new']",
+      event: 'click'
+    }
+  });
+
+  tour.addStep({
+    id: 'equipmentData',
+    title: 'Renseigner les données de l\'équipement',
+    text: `Avant d'ajouter votre équipement, il est nécessaire de renseigner les informations présentes dans ces blocs.`,
+    attachTo: {
+      element: "div[id='general']",
       on: 'auto'
     },
     buttons: [
@@ -26,33 +77,41 @@ document.addEventListener('DOMContentLoaded', function () {
         text: 'Suivant'
       }
     ],
-    id: 'start'
   });
 
   tour.addStep({
-    title: 'Chatbot',
-    text: `Ici c'est moi, le chatbot ! Tu peux me demander ce que tu veux, je suis la pour ça :)`,
+    id: 'equipmentDataCreation',
+    title: 'Ajouter l\'équipement',
+    text: `Une fois les champs complétés, cliquez sur ce bouton pour procéder à l'ajout de l'équipement !`,
     attachTo: {
-      element: 'iframe',
+      element: "button[title='Create']",
       on: 'auto'
     },
-    buttons: [
-      {
-        action() {
-          return this.back();
-        },
-        classes: 'shepherd-button-secondary',
-        text: 'Précédent'
-      },
-      {
-        action() {
-          return this.complete();
-        },
-        text: 'Terminer'
-      }
-    ],
-    id: 'chatbot'
+    advanceOn: {
+      selector: "button[title='Create']",
+      event: 'click'
+    }
   });
+
+  tour.addStep({
+    id: 'end',
+    title: 'Fin',
+    text: 'Fin !',
+    attachTo: {
+      element: "button[title='Create']",
+      on: 'auto'
+    },
+    when: {
+      show: function() {
+        tour.complete();
+        sessionStorage.removeItem("currentWelcomeTourStep");
+      }
+    }
+  });
+
+  if (sessionStorage.currentWelcomeTourStep !== null && sessionStorage.currentWelcomeTourStep !== undefined){
+    tour.show(sessionStorage.currentWelcomeTourStep, true);
+  }
 
     if (!String.prototype.startsWith) {
       String.prototype.startsWith = function (searchString, position) {

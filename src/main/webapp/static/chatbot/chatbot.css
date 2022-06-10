@@ -38,6 +38,10 @@
     color: white;
 }
 
+.shepherd-highlight {
+    box-shadow: 0 0 0 99999px rgba(0, 0, 0, .8) !important;
+}
+
 .iframe {
     position: fixed;
     bottom: 0px;
