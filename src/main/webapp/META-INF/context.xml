@@ -33,7 +33,7 @@
 	<Parameter name="mosquittoHost" value="tcp://mars.dev.klee.lan.net:1883" override="false"/>
 	<Parameter name="orchestra.root.directory" value="d:/data/"/>	
 	<Parameter name="suppliersImportLimit" value="500000" />
-	<Parameter name="chatbotUrl" value="//mars.dev.klee.lan.net:5005/webhooks/rest/webhook" override="false"/>
+	<Parameter name="chatbotUrl" value="https://chatbot-runner-rec.dev.klee.lan.net/runnerDemo" override="false"/>
 	<Parameter name="apiManagementUrl" value="https://mars.dev.klee.lan.net:9443/store/" override="false"/>
 	<Parameter name="keycloakConfigUrl" value="file:///C:\\Code\\Github\\vertigo-mars\\src\\main\\resources\\keycloak.json" override="false"/>
 </Context>
