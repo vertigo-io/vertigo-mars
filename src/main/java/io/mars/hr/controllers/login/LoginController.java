@@ -1,7 +1,6 @@
 package io.mars.hr.controllers.login;
 
 import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import io.mars.hr.services.login.LoginServices;
 import io.vertigo.core.lang.VUserException;
-import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
@@ -62,13 +60,7 @@ public class LoginController extends AbstractVSpringMvcController {
 
 	@GetMapping("/_logout")
 	public String logout(final HttpServletRequest request, final HttpSession httpSession) {
-		try {
-			request.logout();
-		} catch (final ServletException e) {
-			throw WrappedException.wrap(e);
-		}
-		loginServices.logout(httpSession);
-		return "redirect:/";
+		return "redirect:" + loginServices.logout(httpSession);
 	}
 
 }
