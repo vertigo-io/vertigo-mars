@@ -138,7 +138,6 @@ public class LoginServices implements AppLoginHandler<KeycloakPrincipal>, Compon
 	}
 
 	public String logout(final HttpSession httpSession) {
-		authenticationManager.logout();
 		if (keycloakDeploymentConnectorOpt.isPresent()) {
 			return "/keycloak/logout";
 		} else {
