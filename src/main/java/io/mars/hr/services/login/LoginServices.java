@@ -1,13 +1,11 @@
 package io.mars.hr.services.login;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.keycloak.KeycloakPrincipal;
@@ -31,21 +29,18 @@ import io.vertigo.account.security.VSecurityManager;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.connectors.keycloak.KeycloakDeploymentConnector;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.lang.Tuple;
 import io.vertigo.core.lang.VUserException;
-import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.Node;
-import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
-import io.vertigo.vega.impl.servlet.filter.AbstactKeycloakDelegateAuthenticationHandler;
+import io.vertigo.vega.impl.authentication.AppLoginHandler;
 
 @Transactional
-public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler implements Component, Activeable {
+public class LoginServices implements AppLoginHandler<KeycloakPrincipal>, Component {
 
 	@Inject
 	private AuthenticationManager authenticationManager;
@@ -60,57 +55,22 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 	@Inject
 	private MissionServices missionServices;
 	@Inject
-	private List<KeycloakDeploymentConnector> keycloakDeploymentConnectors;
-
-	private boolean keycloakEnabled = false;
+	Optional<KeycloakDeploymentConnector> keycloakDeploymentConnectorOpt;
 
 	@Override
-	public void start() {
-		Assertion.check().isNotNull(keycloakDeploymentConnectors);
-		//---
-		final Optional<KeycloakDeploymentConnector> keycloakDeploymentConnectorOpt = keycloakDeploymentConnectors.stream().filter(connector -> "main".equals(connector.getName())).findFirst();
-		if (keycloakDeploymentConnectorOpt.isPresent()) {
-			keycloakEnabled = true;
-			init(keycloakDeploymentConnectorOpt.get());
-		} else {
-			keycloakEnabled = false;
-		}
-
-	}
-
-	@Override
-	public void stop() {
-		// nothing
-
-	}
-
-	@Override
-	public Tuple<Boolean, HttpServletRequest> doBeforeChain(final HttpServletRequest request, final HttpServletResponse response) {
-		if (keycloakEnabled) {
-			return super.doBeforeChain(request, response);
-		}
-		return Tuple.of(false, request);
-	}
-
-	@Override
-	public boolean doLogin(final HttpServletRequest request, final HttpServletResponse response) {
+	public void doLogin(final HttpServletRequest request, final Map<String, Object> claims, final KeycloakPrincipal keycloakPrincipal) {
 		if (!isAuthenticated()) {
 			// we should have a Principal
-			final KeycloakPrincipal keycloakPrincipal = (KeycloakPrincipal) request.getUserPrincipal();
 			loginWithPrincipal(keycloakPrincipal);
-			try {
-				response.sendRedirect(request.getContextPath() + "/home/");
-			} catch (final IOException e) {
-				throw WrappedException.wrap(e);
-			}
-			//consumed by redirect
-			return true;
 		}
-		//not consumed
-		return false;
 	}
 
 	public void loginWithLoginPassword(final String login, final String password) {
+		Assertion.check()
+				.isTrue(
+						keycloakDeploymentConnectorOpt.isEmpty(),
+						"Cannot login with local authentication when keycloak is enabled");
+		//---
 		final Optional<Account> loggedAccount = authenticationManager.login(new UsernamePasswordAuthenticationToken(login, password));
 		if (!loggedAccount.isPresent()) {
 			sendNotificationToAll(Notification.builder()
@@ -157,7 +117,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 					return authenticationManager.login(new UsernameAuthenticationToken(email)).get();
 
 				});
-		final Person person = personServices.getPerson(Long.valueOf(loggedAccount.getId()));
+		final Person person = personServices.getLoggedPerson(Long.valueOf(loggedAccount.getId()));
 		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);
@@ -177,9 +137,14 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 		return getUserSession().getLoggedPerson();
 	}
 
-	public void logout(final HttpSession httpSession) {
-		authenticationManager.logout();
-		httpSession.invalidate();
+	public String logout(final HttpSession httpSession) {
+		if (keycloakDeploymentConnectorOpt.isPresent()) {
+			return "/keycloak/logout";
+		} else {
+			httpSession.invalidate();
+			return "/";
+
+		}
 	}
 
 	public DtList<MissionDisplay> getAvailableProfiles() {
