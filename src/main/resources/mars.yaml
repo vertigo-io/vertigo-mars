@@ -28,6 +28,7 @@ modules:
           host: ${redisHost}
           port: 6379
           database: 0
+          ssl: false
   io.vertigo.connectors.influxdb.InfluxDbFeatures:
     __flags__: ["klee"]
     features:
