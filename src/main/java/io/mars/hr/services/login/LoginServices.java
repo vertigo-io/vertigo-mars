@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +22,7 @@ import io.mars.support.MarsUserSession;
 import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.AuthorizationManager;
+import io.vertigo.account.authorization.UserAuthorizations;
 import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.account.authorization.definitions.Role;
 import io.vertigo.account.impl.authentication.UsernameAuthenticationToken;
@@ -41,8 +40,6 @@ import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.datamodel.structure.model.DtList;
-import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
 import io.vertigo.vega.impl.servlet.filter.AbstactKeycloakDelegateAuthenticationHandler;
@@ -127,7 +124,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 			throw new VUserException("Login or Password invalid");
 		}
 		final Account account = loggedAccount.get();
-		final Person person = personServices.getPerson(Long.valueOf(account.getId()));
+		final Person person = personServices.getLoggedPerson(Long.valueOf(account.getId()));
 		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);
@@ -168,11 +165,7 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 	}
 
 	private void sendNotificationToAll(final Notification notification) {
-		final Set<UID<Account>> accountUIDs = personServices.getPersons(DtListState.of(null))
-				.stream()
-				.map((person) -> UID.of(Account.class, String.valueOf(person.getPersonId())))
-				.collect(Collectors.toSet());
-		notificationManager.send(notification, accountUIDs);
+		notificationManager.send(notification, personServices.getAllPersonsUID());
 	}
 
 	public boolean isAuthenticated() {
@@ -200,14 +193,18 @@ public class LoginServices extends AbstactKeycloakDelegateAuthenticationHandler 
 				.findFirst().get();
 		getUserSession().setCurrentProfile(activeProfile);
 		final Mission mission = missionServices.get(activeProfile.getMissionId());
-		mission.base().load();
-		final Base base = mission.base().get();
-		authorizationManager.obtainUserAuthorizations()
+
+		final UserAuthorizations userAuthorizations = authorizationManager.obtainUserAuthorizations()
 				.clearRoles()
 				.clearSecurityKeys()
 				.addRole(getRole(mission.getRoleId()))
 				.withSecurityKeys("baseId", mission.getBaseId())
-				.withSecurityKeys("assetsValue", base.getAssetsValue());
+				.withSecurityKeys("personId", getUserSession().getLoggedPerson().getPersonId());
+		if (mission.getBaseId() != null) {
+			mission.base().load();
+			final Base base = mission.base().get();
+			userAuthorizations.withSecurityKeys("assetsValue", base.getAssetsValue());
+		}
 		return activeProfile;
 	}
 

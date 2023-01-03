@@ -1,6 +1,6 @@
 package io.mars.hr.controllers.person;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -20,6 +20,7 @@ import io.mars.hr.domain.Person;
 import io.mars.hr.domain.PersonInput;
 import io.mars.hr.services.mission.MissionServices;
 import io.mars.hr.services.person.PersonServices;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.datastore.filestore.model.VFile;
@@ -30,6 +31,7 @@ import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+//@Secured("AdmUsers") not here : can edit my profil
 @RequestMapping("/hr/person")
 public class PersonDetailController extends AbstractVSpringMvcController {
 
@@ -47,20 +49,20 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 
 	@GetMapping("/{personId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("personId") final Long personId) {
-		final PersonInput personInput = new PersonInput();
-		personInput.setGroups(Arrays.asList(1000L));
 
+		final PersonInput personInput = new PersonInput();
+		personInput.setGroups(List.of(1000L));
 		viewContext
-				.publishMdl(tagsKey, Tag.class, null)//all
+				.publishMdl(tagsKey, Tag.class, null) //all
 				.publishDto(personKey, personServices.getPerson(personId))
 				.publishDtList(missionsKey, MissionDisplayFields.missionId, missionServices.getMissionsByPersonId(personId))
 				.publishFileInfoURI(personPictureUri, null)
 				.publishDto(personInputKey, personInput)
 				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups())
-				//---
 				.toModeReadOnly();
 	}
 
+	@Secured("AdmUsers")
 	@GetMapping("/new")
 	public void initContext(final ViewContext viewContext) {
 		viewContext
@@ -90,6 +92,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 
 	}
 
+	@Secured("AdmUsers")
 	@PostMapping("/_create")
 	public String doCreate(@ViewAttribute("person") final Person person, @ViewAttribute("personPictureUri") final Optional<FileInfoURI> personPictureFile) {
 		personServices.createPerson(person);

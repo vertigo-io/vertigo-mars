@@ -27,11 +27,13 @@ import io.mars.basemanagement.domain.Business;
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.catalog.domain.EquipmentType;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("Equipment$read")
 @RequestMapping("/basemanagement/equipment/")
 public final class EquipmentDetailController extends AbstractVSpringMvcController {
 	private static final ViewContextKey<Equipment> equipmentKey = ViewContextKey.of("equipment");

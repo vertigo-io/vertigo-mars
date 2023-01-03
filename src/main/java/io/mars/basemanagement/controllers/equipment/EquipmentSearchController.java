@@ -15,6 +15,7 @@ import io.mars.basemanagement.domain.EquipmentIndex;
 import io.mars.basemanagement.domain.GeoSearchEquipmentCriteria;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.domain.DtDefinitions.EquipmentIndexFields;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -26,6 +27,7 @@ import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("Equipment$read")
 @RequestMapping("/basemanagement/equipments")
 public class EquipmentSearchController extends AbstractVSpringMvcController {
 

@@ -12,12 +12,14 @@ import io.mars.basemanagement.domain.BaseType;
 import io.mars.basemanagement.domain.Geosector;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.domain.DtDefinitions.BaseFields;
+import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
+@Secured("ViewBases")
 @RequestMapping("/basemanagement/bases")
 public class BaseListController extends AbstractVSpringMvcController {
 

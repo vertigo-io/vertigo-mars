@@ -26,7 +26,7 @@
         {
             "__comment": "Edition information base",
             "name": "write", "label" : "Edition information base",
-            "grant" : "read",
+            "grants" : ["read"],
             "rules": [
                 "baseId<=${baseId}"
             ]
@@ -38,7 +38,7 @@
         {
             "__comment": "Ajout d'équipement à la base",
             "name": "addEqui", "label" : "Ajout d'équipement à la base",
-            "grant" : "read",
+            "grants" : ["read"],
             "rules": [
                 "baseId<=${baseId}"
             ]
@@ -50,7 +50,7 @@
         {
             "__comment": "Create, Archive or delete base",
             "name": "admin", "label" : "Administration des bases",
-            "grant" : ["readAll", "writeAll", "addEquiAdm"],
+            "grants" : ["readAll", "writeAll", "addEquiAdm"],
             "rules": ["true"]
         }]
     },
@@ -76,14 +76,14 @@
         {
             "__comment": "Edition information",
             "name": "write", "label" : "Edition information",
-            "grant" : "read",
+            "grants" : ["read"],
             "rules": [
                 "baseId<=${baseId}"
             ]
         },{
             "__comment": "Edition information",
             "name": "writeAll", "overrides" : ["write"], "label" : "Edition information", 
-            "grant" : "readAll",  
+            "grants" : ["readAll"],  
             "rules": ["true"]
         }, {
             "__comment": "Lecture des tickets",
@@ -93,12 +93,12 @@
             ]
         },  {
             "__comment": "Lecture de tous les tickets",
-            "name": "readAllTickets", "label" : "Lecture de tous les tickets",
+            "name": "readAllTickets", "overrides": ["readTickets"], "label" : "Lecture de tous les tickets",
             "rules": ["true"]
         },{
             "__comment": "Gestion des tickets",
             "name": "editTickets", "label" : "Gestion des tickets",
-            "grant" : "readTickets",
+            "grants" : ["readTickets"],
             "rules": [
                 "baseId<=${baseId}"
             ]

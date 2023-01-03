@@ -21,10 +21,10 @@
 			</div>
 			<div layout:fragment="content-header-actions">
 				<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" :round size="lg" color="primary" icon="cancel" :flat aria-label="Cancel" title="Cancel" class="on-left"  />
-				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>
-				<vu:button-submit th:if="${model.modeReadOnly && model.ticket.ticketStatusId != 'CLOSED'}" action="@{_closeTicket}" :round size="lg" color="primary" icon="check" aria-label="Close ticket" title="Close ticket" class="on-left"  />
+				<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.equipment,'readTickets')}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>
+				<vu:button-submit th:if="${model.modeReadOnly && model.ticket.ticketStatusId != 'CLOSED' && authz.hasOperation(model.equipment,'readTickets')}" action="@{_closeTicket}" :round size="lg" color="primary" icon="check" aria-label="Close ticket" title="Close ticket" class="on-left"  />
 				<q-btn th:if="${!model.modeCreate}" round size="lg" color="primary" icon="add" aria-label="Add work order" title="Add work order" class="on-left" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/new}', { 'ticketId' : vueData.ticket.ticketId, 'successCallback' : 'onWorkOrderSuccess' })|"></q-btn>
-				<vu:button-link th:if="${!model.modeCreate}" icon="fas fa-rocket" url="@{/basemanagement/equipment/} + ${model.ticket.equipmentId}" ariaLabel="Go to equipment" round size="lg" color="primary" class="on-left" />
+				<vu:button-link th:if="${!model.modeCreate && authz.hasOperation(model.equipment,'read')}" icon="fas fa-rocket" url="@{/basemanagement/equipment/} + ${model.ticket.equipmentId}" ariaLabel="Go to equipment" round size="lg" color="primary" class="on-left" />
 			</div>
 		</section>
 		
@@ -53,7 +53,7 @@
 						</vu:grid>
 					</vu:block>
 					<vu:block title="Description">
-						<vu:include-data object="ticket" field="description" />
+						<vu:include-data object="ticket" field="description" modifiable="true" />
 						<q-editor th:v-if="${!model.modeReadOnly}" v-model="vueData.ticket.description" ></q-editor>
 						<pre th:if="${model.modeReadOnly}" v-pre th:utext="${model.ticket.description}"></pre>
 						<input type="hidden" name="vContext[ticket][description]" v-bind:value="vueData.ticket.description" />
@@ -72,7 +72,7 @@
 						<vu:button-submit th:if="${model.modeEdit}"   icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
 						<vu:button-submit th:if="${model.modeCreate}" icon="save" label="Create" action="@{_create}" size="lg" color="primary"/>
 					</q-page-sticky>
-				<vu:modal componentId="workOrderEditModal" title="Work Order" iframe_width="800" iframe_height="400"  />
+				<vu:modal componentId="workOrderEditModal" title="Work Order" iframe_width="550" iframe_height="auto" iframe_onload="setIframeHeight(this)"  />
 			</div>
 		</section>
 		<section layout:fragment="javascript-footer" >

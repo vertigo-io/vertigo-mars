@@ -1,6 +1,8 @@
 package io.mars.support.controllers;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,6 +47,11 @@ public class FileUploadController {
 	@Inject
 	private KVStoreManager kvStoreManager;
 
+	@GetMapping("/upload/download/{fileUri}")
+	public VFile downloadFile(@PathVariable("fileUri") final FileInfoURI fileInfoUri) {
+		return commonsServices.getFile(fileInfoUri).getVFile();
+	}
+
 	@GetMapping("/upload")
 	public UiFileInfo loadUiFileInfo(@QueryParam("file") final FileInfoURI fileInfoUri) {
 		Optional<UiFileInfo> uiFileInfo = kvStoreManager.find(FILE_INFOS_COLLECTION_KEY, createUserFileKey(fileInfoUri), UiFileInfo.class);
@@ -54,11 +62,23 @@ public class FileUploadController {
 		return uiFileInfo.get();
 	}
 
+	@GetMapping("/upload/fileInfos")
+	public List<UiFileInfo> loadUiFileInfos(@QueryParam("file") final List<FileInfoURI> fileInfoUris) {
+		return fileInfoUris
+				.stream()
+				.map(fileInfoUri -> {
+					Optional<UiFileInfo> uiFileInfo = kvStoreManager.find(FILE_INFOS_COLLECTION_KEY, createUserFileKey(fileInfoUri), UiFileInfo.class);
+					if (!uiFileInfo.isPresent()) {
+						uiFileInfo = Optional.of(new UiFileInfo<>(commonsServices.getFile(fileInfoUri)));
+						kvStoreManager.put(FILE_INFOS_COLLECTION_KEY, createUserFileKey(fileInfoUri), uiFileInfo.get());
+					}
+					return uiFileInfo.get();
+				})
+				.collect(Collectors.toList());
+	}
+
 	@PostMapping("/upload")
 	public FileInfoURI uploadFile(@QueryParam("file") final VFile vFile) {
-		if (vFile.getFileName().toLowerCase().contains("virus")) {
-			throw new VUserException("Il y a un virus dans votre PJ " + vFile.getFileName());
-		}
 		final FileInfo storeFile = commonsServices.saveFileTmp(vFile);
 		kvStoreManager.put(FILE_INFOS_COLLECTION_KEY, createUserFileKey(storeFile.getURI()), new UiFileInfo<>(storeFile));
 		return storeFile.getURI();
