@@ -6,7 +6,7 @@
 
 	<groupId>io.vertigo</groupId>
 	<artifactId>mars</artifactId>
-	<version>3.4.0</version>
+	<version>3.5.0</version>
 	<packaging>war</packaging>
 	<name>mars</name>
 
