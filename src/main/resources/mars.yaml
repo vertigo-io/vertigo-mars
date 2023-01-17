@@ -84,11 +84,11 @@ modules:
       - timeseries.fake:
           __flags__: ["home"]
       - sql.datasource:
-          __flags__: ["home"]
+          __flags__: ["klee"]
           classname: io.vertigo.database.impl.sql.vendor.postgresql.PostgreSqlDataBase
           source: java:/comp/env/jdbc/DataSource
       - sql.datasource:
-          __flags__: ["klee"]
+          __flags__: ["home"]
           classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           source: java:/comp/env/jdbc/DataSourceHome
       - migration.liquibase:
