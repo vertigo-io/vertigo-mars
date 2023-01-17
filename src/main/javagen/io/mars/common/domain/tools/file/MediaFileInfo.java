@@ -20,7 +20,6 @@ public final class MediaFileInfo implements Entity {
 	private Long length;
 	private java.time.Instant lastModified;
 	private String filePath;
-	private io.vertigo.core.lang.DataStream fileData;
 
 	/** {@inheritDoc} */
 	@Override
@@ -140,25 +139,6 @@ public final class MediaFileInfo implements Entity {
 	 */
 	public void setFilePath(final String filePath) {
 		this.filePath = filePath;
-	}
-	
-	/**
-	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'data'.
-	 * @return DataStream fileData
-	 */
-	@Field(smartType = "STyFileData", label = "data")
-	public io.vertigo.core.lang.DataStream getFileData() {
-		return fileData;
-	}
-
-	/**
-	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'data'.
-	 * @param fileData DataStream
-	 */
-	public void setFileData(final io.vertigo.core.lang.DataStream fileData) {
-		this.fileData = fileData;
 	}
 	
 	/** {@inheritDoc} */

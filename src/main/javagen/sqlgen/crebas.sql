@@ -368,7 +368,6 @@ create table MEDIA_FILE_INFO
     LENGTH      	 NUMERIC     	not null,
     LAST_MODIFIED	 TIMESTAMP   	not null,
     FILE_PATH   	 VARCHAR(500)	,
-    FILE_DATA   	 bytea       	,
     constraint PK_MEDIA_FILE_INFO primary key (FIL_ID)
 );
 
@@ -389,9 +388,6 @@ comment on column MEDIA_FILE_INFO.LAST_MODIFIED is
 
 comment on column MEDIA_FILE_INFO.FILE_PATH is
 'path';
-
-comment on column MEDIA_FILE_INFO.FILE_DATA is
-'data';
 
 -- ============================================================
 --   Table : MISSION                                        

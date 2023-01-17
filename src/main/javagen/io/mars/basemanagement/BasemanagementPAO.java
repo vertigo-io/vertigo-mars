@@ -53,7 +53,7 @@ public final class BasemanagementPAO implements StoreServices {
  " 				(select count(*) from ticket tic join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,\n" + 
  " 				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id join (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) equ on equ.equipment_id = tic.equipment_id where equ.base_id = #baseId#  and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseOverview")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseOverview", name = "baseOverview")
 	public io.mars.basemanagement.domain.BaseOverview getBaseOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetBaseOverview")
 				.addValue("baseId", baseId)
@@ -79,7 +79,7 @@ public final class BasemanagementPAO implements StoreServices {
  " 				(select count(1) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,\n" + 
  " 				(select sum(case when health_level > 30 then 1.0 else 0.0 end) / count(1) * 100 from (<%=securedEquipment.asSqlFrom(\"equipment\", ctx)%>) as secequ) as online_equipment_percent;",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBasesSummary")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBasesSummary", name = "basesSummary")
 	public io.mars.basemanagement.domain.BasesSummary getBasesSummary(@io.vertigo.datamodel.task.proxy.TaskInput(name = "securedBase", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedBase, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetBasesSummary")
 				.addValue("securedBase", securedBase)
@@ -101,7 +101,7 @@ public final class BasemanagementPAO implements StoreServices {
  " 				(select count(*) from ticket tic where tic.equipment_id = #equipmentId# and ( tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED')) as opened_tickets,\n" + 
  " 				(select count(*) from work_order wor join ticket tic on tic.ticket_id = wor.ticket_id and tic.equipment_id = #equipmentId# and wor.work_order_status_id = 'INPROGRESS') as work_orders_inprogress",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentMaintenanceOverview")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentMaintenanceOverview", name = "equipmentMaintenanceOverview")
 	public io.mars.basemanagement.domain.EquipmentMaintenanceOverview getEquipmentMaintenanceOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId) {
 		final Task task = createTaskBuilder("TkGetEquipmentMaintenanceOverview")
 				.addValue("equipmentId", equipmentId)
@@ -131,7 +131,7 @@ public final class BasemanagementPAO implements StoreServices {
  " 			where equ.base_id = #baseId#\n" + 
  " 			group by business_name, bus.business_id",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentOverview")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentOverview", name = "overview")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetEquipmentsOverview")
 				.addValue("baseId", baseId)
@@ -160,7 +160,7 @@ public final class BasemanagementPAO implements StoreServices {
  " 				join BASE_TYPE bastype on bastype.base_type_id = bas.base_type_id\n" + 
  " 				where BASE_ID in (#baseIds.rownum#);",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseIndex")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseIndex", name = "dtcIndex")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.BaseIndex> loadBaseIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseIds", smartType = "STyId") final java.util.List<Long> baseIds) {
 		final Task task = createTaskBuilder("TkLoadBaseIndex")
 				.addValue("baseIds", baseIds)
@@ -194,7 +194,7 @@ public final class BasemanagementPAO implements StoreServices {
  " 				join EQUIPMENT_CATEGORY equipmentCategory on equipmentCategory.equipment_category_id = equipmentType.equipment_category_id\n" + 
  " 				where EQUIPMENT_ID in (#equipmentIds.rownum#);",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentIndex")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentIndex", name = "dtcIndex")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentIndex> loadEquipmentIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentIds", smartType = "STyId") final java.util.List<Long> equipmentIds) {
 		final Task task = createTaskBuilder("TkLoadEquipmentIndex")
 				.addValue("equipmentIds", equipmentIds)
@@ -212,7 +212,7 @@ public final class BasemanagementPAO implements StoreServices {
 			name = "TkSelectBusinessId",
 			request = "select BUSINESS_ID from BUSINESS",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId", name = "businessIdList")
 	public java.util.List<Long> selectBusinessId() {
 		final Task task = createTaskBuilder("TkSelectBusinessId")
 				.build();
@@ -229,7 +229,7 @@ public final class BasemanagementPAO implements StoreServices {
 			name = "TkSelectGeosectorId",
 			request = "select GEOSECTOR_ID from GEOSECTOR",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId", name = "geosectorIdList")
 	public java.util.List<Long> selectGeosectorId() {
 		final Task task = createTaskBuilder("TkSelectGeosectorId")
 				.build();

@@ -216,7 +216,7 @@ modules:
   io.vertigo.dashboard.DashboardFeatures:
     features:
       - analytics:
-          appName: mars-analytics
+          appName: mars
   io.vertigo.audit.AuditFeatures:
     features:
       - ledger:

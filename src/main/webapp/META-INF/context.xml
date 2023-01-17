@@ -6,7 +6,8 @@
 		driverClassName="org.postgresql.Driver"
 		url="jdbc:postgresql://mars.dev.klee.lan.net:5432/mars"
 		username="mars"
-		password="mars" />
+		password="mars"
+		connectionProperties="quoteReturningIdentifiers=false" />
 				
 		<Resource name="jdbc/DataSourceHomePg"
 		auth="SERVLET"
@@ -14,7 +15,8 @@
 		driverClassName="org.postgresql.Driver"
 		url="jdbc:postgresql://localhost:5432/mars"
 		username="mars"
-		password="mars" />
+		password="mars" 
+		 connectionProperties="quoteReturningIdentifiers=false"/>
 		
 	<Resource name="jdbc/DataSourceHome"
 		auth="SERVLET"
