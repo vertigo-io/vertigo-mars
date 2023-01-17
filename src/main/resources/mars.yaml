@@ -1,4 +1,6 @@
 ---
+node:
+  appName: mars
 boot:
   params:
     locales: fr_FR, en_US
@@ -18,8 +20,7 @@ boot:
     - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin: {}
     - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
         __flags__: ["klee"]
-        appName: mars-analytics
-        hostName: ${boot.analyticsHost}
+        hostNameParam: analyticsHost
 modules:
   io.vertigo.connectors.redis.RedisFeatures:
     __flags__: ["klee"]
