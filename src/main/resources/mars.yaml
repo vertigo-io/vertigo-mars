@@ -165,7 +165,6 @@ modules:
         - webservices:
         - authentication:
             appLoginHandler: loginServices
-            defaultRedirectUrl: /home/
     featuresConfig:
         - webservices.javalin:
             apiPrefix: /api
