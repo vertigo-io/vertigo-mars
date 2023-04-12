@@ -58,12 +58,12 @@ public class LoginServices implements AppLoginHandler<KeycloakPrincipal>, Compon
 	Optional<KeycloakDeploymentConnector> keycloakDeploymentConnectorOpt;
 
 	@Override
-	public String doLogin(final HttpServletRequest request, final Map<String, Object> claims, final KeycloakPrincipal keycloakPrincipal) {
+	public String doLogin(final HttpServletRequest request, final Map<String, Object> claims, final KeycloakPrincipal keycloakPrincipal, final Optional<String> requestedUrl) {
 		if (!isAuthenticated()) {
 			// we should have a Principal
 			loginWithPrincipal(keycloakPrincipal);
 		}
-		return "/home/";
+		return requestedUrl.orElse("/home/");
 	}
 
 	@Override
