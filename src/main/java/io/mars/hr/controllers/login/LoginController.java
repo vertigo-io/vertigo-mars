@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import io.mars.hr.services.login.LoginServices;
 import io.vertigo.core.lang.VUserException;
-import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
@@ -60,15 +59,9 @@ public class LoginController extends AbstractVSpringMvcController {
         return "redirect:/home/";
     }
 
-    @GetMapping("/_logout")
-    public String logout(final HttpServletRequest request, final HttpSession httpSession) {
-        try {
-            request.logout();
-        } catch (final ServletException e) {
-            throw WrappedException.wrap(e);
-        }
-        loginServices.logout(httpSession);
-        return "redirect:/";
-    }
+	@GetMapping("/_logout")
+	public String logout(final HttpServletRequest request, final HttpSession httpSession) {
+		return "redirect:" + loginServices.logout(httpSession);
+	}
 
 }

@@ -1,173 +1,317 @@
-function _chatbotWrapper() {
-	var _botBaseUrl = "./";
-	
-	var _initParam = null;
-	var _urlType;
-	var _button = null;
-	var _iframe = null;
-	
-	function _isUrlActive() {
-		return _urlType !== "DISABLE";
-	}
-	
-	function _resetIfNeeded() {
-		if (_button) {
-			document.body.removeChild(_button);
-			_button = null;
-			
-			if (_iframe) {
-				document.body.removeChild(_iframe);
-				_iframe = null;
-			}
-		}
-	}
-	
-	function _createFlottingButton() {		
-		_button = document.createElement('div');
-		
-		_button.style.cssText = '\
-			position: fixed;\
-			display: flex;\
-			align-items: center;\
-			bottom: 50vh;\
-			right: -100px;\
-			width: 145px;\
-			height: 45px;\
-			transition: right 0.3s ease 0s;\
-			background-color: #027be3;\
-			color: white;\
-			border: solid 1px black;\
-			border-radius: 10px 0 0 10px;\
-			cursor: pointer;\
-			overflow: hidden;\
-			-webkit-user-select: none;\
-			-ms-user-select: none;\
-			-moz-user-select: none;\
-			user-select: none;\
-			font-family: Verdana, Arial, Helvetica, sans-serif;\
-		';
-		
-		_button.addEventListener("click", Chatbot.show);
-		_button.addEventListener("mouseover", _buttonOver);
-		_button.addEventListener("mouseout", _buttonOut);
-		
-		var img = document.createElement('img');
-		img.style.cssText = '\
-			width: 45px;\
-			height: 45px;\
-			background-color: white;\
-			color: black;\
-		';
-		img.src = _botBaseUrl + "images/avatar/avatar_bar.png";
-		img.alt = "Command Center Bot";
-		_button.appendChild(img);
-		
-		var text = document.createElement('div');
-		text.style.cssText = '\
-			flex-grow: 1;\
-			text-align: center;\
-		';
-		text.textContent = "Command Center Bot";
-		_button.appendChild(text);
-		
-		document.body.appendChild(_button);
-	}
-	
-	function _buttonOver() {
-		_button.style.right = "0px";
-	}
-	
-	function _buttonOut() {
-		_button.style.right = "-100px";
-	}
-	
-	function _createIframe() {
-		_iframe = document.createElement('iframe');
-		
-		_iframe.style.cssText = '\
-			position: fixed;\
-			bottom: 0px;\
-			right: 5px;\
-			max-width: 450px;\
-			min-width: 300px;\
-			width: 80%;\
-			max-height: 600px;\
-			min-height: 400px;\
-			height: 95%;\
-			box-shadow: 0px 0px 15px 5px grey;\
-			background-color: white;\
-			border: solid 1px black;\
-			border-radius: 10px 10px 0 0;\
-		';
-		
-		_iframe.src = _botBaseUrl + "index.html?url_type=" + _urlType;
-		if (_initParam.siret) _iframe.src += "&siret=" + _initParam.siret + "&siret_confirm=true";
+let Chatbot = {};
+document.addEventListener('DOMContentLoaded', function () {
 
-		document.body.appendChild(_iframe);
-	}
-	
-	function _getUrlType(url) {
-		var mapping = {
-			"ALL": ["."]
-		}
+  const tour = new Shepherd.Tour({
+    defaultStepOptions: {
+      cancelIcon: {
+        enabled: true
+      },
+      highlightClass: 'shepherd-highlight',
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      when: {
+        show: function() {
+          sessionStorage.currentWelcomeTourStep = tour.getCurrentStep().id;
+        },
+        cancel: function () {
+          sessionStorage.removeItem("currentWelcomeTourStep");
+        }
+      }
+    }
+  });
 
-		for (var prop in mapping) {
-			if (mapping.hasOwnProperty(prop)) {
-				var urlList = mapping[prop];
-				for (var i = 0; i < urlList.length; i++) {
-					var curUrl = urlList[i];
-					if (url.indexOf(curUrl) !== -1) {
-						return prop;
-					}
-				}
-			}
-		}
-		
-		// return "GROUND"; // valeur par défaut
-		return "DISABLE";
-	}
-	
-	function _initIframeListener() {
-		window.addEventListener("message", function(event) {
-			if (event.data === "Chatbot.minimize") Chatbot.minimize();
-			else if (event.data === "Chatbot.close") Chatbot.close();
-		}, false);
-	}
+  tour.addStep({
+    id: 'bases',
+    title: 'Accéder à la liste des bases',
+    text: `Pour commencer, cliquez sur l'onglet "Bases" pour accéder à la liste de toutes les bases du centre.`,
+    attachTo: {
+      element:  "a[href$='/basemanagement/bases/']",
+      on: 'auto'
+    },
+    advanceOn: {
+      selector: "a[href$='/basemanagement/bases/']",
+      event: 'click'
+    }
+  });
 
-	this.Chatbot = {
-		init : function(param) {
-			_urlType = _getUrlType(param.url);
-			if (param.botBaseUrl) {
-				_botBaseUrl = param.botBaseUrl;
-			}
-			
-			_resetIfNeeded();
-			
-			if (_isUrlActive()) {
-				_initParam = param;
-				_createFlottingButton();
-				
-				_initIframeListener();
-			}
-		},
-		
-		show : function() {
-			if (_iframe === null) {
-				_createIframe();
-			} else {
-				_iframe.style.visibility = "visible";
-			}
-		},
-		
-		minimize : function() {
-			_iframe.style.visibility = "hidden";
-		},
-		
-		close : function() {
-			document.body.removeChild(_iframe);
-			_iframe = null;
-		}
-	}
-}
+  tour.addStep({
+    id: 'baseDetails',
+    title: 'Consulter les informations d\'une base',
+    text: `Cliquez ensuite sur une des vignettes de la liste des bases pour affiche le détail de celle-ci.`,
+    attachTo: {
+      element: '.q-card',
+      on: 'auto'
+    },
+    advanceOn: {
+      selector: ".q-card",
+      event: 'click'
+    }
+  });
 
-_chatbotWrapper();
+  tour.addStep({
+    id: 'addEquipment',
+    title: 'Ajouter un équipement à la base',
+    text: `Ce bouton permet d'ajouter un équipement à votre base. Cliquez-dessus pour procéder à l'ajout.`,
+    attachTo: {
+      element: "a[href$='/basemanagement/equipment/new']",
+      on: 'auto'
+    },
+    advanceOn: {
+      selector: "a[href$='/basemanagement/equipment/new']",
+      event: 'click'
+    }
+  });
+
+  tour.addStep({
+    id: 'equipmentData',
+    title: 'Renseigner les données de l\'équipement',
+    text: `Avant d'ajouter votre équipement, il est nécessaire de renseigner les informations présentes dans ces blocs.`,
+    attachTo: {
+      element: "div[id='general']",
+      on: 'auto'
+    },
+    buttons: [
+      {
+        action() {
+          return this.next();
+        },
+        text: 'Suivant'
+      }
+    ],
+  });
+
+  tour.addStep({
+    id: 'equipmentDataCreation',
+    title: 'Ajouter l\'équipement',
+    text: `Une fois les champs complétés, cliquez sur ce bouton pour procéder à l'ajout de l'équipement !`,
+    attachTo: {
+      element: "button[title='Create']",
+      on: 'auto'
+    },
+    advanceOn: {
+      selector: "button[title='Create']",
+      event: 'click'
+    }
+  });
+
+  tour.addStep({
+    id: 'end',
+    title: 'Fin',
+    text: 'Fin !',
+    attachTo: {
+      element: "button[title='Create']",
+      on: 'auto'
+    },
+    when: {
+      show: function() {
+        tour.complete();
+        sessionStorage.removeItem("currentWelcomeTourStep");
+      }
+    }
+  });
+
+  if (sessionStorage.currentWelcomeTourStep !== null && sessionStorage.currentWelcomeTourStep !== undefined){
+    tour.show(sessionStorage.currentWelcomeTourStep, true);
+  }
+
+    if (!String.prototype.startsWith) {
+      String.prototype.startsWith = function (searchString, position) {
+        position = position || 0;
+        return this.substr(position, searchString.length) === searchString;
+      };
+    }
+
+    function _chatbotWrapper() {
+
+      let _initParam = null;
+      let _button = null;
+      let _iframe = null;
+
+      function _createFlottingButton() {
+        _button = document.createElement('div');
+
+        _button.className = 'floating-button';
+
+        _button.addEventListener('click', Chatbot.show);
+        _button.addEventListener('mouseover', _buttonOver);
+        _button.addEventListener('mouseout', _buttonOut);
+
+        const img = document.createElement('img');
+        img.className = 'avatar-img';
+        img.src = _initParam.avatarUrl;
+        img.alt = _initParam.botName;
+        _button.appendChild(img);
+
+        const text = document.createElement('div');
+        text.className = 'avatar-text';
+        text.textContent = _initParam.botName;
+        _button.appendChild(text);
+
+        document.body.appendChild(_button);
+      }
+
+      function addImageViewerModal() {
+        const modal = document.createElement('div');
+        modal.id = 'imageViewerModal';
+        modal.className = 'modalChatbot';
+
+        const spanClose = document.createElement('span');
+        spanClose.id = 'close';
+        spanClose.className = 'close';
+        spanClose.innerHTML = '&times;';
+        spanClose.addEventListener('click', hidePictureModal);
+
+        const img = document.createElement('img');
+        img.id = 'imgToView';
+        img.className = 'modal-content-chatbot';
+        modal.appendChild(spanClose);
+        modal.appendChild(img);
+
+        document.body.prepend(modal);
+      }
+
+      function hidePictureModal() {
+        document.getElementById('imageViewerModal').style.display = 'none';
+      }
+
+      function _buttonOver() {
+        _button.style.right = '0px';
+      }
+
+      function _buttonOut() {
+        _button.style.right = '-90px';
+      }
+
+      function _createIframe() {
+        _iframe = document.createElement('iframe');
+
+        _iframe.className = 'iframe';
+        _iframe.src = `${_initParam.botIHMBaseUrl}?runnerUrl=${_initParam.runnerUrl}&botName=${_initParam.botName}&useRating=${_initParam.useRating}`;
+
+        if (_initParam.optionalParameters) {
+          _initParam.optionalParameters.forEach(function (optionalParam) {
+            _iframe.src += '&' + optionalParam.key + '=' + optionalParam.value;
+          });
+        }
+        _iframe.style.visibility = 'hidden';
+
+        document.body.appendChild(_iframe);
+      }
+
+      function checkIfConversationAlreadyExists() {
+        _iframe.contentWindow.postMessage('conversationExist', '*');
+      }
+
+      function _initIframeListener() {
+        window.addEventListener(
+          'message',
+          function (event) {
+            if (event.data === 'Chatbot.minimize') {
+              Chatbot.minimize();
+            }
+            else if (event.data === 'Chatbot.close') {
+              Chatbot.minimize();
+            }
+            else if (event.data.conversationExist !== undefined) {
+              if (event.data.conversationExist) {
+                Chatbot.show();
+              }
+            }
+            else if (event.data.context) {
+              const map = {};
+              event.data.context.forEach(function (value, key) {
+                  if ( key === 'url' && value === '' ) {
+                    map[key] = window.location.href;
+                  } else {
+                    const element = document.evaluate(value, document, null, XPathResult.ANY_TYPE, null);
+                    const node = element.iterateNext();
+                    if (node !== null) {
+                      let elementValue;
+                      if (node.attributes['value']) {
+                        elementValue = node.attributes['value'].value;
+                      } else {
+                        elementValue = node.innerHTML;
+                      }
+                      map[key] = elementValue;
+                    }
+                  }
+              });
+              event.ports[0].postMessage({result : map});
+            }
+            else if (event.data.pictureModal) {
+              Chatbot.showPictureModal(event.data.pictureModal);
+            }
+            else if (event.data.jsevent) {
+              Chatbot.startJsEvent(event.data.jsevent);
+            }
+          },
+          false
+        );
+      }
+
+      Chatbot = {
+        init(param) {
+          _initParam = param;
+          addImageViewerModal();
+          _initIframeListener();
+          _createIframe();
+          _iframe.addEventListener('load', function() {
+            _createFlottingButton();
+            if (sessionStorage.showChatbot !== undefined) {
+              if (sessionStorage.showChatbot === 'true') {
+                Chatbot.show();
+              }
+            } else {
+              checkIfConversationAlreadyExists();
+            }
+          });
+        },
+
+        show() {
+          sessionStorage.showChatbot = true;
+          _iframe.contentWindow.postMessage('start', '*');
+          _iframe.style.visibility = 'visible';
+        },
+
+        showPictureModal(src) {
+          const modal = document.getElementById('imageViewerModal');
+          const modalImg = parent.document.getElementById('imgToView');
+          modalImg.src = src;
+          modal.style.display = 'block';
+        },
+
+        minimize() {
+          sessionStorage.showChatbot = false;
+          _iframe.style.visibility = 'hidden';
+        },
+
+        close() {
+          sessionStorage.showChatbot = false;
+          document.body.removeChild(_iframe);
+          _iframe = null;
+        },
+
+        clearSessionStorage() {
+          sessionStorage.clear();
+          _iframe.contentWindow.postMessage('clearSessionStorage', '*');
+        },
+
+        startJsEvent(eventName) {
+          if (eventName === 'welcomeTour1') {
+            tour.start();
+          }
+        }
+      };
+    }
+
+    _chatbotWrapper();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+	Chatbot.init({
+		runnerUrl: VertigoUi.vueData.chatbotUrl,
+		botIHMBaseUrl: VertigoUi.vueData.chatbotUrl + "/static/chatbot/index.html",
+		botName: "Chatbot Mars",
+		useRating: true,
+		avatarUrl: '/mars/static/chatbot/images/avatar/avatar_bar.png'
+	})
+});

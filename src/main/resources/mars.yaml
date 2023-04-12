@@ -28,6 +28,7 @@ modules:
           host: ${redisHost}
           port: 6379
           database: 0
+          ssl: false
   io.vertigo.connectors.influxdb.InfluxDbFeatures:
     __flags__: ["klee"]
     features:
@@ -162,6 +163,8 @@ modules:
   io.vertigo.vega.VegaFeatures:
     features:
         - webservices:
+        - authentication:
+            appLoginHandler: loginServices
     featuresConfig:
         - webservices.javalin:
             apiPrefix: /api
@@ -170,6 +173,11 @@ modules:
         - webservices.rateLimiting:
         - webservices.security:
         - webservices.swagger:
+        - authentication.keycloak:
+             __flags__: ["keycloak"]
+        - authentication.local:
+             __flags__: ["!keycloak"]
+             loginUrl: /login/
   io.vertigo.orchestra.OrchestraFeatures:
     featuresConfig:
       - orchestra.database:
