@@ -11,11 +11,9 @@ import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 @RequestMapping("/jobs")
 public class JobListController extends AbstractVSpringMvcController {
 
-	@GetMapping("/")
-	public void initContext(final ViewContext viewContext) {
+    @GetMapping("/")
+    public void initContext(final ViewContext viewContext) {
+        // rien
+    }
 
-	}
-
-		}
-	*/
 }
