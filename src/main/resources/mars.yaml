@@ -59,6 +59,13 @@ modules:
   io.vertigo.connectors.javalin.JavalinFeatures:
     features:
       - standalone:
+  io.vertigo.connectors.oidc.OIDCFeatures:
+    __flags__: ["keycloak"]
+    features:
+      - oidc:
+          clientName: mars-local
+          url: https://vertigo-keycloak.dev.klee.lan.net:8443/auth/realms/mars
+          scopes: openid
   io.vertigo.commons.CommonsFeatures:
     features:
       - script:
@@ -168,7 +175,10 @@ modules:
         - webservices.rateLimiting:
         - webservices.security:
         - webservices.swagger:
+        - authentication.oidc:
+             __flags__: ["keycloak"]
         - authentication.local:
+             __flags__: ["!keycloak"]
              loginUrl: /login/
   io.vertigo.orchestra.OrchestraFeatures:
     featuresConfig:

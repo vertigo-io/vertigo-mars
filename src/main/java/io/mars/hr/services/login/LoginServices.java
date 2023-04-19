@@ -112,8 +112,8 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
     private void loginWithPrincipal(final Map<String, Object> claims,
             final AuthorizationSuccessResponse authorizationSuccessResponse) {
         final String email = (String) claims.get("email");
-        final String firstName = (String) claims.get("givenName");
-        final String lastName = (String) claims.get("familyName");
+        final String firstName = (String) claims.get("given_name");
+        final String lastName = (String) claims.get("family_name");
         final Account loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(email)).orElseGet(
                 () -> {
                     // auto provisionning an account when using keycloak
@@ -148,7 +148,7 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 
     public String logout(final HttpSession httpSession) {
         if (keycloakDeploymentConnectorOpt.isPresent()) {
-            return "/keycloak/logout";
+            return "/OIDC/logout";
         } else {
             httpSession.invalidate();
             return "/";
