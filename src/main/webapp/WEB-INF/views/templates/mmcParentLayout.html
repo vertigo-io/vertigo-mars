@@ -294,15 +294,6 @@
 				</div>
   			</div>
   			
-  			<th:block th:if="${model.modeReadOnly}" th:with="botDrawer=${model.vContext['componentStates'].addComponentState('botDrawer').addPrimitive('open', false)}" >
-  				<q-page-sticky position="bottom-right" :offset="[-16,36]" class="poweredBy">
-				    <q-btn style="background: #E82A2A" round size="lg" @click="componentStates.botDrawer.open = !componentStates.botDrawer.open">
-				    	<img th:src="@{/static/chatbot/images/avatar/avatar_bar.png}" style="width: 60px; height: 60px" alt="avatar chatbot alan"/>
-				    </q-btn>
-				</q-page-sticky>
-	  			<q-drawer :value="componentStates.botDrawer.open" ref="botDrawer"  elevated side="right"  >
-	  			</q-drawer>
-  			</th:block>
   			<!-- 
   			<div v-if="$q.platform.is.desktop" v-shortkey.once="['alt', 'q']" @shortkey="$refs.quicknav.show()">
   				<q-dialog ref="quicknav" >

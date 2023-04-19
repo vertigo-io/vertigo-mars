@@ -51,57 +51,57 @@ drop table IF EXISTS WORK_ORDER_STATUS cascade;
 --   Sequences                                      
 -- ============================================================
 create sequence SEQ_BASE
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 
 create sequence SEQ_BUSINESS
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_EQUIPMENT
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_EQUIPMENT_CATEGORY
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_EQUIPMENT_FEATURE
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_EQUIPMENT_TYPE
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_GEOSECTOR
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_GROUPS
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_MEDIA_FILE_INFO
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_MISSION
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_OPENDATA_SET
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 
 create sequence SEQ_PERSON
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_PICTURE
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 
 
 create sequence SEQ_TAG
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 create sequence SEQ_TICKET
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 
 create sequence SEQ_WORK_ORDER
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 
 
 

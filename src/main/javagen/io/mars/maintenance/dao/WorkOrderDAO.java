@@ -49,13 +49,14 @@ public final class WorkOrderDAO extends DAO<WorkOrder, java.lang.Long> implement
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetLastWorkOrders",
-			request = "select \n" + 
- "             	wor.*\n" + 
- " 			from work_order wor\n" + 
- " 			order by wor.date_created desc\n" + 
- " 			limit 20",
+			request = """
+			select 
+            	wor.*
+			from work_order wor
+			order by wor.date_created desc
+			limit 20""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtWorkOrder")
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtWorkOrder", name = "workOrders")
 	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.WorkOrder> getLastWorkOrders() {
 		final Task task = createTaskBuilder("TkGetLastWorkOrders")
 				.build();

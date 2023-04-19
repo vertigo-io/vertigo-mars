@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.keycloak.KeycloakPrincipal;
+import com.nimbusds.oauth2.sdk.AuthorizationSuccessResponse;
 
 import io.mars.basemanagement.domain.Base;
 import io.mars.hr.domain.Mission;
@@ -25,7 +25,7 @@ import io.vertigo.account.impl.authentication.UsernameAuthenticationToken;
 import io.vertigo.account.impl.authentication.UsernamePasswordAuthenticationToken;
 import io.vertigo.account.security.VSecurityManager;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.connectors.keycloak.KeycloakDeploymentConnector;
+import io.vertigo.connectors.oidc.OIDCDeploymentConnector;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.core.locale.LocaleMessageText;
@@ -35,12 +35,12 @@ import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
-import io.vertigo.vega.impl.authentication.AppLoginHandler;
+import io.vertigo.vega.plugins.authentication.oidc.OIDCAppLoginHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Transactional
-public class LoginServices implements AppLoginHandler<KeycloakPrincipal>, Component {
+public class LoginServices implements OIDCAppLoginHandler, Component {
 
     @Inject
     private AuthenticationManager authenticationManager;
@@ -55,14 +55,14 @@ public class LoginServices implements AppLoginHandler<KeycloakPrincipal>, Compon
     @Inject
     private MissionServices missionServices;
     @Inject
-    Optional<KeycloakDeploymentConnector> keycloakDeploymentConnectorOpt;
+    Optional<OIDCDeploymentConnector> keycloakDeploymentConnectorOpt;
 
     @Override
     public String doLogin(final HttpServletRequest request, final Map<String, Object> claims,
-            final KeycloakPrincipal keycloakPrincipal, final Optional<String> requestedUrl) {
+            final AuthorizationSuccessResponse authorizationSuccessResponse, final Optional<String> requestedUrl) {
         if (!isAuthenticated()) {
             // we should have a Principal
-            loginWithPrincipal(keycloakPrincipal);
+            loginWithPrincipal(claims, authorizationSuccessResponse);
         }
         return requestedUrl.orElse("/home/");
     }
@@ -109,10 +109,11 @@ public class LoginServices implements AppLoginHandler<KeycloakPrincipal>, Compon
 
     }
 
-    private void loginWithPrincipal(final KeycloakPrincipal keycloakPrincipal) {
-        final String email = keycloakPrincipal.getKeycloakSecurityContext().getIdToken().getEmail();
-        final String firstName = keycloakPrincipal.getKeycloakSecurityContext().getToken().getGivenName();
-        final String lastName = keycloakPrincipal.getKeycloakSecurityContext().getToken().getFamilyName();
+    private void loginWithPrincipal(final Map<String, Object> claims,
+            final AuthorizationSuccessResponse authorizationSuccessResponse) {
+        final String email = (String) claims.get("email");
+        final String firstName = (String) claims.get("givenName");
+        final String lastName = (String) claims.get("familyName");
         final Account loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(email)).orElseGet(
                 () -> {
                     // auto provisionning an account when using keycloak

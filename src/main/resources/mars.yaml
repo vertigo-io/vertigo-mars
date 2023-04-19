@@ -56,11 +56,6 @@ modules:
       - mosquitto:
           name: Publisher
           host: ${mosquittoHost}
-  io.vertigo.connectors.keycloak.KeycloakFeatures:
-    __flags__: ["keycloak"]
-    features:
-      - deployment:
-          configUrl: ${keycloakConfigUrl}
   io.vertigo.connectors.javalin.JavalinFeatures:
     features:
       - standalone:
@@ -173,10 +168,7 @@ modules:
         - webservices.rateLimiting:
         - webservices.security:
         - webservices.swagger:
-        - authentication.keycloak:
-             __flags__: ["keycloak"]
         - authentication.local:
-             __flags__: ["!keycloak"]
              loginUrl: /login/
   io.vertigo.orchestra.OrchestraFeatures:
     featuresConfig:

@@ -46,6 +46,7 @@ public enum MarsSmartTypes {
 	@SmartTypeDefinition(LocalDate.class)
 	@Formatter(clazz = FormatterDate.class, arg = "dd/MM/yyyy")
 	@SmartTypeProperty(property = "storeType", value = "DATE")
+	@SmartTypeProperty(property = "uiDatetimeFormat", value = "DD/MM/YYYY")
 	Localdate,
 
 	@SmartTypeDefinition(BigDecimal.class)
