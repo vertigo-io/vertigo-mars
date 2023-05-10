@@ -118,13 +118,13 @@
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>5.3</version>
+			<version>5.7.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.18</version>
+			<version>42.6.0</version>
 		</dependency>
 
 		<dependency>
@@ -136,7 +136,7 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>4.2.2</version>
+			<version>4.21.1</version>
 		</dependency>
 
 		<!-- test -->
@@ -181,22 +181,22 @@
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>transport</artifactId>
-			<version>7.17.7</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<version>7.17.9</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
 		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>elasticsearch-rest-high-level-client</artifactId>
-			<version>7.17.7</version> <!-- REstHighLevelElasticSearchConnector -->
+			<version>7.17.9</version> <!-- REstHighLevelElasticSearchConnector -->
 		</dependency>
 		<dependency>
 			<groupId>org.codelibs.elasticsearch.module</groupId>
 			<artifactId>analysis-common</artifactId>
-			<version>7.17.7</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<version>7.17.9</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
 		</dependency>
 		<dependency>
 			<groupId>org.codelibs.elasticsearch.module</groupId>
 			<artifactId>mapper-extras</artifactId>
-			<version>7.17.7</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<version>7.17.9</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
 		</dependency>
 		
 		<dependency>
