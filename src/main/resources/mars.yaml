@@ -238,7 +238,10 @@ modules:
     features:
       - ifttt:
           baseUrl: ${iftttApiUrl}
-          apiKey: ${iftttApiKey}    
+          apiKey: ${iftttApiKey}
+  
+  io.vertigo.easyforms.EasyFormsFeatures:
+  
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:
   io.mars.hr.HrFeatures:

@@ -55,6 +55,7 @@ create DtDefinition DtEquipment {
 	field geoLocation {domain: DoGeoPoint label:"Geographic Location" }
 	field rentingFee {domain: DoCurrency label: "Renting Fee" }
 	field equipmentValue {domain: DoCurrency label:"Current equipment value" }
+	field formulaire {domain: DoEfFormulaire label:"Informations" cardinality:"?" }
 }
 
 

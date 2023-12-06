@@ -213,6 +213,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		rentingFee,
 		/** Propriété 'Current equipment value'. */
 		equipmentValue,
+		/** Propriété 'Informations'. */
+		formulaire,
 		/** Propriété 'Base'. */
 		baseId,
 		/** Propriété 'Equipment Geosector'. */
@@ -231,7 +233,9 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Equipment Category Label'. */
 		label,
 		/** Propriété 'Equipment category is active'. */
-		active	}
+		active,
+		/** Propriété 'Equipment Category Meta Formulaire'. */
+		mfoId	}
 
 	/**
 	 * Enumération des champs de EquipmentFeature.

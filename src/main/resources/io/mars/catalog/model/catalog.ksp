@@ -15,8 +15,6 @@ create DtDefinition DtEquipmentCategory {
 	field active {domain: DoYesNo label:"Equipment category is active" }
 }
 
-
-
 create Association AEquipmentTypeEquipmentCategory {
 	fkFieldName : "equipmentCategoryId"
     
@@ -25,4 +23,14 @@ create Association AEquipmentTypeEquipmentCategory {
 	dtDefinitionB : DtEquipmentCategory
 			
 	labelB : "Equipment Category"
+}
+
+create Association AEquipmentTypeMetaFormulaire {
+	fkFieldName : "mfoId"
+    
+ 	dtDefinitionA : DtEquipmentCategory
+ 	type : "*>?"
+	dtDefinitionB : DtMetaFormulaire
+			
+	labelB : "Equipment Category Meta Formulaire"
 }

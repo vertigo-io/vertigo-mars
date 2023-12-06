@@ -26,21 +26,6 @@ public final class WorkOrder implements Entity {
 	private java.time.LocalDate dueDate;
 
 	@io.vertigo.datamodel.structure.stereotype.Association(
-			name = "AWorkOrderWorkOrderStatus",
-			fkFieldName = "workOrderStatusId",
-			primaryDtDefinitionName = "DtWorkOrderStatus",
-			primaryIsNavigable = true,
-			primaryRole = "WorkOrderStatus",
-			primaryLabel = "Work Order Status",
-			primaryMultiplicity = "0..1",
-			foreignDtDefinitionName = "DtWorkOrder",
-			foreignIsNavigable = false,
-			foreignRole = "WorkOrder",
-			foreignLabel = "WorkOrder",
-			foreignMultiplicity = "0..*")
-	private final EnumStoreVAccessor<io.mars.maintenance.domain.WorkOrderStatus, io.mars.maintenance.domain.WorkOrderStatusEnum> workOrderStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.maintenance.domain.WorkOrderStatus.class, "WorkOrderStatus", io.mars.maintenance.domain.WorkOrderStatusEnum.class);
-
-	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "ATicketWorkOrder",
 			fkFieldName = "ticketId",
 			primaryDtDefinitionName = "DtTicket",
@@ -54,6 +39,21 @@ public final class WorkOrder implements Entity {
 			foreignLabel = "WorkOrder",
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.maintenance.domain.Ticket> ticketIdAccessor = new StoreVAccessor<>(io.mars.maintenance.domain.Ticket.class, "Ticket");
+
+	@io.vertigo.datamodel.structure.stereotype.Association(
+			name = "AWorkOrderWorkOrderStatus",
+			fkFieldName = "workOrderStatusId",
+			primaryDtDefinitionName = "DtWorkOrderStatus",
+			primaryIsNavigable = true,
+			primaryRole = "WorkOrderStatus",
+			primaryLabel = "Work Order Status",
+			primaryMultiplicity = "0..1",
+			foreignDtDefinitionName = "DtWorkOrder",
+			foreignIsNavigable = false,
+			foreignRole = "WorkOrder",
+			foreignLabel = "WorkOrder",
+			foreignMultiplicity = "0..*")
+	private final EnumStoreVAccessor<io.mars.maintenance.domain.WorkOrderStatus, io.mars.maintenance.domain.WorkOrderStatusEnum> workOrderStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.maintenance.domain.WorkOrderStatus.class, "WorkOrderStatus", io.mars.maintenance.domain.WorkOrderStatusEnum.class);
 
 	/** {@inheritDoc} */
 	@Override
@@ -215,25 +215,6 @@ public final class WorkOrder implements Entity {
 	
 	/**
 	 * Champ : FOREIGN_KEY.
-	 * Récupère la valeur de la propriété 'Work Order Status'.
-	 * @return String workOrderStatusId
-	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Work Order Status", fkDefinition = "DtWorkOrderStatus" )
-	public String getWorkOrderStatusId() {
-		return (String) workOrderStatusIdAccessor.getId();
-	}
-
-	/**
-	 * Champ : FOREIGN_KEY.
-	 * Définit la valeur de la propriété 'Work Order Status'.
-	 * @param workOrderStatusId String
-	 */
-	public void setWorkOrderStatusId(final String workOrderStatusId) {
-		workOrderStatusIdAccessor.setId(workOrderStatusId);
-	}
-	
-	/**
-	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Ticket'.
 	 * @return Long ticketId
 	 */
@@ -249,6 +230,25 @@ public final class WorkOrder implements Entity {
 	 */
 	public void setTicketId(final Long ticketId) {
 		ticketIdAccessor.setId(ticketId);
+	}
+	
+	/**
+	 * Champ : FOREIGN_KEY.
+	 * Récupère la valeur de la propriété 'Work Order Status'.
+	 * @return String workOrderStatusId
+	 */
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Work Order Status", fkDefinition = "DtWorkOrderStatus" )
+	public String getWorkOrderStatusId() {
+		return (String) workOrderStatusIdAccessor.getId();
+	}
+
+	/**
+	 * Champ : FOREIGN_KEY.
+	 * Définit la valeur de la propriété 'Work Order Status'.
+	 * @param workOrderStatusId String
+	 */
+	public void setWorkOrderStatusId(final String workOrderStatusId) {
+		workOrderStatusIdAccessor.setId(workOrderStatusId);
 	}
 
  	/**

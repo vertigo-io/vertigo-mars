@@ -285,7 +285,9 @@ class EquipmentCategory:::entity {
 		+Long equipmentCategoryId
 		+String label
 		+Boolean active
+		+Long mfoId
 }
+EquipmentCategory "*" --> "0..1" MetaFormulaire : MetaFormulaire
 class EquipmentType:::entity {
 		+Long equipmentTypeId
 		+String label
@@ -421,6 +423,7 @@ class Equipment:::keyConcept {
 		+io.mars.support.smarttypes.GeoPoint geoLocation
 		+java.math.BigDecimal rentingFee
 		+java.math.BigDecimal equipmentValue
+		+io.vertigo.easyforms.smarttypes.Formulaire formulaire
 		+Long baseId
 		+Long geosectorId
 		+Long businessId
