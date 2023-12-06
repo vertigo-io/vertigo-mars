@@ -31,9 +31,9 @@ private String printException(Throwable t) throws Exception {
 <%
 		final String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().indexOf(request.getServletPath()))+"/";
 
-		Throwable e = (Throwable) request.getAttribute("javax.servlet.error.exception"), t;
-		String errorMessage = (String) request.getAttribute("javax.servlet.error.message");
-		Integer errorCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+		Throwable e = (Throwable) request.getAttribute("jakarta.servlet.error.exception"), t;
+		String errorMessage = (String) request.getAttribute("jakarta.servlet.error.message");
+		Integer errorCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
 		//Throwable e = (Throwable)pageContext.getAttribute("ex"), t;
         List exceptionList = new ArrayList();
         String message = null;

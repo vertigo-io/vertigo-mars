@@ -94,15 +94,19 @@ public class CommandWebServices implements WebServices {
 		final CommandUi commandUi = new CommandUi();
 		commandUi.setCommandName(commandDefinition.getCommand());
 		commandUi.setDescpription(commandDefinition.getDescription());
-		commandUi.setCommandParams(commandDefinition.getParams());
+		commandUi.setCommandParams(commandDefinition.getParams().stream().map(CommandWebServices::toCommandParamUi).toList());
 		return commandUi;
+	}
+
+	private static CommandParamUi toCommandParamUi(final CommandParam commandParam) {
+		return new CommandParamUi(commandParam.type().getTypeName());
 	}
 
 	public static class CommandUi {
 
 		private String commandName;
 		private String descpription;
-		private List<CommandParam> commandParams;
+		private List<CommandParamUi> commandParams;
 
 		public String getCommandName() {
 			return commandName;
@@ -120,14 +124,21 @@ public class CommandWebServices implements WebServices {
 			this.descpription = descpription;
 		}
 
-		public List<CommandParam> getCommandParams() {
+		public List<CommandParamUi> getCommandParams() {
 			return commandParams;
 		}
 
-		public void setCommandParams(final List<CommandParam> commandParams) {
+		public void setCommandParams(final List<CommandParamUi> commandParams) {
 			this.commandParams = commandParams;
 		}
 
+	}
+
+	public static record CommandParamUi(String type) {
+
+		public CommandParamUi {
+			Assertion.check().isNotNull(type);
+		}
 	}
 
 	@GET("/params/_autocomplete")
@@ -146,8 +157,8 @@ public class CommandWebServices implements WebServices {
 
 	private final DtList<Entity> autocompleteParam(final String terms, final DtDefinition dtDefinition) {
 		final DtListURIForMasterData dtListURIForMasterData = new DtListURIForMasterData(dtDefinition, null);
-		Assertion.check().isTrue(entityStoreManager.getMasterDataConfig().containsMasterData(dtListURIForMasterData.getDtDefinition()), "Autocomplete can't be use with {0}, it's not a MasterDataList.",
-				dtListURIForMasterData.getDtDefinition().getName());
+		//Assertion.check().isTrue(entityStoreManager.getMasterDataConfig().containsMasterData(dtListURIForMasterData.getDtDefinition()), "Autocomplete can't be use with {0}, it's not a MasterDataList.",
+		//		dtListURIForMasterData.getDtDefinition().getName());
 
 		//-----
 		final DtField labelDtField = dtDefinition.getDisplayField().get();

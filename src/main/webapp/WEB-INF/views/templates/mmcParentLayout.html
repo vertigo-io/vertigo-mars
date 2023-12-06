@@ -21,7 +21,7 @@
 
 <body class="mat desktop no-touch platform-mat">
 
-	<vu:page vuiSsr="false" vuiDevMode="true" > 
+	<vu:page vuiSsr="false" vuiDevMode="false" > 
       <q-layout view="hHh LpR fff" v-cloak>
 			<!-- BEGIN HEADER-->
 			<q-header elevated>
@@ -50,15 +50,15 @@
 							  <q-list>
 							  	<q-item-label header dense>Change current profil</q-item-label>
 							  	<q-item dense th:each="item : ${model.availableProfiles}" >
-							    	<q-btn type="a" flat th:label="|${item.role} - ${item.baseName}|" th:href="@{/userProfil/_changeProfile?profileId=__${item.missionId}__}" />
+							    	<q-btn type="a" flat th:label="|${item.role} - ${item.baseName}|" th:href="@{/userProfil/_changeProfile?profileId=__${item.missionId}__}" ></q-btn>
 							    </q-item>
 							    <q-separator></q-separator>
 							  	<q-item>
-							    	<q-item-section><q-btn icon="edit" type="a" flat label="Edit my data" th::href="|'@{/hr/person/}'+vueData.connectedUser.personId|"/></q-item-section>
+							    	<q-item-section><q-btn icon="edit" type="a" flat label="Edit my data" th::href="|'@{/hr/person/}'+vueData.connectedUser.personId|"></q-btn></q-item-section>
 							    </q-item>
 							  	<q-separator></q-separator>
 							    <q-item>
-							    	<q-item-section><q-btn type="a" outline label="Disconnect" th:href="@{/login/_logout}" /></q-item-section>
+							    	<q-item-section><q-btn type="a" outline label="Disconnect" th:href="@{/login/_logout}" ></q-btn></q-item-section>
 							    </q-item>
 							  </q-list>
 							 </q-menu>
@@ -70,7 +70,7 @@
 									<div class="col-6" >
 										<q-btn type="a" href="https://klee-digital-factory.slack.com"  target="_blank" class="full-width" style="height:68px">
 											<div class="column items-center col-12">
-												<div class="col-12"><q-icon size="36px"name="fab fa-slack" ></q-icon></div>
+												<div class="col-12"><q-icon size="36px" name="fab fa-slack" ></q-icon></div>
 												<div class="col-12">Slack</div>
 											</div>
 										</q-btn>
@@ -78,7 +78,7 @@
 									<div class="col-6" th:if="${authz.hasAuthorization('ViewAcademy')}">
 										<q-btn type="a" href="https://kleeacademy.360learning.com/" target="_blank" class="full-width" style="height:68px">
 											<div class="column items-center">
-												<div class="col-12"><img th:src="@{/static/img/logo_360Learning.png}" width="100%" alt="logo 360 learning"></img></div>
+												<div class="col-12"><img th:src="@{/static/img/logo_360Learning.png}" width="100%" alt="logo 360 learning"/></div>
 												<div class="col-12">Academy</div>
 											</div>
 										</q-btn>
@@ -86,7 +86,7 @@
 									<div class="col-6" >
 										<q-btn type="a" href="https://trello.com/b/fKf74LSW/mars-maintenance" target="_blank" class="full-width" style="height:68px">
 											<div class="column items-center">
-												<div class="col-12"><q-icon size="36px"name="fab fa-trello" color="blue" ></q-icon></div>
+												<div class="col-12"><q-icon size="36px" name="fab fa-trello" color="blue" ></q-icon></div>
 												<div class="col-12">Trello</div>
 											</div>
 										</q-btn>
@@ -96,7 +96,7 @@
 									<div class="col-6" >
 										<q-btn type="a" th:href="${model.apiManagementUrl}" target="_blank" class="full-width" style="height:68px">
 											<div class="column items-center">
-												<div class="col-12"><img th:src="@{/static/img/logo_WSO2.png}" width="100%" alt="logo WSO2"></img></div>
+												<div class="col-12"><img th:src="@{/static/img/logo_WSO2.png}" width="100%" alt="logo WSO2"/></div>
 												<div class="col-12">API</div>
 											</div>
 										</q-btn>
@@ -104,7 +104,7 @@
 									<div class="col-6" >
 										<q-btn type="a" href="https://klee.opendatasoft.com/explore/dataset/dt-tests/information/" target="_blank" class="full-width" style="height:68px">
 											<div class="column items-center">
-												<div class="col-12"><img th:src="@{/static/img/logo_ods.png}" width="100%" alt="logo opendatasoft"></img></div>
+												<div class="col-12"><img th:src="@{/static/img/logo_ods.png}" width="100%" alt="logo opendatasoft"/></div>
 												<div class="col-12">OpenData</div>
 											</div>
 										</q-btn>
@@ -112,7 +112,7 @@
 									<div class="col-6" >
 										<q-btn type="a" href="https://aframe.io/examples/showcase/a-blast/" target="_blank" class="full-width" style="height:68px">
 											<div class="column items-center">
-												<div class="col-12"><img th:src="@{/static/img/logo_aframe.png}" height="36px" alt="logo A-Frame"></img></div>
+												<div class="col-12"><img th:src="@{/static/img/logo_aframe.png}" height="36px" alt="logo A-Frame"/></div>
 												<div class="col-12">VR</div>
 											</div>
 										</q-btn>
@@ -263,13 +263,13 @@
 			          </q-item-section>
 			          <q-item-section>Spiders</q-item-section>
 			        </q-item>
-			        <q-item v-if="componentStates.navDrawer.mini"clickable
+			        <q-item v-if="componentStates.navDrawer.mini" clickable
 							@click="componentStates.navDrawer.mini = false; $event.view.window.localStorage.miniMenu = 'false'" title="Expand menu">
 							<q-item-section avatar>
 			          			<q-icon name="arrow_right"></q-icon>
 			          		</q-item-section>
 					</q-item>
-					 <q-item v-if="!componentStates.navDrawer.mini"clickable
+					 <q-item v-if="!componentStates.navDrawer.mini" clickable
 							@click="componentStates.navDrawer.mini = true; $event.view.window.localStorage.miniMenu = 'true'" title="Minify menu">
 						<q-item-section side>
 			          		<q-icon name="arrow_left"></q-icon>

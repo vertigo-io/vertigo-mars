@@ -32,7 +32,7 @@
 		
 		<section layout:fragment="content">
 			<vu:table title="Open Tickets" list="openedTickets" id="openedTickets" componentId="openedTickets" rowsPerPage="10"
-				tr_@click.native="|goTo('@{/maintenance/ticket/}'+props.row.ticketId)|" tr_class="nav" >
+				th:tr_@click.native="|goTo('@{/maintenance/ticket/}'+props.row.ticketId)|" tr_class="nav" >
 				<vu:include-data object="openedTickets" field="ticketId" />
 				<vu:column field="code" />
 				<vu:column field="title" />
@@ -40,7 +40,7 @@
 				<vu:column field="dateClosed" />
 			</vu:table>
 			<vu:table title="Closed Tickets" list="closedTickets" id="closedTickets" componentId="closedTickets" rowsPerPage="10"
-				tr_@click.native="|goTo('@{/maintenance/ticket/}'+props.row.ticketId)|" tr_class="nav" >
+				th:tr_@click.native="|goTo('@{/maintenance/ticket/}'+props.row.ticketId)|" tr_class="nav" >
 				<vu:include-data object="closedTickets" field="ticketId" />	
 				<vu:column field="code" />
 				<vu:column field="title" />

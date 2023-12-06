@@ -84,6 +84,7 @@ public final class Ticket implements Entity {
 	 * @return String code
 	 */
 	@Field(smartType = "STyLabel", label = "Number")
+	@io.vertigo.datamodel.structure.stereotype.SortField
 	public String getCode() {
 		return code;
 	}
@@ -103,6 +104,7 @@ public final class Ticket implements Entity {
 	 * @return String title
 	 */
 	@Field(smartType = "STyLabel", label = "Title")
+	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	public String getTitle() {
 		return title;
 	}

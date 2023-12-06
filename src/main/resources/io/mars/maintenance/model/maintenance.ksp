@@ -1,6 +1,5 @@
 package io.mars.maintenance.domain
 
-
 create DtDefinition DtTicket {
 	id ticketId {domain: DoId label:"Id"}
 	field code {domain: DoLabel label: "Number" }
@@ -8,6 +7,8 @@ create DtDefinition DtTicket {
 	field description {domain: DoDescription label: "Description" }
 	field dateCreated {domain: DoLocaldate label: "Creation Date" }
 	field dateClosed {domain: DoLocaldate label: "Closing Date" }
+	sortField : "code"
+	displayField : "title"
 }
 
 create DtDefinition DtWorkOrder {

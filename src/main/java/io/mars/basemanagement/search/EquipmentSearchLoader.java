@@ -18,7 +18,7 @@ import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datamodel.task.TaskManager;
 
-public final class EquipmentSearchLoader extends AbstractSqlSearchLoader<Long, Equipment, EquipmentIndex> {
+public final class EquipmentSearchLoader extends AbstractSqlSearchLoader<Equipment, EquipmentIndex> {
 
 	private final EquipmentServices myEquipmentServices;
 
@@ -38,7 +38,7 @@ public final class EquipmentSearchLoader extends AbstractSqlSearchLoader<Long, E
 		final DtList<EquipmentIndex> equipmentIndexes = myEquipmentServices.getEquipmentIndex(equipmentIds);
 		final List<SearchIndex<Equipment, EquipmentIndex>> equipmentSearchIndexes = new ArrayList<>(searchChunk.getAllUIDs().size());
 		for (final EquipmentIndex equipmentIndex : equipmentIndexes) {
-			equipmentSearchIndexes.add(SearchIndex.<Equipment, EquipmentIndex> createIndex(indexDefinition,
+			equipmentSearchIndexes.add(SearchIndex.<Equipment, EquipmentIndex>createIndex(indexDefinition,
 					UID.of(indexDefinition.getKeyConceptDtDefinition(), equipmentIndex.getEquipmentId()), equipmentIndex));
 		}
 		return equipmentSearchIndexes;

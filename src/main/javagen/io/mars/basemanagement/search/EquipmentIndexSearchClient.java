@@ -130,6 +130,13 @@ public final class EquipmentIndexSearchClient implements Component, DefinitionPr
 		markAsDirty(UID.of(entity));
 	}
 	
+	/**
+	 * Simple access to definition, need to call some SearchManager function.
+	 * @return SearchDefinition 
+	 */
+	public SearchIndexDefinition getSearchIndexDefinitionIdxEquipment() {
+		return io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxEquipment",SearchIndexDefinition.class);
+	}
 
 	/** {@inheritDoc} */
 	@Override

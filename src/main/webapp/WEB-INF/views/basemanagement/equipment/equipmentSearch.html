@@ -33,7 +33,7 @@
 					<div class="col">
 						<th:block th:if="${model.listRenderer == 'table'}">
 							<vu:table list="equipments_list" componentId="equipmentsTable" sortUrl="${searchUrl}" color="primary"
-							tr_@click.native="|goTo('@{/basemanagement/equipment/}'+props.row.equipmentId)|" tr_class="nav">
+							th:tr_@click.native="|goTo('@{/basemanagement/equipment/}'+props.row.equipmentId)|" tr_class="nav">
 								<vu:include-data object="equipments_list" field="equipmentId" />
 								<vu:column field="name" />
 								<vu:column field="code"/>

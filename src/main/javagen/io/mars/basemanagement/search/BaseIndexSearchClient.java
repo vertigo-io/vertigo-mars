@@ -127,6 +127,20 @@ public final class BaseIndexSearchClient implements Component, DefinitionProvide
 		markAsDirty(UID.of(entity));
 	}
 	
+	/**
+	 * Simple access to definition, need to call some SearchManager function.
+	 * @return SearchDefinition 
+	 */
+	public SearchIndexDefinition getSearchIndexDefinitionIdxBase() {
+		return io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxBase",SearchIndexDefinition.class);
+	}
+	/**
+	 * Simple access to definition, need to call some SearchManager function.
+	 * @return SearchDefinition 
+	 */
+	public SearchIndexDefinition getSearchIndexDefinitionIdxTag() {
+		return io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxTag",SearchIndexDefinition.class);
+	}
 
 	/** {@inheritDoc} */
 	@Override

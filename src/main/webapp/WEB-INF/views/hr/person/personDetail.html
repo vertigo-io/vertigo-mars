@@ -5,7 +5,7 @@
   layout:decorate="~{templates/mmcDetailNavLayout}"
 >
 	<head>
-		<title>Person detail</title>		
+		<title>Person detail</title>
 	</head>
 	
 	<body>
@@ -26,8 +26,8 @@
 					<br/><span th:if="${!model.modeCreate}" class="text-smaller">Base Manager</span>
 				</div>
 				<div layout:fragment="content-header-actions">
-					<vu:button-link th:if="${model.modeEdit}"  url="@{/hr/person/} + ${model.person.personId}" :round size="lg" color="primary" icon="fas fa-ban" :flat ariaLabel="Cancel" class="on-left"  />					
-					<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" ariaLabel="Edit" class="on-left"/>
+					<vu:button-link th:if="${model.modeEdit}"  url="@{/hr/person/} + ${model.person.personId}" :round size="lg" color="primary" icon="fas fa-ban" :flat title="Cancel" class="on-left"  />					
+					<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" title="Edit" class="on-left"/>
 					<q-btn round size="lg" color="primary" icon="more_horiz"  direction="down" aria-label="More actions" title="More actions" class="on-left"> 
 					  <q-menu>
 				        <q-list class="column items-center">

@@ -44,9 +44,11 @@ modules:
       - restHL:
           __flags__: ["home"]
           servers.names: "localhost:9200"
+          ssl: false
       - restHL:
           __flags__: ["klee"]
           servers.names: ${esHost}
+          ssl: false
   io.vertigo.connectors.mqtt.MqttFeatures:
     __flags__: ["klee"]
     features:

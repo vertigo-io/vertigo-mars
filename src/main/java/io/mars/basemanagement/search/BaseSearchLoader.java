@@ -19,7 +19,7 @@ import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datamodel.task.TaskManager;
 
-public final class BaseSearchLoader extends AbstractSqlSearchLoader<Long, Base, BaseIndex> implements Activeable {
+public final class BaseSearchLoader extends AbstractSqlSearchLoader<Base, BaseIndex> implements Activeable {
 
 	private final BaseServices myBaseServices;
 	private final SearchManager searchManager;
@@ -52,7 +52,7 @@ public final class BaseSearchLoader extends AbstractSqlSearchLoader<Long, Base, 
 		final List<SearchIndex<Base, BaseIndex>> baseSearchIndexes = new ArrayList<>(searchChunk.getAllUIDs().size());
 		for (final BaseIndex baseIndex : baseIndexes) {
 			baseSearchIndexes.add(
-					SearchIndex.<Base, BaseIndex> createIndex(indexDefinition,
+					SearchIndex.<Base, BaseIndex>createIndex(indexDefinition,
 							UID.of(indexDefinition.getKeyConceptDtDefinition(), baseIndex.getBaseId()), baseIndex));
 		}
 		return baseSearchIndexes;

@@ -107,6 +107,13 @@ public final class SupplierSearchClient implements Component, DefinitionProvider
 		markAsDirty(UID.of(entity));
 	}
 	
+	/**
+	 * Simple access to definition, need to call some SearchManager function.
+	 * @return SearchDefinition 
+	 */
+	public SearchIndexDefinition getSearchIndexDefinitionIdxSupplier() {
+		return io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("IdxSupplier",SearchIndexDefinition.class);
+	}
 
 	/** {@inheritDoc} */
 	@Override
