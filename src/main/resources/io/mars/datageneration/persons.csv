@@ -1,6 +1,6 @@
 FirstName;LastName;Email;Tags;DateHired;Picture
 James T.;Kirk;jtkirk@mars.mmc.io;"#historic;#captain";12/07/2023;/io/mars/datageneration/files/persons/jtkirk.png
-John;König;jkonig@mars.mmc.io;"#moon;#1999";04/12/2033;/io/mars/datageneration/files/persons/jkonig.png
+John;KÃ¶nig;jkonig@mars.mmc.io;"#moon;#1999";04/12/2033;/io/mars/datageneration/files/persons/jkonig.png
 Neil;Armstrong;narmstrong@mars.mmc.io;"#nasa;#first;#giant";05/12/2033;/io/mars/datageneration/files/persons/narmstrong.png
 Jean-Luc;Picard;jlpicard@mars.mmc.io;"#enterprise;#french";06/12/2005;/io/mars/datageneration/files/persons/jlpicard.png
 Darth;Vader;dvader@mars.mmc.io;#evil;07/01/2008;/io/mars/datageneration/files/persons/dvader.png
