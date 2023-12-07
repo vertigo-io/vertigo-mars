@@ -26,7 +26,11 @@ public enum GlobalAuthorizations implements AuthorizationName {
 	/**
 	 * ViewBases.
 	 */
-	AtzViewBases;
+	AtzViewBases,
+	/**
+	 * AdmReferential.
+	 */
+	AtzAdmReferential;
 
 	/**
 	 * Get the associated authorization.

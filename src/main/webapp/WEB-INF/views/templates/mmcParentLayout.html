@@ -146,25 +146,25 @@
 			        </q-item>
 			        <q-separator></q-separator>
 			       	<component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'"  label="Base managment" default-opened >
-					        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/basemanagement/bases/}" >
-					          <q-item-section avatar>
-					          	<q-icon name="fas fa-dice-d20" title="Bases"></q-icon>
-					          </q-item-section>
-					          <q-item-section>Bases</q-item-section>
-					          <q-item-section side><q-chip color="primary" text-color="white" dense square class="q-mr-xs">VR</q-chip></q-item-section>
-					        </q-item>
-					        <q-item tag="a" th:href="@{/basemanagement/equipments/}" >
-					          <q-item-section avatar>
-					          	<q-icon name="fas fa-rocket" title="Equipments"></q-icon>
-					          </q-item-section>
-					          <q-item-section>Equipments</q-item-section>
-					          <q-item-section side>
-						          <div>
-						            <q-chip color="primary" text-color="white" dense square class="q-mr-xs">3D</q-chip>
-						            <q-chip color="primary" text-color="white" dense square class="q-mr-xs">VR</q-chip>
-						          </div>
-					          </q-item-section>
-					        </q-item>
+				        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/basemanagement/bases/}" >
+				          <q-item-section avatar>
+				          	<q-icon name="fas fa-dice-d20" title="Bases"></q-icon>
+				          </q-item-section>
+				          <q-item-section>Bases</q-item-section>
+				          <q-item-section side><q-chip color="primary" text-color="white" dense square class="q-mr-xs">VR</q-chip></q-item-section>
+				        </q-item>
+				        <q-item tag="a" th:href="@{/basemanagement/equipments/}" >
+				          <q-item-section avatar>
+				          	<q-icon name="fas fa-rocket" title="Equipments"></q-icon>
+				          </q-item-section>
+				          <q-item-section>Equipments</q-item-section>
+				          <q-item-section side>
+					          <div>
+					            <q-chip color="primary" text-color="white" dense square class="q-mr-xs">3D</q-chip>
+					            <q-chip color="primary" text-color="white" dense square class="q-mr-xs">VR</q-chip>
+					          </div>
+				          </q-item-section>
+				        </q-item>
 				    </component>
 				    <q-separator th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
 			       	<component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'" label="People" default-opened 
@@ -192,6 +192,12 @@
 				          	<q-icon name="fas fa-building" title="Suppliers"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Suppliers</q-item-section>
+				        </q-item>
+				        <q-item th:if="${authz.hasAuthorization('AdmReferential')}" tag="a" th:href="@{/catalog/referential/equipmentCategoryList/}" >
+				          <q-item-section avatar>
+				          	<q-icon name="fas fa-list" title="Referential"></q-icon>
+				          </q-item-section>
+				          <q-item-section>Referential</q-item-section>
 				        </q-item>
 				    </component>
 				    <q-separator></q-separator>

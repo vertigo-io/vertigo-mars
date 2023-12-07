@@ -2,6 +2,10 @@
 	"globalAuthorizations": [{
         "name": "ViewBases",
         "label": "View bases list"
+    },
+    {
+        "name": "AdmReferential",
+        "label": "Administer referentials"
     }],
 	"securedEntities": [
 	{

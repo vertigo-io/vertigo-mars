@@ -25,7 +25,7 @@ public final class MarsRoleDefinitionProvider implements SimpleDefinitionProvide
 	public List<Definition> provideDefinitions(final DefinitionSpace definitionSpace) {
 		return List.of(
 				createRole(RoleEnum.admin,
-						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzAdmUsers, GlobalAuthorizations.AtzViewBases,
+						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzAdmUsers, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzAdmReferential,
 						EquipmentAuthorizations.AtzEquipment$writeAll, EquipmentAuthorizations.AtzEquipment$editTickets,
 						BaseAuthorizations.AtzBase$admin, BaseAuthorizations.AtzBase$addEquiAdm),
 				createRole(RoleEnum.manager,

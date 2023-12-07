@@ -5,6 +5,9 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 	<!-- Création de la BDD -->
+	<changeSet author="vertigo" id="v1.1.0-easyforms">
+		<sqlFile encoding="utf8" path="/io/vertigo/easyforms/sql/easyforms_create_init-4.2.0.sql" />
+	</changeSet>
 	<changeSet author="vertigo" id="v1.1.0">
 		<addColumn tableName="EQUIPMENT">
 			<column name="FORMULAIRE" type="JSONB" />
