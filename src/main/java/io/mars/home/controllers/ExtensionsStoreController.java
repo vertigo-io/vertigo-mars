@@ -1,6 +1,6 @@
 package io.mars.home.controllers;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 import javax.inject.Inject;
 
@@ -21,7 +21,7 @@ public class ExtensionsStoreController extends AbstractVSpringMvcController {
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.publishRef(() -> "skills", (ArrayList<String>) appManager.getCurrentNode().getSkills());
+		viewContext.publishRef(() -> "skills", (Serializable) appManager.getCurrentNode().getSkills());
 	}
 
 }
