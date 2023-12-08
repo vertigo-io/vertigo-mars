@@ -50,7 +50,9 @@ public class EquipmentCategoryDetailController extends AbstractFormsController {
 	}
 
 	@PostMapping("/_save")
-	public String doSave(@ViewAttribute("category") final EquipmentCategory category) {
+	public String doSave(final ViewContext viewContext, @ViewAttribute("category") final EquipmentCategory category) {
+		final var mfoId = super.save(viewContext);
+		category.setMfoId(mfoId);
 		equipmentCategoryServices.saveEquipmentCategory(category);
 		return "redirect:/catalog/referential/equipmentCategory/" + category.getEquipmentCategoryId();
 	}

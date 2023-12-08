@@ -13,7 +13,7 @@
 	
 		<section layout:fragment="content-nav">
 	        <q-item tag="a" href="#information">Information</q-item>
-	        <q-item th:if="${!model.modeCreate}" tag="a" href="#additionalFields">Additional fields</q-item>	
+	        <q-item th:if="${!model.modeCreate}" tag="a" href="#surveyFields">Survey fields</q-item>	
 		</section>
 		
 		<section>
@@ -26,118 +26,122 @@
 				<span class="text-bigger" vu:text="${model.category.label}"></span> 
 			</div>
 			<div layout:fragment="content-header-actions">
-				<vu:button-link th:if="${model.modeEdit}" url="@{/catalog/referential/equipmentCategory/} + ${model.category.equipmentCategoryId}" :round size="lg" color="primary" icon="fas fa-ban" :flat title="Cancel" class="on-left"  />					
+				<vu:button-link th:if="${model.modeEdit}" url="@{/catalog/referential/equipmentCategory/} + ${model.category.equipmentCategoryId}"
+								:round size="lg" color="primary" icon="fas fa-ban" :flat title="Cancel" class="on-left" 
+								v-alert-unsaved-updates="'champs'" />					
 				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" title="Edit" class="on-left"/>
 			</div>
 		</section>
 		
 		<section layout:fragment="content" >
-				<vu:block id="information" title="Information">
-					<vu:text-field object="category" field="label" label="Label"/>
-					<vu:checkbox object="category" field="active" label="Active"/>
-				</vu:block>
-				
-				<vu:block id="additionalFields" title="Additional fields">
-					<div class="col-12" v-if-unsaved-updates>
-						<div th:if="${model.modeEdit}"  class="q-card bg-info text-white col">
-							<div class="q-card-main q-pa-md">
-								<div class="q-item-label">Vos modifications ne seront prises en compte qu'après avoir enregistré la page</div>
-							</div>
-						</div>
+			<vu:block id="information" title="Information">
+				<vu:text-field object="category" field="label" label="Label"/>
+				<vu:checkbox object="category" field="active" label="Active"/>
+			</vu:block>
+			
+			<div class="col-12" v-if-unsaved-updates>
+				<div th:if="${model.modeEdit}" class="q-card bg-info text-white col">
+					<div class="q-card-main q-pa-md">
+						<div class="q-item-label">Your changes will only be taken into account after saving the page</div>
 					</div>
-					<div class="col-12">
-						<vu:include-data object="champs" field="isDefault" />
-						<vu:include-data object="champs" field="isDisplay" />
-						<vu:table id="champs" title="Champs du formulaire" list="champs" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md" color="primary">
-							<vu:slot name="top_right_slot">
-								<vu:button th:if="${!model.modeReadOnly}" icon="add" title="Ajouter un champ" @click="addItem()"/>
-							</vu:slot>
-							<vu:slot th:if="${!model.modeReadOnly}" name="actions_slot">
-								<vu:button :disabled="!(props.rowIndex > 0)"
-								           flat icon="ri-arrow-up-line" title="Déplacer le champ vers le haut" @click="moveItem(props.rowIndex,-1)"/>
-								<vu:button :disabled="!(props.rowIndex < vueData.champs.length - 1)"
-								           flat icon="ri-arrow-down-line" title="Déplacer le champ vers le bas" @click="moveItem(props.rowIndex,1)"/>
-								<vu:button flat icon="fas fa-pencil-alt" title="Modifier le champ" @click="editItem(props.rowIndex)"/>
-								<vu:button :disabled="props.row.isDefault"
-								           flat icon="fas fa-trash-alt" v-title="props.row.isDefault?'Champ nécessaire au système, ne peut pas être supprimé':'Supprimer'"
-								           @click="deleteItem(props.rowIndex)" />
-							</vu:slot>
-							<vu:column field="codeChamp" sortable="false">
-							     {{props.row.codeChamp}} <q-badge th:if="${!model.modeReadOnly}" v-if="props.row.isDefault" color="grey">Nécessaire au système</q-badge>
-							</vu:column>
-							<vu:column field="typeDeChampLabel" sortable="false" />
-							<vu:column field="libelle" sortable="false" />
-							<vu:column field="infobulle" sortable="false" />
-							<vu:column name="isDisplay" label="" sortable="false" auto-width>
-								<q-icon v-if="props.row.isDisplay" size="sm" color="primary" name="ri-search-eye-line"
-									aria-label="Information incluse dans la recherche\n et présentée sur l'écran des réservations"> 
-									<span class="sr-only">Information incluse dans la recherche et présentée sur l'écran des réservations</span>
-									<q-tooltip>Information incluse dans la recherche<br />
-			        					et présentée sur l'écran des réservations</q-tooltip></q-icon>
-							</vu:column>
-							<vu:column name="controleDeChamps" auto-width label="" sortable="false" th:with="modifiableTable='true', rowIndex='props.rowIndex'">
-								<q-icon v-if="props.row.controleDeChamps.length>0" size="sm" color="primary" name="ri-file-shield-2-line" aria-label="Contrôles appliqués">
-								   <span class="sr-only">Des contrôles complémentaires sont appliqués sur ce champ</span>
-								   <q-badge color="secondary" rounded>{{props.row.controleDeChamps.length}}</q-badge> 
-								   <q-tooltip>Des contrôles complémentaires sont appliqués sur ce champ:<br />
-										<vu:select-multiple-read object="champs" field="controleDeChamps" list="controleDeChamps" valueField="code" labelField="label" input_dense class="column items-start" />
-								   </q-tooltip>
-							    </q-icon>
-							</vu:column>
-						</vu:table>
-					</div>
-					<th:block id="modalEditItem" th:if="${!model.modeReadOnly}"
-						th:attr="objectKey=${model.vContext['componentStates'].addComponentState('itemModal').addPrimitive('opened', false)}, objectKey=${model.vContext['componentStates']['itemModal'].addPrimitive('editIndex', null)} ">
-						<vu:include-data object="typeDeChamps" field="'*'" />
-						<vu:include-data object="controleDeChampsEdit" field="*" />
-						<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right"> <q-card class="bg-white v-modal" style="width: min(800px, 100vw);"> <q-toolbar class="bg-primary"><vu:button flat dense v-close-popup icon="keyboard_arrow_left" text-color="white" title="Fermer le panneau"/> <q-toolbar-title vu:text="Champ" class="text-white"></q-toolbar-title> </q-toolbar>
-						<q-card-section class="q-layout-padding">
-						<vu:grid>
-							<vu:select-edit object="champEdit" field="typeDeChamp" list="typeDeChamps" valueField="nom" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
-							th:@update:model-value="|httpPostAjax('@{_refreshItem}',{'typeDeChamp':vueData.champEdit.typeDeChamp})|" />
-							
-							<vu:text-field-edit object="champEdit" field="codeChamp" 
-							:hint="(componentStates.itemModal.editIndex == -1)?`Code unique dans le formulaire en rapport avec l'information attendue (ex: nom, nomNaissance, dateDernierControle, etc...)`:``" 
-							title="Information nécessaire au système et ne peut être modifiée"
-			                aria-title="Code technique et unique du champ"
-							:disable="componentStates.itemModal.editIndex != -1 || vueData.champEdit.typeDeChamp==null" />
-			                
-			                <vu:grid-cell v-if="vueData.champEdit.typeDeChamp === 'Motif'">
-								<vu:select-edit object="champEdit" field="listId" list="taxonomyTypes" valueField="motId" label="Liste de valeurs" required="true" />
-							</vu:grid-cell>
-							<vu:grid-cell>
-							    <vu:text-field-edit object="champEdit" field="libelle" />
-							</vu:grid-cell>
-							<vu:grid-cell>
-								<vu:text-field-edit object="champEdit" field="infobulle" />
-							</vu:grid-cell>
-							<vu:grid-cell>
-								<vu:include-data object="champEdit" field="isDisplay" modifiable="true" />
-								<vu:include-data object="champEdit" field="isDefault" />
-								<q-toggle class="q-field" :disable="vueData.champEdit.isDefault" v-model="vueData.champEdit.isDisplay"
-									:title="vueData.champEdit.isDefault?'Information nécessaire au système et ne peut être modifiée':''"
-									:aria-title="vueData.champEdit.isDefault?'Information nécessaire au système et ne peut être modifiée':''"
-									label="Information incluse dans la recherche et présentée sur l'écran des réservations"></q-toggle>
-								<input type="hidden" name="vContext[champEdit][isDisplay]" v-bind:value="vueData.champEdit.isDisplay" />
-							</vu:grid-cell>
-							<vu:grid-cell>
-								<vu:select-multiple-edit v-if="vueData.controleDeChampsEdit.length>0" object="champEdit" field="controleDeChamps" list="controleDeChampsEdit"
-									valueField="code" labelField="label" popup-content-class="popupDescriptionControleDeChamps">
-									<vu:slot name="edit_content_slot">
-										<template v-slot:option="scope">
-											<q-item v-bind="scope.itemProps"> <q-item-section> <q-item-label v-html="scope.opt.label"></q-item-label>
-											<q-item-label caption>{{ vueData.controleDeChampsEdit[scope.index].description}}</q-item-label> </q-item-section> </q-item>
-										</template>
-									</vu:slot>
-								</vu:select-multiple-edit>
-							</vu:grid-cell>
-						</vu:grid> </q-card-section> <q-card-section class="flex justify-end"> <q-btn @click="saveEditItem" color="primary" label="Valider" rounded></q-btn> </q-card-section> </q-card> </q-dialog>
-					</th:block>
-				</vu:block>
+				</div>
+			</div>
+			
+			<vu:include-data object="champs" field="isDefault" />
+			<vu:include-data object="champs" field="isDisplay" />
+			<vu:table id="surveyFields" title="Survey fields" list="champs" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md" color="primary">
+				<vu:slot name="top_right_slot">
+					<vu:button th:if="${!model.modeReadOnly}" icon="add" title="Add field" @click="addItem()"/>
+				</vu:slot>
+				<vu:slot th:if="${!model.modeReadOnly}" name="actions_slot">
+					<vu:button :disabled="!(props.rowIndex > 0)"
+					           flat icon="fas fa-arrow-up" title="Move field up" @click="moveItem(props.rowIndex,-1)"/>
+					<vu:button :disabled="!(props.rowIndex < vueData.champs.length - 1)"
+					           flat icon="fas fa-arrow-down" title="Move field down" @click="moveItem(props.rowIndex,1)"/>
+					<vu:button flat icon="fas fa-pencil-alt" title="Edit field" @click="editItem(props.rowIndex)"/>
+					<vu:button :disabled="props.row.isDefault"
+					           flat icon="fas fa-trash-alt" v-title="props.row.isDefault?'Field required by the system, cannot be deleted':'Delete'"
+					           @click="deleteItem(props.rowIndex)" />
+				</vu:slot>
+				<vu:column field="codeChamp" label="Code" sortable="false">
+				     {{props.row.codeChamp}} <q-badge th:if="${!model.modeReadOnly}" v-if="props.row.isDefault" color="grey">Mandatory for the system</q-badge>
+				</vu:column>
+				<vu:column field="typeDeChampLabel" label="Type" sortable="false" />
+				<vu:column field="libelle" sortable="false" label="Label" />
+				<vu:column field="infobulle" label="Tooltip" sortable="false" />
+				<vu:column name="isDisplay" label="" sortable="false" auto-width>
+					<q-icon v-if="props.row.isDisplay" size="sm" color="primary" name="fa-brands fa-searchengin"
+						aria-label="Information incluse dans la recherche\n et présentée sur l'écran des réservations"> 
+						<span class="sr-only">Information included in the search</span>
+						<q-tooltip>Information included in the search</q-tooltip></q-icon>
+				</vu:column>
+				<vu:column name="controleDeChamps" auto-width label="" sortable="false" th:with="modifiableTable='true', rowIndex='props.rowIndex'">
+					<q-icon v-if="props.row.controleDeChamps.length>0" size="sm" color="primary" name="fas fa-file-shield" aria-label="Contrôles appliqués">
+					   <span class="sr-only">Des contrôles complémentaires sont appliqués sur ce champ</span>
+					   <q-badge color="secondary" rounded>{{props.row.controleDeChamps.length}}</q-badge> 
+					   <q-tooltip>Des contrôles complémentaires sont appliqués sur ce champ:<br />
+							<vu:select-multiple-read object="champs" field="controleDeChamps" list="controleDeChamps" valueField="code" labelField="label" input_dense class="column items-start" />
+					   </q-tooltip>
+				    </q-icon>
+				</vu:column>
+			</vu:table>
+			
+			<th:block id="modalEditItem" th:if="${!model.modeReadOnly}"
+				th:attr="objectKey=${model.vContext['componentStates'].addComponentState('itemModal').addPrimitive('opened', false)}, objectKey=${model.vContext['componentStates']['itemModal'].addPrimitive('editIndex', null)} ">
+				<vu:include-data object="typeDeChamps" field="'*'" />
+				<vu:include-data object="controleDeChampsEdit" field="*" />
+				<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right"> <q-card class="bg-white v-modal" style="width: min(800px, 100vw);"> <q-toolbar class="bg-primary"><vu:button flat dense v-close-popup icon="keyboard_arrow_left" text-color="white" title="Close"/> <q-toolbar-title vu:text="Fields" class="text-white"></q-toolbar-title> </q-toolbar>
+				<q-card-section class="q-layout-padding">
+				<vu:grid>
+					<vu:select-edit object="champEdit" field="typeDeChamp" label="Field type" list="typeDeChamps" valueField="nom" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
+					th:@update:model-value="|httpPostAjax('@{_refreshItem}',{'typeDeChamp':vueData.champEdit.typeDeChamp})|" />
 					
-				<q-page-sticky position="bottom-right">
-					<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
-				</q-page-sticky>				
+					<vu:text-field-edit object="champEdit" field="codeChamp" label="Field code"
+					:hint="(componentStates.itemModal.editIndex == -1)?`Unique code in the form relating to the expected information (e.g. name, birthname, lastcheck date, etc.)`:``" 
+					title="Information required by the system and cannot be modified"
+	                aria-title="Technical and unique code of the field"
+					:disable="componentStates.itemModal.editIndex != -1 || vueData.champEdit.typeDeChamp==null" />
+	                
+	                <vu:grid-cell v-if="vueData.champEdit.typeDeChamp === 'Motif'">
+						<vu:select-edit object="champEdit" field="listId" list="taxonomyTypes" valueField="motId" label="Liste de valeurs" required="true" />
+					</vu:grid-cell>
+					<vu:grid-cell>
+					    <vu:text-field-edit object="champEdit" field="libelle" label="Label"/>
+					</vu:grid-cell>
+					<vu:grid-cell>
+						<vu:text-field-edit object="champEdit" field="infobulle" label="Tooltip" />
+					</vu:grid-cell>
+					<vu:grid-cell>
+						<vu:include-data object="champEdit" field="isDisplay" modifiable="true" />
+						<vu:include-data object="champEdit" field="isDefault" />
+						<q-toggle class="q-field" :disable="vueData.champEdit.isDefault" v-model="vueData.champEdit.isDisplay"
+							:title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
+							:aria-title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
+							label="Information included in the search"></q-toggle>
+						<input type="hidden" name="vContext[champEdit][isDisplay]" v-bind:value="vueData.champEdit.isDisplay" />
+					</vu:grid-cell>
+					<vu:grid-cell>
+						<vu:select-multiple-edit v-if="vueData.controleDeChampsEdit.length>0" object="champEdit" field="controleDeChamps" list="controleDeChampsEdit"
+							valueField="code" labelField="label" popup-content-class="popupDescriptionControleDeChamps">
+							<vu:slot name="edit_content_slot">
+								<template v-slot:option="scope">
+									<q-item v-bind="scope.itemProps"> <q-item-section> <q-item-label v-html="scope.opt.label"></q-item-label>
+									<q-item-label caption>{{ vueData.controleDeChampsEdit[scope.index].description}}</q-item-label> </q-item-section> </q-item>
+								</template>
+							</vu:slot>
+						</vu:select-multiple-edit>
+					</vu:grid-cell>
+				</vu:grid>
+				</q-card-section>
+				<q-card-section class="flex justify-end">
+					<q-btn @click="saveEditItem" color="primary" label="Save" rounded v-alert-unsaved-updates="'champs'"></q-btn>
+				</q-card-section>
+				</q-card> </q-dialog>
+			</th:block>
+				
+			<q-page-sticky position="bottom-right">
+				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
+			</q-page-sticky>				
 		</section>
 	</body>
 </html>
