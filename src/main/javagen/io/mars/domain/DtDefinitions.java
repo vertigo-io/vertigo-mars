@@ -41,6 +41,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		EquipmentMaintenanceOverview(io.mars.basemanagement.domain.EquipmentMaintenanceOverview.class),
 		/** Objet de données EquipmentOverview. */
 		EquipmentOverview(io.mars.basemanagement.domain.EquipmentOverview.class),
+		/** Objet de données EquipmentSurvey. */
+		EquipmentSurvey(io.mars.basemanagement.domain.EquipmentSurvey.class),
 		/** Objet de données EquipmentType. */
 		EquipmentType(io.mars.catalog.domain.EquipmentType.class),
 		/** Objet de données GeoSearchEquipmentCriteria. */
@@ -213,8 +215,6 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		rentingFee,
 		/** Propriété 'Current equipment value'. */
 		equipmentValue,
-		/** Propriété 'Informations'. */
-		formulaire,
 		/** Propriété 'Base'. */
 		baseId,
 		/** Propriété 'Equipment Geosector'. */
@@ -304,6 +304,21 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		okCount,
 		/** Propriété 'Down count'. */
 		downCount	}
+
+	/**
+	 * Enumération des champs de EquipmentSurvey.
+	 */
+	public enum EquipmentSurveyFields implements DtFieldName<io.mars.basemanagement.domain.EquipmentSurvey> {
+		/** Propriété 'Id'. */
+		esuId,
+		/** Propriété 'Date'. */
+		dateAnswer,
+		/** Propriété 'Informations'. */
+		formulaire,
+		/** Propriété 'Equipment'. */
+		equipmentId,
+		/** Propriété 'Respondent'. */
+		personId	}
 
 	/**
 	 * Enumération des champs de EquipmentType.

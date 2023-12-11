@@ -3,6 +3,10 @@ package io.mars.catalog.dao;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
+import io.vertigo.core.node.Node;
+import io.vertigo.datamodel.task.definitions.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
@@ -26,6 +30,45 @@ public final class EquipmentCategoryDAO extends DAO<EquipmentCategory, java.lang
 	@Inject
 	public EquipmentCategoryDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final SmartTypeManager smartTypeManager) {
 		super(EquipmentCategory.class, entityStoreManager, taskManager, smartTypeManager);
+	}
+
+
+	/**
+	 * Creates a taskBuilder.
+	 * @param name  the name of the task
+	 * @return the builder 
+	 */
+	private static TaskBuilder createTaskBuilder(final String name) {
+		final TaskDefinition taskDefinition = Node.getNode().getDefinitionSpace().resolve(name, TaskDefinition.class);
+		return Task.builder(taskDefinition);
+	}
+
+	/**
+	 * Execute la tache TkGetEquipmentCategoryFromEquipmentId.
+	 * @param equipmentId Long
+	 * @param securedEquipment AuthorizationCriteria
+	 * @return EquipmentCategory equipmentCategory
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkGetEquipmentCategoryFromEquipmentId",
+			request = """
+			select 
+            	eca.*
+			from equipment equ
+				join equipment_type ety on ety.equipment_type_id = equ.equipment_type_id
+				join equipment_category eca on eca.equipment_category_id = ety.equipment_category_id
+			where equ.equipment_id = #equipmentId#
+				and <%=securedEquipment.asSqlWhere("equ", ctx)%>""",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentCategory", name = "equipmentCategory")
+	public io.mars.catalog.domain.EquipmentCategory getEquipmentCategoryFromEquipmentId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+		final Task task = createTaskBuilder("TkGetEquipmentCategoryFromEquipmentId")
+				.addValue("equipmentId", equipmentId)
+				.addValue("securedEquipment", securedEquipment)
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
 	}
 
 }

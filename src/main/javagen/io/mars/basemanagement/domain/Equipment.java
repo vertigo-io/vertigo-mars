@@ -25,7 +25,6 @@ public final class Equipment implements KeyConcept {
 	private io.mars.support.smarttypes.GeoPoint geoLocation;
 	private java.math.BigDecimal rentingFee;
 	private java.math.BigDecimal equipmentValue;
-	private io.vertigo.easyforms.smarttypes.Formulaire formulaire;
 
 	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "ABaseEquipment",
@@ -281,25 +280,6 @@ public final class Equipment implements KeyConcept {
 	 */
 	public void setEquipmentValue(final java.math.BigDecimal equipmentValue) {
 		this.equipmentValue = equipmentValue;
-	}
-	
-	/**
-	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Informations'.
-	 * @return Formulaire formulaire
-	 */
-	@Field(smartType = "STyEfFormulaire", label = "Informations")
-	public io.vertigo.easyforms.smarttypes.Formulaire getFormulaire() {
-		return formulaire;
-	}
-
-	/**
-	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Informations'.
-	 * @param formulaire Formulaire
-	 */
-	public void setFormulaire(final io.vertigo.easyforms.smarttypes.Formulaire formulaire) {
-		this.formulaire = formulaire;
 	}
 	
 	/**

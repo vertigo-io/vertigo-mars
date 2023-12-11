@@ -6,7 +6,7 @@
 >
 	<head>
 		<title>Referential - Equipment category</title>
-		<script th:src="@{/vertigo-ui/static/easyforms/js/vertigo-easyforms.js}"></script>
+		<script th:src="@{/vertigo-ui/static/easyforms/js/vertigo-easyforms.js}" th:data-context="@{/}"></script>
 	</head>
 	
 	<body>
@@ -94,7 +94,7 @@
 				<q-card-section class="q-layout-padding">
 				<vu:grid>
 					<vu:select-edit object="champEdit" field="typeDeChamp" label="Field type" list="typeDeChamps" valueField="nom" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
-					th:@update:model-value="|httpPostAjax('@{_refreshItem}',{'typeDeChamp':vueData.champEdit.typeDeChamp})|" />
+					@update:model-value="refreshItem()" />
 					
 					<vu:text-field-edit object="champEdit" field="codeChamp" label="Field code"
 					:hint="(componentStates.itemModal.editIndex == -1)?`Unique code in the form relating to the expected information (e.g. name, birthname, lastcheck date, etc.)`:``" 
@@ -141,7 +141,7 @@
 				
 			<q-page-sticky position="bottom-right">
 				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
-			</q-page-sticky>				
+			</q-page-sticky>
 		</section>
 	</body>
 </html>

@@ -16,6 +16,8 @@ drop table IF EXISTS EQUIPMENT_CATEGORY cascade;
 drop sequence IF EXISTS SEQ_EQUIPMENT_CATEGORY;
 drop table IF EXISTS EQUIPMENT_FEATURE cascade;
 drop sequence IF EXISTS SEQ_EQUIPMENT_FEATURE;
+drop table IF EXISTS EQUIPMENT_SURVEY cascade;
+drop sequence IF EXISTS SEQ_EQUIPMENT_SURVEY;
 drop table IF EXISTS EQUIPMENT_TYPE cascade;
 drop sequence IF EXISTS SEQ_EQUIPMENT_TYPE;
 drop table IF EXISTS GEOSECTOR cascade;
@@ -64,6 +66,9 @@ create sequence SEQ_EQUIPMENT_CATEGORY
 	start with 1000 cache 1; 
 
 create sequence SEQ_EQUIPMENT_FEATURE
+	start with 1000 cache 1; 
+
+create sequence SEQ_EQUIPMENT_SURVEY
 	start with 1000 cache 1; 
 
 create sequence SEQ_EQUIPMENT_TYPE
@@ -212,7 +217,6 @@ create table EQUIPMENT
     GEO_LOCATION	 TEXT        	,
     RENTING_FEE 	 NUMERIC(12,2)	,
     EQUIPMENT_VALUE	 NUMERIC(12,2)	,
-    FORMULAIRE  	 JSONB       	,
     BASE_ID     	 NUMERIC     	not null,
     GEOSECTOR_ID	 NUMERIC     	,
     BUSINESS_ID 	 NUMERIC     	,
@@ -249,9 +253,6 @@ comment on column EQUIPMENT.RENTING_FEE is
 
 comment on column EQUIPMENT.EQUIPMENT_VALUE is
 'Current equipment value';
-
-comment on column EQUIPMENT.FORMULAIRE is
-'Informations';
 
 comment on column EQUIPMENT.BASE_ID is
 'Base';
@@ -308,6 +309,34 @@ comment on column EQUIPMENT_FEATURE.NAME is
 
 comment on column EQUIPMENT_FEATURE.EQUIPMENT_ID is
 'Equipment';
+
+-- ============================================================
+--   Table : EQUIPMENT_SURVEY                                        
+-- ============================================================
+create table EQUIPMENT_SURVEY
+(
+    ESU_ID      	 NUMERIC     	not null,
+    DATE_ANSWER 	 TIMESTAMP   	not null,
+    FORMULAIRE  	 JSONB       	not null,
+    EQUIPMENT_ID	 NUMERIC     	not null,
+    PERSON_ID   	 NUMERIC     	not null,
+    constraint PK_EQUIPMENT_SURVEY primary key (ESU_ID)
+);
+
+comment on column EQUIPMENT_SURVEY.ESU_ID is
+'Id';
+
+comment on column EQUIPMENT_SURVEY.DATE_ANSWER is
+'Date';
+
+comment on column EQUIPMENT_SURVEY.FORMULAIRE is
+'Informations';
+
+comment on column EQUIPMENT_SURVEY.EQUIPMENT_ID is
+'Equipment';
+
+comment on column EQUIPMENT_SURVEY.PERSON_ID is
+'Respondent';
 
 -- ============================================================
 --   Table : EQUIPMENT_TYPE                                        
@@ -835,6 +864,18 @@ alter table EQUIPMENT
 	references GEOSECTOR (GEOSECTOR_ID);
 
 create index A_EQUIPMENT_GEOSECTOR_GEOSECTOR_FK on EQUIPMENT (GEOSECTOR_ID asc);
+
+alter table EQUIPMENT_SURVEY
+	add constraint FK_A_EQUIPMENT_SURVEY_EQUIPMENT_EQUIPMENT foreign key (EQUIPMENT_ID)
+	references EQUIPMENT (EQUIPMENT_ID);
+
+create index A_EQUIPMENT_SURVEY_EQUIPMENT_EQUIPMENT_FK on EQUIPMENT_SURVEY (EQUIPMENT_ID asc);
+
+alter table EQUIPMENT_SURVEY
+	add constraint FK_A_EQUIPMENT_SURVEY_PERSON_PERSON foreign key (PERSON_ID)
+	references PERSON (PERSON_ID);
+
+create index A_EQUIPMENT_SURVEY_PERSON_PERSON_FK on EQUIPMENT_SURVEY (PERSON_ID asc);
 
 alter table TICKET
 	add constraint FK_A_EQUIPMENT_TICKET_EQUIPMENT foreign key (EQUIPMENT_ID)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/mmcDetailNavLayout}"
+>
+	<head>
+		<title>Equipment Survey</title>
+	</head>
+	
+	<body>
+		
+		<section>
+				<div layout:fragment="content-header-left" th:include="basemanagement/equipment/equipmentInformation :: #equipmentIcon"></div>
+				<div layout:fragment="content-header-title" th:include="basemanagement/equipment/equipmentInformation :: #equipmentTitle"></div>
+				<div layout:fragment="content-header-actions">
+					<q-btn round size="lg" class="on-left" color="primary" icon="add" aria-label="Respond to survey" title="Respond to survey" type="a" th:href="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/new}"></q-btn>
+				</div>
+				<div th:if="${!model.modeCreate}" layout:fragment="content-header-tabs">
+					<vu:button-link flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link th:if="${authz.hasOperation(model.equipment,'readTickets')}" flat label="Maintenance" url="@{/basemanagement/equipment/maintenance/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link flat label="Environment" url="@{/basemanagement/equipment/environment/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link flat label="VR View" url="@{/basemanagement/equipment/vr/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link flat label="Spare Parts" url="@{/basemanagement/equipment/spare/} + ${model.equipment.equipmentId}"/>	
+					<vu:button-link class="active" flat label="Survey" url="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/}"/>
+				</div>
+		</section>
+		
+		<section layout:fragment="content">
+			<vu:table list="surveys" color="primary" componentId="surveyTable" sortUrl="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/_sort}"
+				th:tr_@click.native="|goTo('@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/}' + props.row.esuId)|" tr_class="nav">
+				<vu:include-data object="surveys" field="esuId" />
+				<vu:column field="dateAnswer" sortable="true"/>
+				<vu:column field="personId" sortable="true" />
+			</vu:table>
+		</section>
+	</body>
+</html>

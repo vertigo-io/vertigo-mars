@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/mmcDetailNavLayout}"
+>
+	<head>
+		<title>Equipment Survey</title>
+		<script th:src="@{/vertigo-ui/static/easyforms/js/vertigo-easyforms.js}" th:data-context="@{/}"></script>
+	</head>
+	
+	<body>
+		
+		<section>
+				<div layout:fragment="content-header-left" th:include="basemanagement/equipment/equipmentInformation :: #equipmentIcon"></div>
+				<div layout:fragment="content-header-title" th:include="basemanagement/equipment/equipmentInformation :: #equipmentTitle"></div>
+				<div layout:fragment="content-header-actions">
+					<q-btn round size="lg" class="on-left" color="primary" icon="add" aria-label="Respond to survey" title="Respond to survey" type="a" th:href="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/new}"></q-btn>
+				</div>
+				<div th:if="${!model.modeCreate}" layout:fragment="content-header-tabs">
+					<vu:button-link flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link th:if="${authz.hasOperation(model.equipment,'readTickets')}" flat label="Maintenance" url="@{/basemanagement/equipment/maintenance/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link flat label="Environment" url="@{/basemanagement/equipment/environment/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link flat label="VR View" url="@{/basemanagement/equipment/vr/} + ${model.equipment.equipmentId}"/>
+					<vu:button-link flat label="Spare Parts" url="@{/basemanagement/equipment/spare/} + ${model.equipment.equipmentId}"/>	
+					<vu:button-link class="active" flat label="Survey" url="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/}"/>
+				</div>
+		</section>
+		
+		<section layout:fragment="content">
+			<vu:include-data-primitive key="hasSurvey" />
+			<vu:include-data object="survey" field="'*'" />
+			<vu:include-data object="survey" field="formulaire" modifiable="true" />
+			vueData.hasSurvey : {{vueData.hasSurvey}}
+			
+			<vu:block id="survey" title="Survey" v-if="vueData.hasSurvey">
+				<vui-easy-forms v-model="vueData.survey.formulaire" class="full-width" id="formulaire" >
+					<template v-slot:default="slotProps">
+						<th:block th:each="champ : ${model.modeleFormulaire.champs} " th:with="typeChamp = ${model.mfoUiUtil.getTypeDeChampByNom(champ.typeChamp)}"  >
+							<div  class="fr-input-group" th::class="|{'fr-input-group--error' : hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')}|">
+								<div>
+									<label class="fr-label" th:for="|text-input-${champ.codeChamp}-${champ.ordre}|" >
+										<span vu:text="${champ.libelle}"></span>
+										<q-icon th:if="${champ.typeChamp == 'RdvTchAgdref'}" tabindex="0" name="ri-information-fill" color="primary" aria-label="Où trouver le numéro AGDREF" aria-controls="fr-modal-1">
+											<q-popup-proxy :breakpoint="10000" id="fr-modal-1" aria-labelledby="fr-modal-title-modal-1" role="dialog">
+												<q-card>
+													<div class="row fr-modal__header justify-between q-pa-sm" >
+		                                                 <h1 class="fr-modal__title q-ma-none" id="fr-modal-title-modal-1">Où trouver le N°AGDREF</h1>
+		                                                 <q-btn class="fr-btn--close fr-btn" title="Fermer la fenêtre modale" aria-controls="fr-modal-1" data-fr-js-modal-button="true" v-close-popup dense>Fermer</q-btn>                               
+		                                            </div>
+		                                            <div>
+		                                                <img th:src="@{/static/images/numero_etranger_visa.jpg}" alt="Sur les visas, le N°AGDREF se trouve dans le coin supérieur droit" class="agdref-tooltip" />
+		                                                <img th:src="@{/static/images/numero_etranger_titre_de_sejour_apres_octobre_2020.jpg}" alt="Sur les titres de séjour délivrés après octobre 2020, le N°AGDREF se trouve en dessous de la mention &quot;NUMÉRO PERSONNEL&quot;" class="agdref-tooltip" />
+		                                                <img th:src="@{/static/images/numero_etranger_titre_de_sejour_apres_juin_2011.jpg}" alt="Sur les titres de séjour délivrés après juin 2011, le N°AGDREF se trouve sur la droite, à l'horizontal" class="agdref-tooltip" />
+		                                                <img th:src="@{/static/images/numero_etranger_titre_de_sejour_avant_juin_2011.jpg}" alt="Sur les titres de séjour délivrés avant juin 2011, le N°AGDREF se trouve dans le coin supérieur droit" class="agdref-tooltip" />
+	                                                                  </div>
+												</q-card>
+											</q-popup-proxy>
+										</q-icon>
+										<q-icon th:if="${champ.typeChamp == 'RdvTchPermisNeph'}" tabindex="0" name="ri-information-fill" color="primary" aria-label="Où trouver le numéro de permis de conduire" aria-controls="fr-modal-2">
+											<q-popup-proxy :breakpoint="10000" id="fr-modal-2" aria-labelledby="fr-modal-title-modal-2" role="dialog">
+												<q-card>
+													<div class="row fr-modal__header justify-between q-pa-sm" >
+		                                                 <h1 class="fr-modal__title q-ma-none" id="fr-modal-title-modal-2">Où trouver le N° de permis de conduire</h1>
+		                                                 <q-btn class="fr-btn--close fr-btn" title="Fermer la fenêtre modale" aria-controls="fr-modal-2" data-fr-js-modal-button="true" v-close-popup dense>Fermer</q-btn>                               
+		                                            </div>
+		                                            <div>
+		                                                <img th:src="@{/static/images/numero_permis_de_conduire_apres_75.jpg}" alt="Sur les permis obtenus après le 1er juin 1975, le numéro de permis se trouve à côté de votre photo" class="agdref-tooltip" />
+	                                                                  </div>
+												</q-card>
+											</q-popup-proxy>
+										</q-icon>
+										<span th:if="${!#strings.isEmpty(champ.infobulle) }" vu:text="${champ.infobulle}" class="fr-hint-text"></span>
+									</label>
+									
+								</div>
+								<fieldset th:if='${typeChamp.isListOfType("CiviliteSexe") && "radio".equals(typeChamp.composantUi)}' class="fr-fieldset" role="group"
+										aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+										th:id="|radio-input-${champ.codeChamp}-${champ.ordre}|">
+									<legend class="fr-fieldset__legend" th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-legend|" style="display: none;">
+										<span vu:text="${champ.libelle}"></span>
+									</legend>
+									<div th:each="civilite : ${model.civiliteSexeList} " class="fr-fieldset__element">
+										<div class="fr-radio-group">
+											<input type="radio"
+													th:name="${champ.codeChamp}"
+													th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-${civilite.civCd}|"
+													th:value="${civilite.civCd}"
+													th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
+													th:v-autofocus="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
+													th::aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+													th::aria-invalid="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
+													th::class="|{'fr-input--error' : hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')}|"
+													 >
+											<label class="fr-label"
+													th:for="|radio-input-${champ.codeChamp}-${champ.ordre}-${civilite.civCd}|"
+													th:text="${civilite.label}" />
+										</div>
+									</div>
+									<div class="fr-messages-group" assert-live="assertive" th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-messages|">
+									</div>
+								</fieldset>
+								<select th:if='${typeChamp.isListOfType("MotifType") && "select".equals(typeChamp.composantUi)}'
+										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
+										th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
+										class="fr-select"
+										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'text-select-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|" 
+										th:id="|text-select-${champ.codeChamp}-${champ.ordre}|"
+										th::class="|{'fr-select--error' : hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')}|" >
+									<option value="" selected disabled hidden>Selectionnez une option</option>
+									<option th:each="motifValue: ${model['motifValues_' + champ.codeChamp]}" th:value="${motifValue.movId}" vu:text="${motifValue.label}"></option>
+								</select>
+								<input th:unless="${typeChamp.composantUi == 'radio' || typeChamp.composantUi == 'select'}"
+										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
+										th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
+										class="fr-input"
+										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'text-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|" 
+										th:id="|text-input-${champ.codeChamp}-${champ.ordre}|"
+										th::class="|{'fr-input--error' : hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')}|" 
+										th:type="${typeChamp.composantUi == 'textfield' ? 'text' : (typeChamp.composantUi == 'date' ? 'date' : 'text')}"
+										th:autocomplete="${typeChamp.uiAutocompleteInputAttribute}"
+										th:maxlength="${model.mfoUiUtil.smartTypeMaxLength(champ.typeChamp)}" >
+								<p th:v-if="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|" th:id="|text-input-${champ.codeChamp}-${champ.ordre}-desc-error|" class="fr-error-text">{{ getErreurFormulaire(uiMessageStack, '[[${champ.codeChamp}]]') }}</p>
+							</div>
+						</th:block>
+					</template>
+				</vui-easy-forms>
+				<input type="hidden"  name="vContext[survey][formulaire]" v-bind:value="JSON.stringify(vueData.survey.formulaire)" />
+			</vu:block>
+			
+			<q-page-sticky position="bottom-right">
+				<vu:button-submit th:if="${model.modeCreate}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
+			</q-page-sticky>
+		</section>
+	</body>
+</html>

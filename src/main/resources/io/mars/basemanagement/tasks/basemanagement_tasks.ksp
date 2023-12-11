@@ -79,3 +79,20 @@ create Task TkLoadEquipmentsByChunk {
 	in 	dateExist 		{domain : DoInstant 	cardinality: "1" }
 	out	equipmentList	{domain : DoDtEquipment	cardinality: "*" }
 }
+
+
+create Task TkGetEquipmentCategoryFromEquipmentId {  
+    className : "io.vertigo.basics.task.TaskEngineSelect"
+    request : "
+            select 
+            	eca.*
+			from equipment equ
+				join equipment_type ety on ety.equipment_type_id = equ.equipment_type_id
+				join equipment_category eca on eca.equipment_category_id = ety.equipment_category_id
+			where equ.equipment_id = #equipmentId#
+				and <%=securedEquipment.asSqlWhere(\"equ\", ctx)%>
+             "
+    in 	equipmentId  		{domain : DoId  					cardinality: "1" }
+    in  securedEquipment 	{domain : DoAuthorizationCriteria   cardinality: "1" }
+    out	equipmentCategory 	{domain : DoDtEquipmentCategory  	cardinality: "1" } 
+}

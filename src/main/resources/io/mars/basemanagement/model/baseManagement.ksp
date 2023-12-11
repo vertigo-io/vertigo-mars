@@ -55,9 +55,13 @@ create DtDefinition DtEquipment {
 	field geoLocation {domain: DoGeoPoint label:"Geographic Location" }
 	field rentingFee {domain: DoCurrency label: "Renting Fee" }
 	field equipmentValue {domain: DoCurrency label:"Current equipment value" }
-	field formulaire {domain: DoEfFormulaire label:"Informations" cardinality:"?" }
 }
 
+create DtDefinition DtEquipmentSurvey {
+	id esuId {domain: DoId label:"Id"}
+	field dateAnswer {domain: DoInstant label: "Date" cardinality:"1"}
+	field formulaire {domain: DoEfFormulaire label:"Informations" cardinality:"1"}
+}
 
 
 /* Exemple : "Long Range Antenna","High Res Camera", "All Terrain Tires" */
@@ -146,6 +150,27 @@ create Association AEquipmentGeosector {
 	labelB : "Equipment Geosector"
 	
 }
+
+create Association AEquipmentSurveyEquipment {
+	fkFieldName : "equipmentId"
+    
+ 	dtDefinitionA : DtEquipmentSurvey
+ 	type : "*>1"
+	dtDefinitionB : DtEquipment
+	
+	labelB : "Equipment"
+}
+
+create Association AEquipmentSurveyPerson {
+	fkFieldName : "personId"
+    
+ 	dtDefinitionA : DtEquipmentSurvey
+ 	type : "*>1"
+	dtDefinitionB : DtPerson
+	
+	labelB : "Respondent"
+}
+
 
 create Association AEquipmentEquipmentFeature {
 	fkFieldName : "equipmentId"

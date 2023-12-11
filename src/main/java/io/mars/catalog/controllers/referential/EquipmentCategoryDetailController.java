@@ -17,16 +17,20 @@ import io.vertigo.easyforms.metaformulaire.controllers.AbstractFormsController;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
+import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
 @Secured("AdmReferential")
 @RequestMapping("/catalog/referential/equipmentCategory/")
-public class EquipmentCategoryDetailController extends AbstractFormsController {
+public class EquipmentCategoryDetailController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<EquipmentCategory> categoryKey = ViewContextKey.of("category");
 
 	@Inject
 	private EquipmentCategoryServices equipmentCategoryServices;
+
+	@Inject
+	private AbstractFormsController easyformsController;
 
 	@GetMapping("/{categoryId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("categoryId") final Long categoryId) {
@@ -35,7 +39,7 @@ public class EquipmentCategoryDetailController extends AbstractFormsController {
 				.publishDto(categoryKey, equipmentCategory)
 				.toModeReadOnly();
 
-		super.initContext(viewContext, Optional.ofNullable(equipmentCategory.metaFormulaire().getUID())); // init easyforms context
+		easyformsController.initContext(viewContext, Optional.ofNullable(equipmentCategory.metaFormulaire().getUID())); // init easyforms context
 	}
 
 	@PostMapping("/_edit")
@@ -51,9 +55,7 @@ public class EquipmentCategoryDetailController extends AbstractFormsController {
 
 	@PostMapping("/_save")
 	public String doSave(final ViewContext viewContext, @ViewAttribute("category") final EquipmentCategory category) {
-		final var mfoId = super.save(viewContext);
-		category.setMfoId(mfoId);
-		equipmentCategoryServices.saveEquipmentCategory(category);
+		equipmentCategoryServices.saveEquipmentCategory(category, () -> easyformsController.save(viewContext));
 		return "redirect:/catalog/referential/equipmentCategory/" + category.getEquipmentCategoryId();
 	}
 

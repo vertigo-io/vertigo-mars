@@ -423,7 +423,6 @@ class Equipment:::keyConcept {
 		+io.mars.support.smarttypes.GeoPoint geoLocation
 		+java.math.BigDecimal rentingFee
 		+java.math.BigDecimal equipmentValue
-		+io.vertigo.easyforms.smarttypes.Formulaire formulaire
 		+Long baseId
 		+Long geosectorId
 		+Long businessId
@@ -439,6 +438,15 @@ class EquipmentFeature:::entity {
 		+Long equipmentId
 }
 EquipmentFeature "*" --> "0..1" Equipment : Equipment
+class EquipmentSurvey:::entity {
+		+Long esuId
+		+java.time.Instant dateAnswer
+		+io.vertigo.easyforms.smarttypes.Formulaire formulaire
+		+Long equipmentId
+		+Long personId
+}
+EquipmentSurvey "*" --> "1" Equipment : Equipment
+EquipmentSurvey "*" --> "1" Person : Person
 class Geosector:::entity {
 		+Long geosectorId
 		+String sectorLabel
