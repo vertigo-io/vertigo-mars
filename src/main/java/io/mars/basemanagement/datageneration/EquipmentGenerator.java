@@ -21,6 +21,11 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.easyforms.metaformulaire.domain.MetaFormulaire;
+import io.vertigo.easyforms.metaformulaire.domain.ModeleFormulaire;
+import io.vertigo.easyforms.metaformulaire.domain.ModeleFormulaireBuilder;
+import io.vertigo.easyforms.metaformulaire.domain.TypeDeChamp;
+import io.vertigo.easyforms.metaformulaire.services.MetaFormulaireServices;
 
 @Transactional
 public class EquipmentGenerator implements Component {
@@ -39,6 +44,8 @@ public class EquipmentGenerator implements Component {
 	private BusinessDAO businessDAO;
 	@Inject
 	private ResourceManager resourceManager;
+	@Inject
+	private MetaFormulaireServices metaFormulaireServices;
 
 	public void createInitialEquipments(final int equipmentUnitsToGenerate, final List<Base> bases) {
 		final DtList<EquipmentType> equipmentTypes = equipmentTypeDAO.selectEquipmentType();
@@ -56,9 +63,22 @@ public class EquipmentGenerator implements Component {
 	}
 
 	public void createInitialEquipmentCategories() {
-		equipmentCategoryDAO.create(createEquipmentCategory(true, "Bot"));
-		equipmentCategoryDAO.create(createEquipmentCategory(true, "Building"));
-		equipmentCategoryDAO.create(createEquipmentCategory(true, "Vehicle"));
+		createEquipmentCategory(true, "Bot", new ModeleFormulaireBuilder()
+				.ajouterChamp("iaAutonomy", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "IA autonomy", null, false, false, List.of())
+				.ajouterChamp("easyness", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Easyness of use", null, false, false, List.of())
+				.ajouterChamp("obsolete", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Is obsolete", null, false, false, List.of())
+				.build());
+		createEquipmentCategory(true, "Building", new ModeleFormulaireBuilder()
+				.ajouterChamp("equipment", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Completude of equipment", null, false, false, List.of())
+				.ajouterChamp("temperature", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Temperature inside", null, false, false, List.of())
+				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, List.of())
+				.build());
+		createEquipmentCategory(true, "Vehicle", new ModeleFormulaireBuilder()
+				.ajouterChamp("comfort", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Comfort", null, false, false, List.of())
+				.ajouterChamp("speed", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Speed", null, false, false, List.of())
+				.ajouterChamp("storageCapacity", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Storage capacity", null, false, false, List.of())
+				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, List.of())
+				.build());
 	}
 
 	private void consume(final String csvFilePath, final String[] record) {
@@ -77,11 +97,18 @@ public class EquipmentGenerator implements Component {
 		CSVReaderUtil.parseCSV(resourceManager, csvFilePath, this::consume);
 	}
 
-	private static EquipmentCategory createEquipmentCategory(final boolean active, final String label) {
+	private EquipmentCategory createEquipmentCategory(final boolean active, final String label, final ModeleFormulaire modeleFormulaire) {
 		final EquipmentCategory equipmentCategory = new EquipmentCategory();
+
+		if (modeleFormulaire != null) {
+			final MetaFormulaire metaFormulaire = new MetaFormulaire();
+			metaFormulaire.setModele(modeleFormulaire);
+			equipmentCategory.metaFormulaire().set(metaFormulaireServices.creerMetaFormulaire(metaFormulaire));
+		}
+
 		equipmentCategory.setActive(active);
 		equipmentCategory.setLabel(label);
-		return equipmentCategory;
+		return equipmentCategoryDAO.create(equipmentCategory);
 	}
 
 	private static EquipmentType createEquipmentType(final boolean active, final String label, final EquipmentCategory equipmentCategory) {

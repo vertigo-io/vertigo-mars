@@ -96,3 +96,24 @@ create Task TkGetEquipmentCategoryFromEquipmentId {
     in  securedEquipment 	{domain : DoAuthorizationCriteria   cardinality: "1" }
     out	equipmentCategory 	{domain : DoDtEquipmentCategory  	cardinality: "1" } 
 }
+
+create Task TkListSurveysFromEquipmentId {  
+    className : "io.vertigo.basics.task.TaskEngineSelect"
+    request : "
+            select 
+            	esu.esu_id,
+				esu.date_answer,
+				per.first_name,
+				per.last_name,
+				per.email
+			from equipment equ
+				join equipment_survey esu on esu.equipment_id = equ.equipment_id
+				join person per on per.person_id = esu.person_id
+			where equ.equipment_id = #equipmentId#
+				and <%=securedEquipment.asSqlWhere(\"equ\", ctx)%>
+             "
+    in 	equipmentId  		{domain : DoId  						cardinality: "1" }
+    in  securedEquipment 	{domain : DoAuthorizationCriteria   	cardinality: "1" }
+    out	surveys 			{domain : DoDtEquipmentSurveyDisplay	cardinality: "*" } 
+}
+

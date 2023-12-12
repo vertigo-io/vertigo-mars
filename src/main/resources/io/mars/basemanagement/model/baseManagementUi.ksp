@@ -26,3 +26,11 @@ create DtDefinition DtEquipmentOverview {
 	field okCount  {domain: DoCount label: "Ok count" }
 	field downCount  {domain: DoCount label: "Down count" }
 }
+
+create DtDefinition DtEquipmentSurveyDisplay {
+	field esuId 		{domain: DoId 		label:"Id" }
+	field dateAnswer 	{domain: DoInstant 	label:"Date" }
+	field firstName 	{domain: DoLabel 	label:"First name" }
+	field lastName 		{domain: DoLabel 	label:"Last name" }
+	field email 		{domain: DoEmail 	label:"E-mail" }
+}

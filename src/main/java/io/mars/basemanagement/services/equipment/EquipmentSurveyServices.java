@@ -4,15 +4,18 @@ import java.time.Instant;
 
 import javax.inject.Inject;
 
+import io.mars.authorization.SecuredEntities;
+import io.mars.basemanagement.BasemanagementPAO;
 import io.mars.basemanagement.dao.EquipmentSurveyDAO;
+import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.domain.EquipmentSurvey;
-import io.mars.domain.DtDefinitions.EquipmentSurveyFields;
+import io.mars.basemanagement.domain.EquipmentSurveyDisplay;
 import io.mars.support.MarsUserSession;
 import io.mars.support.util.SecurityUtil;
+import io.vertigo.account.authorization.AuthorizationUtil;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
 
@@ -22,12 +25,18 @@ public class EquipmentSurveyServices implements Component {
 	@Inject
 	private EquipmentSurveyDAO equipmentSurveyDAO;
 
-	public DtList<EquipmentSurvey> getListByEquipment(final Long equipmentId, final DtListState dtListState) {
-		return equipmentSurveyDAO.findAll(Criterions.isEqualTo(EquipmentSurveyFields.equipmentId, equipmentId), dtListState);
+	@Inject
+	private BasemanagementPAO basemanagementPAO;
+
+	public DtList<EquipmentSurveyDisplay> getListByEquipment(final Long equipmentId, final DtListState dtListState) {
+		return basemanagementPAO.listSurveysFromEquipmentId(equipmentId, AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read));
+		//		return equipmentSurveyDAO.findAll(Criterions.isEqualTo(EquipmentSurveyFields.equipmentId, equipmentId), dtListState);
 	}
 
 	public EquipmentSurvey getById(final Long esuId) {
-		return equipmentSurveyDAO.get(esuId);
+		final var equipmentSurvey = equipmentSurveyDAO.get(esuId);
+		equipmentSurvey.person().load();
+		return equipmentSurvey;
 	}
 
 	public Long save(final EquipmentSurvey survey) {

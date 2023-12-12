@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.basemanagement.domain.Equipment;
-import io.mars.basemanagement.domain.EquipmentSurvey;
+import io.mars.basemanagement.domain.EquipmentSurveyDisplay;
 import io.mars.basemanagement.services.equipment.EquipmentSurveyServices;
 import io.mars.domain.DtDefinitions.EquipmentSurveyFields;
 import io.vertigo.account.authorization.annotations.Secured;
@@ -29,7 +29,7 @@ public class EquipmentSurveyListController extends AbstractVSpringMvcController 
 	@Inject
 	private EquipmentDetailController equipmentDetailController;
 
-	private static final ViewContextKey<EquipmentSurvey> surveys = ViewContextKey.of("surveys");
+	private static final ViewContextKey<EquipmentSurveyDisplay> surveys = ViewContextKey.of("surveys");
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId) {

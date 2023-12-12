@@ -147,6 +147,38 @@ public final class BasemanagementPAO implements StoreServices {
 	}
 
 	/**
+	 * Execute la tache TkListSurveysFromEquipmentId.
+	 * @param equipmentId Long
+	 * @param securedEquipment AuthorizationCriteria
+	 * @return DtList de EquipmentSurveyDisplay surveys
+	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkListSurveysFromEquipmentId",
+			request = """
+			select 
+            	esu.esu_id,
+				esu.date_answer,
+				per.first_name,
+				per.last_name,
+				per.email
+			from equipment equ
+				join equipment_survey esu on esu.equipment_id = equ.equipment_id
+				join person per on per.person_id = esu.person_id
+			where equ.equipment_id = #equipmentId#
+				and <%=securedEquipment.asSqlWhere("equ", ctx)%>""",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentSurveyDisplay", name = "surveys")
+	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentSurveyDisplay> listSurveysFromEquipmentId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+		final Task task = createTaskBuilder("TkListSurveysFromEquipmentId")
+				.addValue("equipmentId", equipmentId)
+				.addValue("securedEquipment", securedEquipment)
+				.build();
+		return getTaskManager()
+				.execute(task)
+				.getResult();
+	}
+
+	/**
 	 * Execute la tache TkLoadBaseIndex.
 	 * @param baseIds List de Long
 	 * @return DtList de BaseIndex dtcIndex

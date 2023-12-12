@@ -1,5 +1,6 @@
 package io.mars.basemanagement.controllers.equipment;
 
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import io.mars.basemanagement.domain.EquipmentSurvey;
 import io.mars.basemanagement.services.equipment.EquipmentSurveyServices;
 import io.mars.catalog.domain.EquipmentCategory;
 import io.mars.catalog.services.equipment.EquipmentCategoryServices;
+import io.mars.hr.domain.Person;
 import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.easyforms.metaformulaire.domain.MetaFormulaire;
@@ -41,18 +43,34 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	private EquipmentCategoryServices equipmentCategoryServices;
 
 	private static final ViewContextKey<Boolean> hasSurvey = ViewContextKey.of("hasSurvey");
+
+	// creation
 	private static final ViewContextKey<EquipmentSurvey> surveyKey = ViewContextKey.of("survey");
 	private static final ViewContextKey<ModeleFormulaire> modeleFormulaireKey = ViewContextKey.of("modeleFormulaire");
 	private static final ViewContextKey<String> controlMandatoryKey = ViewContextKey.of("controlMandatory");
 	private static final ViewContextKey<MetaFormulaireUiUtil> mfoUiUtilKey = ViewContextKey.of("mfoUiUtil");
 
+	// reading
+	private static final ViewContextKey<LinkedHashMap<String, String>> surveyDisplayKey = ViewContextKey.of("surveyDisplay");
+	private static final ViewContextKey<Person> surveyRespondantKey = ViewContextKey.of("respondant");
+
 	@GetMapping("/{esuId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId, @PathVariable("esuId") final Long esuId) {
 		//--
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
+		final var metaFormulaireUiUtil = new MetaFormulaireUiUtil();
+
+		final EquipmentCategory equipmentCategory = equipmentCategoryServices.getEquipmentCategoryFromEquipmentId(equipmentId);
+		final UID<MetaFormulaire> mfoUid = equipmentCategory.metaFormulaire().getUID();
+		final var metaFormulaire = metaFormulaireServices.getMetaFormulaireById(mfoUid);
+		final var survey = equipmentSurveyServices.getById(esuId);
+
+		final LinkedHashMap<String, String> surveyDisplay = metaFormulaireUiUtil.getFormulaireDisplay(metaFormulaire.getModele(), survey.getFormulaire());
 
 		viewContext
-				.publishDto(surveyKey, equipmentSurveyServices.getById(esuId))
+				.publishRef(hasSurvey, true)
+				.publishRef(surveyDisplayKey, surveyDisplay)
+				.publishDto(surveyRespondantKey, survey.person().get())
 				//---
 				.toModeReadOnly();
 	}
@@ -70,8 +88,6 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 			viewContext.publishRef(hasSurvey, false)
 					.toModeReadOnly();
 		} else {
-			viewContext.publishRef(hasSurvey, true);
-
 			final var metaFormulaire = metaFormulaireServices.getMetaFormulaireById(mfoUid);
 
 			final var controlMandatory = metaFormulaire.getModele().getChamps().stream()
@@ -80,6 +96,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 					.collect(Collectors.joining(" || "));
 
 			viewContext
+					.publishRef(hasSurvey, true)
 					.publishDto(surveyKey, new EquipmentSurvey())
 					.publishRef(modeleFormulaireKey, metaFormulaire.getModele())
 					.publishRef(controlMandatoryKey, controlMandatory)

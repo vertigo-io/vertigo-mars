@@ -27,11 +27,13 @@
 		</section>
 		
 		<section layout:fragment="content">
-			<vu:table list="surveys" color="primary" componentId="surveyTable" sortUrl="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/_sort}"
+			<vu:table list="surveys" color="primary" componentId="surveyTable"
 				th:tr_@click.native="|goTo('@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/}' + props.row.esuId)|" tr_class="nav">
 				<vu:include-data object="surveys" field="esuId" />
 				<vu:column field="dateAnswer" sortable="true"/>
-				<vu:column field="personId" sortable="true" />
+				<vu:column field="firstName" sortable="true" />
+				<vu:column field="lastName" sortable="true" />
+				<vu:column field="email" sortable="true" />
 			</vu:table>
 		</section>
 	</body>
