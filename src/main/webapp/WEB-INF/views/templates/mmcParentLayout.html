@@ -50,15 +50,15 @@
 							<div class="on-right"><span vu:text="${model.vContext['connectedUser']['firstName']+' '+model.vContext['connectedUser']['lastName']}"></span><br/><small><span vu:text="${model.vContext['activeProfile']['role']}"></span> - <span vu:text="${model.vContext['activeProfile']['baseName']}"></span></small></div>
 							<q-menu fit>
 							  <q-list>
-							  	<q-item-label header dense>Change current profil</q-item-label>
+							  	<q-item-label header dense class="text-center">Change current profil</q-item-label>
 							  	<q-item dense th:each="item : ${model.availableProfiles}" >
 							    	<q-btn type="a" flat th:label="|${item.role} - ${item.baseName}|" th:href="@{/userProfil/_changeProfile?profileId=__${item.missionId}__}" ></q-btn>
 							    </q-item>
-							    <q-separator dark></q-separator>
+							    <q-separator></q-separator>
 							  	<q-item>
 							    	<q-item-section><q-btn icon="edit" type="a" flat label="Edit my data" th::href="|'@{/hr/person/}'+vueData.connectedUser.personId|"></q-btn></q-item-section>
 							    </q-item>
-							  	<q-separator dark></q-separator>
+							  	<q-separator></q-separator>
 							    <q-item>
 							    	<q-item-section><q-btn type="a" outline label="Disconnect" th:href="@{/login/_logout}" ></q-btn></q-item-section>
 							    </q-item>

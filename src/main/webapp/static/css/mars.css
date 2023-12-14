@@ -44,7 +44,7 @@ img {
 	color: var(--q-accent);
 }
 
-.q-item__label--header {
+.q-drawer .q-item__label--header {
 	color: var(--v-primary-invert);
 }
 

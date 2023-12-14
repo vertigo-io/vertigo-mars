@@ -1,4 +1,5 @@
 VUiExtensions = {
+	dataX : {},
 	methods : {
 		notificationTypes : function() {
 			return {
