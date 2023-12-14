@@ -1,4 +1,4 @@
-package io.mars.catalog.controllers.referential;
+package io.mars.catalog.controllers.masterdata;
 
 import java.util.Optional;
 
@@ -20,8 +20,8 @@ import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
-@Secured("AdmReferential")
-@RequestMapping("/catalog/referential/equipmentCategoryList/")
+@Secured("AdmMasterData")
+@RequestMapping("/catalog/masterdata/equipmentCategoryList/")
 public class EquipmentCategoryListController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<EquipmentCategory> categories = ViewContextKey.of("categories");

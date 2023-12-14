@@ -102,7 +102,7 @@ public class PersonGenerator implements Component {
 		final Mission mission = new Mission();
 		mission.setPersonId(person.getPersonId());
 		mission.setBaseId(bases.get(DataGenerator.RND.nextInt(bases.size())).getBaseId());
-		mission.role().setEnumValue(RoleEnum.manager);
+		mission.role().setEnumValue(RoleEnum.admin);
 		return mission;
 	}
 

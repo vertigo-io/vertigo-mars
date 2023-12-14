@@ -1,4 +1,4 @@
-package io.mars.catalog.controllers.referential;
+package io.mars.catalog.controllers.masterdata;
 
 import java.util.Optional;
 
@@ -20,8 +20,8 @@ import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
-@Secured("AdmReferential")
-@RequestMapping("/catalog/referential/equipmentCategory/")
+@Secured("AdmMasterData")
+@RequestMapping("/catalog/masterdata/equipmentCategory/")
 public class EquipmentCategoryDetailController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<EquipmentCategory> categoryKey = ViewContextKey.of("category");
@@ -56,7 +56,7 @@ public class EquipmentCategoryDetailController extends AbstractVSpringMvcControl
 	@PostMapping("/_save")
 	public String doSave(final ViewContext viewContext, @ViewAttribute("category") final EquipmentCategory category) {
 		equipmentCategoryServices.saveEquipmentCategory(category, () -> easyformsController.save(viewContext));
-		return "redirect:/catalog/referential/equipmentCategory/" + category.getEquipmentCategoryId();
+		return "redirect:/catalog/masterdata/equipmentCategory/" + category.getEquipmentCategoryId();
 	}
 
 }

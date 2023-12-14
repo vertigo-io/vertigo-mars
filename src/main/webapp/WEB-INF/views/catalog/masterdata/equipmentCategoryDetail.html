@@ -5,7 +5,7 @@
   layout:decorate="~{templates/mmcDetailNavLayout}"
 >
 	<head>
-		<title>Referential - Equipment category</title>
+		<title>Master data - Equipment category</title>
 		<script th:src="@{/vertigo-ui/static/easyforms/js/vertigo-easyforms.js}" th:data-context="@{/}"></script>
 	</head>
 	
@@ -26,8 +26,8 @@
 				<span class="text-bigger" vu:text="${model.category.label}"></span> 
 			</div>
 			<div layout:fragment="content-header-actions">
-				<vu:button-link th:if="${model.modeEdit}" url="@{/catalog/referential/equipmentCategory/} + ${model.category.equipmentCategoryId}"
-								:round size="lg" color="primary" icon="fas fa-ban" :flat title="Cancel" class="on-left" 
+				<vu:button-link th:if="${model.modeEdit}" url="@{/catalog/masterdata/equipmentCategory/} + ${model.category.equipmentCategoryId}"
+								:round size="lg" color="secondary-inverted" icon="fas fa-ban" :flat title="Cancel" class="on-left" 
 								v-alert-unsaved-updates="'champs'" />					
 				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" title="Edit" class="on-left"/>
 			</div>

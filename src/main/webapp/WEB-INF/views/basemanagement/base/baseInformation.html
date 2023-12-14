@@ -24,7 +24,7 @@
 			<span class="text-smaller" vu:text="${model.baseTypes.getById('baseTypeId', model.base.baseTypeId).label}"></span>
 		</div>
 		<div layout:fragment="content-header-actions">
-			<vu:button-link th:if="${model.modeEdit}" class="text-accent-inverted on-left" flat round size="lg" icon="fas fa-ban"
+			<vu:button-link th:if="${model.modeEdit}" class="text-secondary-inverted on-left" flat round size="lg" icon="fas fa-ban"
 				url="@{/basemanagement/base/information/} + ${model.base.baseId}" title="Cancel"/>
 			<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.base,'write')}" action="@{_edit}" round size="lg" color="primary" icon="edit" title="Edit" class="on-left" />
 			<th:block id="baseActions">

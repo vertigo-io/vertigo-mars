@@ -16,9 +16,9 @@ public enum GlobalAuthorizations implements AuthorizationName {
 	 */
 	AtzAdmMissions,
 	/**
-	 * AdmReferential.
+	 * AdmMasterData.
 	 */
-	AtzAdmReferential,
+	AtzAdmMasterData,
 	/**
 	 * AdmUsers.
 	 */

@@ -4,22 +4,24 @@
 	--v-color-body-color: #0c0c0c;
 	/*--q-color-primary: #027be3;
 	--q-color-secondary:#fad9c2;*/
-	--q-primary: #027be3;
-	--v-primary-invert: rgba(255, 255, 255, 0.9);
-	--q-secondary:#00BCD4;
+	--q-primary: var(--q-dark);
+	--v-primary-invert: #FFFFFF;
+	--q-secondary: #014d81; 
 	--v-secondary-invert: rgba(255, 255, 255, 0.9);
-	--q-accent:	#B2EBF2;
-	--v-accent-invert:	rgba(60, 60, 60, 0.8);
+	--q-accent:	#7babdd;
+	--v-accent-invert:	#000000;
+	
+	--q-dark: #1c3754;
 	
 	
 	/*--q-color-primary:#2196F3;
 	--q-color-secondary:#64B5F6;
 	--q-color-tertiary:	#BBDEFB;*/
 	
-	--q-positive:	#21BA45;
-	--q-negative:	#DB2828;
+	--q-positive:	#008000;
+	--q-negative:	#e60000;
 	--q-info:		#31CCEC;	
-	--q-warning:	#F2C037;  
+	--q-warning:	#ad6216;  
 }
 
 body {
@@ -33,6 +35,24 @@ img {
   display: block;
 }
 
+/* drawer */
+.q-item__label--caption {
+  color: rgba(255, 255, 255, 0.54);
+}
+
+.q-drawer i {
+	color: var(--q-accent);
+}
+
+.q-item__label--header {
+	color: var(--v-primary-invert);
+}
+
+/* */
+
+.q-table th.sortable:hover .q-table__sort-icon {
+  opacity: 0.9;
+}
 
 /* width */
 ::-webkit-scrollbar {
@@ -76,7 +96,7 @@ body.login {
 	width:90vw;
 	max-width:700px;
 }
-.login form {
+.login form, .login img{
 	background: rgba(255, 255, 255, 0.8);
 	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
        		box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
@@ -84,6 +104,7 @@ body.login {
 	display:inline-block;
 	margin: auto;
 	min-width: 400px;
+	border-radius: 20px;
 }
 
 /*
@@ -187,7 +208,7 @@ nav.scroll-spy-nav a.q-item.active {
 }
 
 nav a.q-item, .nav a.q_item {
-	color: grey;
+	color: var(--q-primary-invert);
 	align-items: center; /** replaced using q-item-section every times */
 }
 
@@ -248,11 +269,11 @@ nav a.q-item, .nav a.q_item {
 }
 
 .q-table th.sortable:hover, .q-table th.sorted {
-    opacity: 0.96;
+    opacity: 1;
 }
 
 .q-table th.sortable {
-    opacity: 0.66;
+    opacity: 0.9;
 }
 
 @media (min-width: 1500px) {
@@ -298,7 +319,7 @@ nav a.q-item, .nav a.q_item {
 
 .header-tabs a.active .q-btn__content {
 	padding-top: 3px;
-	border-bottom: 3px solid black;
+	border-bottom: 3px solid;
 }
 
 .header-tabs {

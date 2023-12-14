@@ -25,11 +25,11 @@ public final class MarsRoleDefinitionProvider implements SimpleDefinitionProvide
 	public List<Definition> provideDefinitions(final DefinitionSpace definitionSpace) {
 		return List.of(
 				createRole(RoleEnum.admin,
-						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzAdmUsers, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzAdmReferential,
+						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzAdmUsers, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzAdmMasterData,
 						EquipmentAuthorizations.AtzEquipment$writeAll, EquipmentAuthorizations.AtzEquipment$editTickets,
 						BaseAuthorizations.AtzBase$admin, BaseAuthorizations.AtzBase$addEquiAdm),
 				createRole(RoleEnum.manager,
-						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzAdmReferential, GlobalAuthorizations.AtzViewAcademy,
+						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzAdmMasterData, GlobalAuthorizations.AtzViewAcademy,
 						EquipmentAuthorizations.AtzEquipment$readConf, EquipmentAuthorizations.AtzEquipment$write, EquipmentAuthorizations.AtzEquipment$editTickets,
 						BaseAuthorizations.AtzBase$write, BaseAuthorizations.AtzBase$readConf, BaseAuthorizations.AtzBase$addEqui),
 				createRole(RoleEnum.engineer,

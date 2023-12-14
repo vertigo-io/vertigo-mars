@@ -4,8 +4,8 @@
         "label": "View bases list"
     },
     {
-        "name": "AdmReferential",
-        "label": "Administer referentials"
+        "name": "AdmMasterData",
+        "label": "Administer master data"
     }],
 	"securedEntities": [
 	{
