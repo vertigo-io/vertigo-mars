@@ -10,6 +10,7 @@
     <meta name="description" content="Demo Application of Vertigo UI powered by SpringMvc, Thymeleaf and Quasar Framework"/>
     <meta name="author" content="Klee Group"/>
     
+    <link th:href="@{/static/3rdParty/poppins/css/poppins.css}" rel="stylesheet" type="text/css"/>
   	<link rel="stylesheet" th:href="@{/static/css/mars.css}"/>
 	<link rel="icon" th:href="@{/static/img/favicon.ico}"/>
    	<script th:src="@{/static/js/mars.js}"></script>
@@ -26,17 +27,13 @@
 	<vu:page vuiSsr="false" vuiDevMode="false" > 
       <q-layout view="hHh LpR fff" v-cloak>
 			<!-- BEGIN HEADER-->
-			<q-header elevated>
+			<q-header>
 				<q-toolbar>
-					<div class="row items-center">
+					<div class="row items-center" style="width: 240px;">
 						<q-btn flat round dense class="lt-lg"
 						th:with="mini=${model.vContext['componentStates'].addComponentState('navDrawer').addPrimitive('mini', false)}"
 						@click="$refs.menuDrawer.toggle()" icon="menu" aria-label="Toggle menu on left side"></q-btn>
 						<img th:src="@{/static/img/logo MMC white v0.1.png}" height="40" class="gt-md" alt="logo mmc"/>
-						<q-toolbar-title class="gt-md">
-								<div>Command Center</div>
-								<div class="text-subtitle2">Observe, Orient, Decide and Act</div>
-						</q-toolbar-title>
 					</div>
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="col q-mx-xl">
@@ -50,6 +47,7 @@
 							<div class="on-right"><span vu:text="${model.vContext['connectedUser']['firstName']+' '+model.vContext['connectedUser']['lastName']}"></span><br/><small><span vu:text="${model.vContext['activeProfile']['role']}"></span> - <span vu:text="${model.vContext['activeProfile']['baseName']}"></span></small></div>
 							<q-menu fit>
 							  <q-list>
+							  
 							  	<q-item-label header dense class="text-center">Change current profil</q-item-label>
 							  	<q-item dense th:each="item : ${model.availableProfiles}" >
 							    	<q-btn type="a" flat th:label="|${item.role} - ${item.baseName}|" th:href="@{/userProfil/_changeProfile?profileId=__${item.missionId}__}" ></q-btn>
@@ -124,6 +122,7 @@
 						</q-btn>
 					</div>
 				</q-toolbar>
+				<q-separator dark></q-separator>
 			</q-header>
         	<!-- END HEADER-->
         			
@@ -134,18 +133,18 @@
 		      side="left"
 		      ref="menuDrawer"
 		      show-if-above
-		      elevated
+		      bordered
 		      @vue:mounted="function() { componentStates.navDrawer.mini = (this.localStorage.miniMenu === 'true')}"
 		      :mini="componentStates.navDrawer.mini"
 		    >
-		      
+		      <q-scroll-area class="fit" dark>
 			    <nav class="text-no-wrap">
 			      <q-list :class="{'dense-list-header':!componentStates.navDrawer.mini}" style="height:100%">
 			        <q-item tag="a" th:href="@{/home/}">
 			          <q-item-section avatar>
-			          	<q-icon name="fas fa-globe-europe" title="Planetary Status" ></q-icon>
+			          	<q-icon name="o_home" title="Home" size="md"></q-icon>
 			          </q-item-section>
-			          <q-item-section>Planetary Status</q-item-section>
+			          <q-item-section>Home</q-item-section>
 			        </q-item>
 			        
 			        <q-separator dark></q-separator>
@@ -155,13 +154,13 @@
 			       	    
 				        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/basemanagement/bases/}" >
 				          <q-item-section avatar>
-				          	<q-icon name="fas fa-dice-d20" title="Bases"></q-icon>
+				          	<q-icon name="o_location_on" title="Bases" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Bases</q-item-section>
 				        </q-item>
 				        <q-item tag="a" th:href="@{/basemanagement/equipments/}" >
 				          <q-item-section avatar>
-				          	<q-icon name="fas fa-rocket" title="Equipments"></q-icon>
+				          	<q-icon name="o_square_foot" title="Equipments" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Equipments</q-item-section>
 				        </q-item>
@@ -170,15 +169,22 @@
 				    <q-separator dark th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
 				    
 			       	<div th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}">
-			       	 	<q-item-label header>People</q-item-label>
+			       	 	<q-item-label header>Users</q-item-label>
 			       	 	
 				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}">
 				          <q-item-section avatar>
-				          	<q-icon name="fas fa-user-friends" title="Teams"></q-icon>
+				          	<q-icon name="o_person" title="Accounts" size="md"></q-icon>
+				          </q-item-section>
+				          <q-item-section>
+				           <q-item-label>Accounts</q-item-label>
+				          </q-item-section>
+				        </q-item>
+				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}">
+				          <q-item-section avatar>
+				          	<q-icon name="o_group" title="Teams" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>
 				           <q-item-label>Teams</q-item-label>
-				           <q-item-label caption>Base managers, Workers,...</q-item-label>
 				          </q-item-section>
 				        </q-item>
 				        <q-item th:if="${authz.hasAuthorization('ViewAcademy')}" tag="a" th:href="@{/academy/}">
@@ -196,13 +202,13 @@
 			            
 				        <q-item tag="a" th:href="@{/catalog/suppliers/}">
 				         <q-item-section avatar>
-				          	<q-icon name="fas fa-building" title="Suppliers"></q-icon>
+				          	<q-icon name="o_business" title="Suppliers" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Suppliers</q-item-section>
 				        </q-item>
 				        <q-item th:if="${authz.hasAuthorization('AdmMasterData')}" tag="a" th:href="@{/catalog/masterdata/equipmentCategoryList/}" >
 				          <q-item-section avatar>
-				          	<q-icon name="fas fa-list" title="Master data"></q-icon>
+				          	<q-icon name="mdi-database-cog-outline" title="Master data" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Master data</q-item-section>
 				        </q-item>
@@ -211,11 +217,11 @@
 				    <q-separator dark></q-separator>
 				    
 			       	<div>
-			       	    <q-item-label header>Maintenance</q-item-label>
+			       	    <q-item-label header>Missions</q-item-label>
 			       	    
 				        <q-item tag="a" th:href="@{/maintenance/dashboard/}">
 				         <q-item-section avatar>
-				          	<q-icon name="fas fa-tools" title="Maintenance"></q-icon>
+				          	<q-icon name="o_build" title="Maintenance" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>
 				          	<q-item-label>Maintenance</q-item-label>
@@ -224,7 +230,7 @@
 				        </q-item>
 				        <q-item tag="a" th:href="@{/jobs/}">
 				          <q-item-section avatar>
-				          	<q-icon name="fas fa-tasks" title="Jobs" ></q-icon>
+				          	<q-icon name="o_task" title="Jobs" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Jobs</q-item-section>
 				        </q-item>
@@ -255,7 +261,9 @@
 				     
 				    <q-separator dark></q-separator>
 				    
-		       	    <q-item-label header>Security</q-item-label>
+		       	    <q-item-label header>Marketplace</q-item-label>
+		       	    
+		       	    <!-- 
 			        <q-item tag="a" th:href="@{/digitaltrust/}">
 			          <q-item-section avatar>
 			          	<q-icon name="fas fa-award" title="Digital Trust"></q-icon>
@@ -263,12 +271,12 @@
 			          <q-item-section>Digital Trust</q-item-section>
 			          <!-- tag example 
 			          <q-item-section side><q-chip color="primary" text-color="white" dense square class="q-mr-xs">Blockchain</q-chip></q-item-section>
-			          -->
 			        </q-item>
+			         -->
 				    
 			        <q-item tag="a" th:href="@{/extensionsStore/}">
 			          <q-item-section avatar>
-			          	<q-icon name="fas fa-puzzle-piece" title="Extensions Store"></q-icon>
+			          	<q-icon name="mdi-puzzle-outline" title="Extensions Store" size="md"></q-icon>
 			          </q-item-section>
 			          <q-item-section>Extensions Store</q-item-section>
 			        </q-item>
@@ -296,6 +304,7 @@
 					</q-item>
 			        </q-list>
 			    </nav>
+			  </q-scroll-area>
 		    </q-drawer>
 		    
 			<q-page-container class="row justify-center q-pb-lg" >
@@ -305,11 +314,11 @@
 			
 			<q-page-sticky position="bottom-left" :offset="[18,0]" class="poweredBy">
 				<div>Powered by</div>
-			    <img th:src="@{/static/img/logo-digital-factory-P3-petit.png}"  /> 
+			    <img th:src="@{/static/img/logo-digital-factory-P3-petit.png}"  />
 			</q-page-sticky>
 			<div class="fixed-bottom-right version-watermark">
     			<div class="row items-center">
-					<img th:src="@{/static/img/logo MMC grey v0.1.png}" height="30" class="on-left" alt="logo MMC"/> v1.1.0 &copy; 2153 Mars Mining Corp.
+					v1.1.0 &copy; Klee Group
 				</div>
   			</div>
   			

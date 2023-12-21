@@ -1,6 +1,6 @@
 /******** CSS SPECIFIQUE A CERTAINES PAGES *******/
 :root {
-  	--v-color-body-background: #f5f5f5;
+  	--v-color-body-background: #FFF;
 	--v-color-body-color: #0c0c0c;
 	/*--q-color-primary: #027be3;
 	--q-color-secondary:#fad9c2;*/
@@ -8,7 +8,7 @@
 	--v-primary-invert: #FFFFFF;
 	--q-secondary: #014d81; 
 	--v-secondary-invert: rgba(255, 255, 255, 0.9);
-	--q-accent:	#7babdd;
+	--q-accent:	#FFFFFF;
 	--v-accent-invert:	#000000;
 	
 	--q-dark: #1c3754;
@@ -28,6 +28,7 @@ body {
   background: white !important;
   background: var(--v-color-body-background) !important;
   color: var(--v-color-body-color) !important;
+  font-family: "Poppins", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 img {
@@ -48,10 +49,73 @@ img {
 	color: var(--v-primary-invert);
 }
 
-/* */
+/* table */
+
+.q-table__title, .q-card__section h1, .q-card__section.text-h6 {
+  font-size: 22px;
+}
+
+.q-table__top, .q-card__section.text-h6 {
+  padding: 5px 16px;
+}
+
+.q-card, .q-table__container {
+  border-top: 3px var(--q-secondary) solid;
+}
+
+.q-table tr:hover td {
+  overflow: visible; 
+  white-space: normal;
+  /*height:auto;  /* just added this line */
+}
+
+.q-table thead tr, .q-table tbody td {
+  height: 35px;
+}
+
+.table-secondary thead {
+  background: #E9E9E9 !important;
+}
+
+.table-secondary th {
+  color: black !important;
+  transition: var(--q-transition-duration);
+}
+
+.table-secondary th:hover {
+  background-color: #D3D3D3;
+}
+
+.q-table td, .q-table th {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.q-table th {
+  padding: 5px 16px;
+}
+
+.q-table th.sortable:hover, .q-table th.sorted {
+  opacity: 1;
+}
+
+.q-table th.sortable {
+  opacity: 0.9;
+}
+
 
 .q-table th.sortable:hover .q-table__sort-icon {
   opacity: 0.9;
+}
+
+.q-table__bottom {
+  min-height: 40px;
+  padding: 0px 16px;
+}
+.q-table__bottom:not(.q-table__bottom--nodata) {
+  background-color: #F7F7F7;
 }
 
 /* width */
@@ -250,31 +314,6 @@ nav a.q-item, .nav a.q_item {
     		box-shadow: 3px 7px 5px rgba(0,0,0,.2), 1px 3px 2px rgba(0,0,0,.14), 0px 1px 1px -2px rgba(0,0,0,.12);
 }
 
-.q-table tr:hover td {
-    overflow: visible; 
-    white-space: normal;
-    /*height:auto;  /* just added this line */
-}
-
-
-.q-table td, .q-table th {
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.q-table th {
-    padding: 16px; /** same as block */
-}
-
-.q-table th.sortable:hover, .q-table th.sorted {
-    opacity: 1;
-}
-
-.q-table th.sortable {
-    opacity: 0.9;
-}
 
 @media (min-width: 1500px) {
 .row  .marsCard {
@@ -328,6 +367,10 @@ nav a.q-item, .nav a.q_item {
 	white-space: nowrap;
 }
 
+.header-tabs a {
+	text-transform: inherit;
+}
+
 .text-bigger{
 	font-size: 170%;
 }
@@ -376,10 +419,14 @@ nav a.q-item, .nav a.q_item {
 }
 .poweredBy {
 	font-style: italic;
+	width: 120px;
+	backdrop-filter: blur(2px);
+	background-color: rgba(255,255,255, 0.25);
+	border-radius: 5px;
 }
 
 .poweredBy img {
-	width:40%;
+	width:100%;
 }
 /*
 .q-stepper.noContent > .q-stepper-step > .q-stepper-step-content {

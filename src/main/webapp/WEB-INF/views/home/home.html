@@ -15,81 +15,62 @@
 	<body>
 		<section layout:fragment="page-container">
 		<q-page padding class="row col-12 q-col-gutter-md col justify-center" >			
-					<div class="col-lg-3 col-md-6 col-12">
-						<q-card>
-							<q-card-section class="text-h6 bg-secondary text-white">Bases</q-card-section>
-							<q-card-section class="row justify-center items-center q-pt-none" style="height: 100px;">
-								<span class="text-secondary" style="font-size:5em;" vu:text="${model.basesSummary.baseCount}"></span> 
-								<q-icon name="fas fa-dice-d20" color="grey on-right" size="4em"></q-icon>
-							</q-card-section>
-						</q-card>
+			<div class="col-lg-3 col-md-6 col-12">
+				<vu:block title="Bases" header_th:classappend="text-center" content_th:class="'q-card__section row justify-center items-center'" card_style="height: 150px;">
+					<span class="text-secondary" style="font-size:5em;" vu:text="${model.basesSummary.baseCount}"></span> 
+					<q-icon name="fas fa-dice-d20" color="blue-grey-7 on-right" size="4em"></q-icon>
+				</vu:block>
+			</div>
+			<div class="col-lg-3 col-md-6 col-12">
+				<vu:block title="Global Health Level" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+					<q-rating readonly th::model-value="${model.basesSummary.baseMeanHealth} / 100 * 3 + 1" :max="3" size="xl" icon="favorite" color="red"></q-rating>
+				</vu:block>
+			</div>
+			<div class="col-lg-3 col-md-6 col-12">
+				<vu:block title="Equipment" header_th:classappend="text-center" content_th:class="'q-card__section column items-center'" card_style="height: 150px;">
+					<div class="row text-secondary indicator" vu:text="|${model.basesSummary.onlineEquipmentPercent} %|" ></div>
+					<div class="row text-blue-grey-7 indicator-title">Equipments online</div>
+				</vu:block>
+			</div>
+			<div class="col-lg-3 col-md-6 col-12">
+				<vu:block title="Maintenance" header_th:classappend="text-center" content_th:class="'q-card__section column items-center'" card_style="height: 150px;">
+					<div class="row text-secondary indicator" vu:text="${model.basesSummary.openedTickets}" ></div>
+					<div class="row text-blue-grey-7 indicator-title">Opened Tickets</div>
+				</vu:block>
+			</div>
+			<div class="col-12" >
+				<vu:include-data object="bases" field="geoLocation" />
+				<vu:include-data object="bases" field="name" />
+				<v-map tabindex="1" style="width:100%; height: 600px;" id="map" >
+					<v-map-layer marker-color="#027BE3" :list="vueData.bases" field="geoLocation" name-field="name" th:base-url="@{/api/bases/}"></v-map-layer>
+				</v-map>
+			</div>
+			<div class="col-lg-6 col-12">
+				<vu:block title="Supplies" header_th:classappend="text-center" content_th:classappend="q-gutter-sm">
+					<div class="row">
+						<span class="col-1 text-blue-8 justify-between"><q-icon name="fas fa-tint" color="blue-8"></q-icon> 75%</span>
+						<q-linear-progress class="col" :value="0.75" stripe color="blue-8" style="height: 20px"></q-linear-progress> 
 					</div>
-					<div class="col-lg-3 col-md-6 col-12">
-						<q-card>
-							<q-card-section class="text-h6 bg-secondary text-white">Global Health Level</q-card-section>
-							<q-card-section class="row justify-center  q-pt-none" style="height: 100px;">
-								<q-rating readonly th::value="${model.basesSummary.baseMeanHealth} / 100 * 3 + 1" :max="3" size="3em" icon="favorite" color="red"></q-rating>
-							</q-card-section>
-						</q-card>
+					<div class="row">
+						<span class="col-1 text-amber-9"><q-icon name="fas fa-bolt" color="amber-9"></q-icon> 98%</span>
+						<q-linear-progress class="col" :value="0.98" stripe  color="amber-9" style="height: 20px"></q-linear-progress>
 					</div>
-					<div class="col-lg-3 col-md-6 col-12" >
-						<q-card>
-							<q-card-section class="text-h6 bg-secondary text-white">Equipment</q-card-section>
-							<q-card-section  class="q-pt-none" style="height: 100px;">
-								<div class="column items-center">
-									<div class="row text-secondary indicator" vu:text="|${model.basesSummary.onlineEquipmentPercent} %|" ></div>
-									<div class="row text-grey indicator-title">Equipments online</div>
-								</div>
-							</q-card-section>
-						</q-card>
+					<div class="row">
+						<span class="col-1 text-blue-grey-7"><q-icon name="fas fa-cloud" color="blue-grey-7"></q-icon> 20%</span>
+						<q-linear-progress class="col" :value="0.20" stripe  color="blue-grey-7" style="height: 20px"></q-linear-progress>
 					</div>
-					<div class="col-lg-3 col-md-6 col-12">
-						<q-card>
-							<q-card-section class="text-h6 bg-secondary text-white">Maintenance</q-card-section>
-							<q-card-section class="q-pt-none" style="height: 100px;">
-								<div class="column items-center">
-									<div class="row text-secondary indicator" vu:text="${model.basesSummary.openedTickets}" ></div>
-									<div class="row text-grey indicator-title">Opened Tickets</div>
-								</div>
-							</q-card-section>
-						</q-card>
-					</div>
-				<div class="col-12" >
-					<vu:include-data object="bases" field="geoLocation" />
-					<vu:include-data object="bases" field="name" />
-					<v-map tabindex="1" style="width:100%; height: 600px;" id="map" >
-						<v-map-layer marker-color="#027BE3" :list="vueData.bases" field="geoLocation" name-field="name" th:base-url="@{/api/bases/}"></v-map-layer>
-					</v-map>
-				</div>
-					<div class="col-lg-6 col-12">
-						<q-card>
-							<q-card-section class="text-h6 bg-secondary text-white">Supplies</q-card-section>
-							<q-card-section class="q-gutter-sm">
-								<div class="row q-mt-lg">
-									<span class="col-1 text-blue justify-between"><q-icon name="fas fa-tint" color="blue"></q-icon> 75%</span>
-									<q-linear-progress class="col" :value="0.75" stripe color="blue" style="height: 20px"></q-linear-progress> 
-								</div>
-								<div class="row">
-									<span class="col-1 text-yellow"><q-icon name="fas fa-bolt" color="yellow"></q-icon> 98%</span>
-									<q-linear-progress class="col" :value="0.98" stripe  color="yellow" style="height: 20px"></q-linear-progress>
-								</div>
-								<div class="row">
-									<span class="col-1 text-grey"><q-icon name="fas fa-cloud" color="grey"></q-icon> 20%</span>
-									<q-linear-progress class="col" :value="0.20" stripe  color="grey" style="height: 20px"></q-linear-progress>
-								</div>
-							</q-card-section>
-						</q-card>
-					</div>
-					<div class="col-lg-6 col-12">
-						<vu:table list="lastWorkOrders" componentId="lastWorkOrders" rowsPerPage="3" >
-								<vu:column field="name" />
-								<vu:column field="dateCreated" label="Creation Date" />
-								<vu:column field="dateClosed" label="Closing Date" />
-								<vu:column name="status" label="Status" >
-									<vu:field-read field="workOrderStatusId" list="workOrderStatus" listKey="workOrderStatusId" listDisplay="label" />
-								</vu:column>
-							</vu:table>
-					</div>
+				</vu:block>
+			</div>
+			<div class="col-lg-6 col-12">
+				<vu:table list="lastWorkOrders" componentId="lastWorkOrders" rowsPerPage="3" >
+					<vu:column field="name" />
+					<vu:column field="dateCreated" label="Creation Date" />
+					<vu:column field="dateClosed" label="Closing Date" />
+					<vu:column name="status" label="Status" >
+						<vu:field-read field="workOrderStatusId" list="workOrderStatus" listKey="workOrderStatusId" listDisplay="label" />
+					</vu:column>
+				</vu:table>
+			</div>
 		</q-page>
 		</section>
 	</body>

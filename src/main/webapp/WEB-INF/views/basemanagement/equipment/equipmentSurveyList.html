@@ -27,7 +27,7 @@
 		</section>
 		
 		<section layout:fragment="content">
-			<vu:table list="surveys" color="primary" componentId="surveyTable"
+			<vu:table list="surveys" componentId="surveyTable"
 				th:tr_@click.native="|goTo('@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/}' + props.row.esuId)|" tr_class="nav">
 				<vu:include-data object="surveys" field="esuId" />
 				<vu:column field="dateAnswer" sortable="true"/>

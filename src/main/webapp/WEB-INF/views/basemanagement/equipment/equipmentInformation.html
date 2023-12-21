@@ -21,13 +21,13 @@
 		</div>
 		<div layout:fragment="content-header-title" id="equipmentTitle">
 			<span class="text-bigger" vu:text="${model.equipment.name?:'New Equipment'}"></span> <br />
-			<span class="text-smaller" vu:text="${model.equipment.code}"></span>
+			<span class="text-small" vu:text="${model.equipment.code}"></span>
 		</div>
 		<div th:if="${!model.modeCreate}" layout:fragment="content-header-actions">
 			<vu:button-link th:if="${model.modeEdit}" icon="fas fa-ban" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}" title="Cancel"
 				class="text-secondary-inverted on-left" flat round size="lg" />
-			<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" title="Edit" class="on-left" />
-			<v-comments th:base-url="@{/api/}" concept="Equipment" th:id="${model.equipment.equipmentId}" :connected-account="vueData.connectedUser.personId"></v-comments>
+			<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" title="Edit" class="on-left" />
+			<v-comments th:base-url="@{/api/}" concept="Equipment" flat icon="o_comment" icon-none="o_add_comment" text-color="secondary-inverted" th:id="${model.equipment.equipmentId}" :connected-account="vueData.connectedUser.personId"></v-comments>
 		</div>
 		<div th:if="${!model.modeCreate}" layout:fragment="content-header-tabs">
 			<vu:button-link class="active" flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}" />
@@ -39,23 +39,27 @@
 		</div>
 	</section>
 	<section layout:fragment="content">
-		<div id="health" class="col-md-3 col-xs-12" th:if="${!model.modeCreate}">
+		<div id="health" class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
 			<q-card class="bg-white text-center">
-				<q-card-section class="indicator-title text-faded">Health</q-card-section>
 				<q-card-section>
-				 <q-knob th::value="${model.equipment.healthLevel}" :min="0" :max="100" color="positive" :readonly="true" show-value size="80px" :thickness="0.15"></q-knob> 
-				</q-card-section>
+				 	<q-knob th::value="${model.equipment.healthLevel}" :min="0" :max="100" color="positive" :readonly="true" show-value size="60px" :thickness="0.2"></q-knob>
+					<div class="indicator-title text-faded">Health</div>
+				 </q-card-section>
 			</q-card>
 		</div>
-		<div class="col-md-9 col-xs-12" th:if="${!model.modeCreate}">
+		<div class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
 			<q-card class="bg-white row justify-around items-center" style="height:100%;">
 				<div class="text-center">
 					<span class="indicator text-positive" vu:text="${model.equipmentMaintenanceOverview.openedTickets}" /><br />
-					<span class="indicator-title text-faded">Opened Tickets(s)</span>
+					<span class="indicator-title text-faded" vu:text="|Opened Ticket${model.equipmentMaintenanceOverview.getTypedValue('openedTickets') > 1 ?'s':''}|"></span>
 				</div>
+			</q-card>
+		</div>
+		<div class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
+			<q-card class="bg-white row justify-around items-center" style="height:100%;">
 				<div class="text-center">
 					<span class="indicator text-positive" vu:text="${model.equipmentMaintenanceOverview.workOrdersInprogress}" /><br />
-					<span class="indicator-title text-faded">WorkOrder(s) in progress</span>
+					<span class="indicator-title text-faded" vu:text="|WorkOrder${model.equipmentMaintenanceOverview.getTypedValue('workOrdersInprogress') > 1 ?'s':''} in progress|"></span>
 				</div>
 			</q-card>
 		</div>

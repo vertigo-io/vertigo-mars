@@ -175,6 +175,7 @@ modules:
         - webservices.token:
             tokens: mars-api
         - webservices.rateLimiting:
+            limitValue: 600
         - webservices.security:
         - webservices.swagger:
         - authentication.oidc:

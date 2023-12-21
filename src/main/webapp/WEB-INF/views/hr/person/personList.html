@@ -10,7 +10,7 @@
 			<div class="m-title text-h6 self-center">{{vueData.persons.length}} Persons</div>
 			<div class="col"></div>
 			<div class="row justify-end items-center text-primary">
-				<vu:button-link url="@{/hr/person/new}" title="Add person" icon="fas fa-user" color="primary" round size="lg" class="on-left" >+</vu:button-link>
+				<vu:button-link url="@{/hr/person/new}" title="Add person" icon="fas fa-user" text-color="primary" flat round size="lg" class="on-left" >+</vu:button-link>
 				<div class="vertical-separator"></div>
 				<q-btn round icon="fas fa-grip-horizontal" type="a" th:href="@{?renderer=cards}" th::flat="${model.listRenderer != 'cards'}"> </q-btn>
 				<q-btn round icon="fas fa-table" type="a" th:href="@{?renderer=table}" th::flat="${model.listRenderer != 'table'}"> </q-btn>
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<th:block th:if="${model.listRenderer == 'table'}">
-			<vu:table list="persons" color="primary" componentId="personsTable" sortUrl="@{/hr/persons/_sort}"
+			<vu:table list="persons" componentId="personsTable" sortUrl="@{/hr/persons/_sort}" rowsPerPage="15"
 				th:tr_@click.native="|goTo('@{/hr/person/}'+props.row.personId)|" tr_class="nav">
 				<vu:include-data object="persons" field="personId" />
 				<vu:column field="firstName" sortable="true" />

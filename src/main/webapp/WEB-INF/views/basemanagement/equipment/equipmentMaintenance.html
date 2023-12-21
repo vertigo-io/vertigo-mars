@@ -11,7 +11,7 @@
 	<body>
 	
 		<section layout:fragment="content-nav">
-			        <q-item tag="a" href="#openedTickets">Opened tickets</q-item>
+			        <q-item tag="a" href="#openedTickets">Open tickets</q-item>
 			        <q-item tag="a" href="#closedTickets">Closed tickets</q-item>
 		</section>
 		
@@ -32,7 +32,7 @@
 		</section>
 		
 		<section layout:fragment="content">
-			<vu:table title="Open Tickets" list="openedTickets" id="openedTickets" componentId="openedTickets" rowsPerPage="10"
+			<vu:table title="Open tickets" list="openedTickets" id="openedTickets" componentId="openedTickets" rowsPerPage="10"
 				th:tr_@click.native="|goTo('@{/maintenance/ticket/}'+props.row.ticketId)|" tr_class="nav" >
 				<vu:include-data object="openedTickets" field="ticketId" />
 				<vu:column field="code" />
@@ -40,7 +40,7 @@
 				<vu:column field="dateCreated" />
 				<vu:column field="dateClosed" />
 			</vu:table>
-			<vu:table title="Closed Tickets" list="closedTickets" id="closedTickets" componentId="closedTickets" rowsPerPage="10"
+			<vu:table title="Closed tickets" list="closedTickets" id="closedTickets" componentId="closedTickets" rowsPerPage="10"
 				th:tr_@click.native="|goTo('@{/maintenance/ticket/}'+props.row.ticketId)|" tr_class="nav" >
 				<vu:include-data object="closedTickets" field="ticketId" />	
 				<vu:column field="code" />

@@ -20,8 +20,8 @@
 		</div>
 		<div layout:fragment="content-header-title" id="baseTitle">
 			<span class="text-bigger" vu:text="${model.base.name}"></span> <br />
-			<span class="text-smaller ne-mini" vu:text="${model.base.code}"></span> <br class="ne-mini" />
-			<span class="text-smaller" vu:text="${model.baseTypes.getById('baseTypeId', model.base.baseTypeId).label}"></span>
+			<span class="text-small ne-mini" vu:text="${model.base.code}"></span> <br class="ne-mini" />
+			<span class="text-small" vu:text="${model.baseTypes.getById('baseTypeId', model.base.baseTypeId).label}"></span>
 		</div>
 		<div layout:fragment="content-header-actions">
 			<vu:button-link th:if="${model.modeEdit}" class="text-secondary-inverted on-left" flat round size="lg" icon="fas fa-ban"
@@ -44,30 +44,40 @@
 		</div>
 	</section>
 	<section layout:fragment="content">
-		<div id="health" class="col-md-3 col-xs-12" th:if="${!model.modeCreate}">
-			<q-card class="bg-white text-center">
-				 <q-card-section class="indicator-title text-faded">Health</q-card-section>
-				 <q-card-section>
-				 	<q-knob th::value="${model.base.healthLevel}" :min="0" :max="100" color="positive" :readonly="true" show-value size="80px" :thickness="0.15"></q-knob>
-				 </q-card-section>
-			</q-card>
-		</div>
-		<div class="col-md-9 col-xs-12" th:if="${!model.modeCreate}">
-			<q-card class="bg-white row justify-around items-center" style="height:100%;">
-			<div class="text-center">
-				<span class="indicator text-secondary" vu:text="${model.baseOverview.equipmentCount}" /><br />
-				<span class="indicator-title text-faded">Equipment(s)</span>
+		<th:block th:if="${!model.modeCreate}">
+			<div class="col-md-3 col-xs-12">
+				<q-card class="bg-white text-center">
+					 <q-card-section>
+					 	<q-knob th::value="${model.base.healthLevel}" :min="0" :max="100" color="positive" :readonly="true" show-value size="60px" :thickness="0.2"></q-knob>
+						<div class="indicator-title text-faded">Health</div>
+					 </q-card-section>
+				</q-card>
 			</div>
-			<div class="text-center">
-				<span class="indicator text-secondary" vu:text="${model.baseOverview.openedTickets}" /><br />
-				<span class="indicator-title text-faded">Open Tickets(s)</span>
+			<div class="col-md-3 col-xs-12">
+				<q-card class="bg-white row justify-around items-center" style="height:100%;">
+					<div class="text-center">
+						<span class="indicator text-secondary" vu:text="${model.baseOverview.equipmentCount}" /><br />
+						<span class="indicator-title text-faded" vu:text="|Equipment${model.baseOverview.getTypedValue('equipmentCount') > 1 ?'s':''}|"></span>
+					</div>
+				</q-card>
 			</div>
-			<div class="text-center">
-				<span class="indicator text-secondary" vu:text="${model.baseOverview.workOrdersInprogress}" /><br />
-				<span class="indicator-title text-faded">Work Order(s) in progress</span>
+			<div class="col-md-3 col-xs-12">
+				<q-card class="bg-white row justify-around items-center" style="height:100%;">
+					<div class="text-center">
+						<span class="indicator text-secondary" vu:text="${model.baseOverview.openedTickets}" /><br />
+						<span class="indicator-title text-faded" vu:text="|Open Ticket${model.baseOverview.getTypedValue('openedTickets') > 1 ?'s':''}|"></span>
+					</div>
+				</q-card>
 			</div>
-			</q-card>
-		</div>
+			<div class="col-md-3 col-xs-12">
+				<q-card class="bg-white row justify-around items-center" style="height:100%;">
+					<div class="text-center">
+						<span class="indicator text-secondary" vu:text="${model.baseOverview.workOrdersInprogress}" /><br />
+						<span class="indicator-title text-faded" vu:text="|Work Order${model.baseOverview.getTypedValue('workOrdersInprogress') > 1 ?'s':''} in progress|"></span>
+					</div>
+				</q-card>
+			</div>
+		</th:block>
 		<vu:block id="general" title="General Information">
 			<vu:slot name="actions_slot" th:if="${model.modeEdit}">
 				<q-btn th:@click="|httpPostAjax('@{_ajaxValidation}', vueDataParams(['base']), { onSuccess: function(response) {$q.notify({message: 'test', type :'positive'})}})|" color="primary" label="Ajax Validation" ></q-btn>

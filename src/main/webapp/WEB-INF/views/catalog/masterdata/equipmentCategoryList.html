@@ -9,7 +9,7 @@
 		<div class="row q-mb-md text-primary">
 			<div class="m-title text-h6 self-center">{{vueData.categories.length}} Equipment categories</div>
 		</div>
-		<vu:table list="categories" color="primary" componentId="categoriesTable" sortUrl="@{/catalog/masterdata/equipmentCategoryList/_sort}"
+		<vu:table list="categories" componentId="categoriesTable" sortUrl="@{/catalog/masterdata/equipmentCategoryList/_sort}"
 			th:tr_@click.native="|goTo('@{/catalog/masterdata/equipmentCategory/}'+props.row.equipmentCategoryId)|" tr_class="nav">
 			<vu:include-data object="categories" field="equipmentCategoryId" />
 			<vu:column field="label" sortable="true" label="Label"/>

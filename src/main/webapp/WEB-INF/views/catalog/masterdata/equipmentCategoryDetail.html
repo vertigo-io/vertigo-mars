@@ -49,7 +49,7 @@
 			
 			<vu:include-data object="champs" field="isDefault" />
 			<vu:include-data object="champs" field="isDisplay" />
-			<vu:table id="surveyFields" title="Survey fields" list="champs" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md" color="primary">
+			<vu:table id="surveyFields" title="Survey fields" list="champs" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md">
 				<vu:slot name="top_right_slot">
 					<vu:button th:if="${!model.modeReadOnly}" icon="add" title="Add field" @click="addItem()"/>
 				</vu:slot>
@@ -94,7 +94,8 @@
 				<q-card-section class="q-layout-padding">
 				<vu:grid>
 					<vu:select-edit object="champEdit" field="typeDeChamp" label="Field type" list="typeDeChamps" valueField="nom" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
-					@update:model-value="refreshItem()" />
+					@update:model-value="refreshItem()" 
+					searchable="true"/>
 					
 					<vu:text-field-edit object="champEdit" field="codeChamp" label="Field code"
 					:hint="(componentStates.itemModal.editIndex == -1)?`Unique code in the form relating to the expected information (e.g. name, birthname, lastcheck date, etc.)`:``" 
@@ -102,8 +103,8 @@
 	                aria-title="Technical and unique code of the field"
 					:disable="componentStates.itemModal.editIndex != -1 || vueData.champEdit.typeDeChamp==null" />
 	                
-	                <vu:grid-cell v-if="vueData.champEdit.typeDeChamp === 'Motif'">
-						<vu:select-edit object="champEdit" field="listId" list="taxonomyTypes" valueField="motId" label="Liste de valeurs" required="true" />
+	                <vu:grid-cell v-if="vueData.champEdit.typeDeChamp === 'Taxonomie'">
+						<vu:select-edit object="champEdit" field="listId" list="taxonomyTypes" valueField="motId" label="List of values" required="true" />
 					</vu:grid-cell>
 					<vu:grid-cell>
 					    <vu:text-field-edit object="champEdit" field="libelle" label="Label"/>
@@ -134,13 +135,13 @@
 				</vu:grid>
 				</q-card-section>
 				<q-card-section class="flex justify-end">
-					<q-btn @click="saveEditItem" color="primary" label="Save" rounded v-alert-unsaved-updates="'champs'"></q-btn>
+					<q-btn @click="saveEditItem" color="primary" label="Save" rounded></q-btn>
 				</q-card-section>
 				</q-card> </q-dialog>
 			</th:block>
 				
 			<q-page-sticky position="bottom-right">
-				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
+				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" v-alert-unsaved-updates="'champs'" action="@{_save}" size="lg" color="primary" />
 			</q-page-sticky>
 		</section>
 	</body>

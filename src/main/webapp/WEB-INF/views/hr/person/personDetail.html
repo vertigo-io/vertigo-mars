@@ -23,7 +23,7 @@
 				</div>
 				<div layout:fragment="content-header-title">
 					<span class="text-bigger" vu:text="${model.modeCreate?'New Person':model.person.fullName}"></span> 
-					<br/><span th:if="${!model.modeCreate}" class="text-smaller">Base Manager</span>
+					<br/><span th:if="${!model.modeCreate}" class="text-small">Base Manager</span>
 				</div>
 				<div layout:fragment="content-header-actions">
 					<vu:button-link th:if="${model.modeEdit}"  url="@{/hr/person/} + ${model.person.personId}" :round size="lg" color="primary" icon="fas fa-ban" :flat title="Cancel" class="on-left"  />					
