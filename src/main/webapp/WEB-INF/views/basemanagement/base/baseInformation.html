@@ -26,14 +26,13 @@
 		<div layout:fragment="content-header-actions">
 			<vu:button-link th:if="${model.modeEdit}" class="text-secondary-inverted on-left" flat round size="lg" icon="fas fa-ban"
 				url="@{/basemanagement/base/information/} + ${model.base.baseId}" title="Cancel"/>
-			<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.base,'write')}" action="@{_edit}" round size="lg" color="primary" icon="edit" title="Edit" class="on-left" />
+			<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.base,'write')}" action="@{_edit}" flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" title="Edit" class="on-left" />
 			<th:block id="baseActions">
 				<vu:buttons-group sm="0" md="2" moreLabel="More actions">
-					<vu:button-link th:if="${authz.hasAuthorization('Equipment$read')}" url="@{/basemanagement/equipments/}" title="See all equipments" icon="fas fa-rocket" color="primary" round size="lg" class="on-left" />
-					<vu:button-link th:if="${authz.hasOperation(model.base,'addEqui')}" url="@{/basemanagement/equipment/new}" title="Add equipment" icon="fas fa-rocket" color="primary" round size="lg" class="on-left">+</vu:button-link>
-					<vu:button-link th:if="${authz.hasOperation(model.base,'write')}" url="@{/basemanagement/newPicture}" title="Add photo" icon="fas fa-image" color="primary" round size="lg" class="on-left">+</vu:button-link>
-					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_archive" title="Archive base" icon="fas fa-archive" color="primary" round size="lg" class="on-left"/>
-					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_delete" title="Delete base" icon="fas fa-trash-alt" color="primary" round size="lg" class="on-left"/>
+					<vu:button-link th:if="${authz.hasOperation(model.base,'addEqui')}" url="@{/basemanagement/equipment/new}" title="Add equipment" icon="mdi-cube-outline" color="secondary-inverted" round flat size="lg" class="on-left">+</vu:button-link>
+					<vu:button-link th:if="${authz.hasOperation(model.base,'write')}" url="@{/basemanagement/newPicture}" title="Add photo" icon="mdi-file-image-outline" color="secondary-inverted" round flat size="lg" class="on-left">+</vu:button-link>
+					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_archive" title="Archive base" icon="mdi-archive-lock-outline" color="secondary-inverted" round flat size="lg" class="on-left"/>
+					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_delete" title="Delete base" icon="mdi-delete-forever-outline" color="secondary-inverted" round flat size="lg" class="on-left"/>
 				</vu:buttons-group>
 			</th:block>
 		</div>

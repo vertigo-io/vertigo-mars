@@ -37,7 +37,12 @@
 					</div>
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="col q-mx-xl">
-						<v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands> 
+<!-- 						<v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands>  -->
+						<q-input th:attr="objectKey=${model.vContext['componentStates'].addComponentState('search').addPrimitive('criteria','')}"
+								autofocus placeholder="Search" v-model="componentStates.search.criteria" outlined bg-color="white" dense style="transition: var(--q-transition-duration)" :style="componentStates.search.criteria.length > 0 ? 'max-width: 800px;' : 'max-width: 320px'"
+								th:@keydown.enter="|componentStates.search.criteria.length > 0 ? goTo('@{/basemanagement/equipments/?criteria=}'+componentStates.search.criteria):''|" >
+							<template v-slot:prepend><q-icon name="search" ></q-icon></template>
+						</q-input>
 					</div>
 					<div>
 						<v-notifications th:base-url="@{/api/}" :type-icon-map="notificationTypes()" ></v-notifications>
@@ -128,19 +133,18 @@
         			
   			
   			<q-drawer
-  			  content-class="bg-white text-primary"
+  			  class="menu"
   			  dark
 		      side="left"
 		      ref="menuDrawer"
 		      show-if-above
-		      bordered
 		      @vue:mounted="function() { componentStates.navDrawer.mini = (this.localStorage.miniMenu === 'true')}"
 		      :mini="componentStates.navDrawer.mini"
 		    >
 		      <q-scroll-area class="fit" dark>
 			    <nav class="text-no-wrap">
 			      <q-list :class="{'dense-list-header':!componentStates.navDrawer.mini}" style="height:100%">
-			        <q-item tag="a" th:href="@{/home/}">
+			        <q-item tag="a" th:href="@{/home/}" th:class="${model.requestURI.equals('__@{/home/}__') ? 'active':''}">
 			          <q-item-section avatar>
 			          	<q-icon name="o_home" title="Home" size="md"></q-icon>
 			          </q-item-section>
@@ -152,13 +156,13 @@
 			       	<div>
 			       	    <q-item-label header>Base managment</q-item-label>
 			       	    
-				        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/basemanagement/bases/}" >
+				        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/basemanagement/bases/}" th:class="${model.requestURI.startsWith('__@{/basemanagement/base}__') ? 'active':''}" >
 				          <q-item-section avatar>
 				          	<q-icon name="o_location_on" title="Bases" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Bases</q-item-section>
 				        </q-item>
-				        <q-item tag="a" th:href="@{/basemanagement/equipments/}" >
+				        <q-item tag="a" th:href="@{/basemanagement/equipments/}" th:class="${model.requestURI.startsWith('__@{/basemanagement/equipment}__') ? 'active':''}" >
 				          <q-item-section avatar>
 				          	<q-icon name="mdi-cube-outline" title="Equipments" size="md"></q-icon>
 				          </q-item-section>
@@ -171,7 +175,7 @@
 			       	<div th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}">
 			       	 	<q-item-label header>Users</q-item-label>
 			       	 	
-				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}">
+				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}" th:class="${model.requestURI.startsWith('__@{/hr/person}__') ? 'active':''}">
 				          <q-item-section avatar>
 				          	<q-icon name="o_person" title="Accounts" size="md"></q-icon>
 				          </q-item-section>
@@ -187,7 +191,7 @@
 				           <q-item-label>Teams</q-item-label>
 				          </q-item-section>
 				        </q-item>
-				        <q-item th:if="${authz.hasAuthorization('ViewAcademy')}" tag="a" th:href="@{/academy/}">
+				        <q-item th:if="${authz.hasAuthorization('ViewAcademy')}" tag="a" th:href="@{/academy/}" th:class="${model.requestURI.startsWith('__@{/academy/}__') ? 'active':''}">
 				          <q-item-section avatar>
 				          	<q-icon name="fas fa-graduation-cap"></q-icon>
 				          </q-item-section>
@@ -200,13 +204,13 @@
 			        <div>
 			            <q-item-label header>Catalog</q-item-label>
 			            
-				        <q-item tag="a" th:href="@{/catalog/suppliers/}">
+				        <q-item tag="a" th:href="@{/catalog/suppliers/}" th:class="${model.requestURI.startsWith('__@{/catalog/supplier}__') ? 'active':''}">
 				         <q-item-section avatar>
 				          	<q-icon name="mdi-office-building-outline" title="Suppliers" size="md"></q-icon>
 				          </q-item-section>
 				          <q-item-section>Suppliers</q-item-section>
 				        </q-item>
-				        <q-item th:if="${authz.hasAuthorization('AdmMasterData')}" tag="a" th:href="@{/catalog/masterdata/equipmentCategoryList/}" >
+				        <q-item th:if="${authz.hasAuthorization('AdmMasterData')}" tag="a" th:href="@{/catalog/masterdata/equipmentCategoryList/}" th:class="${model.requestURI.startsWith('__@{/catalog/masterdata/}__') ? 'active':''}">
 				          <q-item-section avatar>
 				          	<q-icon name="mdi-database-cog-outline" title="Master data" size="md"></q-icon>
 				          </q-item-section>
@@ -219,7 +223,7 @@
 			       	<div>
 			       	    <q-item-label header>Missions</q-item-label>
 			       	    
-				        <q-item tag="a" th:href="@{/maintenance/dashboard/}">
+				        <q-item tag="a" th:href="@{/maintenance/dashboard/}" th:class="${model.requestURI.startsWith('__@{/maintenance/}__') ? 'active':''}">
 				         <q-item-section avatar>
 				          	<q-icon name="o_build" title="Maintenance" size="md"></q-icon>
 				          </q-item-section>
@@ -228,7 +232,7 @@
 				          	<q-item-label caption>Tickets, Work Orders</q-item-label>
 				          </q-item-section>
 				        </q-item>
-				        <q-item tag="a" th:href="@{/jobs/}">
+				        <q-item tag="a" th:href="@{/jobs/}" th:class="${model.requestURI.startsWith('__@{/jobs/}__') ? 'active':''}">
 				          <q-item-section avatar>
 				          	<q-icon name="o_task" title="Jobs" size="md"></q-icon>
 				          </q-item-section>
@@ -269,12 +273,11 @@
 			          	<q-icon name="fas fa-award" title="Digital Trust"></q-icon>
 			          </q-item-section>
 			          <q-item-section>Digital Trust</q-item-section>
-			          <!-- tag example 
 			          <q-item-section side><q-chip color="primary" text-color="white" dense square class="q-mr-xs">Blockchain</q-chip></q-item-section>
 			        </q-item>
 			         -->
 				    
-			        <q-item tag="a" th:href="@{/extensionsStore/}">
+			        <q-item tag="a" th:href="@{/extensionsStore/}" th:class="${model.requestURI.startsWith('__@{/extensionsStore/}__') ? 'active':''}">
 			          <q-item-section avatar>
 			          	<q-icon name="mdi-puzzle-outline" title="Extensions Store" size="md"></q-icon>
 			          </q-item-section>
@@ -293,13 +296,13 @@
 			        <q-item v-if="componentStates.navDrawer.mini" clickable
 							@click="componentStates.navDrawer.mini = false; $event.view.window.localStorage.miniMenu = 'false'" title="Expand menu">
 							<q-item-section avatar>
-			          			<q-icon name="arrow_right"></q-icon>
+			          			<q-icon name="keyboard_double_arrow_right"></q-icon>
 			          		</q-item-section>
 					</q-item>
 					 <q-item v-if="!componentStates.navDrawer.mini" clickable
 							@click="componentStates.navDrawer.mini = true; $event.view.window.localStorage.miniMenu = 'true'" title="Minify menu">
 						<q-item-section side>
-			          		<q-icon name="arrow_left"></q-icon>
+			          		<q-icon name="keyboard_double_arrow_left"></q-icon>
 			          	</q-item-section>
 					</q-item>
 			        </q-list>
@@ -312,13 +315,15 @@
 			</q-page-container>
 			
 			
-			<q-page-sticky position="bottom-left" :offset="[18,0]" class="poweredBy">
-				<div>Powered by</div>
-			    <img th:src="@{/static/img/logo-digital-factory-P3-petit.png}"  />
+			<q-page-sticky position="bottom-left" :offset="[8,0]" class="poweredBy">
+				<a href="https://github.com/vertigo-io/" target="_blank">
+					<div>Powered by</div>
+				    <img th:src="@{/static/img/logo_vertigo.png}" />
+				</a>
 			</q-page-sticky>
 			<div class="fixed-bottom-right version-watermark">
     			<div class="row items-center">
-					v1.1.0 &copy; Klee Group
+					v1.1.0
 				</div>
   			</div>
   			

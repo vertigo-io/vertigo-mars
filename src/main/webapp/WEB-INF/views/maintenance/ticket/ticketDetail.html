@@ -20,11 +20,10 @@
 				<br class="ne-mini"/><span class="text-smaller ne-mini" vu:text="${model.ticket.code}"></span>
 			</div>
 			<div layout:fragment="content-header-actions">
-				<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" :round size="lg" color="primary" icon="cancel" :flat aria-label="Cancel" title="Cancel" class="on-left"  />
-				<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.equipment,'readTickets')}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>
-				<vu:button-submit th:if="${model.modeReadOnly && model.ticket.ticketStatusId != 'CLOSED' && authz.hasOperation(model.equipment,'readTickets')}" action="@{_closeTicket}" :round size="lg" color="primary" icon="check" aria-label="Close ticket" title="Close ticket" class="on-left"  />
-				<q-btn th:if="${!model.modeCreate}" round size="lg" color="primary" icon="add" aria-label="Add work order" title="Add work order" class="on-left" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/new}', { 'ticketId' : vueData.ticket.ticketId, 'successCallback' : 'onWorkOrderSuccess' })|"></q-btn>
-				<vu:button-link th:if="${!model.modeCreate && authz.hasOperation(model.equipment,'read')}" icon="fas fa-rocket" url="@{/basemanagement/equipment/} + ${model.ticket.equipmentId}" title="Go to equipment" round size="lg" color="primary" class="on-left" />
+				<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" :round size="lg" color="secondary-inverted" icon="fas fa-ban" flat title="Cancel" class="on-left"  />
+				<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.equipment,'readTickets')}" action="@{_edit}" round flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" aria-label="Edit" title="Edit" class="on-left"/>
+				<vu:button-submit th:if="${model.modeReadOnly && model.ticket.ticketStatusId != 'CLOSED' && authz.hasOperation(model.equipment,'readTickets')}" action="@{_closeTicket}" round flat size="lg" color="secondary-inverted" icon="check" aria-label="Close ticket" title="Close ticket" class="on-left"  />
+				<vu:button-link th:if="${model.modeReadOnly && authz.hasOperation(model.equipment,'read')}" icon="mdi-cube-outline" url="@{/basemanagement/equipment/} + ${model.ticket.equipmentId}" title="Go to equipment" round flat size="lg" color="secondary-inverted" class="on-left" />
 			</div>
 		</section>
 		
@@ -59,8 +58,8 @@
 						<input type="hidden" name="vContext[ticket][description]" v-bind:value="vueData.ticket.description" />
 					</vu:block>
 					<vu:table th:if="${model.modeReadOnly}" list="workOrders" title="Work Orders" componentId="workOrders" rowsPerPage="10">
-						<vu:slot name="top_right_slot"><q-btn class="fab-block" round color="primary" icon="add" aria-label="Add work order" title="Add work order" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/new}', { 'ticketId' : vueData.ticket.ticketId, 'successCallback' : 'onWorkOrderSuccess' })|"></q-btn></vu:slot>
-						<vu:slot name="actions_slot"><q-btn round icon="edit" title="View detail" aria-label="View detail" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/}' + props.row.woId , {'successCallback' : 'onWorkOrderSuccess' })|"></q-btn></vu:slot>
+						<vu:slot name="top_right_slot"><q-btn class="fab-block" round flat color="primary" icon="add" aria-label="Add work order" title="Add work order" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/new}', { 'ticketId' : vueData.ticket.ticketId, 'successCallback' : 'onWorkOrderSuccess' })|"></q-btn></vu:slot>
+						<vu:slot name="actions_slot"><q-btn icon="edit" round flat color="primary" title="View detail" aria-label="View detail" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/}' + props.row.woId , {'successCallback' : 'onWorkOrderSuccess' })|"></q-btn></vu:slot>
 						<vu:include-data object="ticket" field="ticketId" />
 						<vu:include-data object="workOrders" field="woId" />
 						<vu:column field="name" />

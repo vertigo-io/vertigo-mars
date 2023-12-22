@@ -28,8 +28,8 @@
 					<br/><div>{{vueData.opendataSet.code}}</div>
 				</div>
 				<div layout:fragment="content-header-actions">
-					<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" :round size="lg" color="primary" icon="fas fa-ban" :flat aria-label="Cancel" title="Cancel" class="on-left"  />
-					<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>
+					<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" :round size="lg" color="secondary-inverted" icon="fas fa-ban" flat title="Cancel" class="on-left"  />
+					<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" round flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" aria-label="Edit" title="Edit" class="on-left"/>
 					
 					<q-btn round size="lg" color="primary" icon="more_horiz"  direction="down" aria-label="More actions" title="More actions" class="on-left"> 
 					  <q-menu><q-list class="column items-center">

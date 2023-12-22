@@ -23,9 +23,9 @@
 				<span class="text-bigger" vu:text="${model.job.label}"></span> 
 			</div>
 			<div layout:fragment="content-header-actions">
-				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" aria-label="Edit" title="Edit" class="on-left"/>
-				<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" :round size="lg" color="primary" icon="fas fa-ban" :flat aria-label="Cancel" title="Cancel" class="on-left"  />
-				<q-btn round size="lg" color="primary" icon="play_circle_outline" class="on-left"  th:@click="|httpPostAjax('@{_executeNow}', {}, function(response){ this.$q.notify({message : 'Job scheduled', type : 'positive'});})|" ></q-btn>
+				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" round flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" title="Edit" class="on-left"/>
+				<vu:button-submit th:if="${model.modeEdit}"   action="@{_cancel}" round flat size="lg" color="secondary-inverted" icon="fas fa-ban" title="Cancel" class="on-left"  />
+				<q-btn round flat size="lg" color="secondary-inverted" icon="play_circle_outline" class="on-left"  th:@click="|httpPostAjax('@{_executeNow}', {}, function(response){ this.$q.notify({message : 'Job scheduled', type : 'positive'});})|" ></q-btn>
 			</div>
 			<div layout:fragment="content-header-tabs">
 				<vu:button-link class="active" flat label="Detail" url="@{/jobDetail/} + ${model.job.name}"/>

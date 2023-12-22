@@ -19,7 +19,7 @@
 				<div layout:fragment="content-header-left" th:include="basemanagement/equipment/equipmentInformation :: #equipmentIcon"></div>
 				<div layout:fragment="content-header-title" th:include="basemanagement/equipment/equipmentInformation :: #equipmentTitle"></div>
 				<div layout:fragment="content-header-actions">
-					<q-btn round size="lg" class="on-left" color="primary" icon="add" aria-label="Add Ticket" title="Add Ticket" type="a" th:href="@{/maintenance/ticket/new?equipmentId=__${model.equipment.equipmentId}__}"></q-btn>
+					<q-btn round flat size="lg" class="on-left" color="secondary-inverted" icon="add" aria-label="Add Ticket" title="Add Ticket" type="a" th:href="@{/maintenance/ticket/new?equipmentId=__${model.equipment.equipmentId}__}"></q-btn>
 				</div>
 				<div layout:fragment="content-header-tabs">
 					<vu:button-link flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}"/>

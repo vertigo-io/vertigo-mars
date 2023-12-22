@@ -18,7 +18,7 @@
 					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount}} Equipments</div>
 					<div class="col-md col-sm-12">
 						<vu:include-data object="criteria" field="criteria" modifiable/>
-						<q-input placeholder="Type, Name..." v-model="vueData.criteria.criteria" @update:model-value="search('equipments')" :debounce="300"  outlined bg-color="white" dense >
+						<q-input autofocus placeholder="Type, Name..." v-model="vueData.criteria.criteria" @update:model-value="search('equipments')" :debounce="300"  outlined bg-color="white" dense >
 							<template v-slot:prepend><q-icon name="search" /></template>
 						</q-input>
 					</div>

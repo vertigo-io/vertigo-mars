@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import io.vertigo.core.param.ParamManager;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
+import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice(assignableTypes = { AbstractVSpringMvcController.class })
 public final class GlobalParamsControllerAdvice {
@@ -34,9 +35,10 @@ public final class GlobalParamsControllerAdvice {
 	private ParamManager paramManager;
 
 	@ModelAttribute
-	public void initContext(final ViewContext viewContext) {
+	public void initContext(final ViewContext viewContext, final HttpServletRequest request) {
 		viewContext.publishRef(() -> "chatbotUrl", paramManager.getParam("chatbotUrl").getValueAsString());
 		viewContext.publishRef(() -> "apiManagementUrl", paramManager.getParam("apiManagementUrl").getValueAsString());
+		viewContext.publishRef(() -> "requestURI", request.getRequestURI());
 	}
 
 }
