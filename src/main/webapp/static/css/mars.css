@@ -56,7 +56,11 @@ img {
 }
 
 .q-table__top, .q-card__section.text-h6 {
-  padding: 5px 16px;
+  padding: 8px 16px;
+}
+
+.q-table--horizontal-separator thead th {
+  border-top-width: 1px;
 }
 
 .q-card, .q-table__container {
@@ -74,7 +78,14 @@ img {
 }
 
 .table-secondary thead {
-  background: #E9E9E9 !important;
+  background: #EEE !important;
+}
+
+.q-table__control:first-of-type {
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1e10 1 0%;
 }
 
 .table-secondary th {
@@ -83,7 +94,7 @@ img {
 }
 
 .table-secondary th:hover {
-  background-color: #D3D3D3;
+  background-color: #E0E0E0;
 }
 
 .q-table td, .q-table th {
@@ -115,7 +126,7 @@ img {
   padding: 0px 16px;
 }
 .q-table__bottom:not(.q-table__bottom--nodata) {
-  background-color: #F7F7F7;
+  background-color: #EEE;
 }
 
 /* width */

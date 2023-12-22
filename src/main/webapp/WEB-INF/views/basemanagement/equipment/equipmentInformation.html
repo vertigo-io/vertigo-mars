@@ -39,30 +39,23 @@
 		</div>
 	</section>
 	<section layout:fragment="content">
-		<div id="health" class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
-			<q-card class="bg-white text-center">
-				<q-card-section>
-				 	<q-knob th::value="${model.equipment.healthLevel}" :min="0" :max="100" color="positive" :readonly="true" show-value size="60px" :thickness="0.2"></q-knob>
-					<div class="indicator-title text-faded">Health</div>
-				 </q-card-section>
-			</q-card>
-		</div>
-		<div class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
-			<q-card class="bg-white row justify-around items-center" style="height:100%;">
-				<div class="text-center">
-					<span class="indicator text-positive" vu:text="${model.equipmentMaintenanceOverview.openedTickets}" /><br />
-					<span class="indicator-title text-faded" vu:text="|Opened Ticket${model.equipmentMaintenanceOverview.getTypedValue('openedTickets') > 1 ?'s':''}|"></span>
-				</div>
-			</q-card>
-		</div>
-		<div class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
-			<q-card class="bg-white row justify-around items-center" style="height:100%;">
-				<div class="text-center">
-					<span class="indicator text-positive" vu:text="${model.equipmentMaintenanceOverview.workOrdersInprogress}" /><br />
-					<span class="indicator-title text-faded" vu:text="|WorkOrder${model.equipmentMaintenanceOverview.getTypedValue('workOrdersInprogress') > 1 ?'s':''} in progress|"></span>
-				</div>
-			</q-card>
-		</div>
+		<th:block th:if="${!model.modeCreate}">
+			<div id="health" class="col-md-4 col-xs-12" >
+				<vu:block title="Health" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+					<q-knob th::value="${model.equipment.healthLevel}" :min="0" :max="100" color="positive" :readonly="true" show-value size="65px" :thickness="0.2"></q-knob>
+				</vu:block>
+			</div>
+			<div class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
+				<vu:block title="Open tickets" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+					<span class="indicator" vu:text="${model.equipmentMaintenanceOverview.openedTickets}" />
+				</vu:block>
+			</div>
+			<div class="col-md-4 col-xs-12" th:if="${!model.modeCreate}">
+				<vu:block title="Work orders in progress" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+					<span class="indicator" vu:text="${model.equipmentMaintenanceOverview.workOrdersInprogress}" />
+				</vu:block>
+			</div>
+		</th:block>
 		<vu:block id="general" title="General Information">
 			<vu:grid cols="2">
 				<vu:text-field object="equipment" field="name" />

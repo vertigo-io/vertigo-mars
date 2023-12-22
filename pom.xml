@@ -210,7 +210,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>io.vertigo</groupId>
-				<artifactId>vertigo-extensions</artifactId>
+				<artifactId>vertigo-libs</artifactId>
 				<version>${vertigo.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
