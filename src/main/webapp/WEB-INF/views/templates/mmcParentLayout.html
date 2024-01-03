@@ -29,14 +29,15 @@
 			<!-- BEGIN HEADER-->
 			<q-header>
 				<q-toolbar>
-					<div class="row items-center" style="width: 240px;">
+					<div class="row items-center" :style="'width: ' + (componentStates.navDrawer.displayed && !componentStates.navDrawer.mini ? 288 : 45) + 'px;'">
 						<q-btn flat round dense class="lt-lg"
-						th:with="mini=${model.vContext['componentStates'].addComponentState('navDrawer').addPrimitive('mini', false)}"
+						th:attr="mini=${model.vContext['componentStates'].addComponentState('navDrawer').addPrimitive('mini', false)},
+						displayed=${model.vContext['componentStates'].addComponentState('navDrawer').addPrimitive('displayed', null)}"
 						@click="$refs.menuDrawer.toggle()" icon="menu" aria-label="Toggle menu on left side"></q-btn>
-						<img th:src="@{/static/img/logo MMC white v0.1.png}" height="40" class="gt-md" alt="logo mmc"/>
+						<img v-if="!componentStates.navDrawer.mini" th:src="@{/static/img/logo MMC white v0.1.png}" height="40" class="gt-md" alt="logo mmc"/>
 					</div>
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="col q-mx-xl">
+					<div class="col">
 <!-- 						<v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands>  -->
 						<q-input th:attr="objectKey=${model.vContext['componentStates'].addComponentState('search').addPrimitive('criteria','')}"
 								autofocus placeholder="Search" v-model="componentStates.search.criteria" outlined bg-color="white" dense style="transition: var(--q-transition-duration)" :style="componentStates.search.criteria.length > 0 ? 'max-width: 800px;' : 'max-width: 320px'"
@@ -139,6 +140,7 @@
 		      ref="menuDrawer"
 		      show-if-above
 		      @vue:mounted="function() { componentStates.navDrawer.mini = (this.localStorage.miniMenu === 'true')}"
+  			  @on-layout="state => componentStates.navDrawer.displayed=state"
 		      :mini="componentStates.navDrawer.mini"
 		    >
 		      <q-scroll-area class="fit" dark>
@@ -314,8 +316,11 @@
 				<section class="col container-bottom-padding" layout:fragment="page-container"></section>
 			</q-page-container>
 			
+			<q-page-scroller position="top-right" :scroll-offset="50" :offset="[18, 48]">
+				<q-btn fab icon="keyboard_arrow_up" color="secondary" ></q-btn>
+			</q-page-scroller>
 			
-			<q-page-sticky position="bottom-left" :offset="[8,0]" class="poweredBy">
+			<q-page-sticky position="bottom-left" :offset="[8,4]" class="poweredBy">
 				<a href="https://github.com/vertigo-io/" target="_blank">
 					<div>Powered by</div>
 				    <img th:src="@{/static/img/logo_vertigo.png}" />

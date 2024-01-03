@@ -20,7 +20,7 @@
 		</div>
 		<div layout:fragment="content-header-title" id="baseTitle">
 			<span class="text-bigger" vu:text="${model.base.name}"></span> <br />
-			<span class="text-small ne-mini" vu:text="${model.base.code}"></span> <br class="ne-mini" />
+			<span class="text-small ne-mini" vu:text="${model.base.code}"></span> <span class="ne-mini q-px-xs">-</span>
 			<span class="text-small" vu:text="${model.baseTypes.getById('baseTypeId', model.base.baseTypeId).label}"></span>
 		</div>
 		<div layout:fragment="content-header-actions">
@@ -28,9 +28,9 @@
 				url="@{/basemanagement/base/information/} + ${model.base.baseId}" title="Cancel"/>
 			<vu:button-submit th:if="${model.modeReadOnly && authz.hasOperation(model.base,'write')}" action="@{_edit}" flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" title="Edit" class="on-left" />
 			<th:block id="baseActions">
-				<vu:buttons-group sm="0" md="2" moreLabel="More actions">
-					<vu:button-link th:if="${authz.hasOperation(model.base,'addEqui')}" url="@{/basemanagement/equipment/new}" title="Add equipment" icon="mdi-cube-outline" color="secondary-inverted" round flat size="lg" class="on-left">+</vu:button-link>
-					<vu:button-link th:if="${authz.hasOperation(model.base,'write')}" url="@{/basemanagement/newPicture}" title="Add photo" icon="mdi-file-image-outline" color="secondary-inverted" round flat size="lg" class="on-left">+</vu:button-link>
+				<vu:buttons-group sm="0" md="2" moreLabel="More actions" color="secondary-inverted" btn_flat>
+					<vu:button-link th:if="${authz.hasOperation(model.base,'addEqui')}" url="@{/basemanagement/equipment/new}" title="Add equipment" icon="mdi-cube-outline" color="secondary-inverted" round flat size="lg" class="on-left"><div class="hide-on-more">+</div></vu:button-link>
+					<vu:button-link th:if="${authz.hasOperation(model.base,'write')}" url="@{/basemanagement/newPicture}" title="Add photo" icon="mdi-file-image-outline" color="secondary-inverted" round flat size="lg" class="on-left"><div class="hide-on-more">+</div></vu:button-link>
 					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_archive" title="Archive base" icon="mdi-archive-lock-outline" color="secondary-inverted" round flat size="lg" class="on-left"/>
 					<vu:button-submit th:if="${authz.hasOperation(model.base,'admin')}" action="_delete" title="Delete base" icon="mdi-delete-forever-outline" color="secondary-inverted" round flat size="lg" class="on-left"/>
 				</vu:buttons-group>
@@ -44,22 +44,22 @@
 	</section>
 	<section layout:fragment="content">
 		<th:block th:if="${!model.modeCreate}">
-			<div class="col-md-3 col-xs-12">
+			<div class="col-xl-3 col-md-6 col-xs-12">
 				<vu:block title="Health" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
-				 	<q-knob th::value="${model.base.healthLevel}" :min="0" :max="100" color="positive" :readonly="true" show-value size="65px" :thickness="0.2"></q-knob>
+				 	<q-knob th::value="${model.base.healthLevel}" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2"></q-knob>
 			 	</vu:block>
 			</div>
-			<div class="col-md-3 col-xs-12">
+			<div class="col-xl-3 col-md-6 col-xs-12">
 				<vu:block title="Equipments" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator text-secondary" vu:text="${model.baseOverview.equipmentCount}" />
 				</vu:block>
 			</div>
-			<div class="col-md-3 col-xs-12">
+			<div class="col-xl-3 col-md-6 col-xs-12">
 				<vu:block title="Open Tickets" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator text-secondary" vu:text="${model.baseOverview.openedTickets}" />
 				</vu:block>
 			</div>
-			<div class="col-md-3 col-xs-12">
+			<div class="col-xl-3 col-md-6 col-xs-12">
 				<vu:block title="Work Orders in progress" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator text-secondary" vu:text="${model.baseOverview.workOrdersInprogress}" />
 				</vu:block>

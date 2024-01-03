@@ -12,24 +12,25 @@
 				<div class="col column ">
 					<div class="row col">
 						<div class="detailTitle q-px-md self-center text-secondary-inverted" layout:fragment="content-header-title"></div>
-						<div th:with="color='primary-inverted'" class="col self-end bg-primary header-tabs eq-mini gt-md" layout:fragment="content-header-tabs"></div>
+						<div th:with="color='accent-inverted'" class="col self-end bg-accent header-tabs eq-mini gt-md" layout:fragment="content-header-tabs"></div>
 						<div class="row self-center ne-mini justify-end col">
 							<vu:form>
 								<div class="primary" layout:fragment="content-header-actions"></div>
 							</vu:form>
 						</div>
 					</div>
-					<div th:with="color='primary-inverted'" class="row bg-primary items-end header-tabs ne-mini" layout:fragment="content-header-tabs"></div>
+					<div th:with="color='accent-inverted'" class="row bg-accent items-end header-tabs ne-mini" layout:fragment="content-header-tabs"></div>
+					<q-separator color="primary"></q-separator>
 				</div>
 			</div>
 			<div class="bg-secondary mini" th:insert="~{:: maxiHeader}"/>
 		</section>
   		<q-page padding class="row col-12 q-gutter-md">
 			<div class="col content-body">
-			<vu:form>
-	 			<vu:messages/>
-				<section layout:fragment="content" class="row q-col-gutter-md"></section>
-	 		</vu:form>
+				<vu:form>
+		 			<vu:messages/>
+					<section layout:fragment="content" class="row q-col-gutter-md"></section>
+		 		</vu:form>
 	 		</div>
 		</q-page>
 	</section>
