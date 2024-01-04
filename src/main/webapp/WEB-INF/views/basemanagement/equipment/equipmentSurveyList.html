@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
   xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{templates/mmcDetailNavLayout}"
+  layout:decorate="~{templates/mmcDetailLayout}"
 >
 	<head>
 		<title>Equipment Survey</title>
@@ -11,30 +11,51 @@
 	<body>
 		
 		<section>
-				<div layout:fragment="content-header-left" th:include="basemanagement/equipment/equipmentInformation :: #equipmentIcon"></div>
-				<div layout:fragment="content-header-title" th:include="basemanagement/equipment/equipmentInformation :: #equipmentTitle"></div>
-				<div layout:fragment="content-header-actions">
-					<q-btn round flat size="lg" class="on-left" color="secondary-inverted" icon="add" aria-label="Respond to survey" title="Respond to survey" type="a" th:href="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/new}"></q-btn>
-				</div>
-				<div th:if="${!model.modeCreate}" layout:fragment="content-header-tabs">
-					<vu:button-link flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}"/>
-					<vu:button-link th:if="${authz.hasOperation(model.equipment,'readTickets')}" flat label="Maintenance" url="@{/basemanagement/equipment/maintenance/} + ${model.equipment.equipmentId}"/>
-					<vu:button-link flat label="Environment" url="@{/basemanagement/equipment/environment/} + ${model.equipment.equipmentId}"/>
-					<vu:button-link flat label="VR View" url="@{/basemanagement/equipment/vr/} + ${model.equipment.equipmentId}"/>
-					<vu:button-link flat label="Spare Parts" url="@{/basemanagement/equipment/spare/} + ${model.equipment.equipmentId}"/>	
-					<vu:button-link class="active" flat label="Survey" url="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/}"/>
-				</div>
+			<div layout:fragment="content-header-left" th:include="basemanagement/equipment/equipmentInformation :: #equipmentIcon"></div>
+			<div layout:fragment="content-header-title" th:include="basemanagement/equipment/equipmentInformation :: #equipmentTitle"></div>
+			<div layout:fragment="content-header-actions">
+				<q-btn round flat size="lg" class="on-left" color="secondary-inverted" icon="add" aria-label="Respond to survey" title="Respond to survey" type="a" th:href="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/new}"></q-btn>
+			</div>
+			<div th:if="${!model.modeCreate}" layout:fragment="content-header-tabs">
+				<vu:button-link flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}"/>
+				<vu:button-link th:if="${authz.hasOperation(model.equipment,'readTickets')}" flat label="Maintenance" url="@{/basemanagement/equipment/maintenance/} + ${model.equipment.equipmentId}"/>
+				<vu:button-link flat label="Environment" url="@{/basemanagement/equipment/environment/} + ${model.equipment.equipmentId}"/>
+				<vu:button-link flat label="VR View" url="@{/basemanagement/equipment/vr/} + ${model.equipment.equipmentId}"/>
+				<vu:button-link flat label="Spare Parts" url="@{/basemanagement/equipment/spare/} + ${model.equipment.equipmentId}"/>	
+				<vu:button-link class="active" flat label="Survey" url="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/}"/>
+			</div>
 		</section>
 		
 		<section layout:fragment="content">
-			<vu:table list="surveys" componentId="surveyTable"
-				th:tr_@click.native="|goTo('@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/}' + props.row.esuId)|" tr_class="nav">
-				<vu:include-data object="surveys" field="esuId" />
-				<vu:column field="dateAnswer" sortable="true"/>
-				<vu:column field="firstName" sortable="true" />
-				<vu:column field="lastName" sortable="true" />
-				<vu:column field="email" sortable="true" />
-			</vu:table>
+			<div class="col-12 col-lg-3">
+				<div class="row q-col-gutter-md">
+					<div class="col-12 col-sm-6 col-md-4 col-lg-12">
+						<vu:block title="Completion" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+						 	<q-knob :value="12" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2">12 %</q-knob>
+					 	</vu:block>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 col-lg-12">
+					 	<vu:block title="Days elapsed" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+						 	<q-knob :value="5" :min="0" :max="20" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2"></q-knob>
+					 	</vu:block>
+				 	</div>
+					<div class="col-12 col-sm-12 col-md-4 col-lg-12">
+					 	<vu:block title="Satisfaction" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+						 	<q-knob :value="73" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2">73 %</q-knob>
+					 	</vu:block>
+				 	</div>
+				 </div>
+			</div>
+			<div class="col-12 col-lg-9">
+				<vu:table list="surveys" componentId="surveyTable" title="Results"
+					th:tr_@click.native="|goTo('@{/basemanagement/equipment/__${model.equipment.equipmentId}__/survey/}' + props.row.esuId)|" tr_class="nav">
+					<vu:include-data object="surveys" field="esuId" />
+					<vu:column field="dateAnswer" sortable="true"/>
+					<vu:column field="firstName" sortable="true" />
+					<vu:column field="lastName" sortable="true" />
+					<vu:column field="email" sortable="true" />
+				</vu:table>
+			</div>
 		</section>
 	</body>
 </html>

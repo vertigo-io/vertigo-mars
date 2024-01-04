@@ -29,18 +29,31 @@
 				</div>
 		</section>
 		
+		<section layout:fragment="content-nav">
+			<q-item tag="a" href="#respondant">Respondant</q-item>
+			<q-item tag="a" href="#survey">Survey</q-item>
+		</section>
+		
 		<section layout:fragment="content">
 			<vu:include-data-primitive key="hasSurvey" />
 			
 			<vu:block id="respondant" title="Respondant" th:if="${model.modeReadOnly and model.hasSurvey}">
-				<vu:text-field object="respondant" field="firstName" />
-				<vu:text-field object="respondant" field="lastName" />
-				<vu:text-field object="respondant" field="email" />
+				<vu:include-data-protected object="respondant" field="picturefileId"/>
+				<div class="row">
+					<div class="col-grow row">
+						<vu:text-field object="respondant" field="firstName" class="col-12 col-sm-6 col-md-4"/>
+						<vu:text-field object="respondant" field="lastName" class="col-12 col-sm-6 col-md-4"/>
+						<vu:text-field object="respondant" field="email" />
+					</div>
+					<div class="on-right">
+						<img th::src="|'@{/hr/person/picture/}'+vueData.respondant.picturefileId|" height="150" alt="Avatar"/>
+					</div>
+				</div>
 			</vu:block>
 			
-			<vu:block id="survey" title="Survey" th:if="${model.modeReadOnly and model.hasSurvey}">
+			<vu:block id="survey" title="Survey" th:if="${model.modeReadOnly and model.hasSurvey}" content_th:classappend="row">
 				<vu:include-data-primitive key="surveyDisplay"/>
-                <div class="col-6" v-for="(value, name) in vueData.surveyDisplay">
+                <div class="col-12 col-md-6" v-for="(value, name) in vueData.surveyDisplay">
                      <q-field :label="name" orientation="vertical" stack-label readonly borderless >
                          {{ value }}
                      </q-field>

@@ -4,13 +4,14 @@
 <head>
 <title>Base Information</title>
 	<!-- maps -->
-	<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"/>
-	<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
 </head>
 <body>
 	<section layout:fragment="content-nav">
-		<q-item tag="a" href="#health">Health Condition</q-item>
+		<q-item tag="a" href="#health" th:if="${!model.modeCreate}">Health Condition</q-item>
 		<q-item tag="a" href="#general">General Information</q-item>
+		<q-item tag="a" href="#location">Location</q-item>
 		<q-item tag="a" href="#views">Views</q-item>
 		<q-item tag="a" href="#financial">Financial value</q-item>
 	</section>
@@ -44,49 +45,54 @@
 	</section>
 	<section layout:fragment="content">
 		<th:block th:if="${!model.modeCreate}">
-			<div class="col-xl-3 col-md-6 col-xs-12">
+			<div id="health" class="col-xl-3 col-sm-6 col-xs-12">
 				<vu:block title="Health" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 				 	<q-knob th::value="${model.base.healthLevel}" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2"></q-knob>
 			 	</vu:block>
 			</div>
-			<div class="col-xl-3 col-md-6 col-xs-12">
+			<div class="col-xl-3 col-sm-6 col-xs-12">
 				<vu:block title="Equipments" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator text-secondary" vu:text="${model.baseOverview.equipmentCount}" />
 				</vu:block>
 			</div>
-			<div class="col-xl-3 col-md-6 col-xs-12">
+			<div class="col-xl-3 col-sm-6 col-xs-12">
 				<vu:block title="Open Tickets" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator text-secondary" vu:text="${model.baseOverview.openedTickets}" />
 				</vu:block>
 			</div>
-			<div class="col-xl-3 col-md-6 col-xs-12">
-				<vu:block title="Work Orders in progress" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+			<div class="col-xl-3 col-sm-6 col-xs-12">
+				<vu:block title="Active Work Orders" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator text-secondary" vu:text="${model.baseOverview.workOrdersInprogress}" />
 				</vu:block>
 			</div>
 		</th:block>
+		
 		<vu:block id="general" title="General Information">
 			<vu:slot name="actions_slot" th:if="${model.modeEdit}">
 				<q-btn th:@click="|httpPostAjax('@{_ajaxValidation}', vueDataParams(['base']), { onSuccess: function(response) {$q.notify({message: 'test', type :'positive'})}})|" color="primary" label="Ajax Validation" ></q-btn>
 			</vu:slot>
 			<vu:grid cols="2">
 				<vu:text-field object="base" field="name" />
-				<vu:text-field object="base" field="code" />
 				<vu:text-field-read object="baseManager" field="lastName" label="Base Manager" />
+				<vu:text-field object="base" field="code" />
 				<vu:autocomplete object="base" field="geosectorId" list="geosectors" />
-				<vu:geolocation object="base" field="geoLocation" />
-				<vu:radio object="base" field="baseTypeId" list="baseTypes" />
 				<vu:date object="base" field="creationDate" />
+				<vu:radio object="base" field="baseTypeId" list="baseTypes" layout="horizontal" />
 				<vu:chips-autocomplete object="base" field="tags" list="tags" staticData="true" />
 				<vu:grid-cell>
 					<vu:text-area object="base" field="description" />
 				</vu:grid-cell>
 			</vu:grid>
 		</vu:block>
+		
+		<vu:block id="location" title="Location">
+			<vu:geolocation object="base" field="geoLocation"/>
+		</vu:block>
+		
 		<vu:block id="views" title="Views">
 			<vu:include-data-protected object="basePictures" field="picturefileId" />
 			<q-carousel th:if="${not #lists.isEmpty(model.basePictures)}" th:attr="objectKey=${model.vContext['componentStates'].addComponentState('basePicturesCarousel').addPrimitive('current', 0)}" 
-			v-model="componentStates.basePicturesCarousel.current" control-color="primary" arrows navigation style="height:300px;" color="grey" class="image-gallery"> 
+			v-model="componentStates.basePicturesCarousel.current" control-color="primary" arrows navigation color="grey" class="image-gallery"> 
 				<q-carousel-slide
 					v-for="(item, index) in vueData.basePictures" th:class="|${cardClass?:''}  showButtonOnHover|" :name="index" > 
 					<img 

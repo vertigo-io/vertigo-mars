@@ -4,13 +4,14 @@
 <head>
 <title>Equipment Information</title>
 	<!-- maps -->
-	<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"/>
-	<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
 </head>
 <body>
 	<section layout:fragment="content-nav">
 		<q-item tag="a" href="#health">Health Condition</q-item>
 		<q-item tag="a" href="#general">General Information</q-item>
+		<q-item tag="a" href="#location">Location</q-item>
 		<q-item tag="a" href="#financial">Financial value</q-item>
 	</section>
 	<section>
@@ -59,14 +60,16 @@
 		<vu:block id="general" title="General Information">
 			<vu:grid cols="2">
 				<vu:text-field object="equipment" field="name" />
-				<vu:text-field object="equipment" field="code" />
 				<vu:autocomplete object="equipment" field="baseId" list="bases" labelField="name" />
+				<vu:text-field object="equipment" field="code" />
 				<vu:select object="equipment" field="equipmentTypeId" list="equipmentTypes" />
 				<vu:select object="equipment" field="businessId" list="businesses" labelField="name" />
 				<vu:date object="equipment" field="purchaseDate" />
 				<vu:chips-autocomplete object="equipment" field="tags" list="tags" staticData="true" />
-				<vu:geolocation object="equipment" field="geoLocation" />
 			</vu:grid>
+		</vu:block>
+		<vu:block id="location" title="Location">
+			<vu:geolocation object="equipment" field="geoLocation" />
 		</vu:block>
 		<vu:block id="financial" title="Financial value">
 			<vu:grid cols="2">
