@@ -6,22 +6,24 @@
   
   	<section layout:fragment="page-container">
   		<section th:ref="detailHeader" class="col-12" v-minify="{topOffsetEl:'.q-header', leftOffsetEl:'.q-drawer--left'}">
-			<div th:ref="maxiHeader" class="row justify-between items-center bg-secondary header-content" >
-				<div layout:fragment="content-header-left"></div>
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="col column ">
-					<div class="row col">
-						<div class="detailTitle q-px-md self-center text-secondary-inverted" layout:fragment="content-header-title"></div>
-						<div th:with="color='accent-inverted'" class="col self-end bg-accent header-tabs eq-mini gt-md" layout:fragment="content-header-tabs"></div>
-						<div class="row self-center ne-mini justify-end col">
-							<vu:form>
-								<div class="primary" layout:fragment="content-header-actions"></div>
-							</vu:form>
+			<div th:ref="maxiHeader">
+				<div class="row justify-between bg-secondary header-content">
+					<div layout:fragment="content-header-left"></div>
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="col column ">
+						<div class="row col">
+							<div class="detailTitle q-px-md self-center text-secondary-inverted" layout:fragment="content-header-title"></div>
+							<div th:with="color='accent-inverted'" class="col self-end bg-accent header-tabs eq-mini gt-md" layout:fragment="content-header-tabs"></div>
+							<div class="row self-center ne-mini justify-end col">
+								<vu:form>
+									<div class="primary" layout:fragment="content-header-actions"></div>
+								</vu:form>
+							</div>
 						</div>
+						<div th:with="color='accent-inverted'" class="row bg-accent items-end header-tabs ne-mini" layout:fragment="content-header-tabs"></div>
 					</div>
-					<div th:with="color='accent-inverted'" class="row bg-accent items-end header-tabs ne-mini" layout:fragment="content-header-tabs"></div>
-					<q-separator color="primary"></q-separator>
 				</div>
+				<q-separator color="primary"></q-separator>
 			</div>
 			<div class="bg-secondary mini" th:insert="~{:: maxiHeader}"/>
 		</section>

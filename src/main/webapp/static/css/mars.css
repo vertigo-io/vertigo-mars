@@ -221,7 +221,11 @@ body.login {
 	border-radius: 50%;
 }
 .detailImg, .detailImg img {
-	height: 100%;
+	height: 100px;
+}
+
+.mini .detailImg, .mini .detailImg img {
+	height: 38px;
 }
 
 .detailTypeIcon {
@@ -355,17 +359,8 @@ nav a.q-item, .nav a.q_item {
 }
 
 .header-content {
-	height: 100px;
 	position: relative;
     z-index: 10;
-}
-
-.mini .header-content {
-	height: 38px;
-}
-
-.header-content > div {
-	height: 100%;
 }
 
 .header-tabs a.active {
