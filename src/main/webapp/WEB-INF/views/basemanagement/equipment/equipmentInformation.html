@@ -52,7 +52,7 @@
 				</vu:block>
 			</div>
 			<div class="col-xl-4 col-md-6 col-xs-12" th:if="${!model.modeCreate}">
-				<vu:block title="Work orders in progress" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
+				<vu:block title="Active Work orders" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator" vu:text="${model.equipmentMaintenanceOverview.workOrdersInprogress}" />
 				</vu:block>
 			</div>
@@ -69,7 +69,7 @@
 			</vu:grid>
 		</vu:block>
 		<vu:block id="location" title="Location">
-			<vu:geolocation object="equipment" field="geoLocation" />
+			<vu:geolocation object="equipment" field="geoLocation" map_style="height: 50vh; width:100%;" />
 		</vu:block>
 		<vu:block id="financial" title="Financial value">
 			<vu:grid cols="2">

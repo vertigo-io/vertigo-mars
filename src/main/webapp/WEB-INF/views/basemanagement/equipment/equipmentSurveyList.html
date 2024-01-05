@@ -31,7 +31,7 @@
 				<div class="row q-col-gutter-md">
 					<div class="col-12 col-sm-6 col-md-4 col-lg-12">
 						<vu:block title="Completion" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
-						 	<q-knob :value="12" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2">12 %</q-knob>
+						 	<q-knob :value="vueData.surveys.length == 0 ? 0 : 12" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2">{{ vueData.surveys.length == 0 ? 0 : 12 }} %</q-knob>
 					 	</vu:block>
 					</div>
 					<div class="col-12 col-sm-6 col-md-4 col-lg-12">
@@ -41,7 +41,7 @@
 				 	</div>
 					<div class="col-12 col-sm-12 col-md-4 col-lg-12">
 					 	<vu:block title="Satisfaction" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
-						 	<q-knob :value="73" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2">73 %</q-knob>
+						 	<q-knob :value="vueData.surveys.length == 0 ? 0 : 73" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2">{{ vueData.surveys.length == 0 ? 'NA' : '73 %' }}</q-knob>
 					 	</vu:block>
 				 	</div>
 				 </div>
