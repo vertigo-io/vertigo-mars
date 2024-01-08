@@ -61,9 +61,9 @@ public final class EquipmentFeature implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Name'.
-	 * @return String name
+	 * @return String name <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Name")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -71,7 +71,7 @@ public final class EquipmentFeature implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Name'.
-	 * @param name String
+	 * @param name String <b>Obligatoire</b>
 	 */
 	public void setName(final String name) {
 		this.name = name;

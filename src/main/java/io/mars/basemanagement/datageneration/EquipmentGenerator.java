@@ -64,20 +64,20 @@ public class EquipmentGenerator implements Component {
 
 	public void createInitialEquipmentCategories() {
 		createEquipmentCategory(true, "Bot", new ModeleFormulaireBuilder()
-				.ajouterChamp("iaAutonomy", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "IA autonomy", null, false, false, List.of())
-				.ajouterChamp("easyness", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Easyness of use", null, false, false, List.of())
-				.ajouterChamp("obsolete", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Is obsolete", null, false, false, List.of())
+				.ajouterChamp("iaAutonomy", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "IA autonomy", null, false, false, false, List.of())
+				.ajouterChamp("easyness", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Easyness of use", null, false, false, false, List.of())
+				.ajouterChamp("obsolete", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Is obsolete", null, false, false, true, List.of())
 				.build());
 		createEquipmentCategory(true, "Building", new ModeleFormulaireBuilder()
-				.ajouterChamp("equipment", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Completude of equipment", null, false, false, List.of())
-				.ajouterChamp("temperature", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Temperature inside", null, false, false, List.of())
-				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, List.of())
+				.ajouterChamp("equipment", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Completude of equipment", null, false, false, true, List.of())
+				.ajouterChamp("temperature", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Temperature inside", null, false, false, false, List.of())
+				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, false, List.of())
 				.build());
 		createEquipmentCategory(true, "Vehicle", new ModeleFormulaireBuilder()
-				.ajouterChamp("comfort", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Comfort", null, false, false, List.of())
-				.ajouterChamp("speed", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Speed", null, false, false, List.of())
-				.ajouterChamp("storageCapacity", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Storage capacity", null, false, false, List.of())
-				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, List.of())
+				.ajouterChamp("comfort", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Comfort", null, false, false, true, List.of())
+				.ajouterChamp("speed", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Speed", null, false, false, false, List.of())
+				.ajouterChamp("storageCapacity", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Storage capacity", null, false, false, false, List.of())
+				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, false, List.of())
 				.build());
 	}
 

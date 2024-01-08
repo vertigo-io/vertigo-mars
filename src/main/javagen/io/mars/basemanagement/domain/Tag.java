@@ -45,9 +45,9 @@ public final class Tag implements KeyConcept {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Label'.
-	 * @return String label
+	 * @return String label <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Label")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Label")
 	@io.vertigo.datamodel.structure.stereotype.SortField
 	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	public String getLabel() {
@@ -57,7 +57,7 @@ public final class Tag implements KeyConcept {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Label'.
-	 * @param label String
+	 * @param label String <b>Obligatoire</b>
 	 */
 	public void setLabel(final String label) {
 		this.label = label;

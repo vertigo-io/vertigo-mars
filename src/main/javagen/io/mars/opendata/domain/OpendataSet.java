@@ -66,9 +66,9 @@ public final class OpendataSet implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Code'.
-	 * @return String code
+	 * @return String code <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyCode", label = "Code")
+	@Field(smartType = "STyCode", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Code")
 	public String getCode() {
 		return code;
 	}
@@ -76,7 +76,7 @@ public final class OpendataSet implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Code'.
-	 * @param code String
+	 * @param code String <b>Obligatoire</b>
 	 */
 	public void setCode(final String code) {
 		this.code = code;
@@ -85,9 +85,9 @@ public final class OpendataSet implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Title'.
-	 * @return String title
+	 * @return String title <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Title")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Title")
 	public String getTitle() {
 		return title;
 	}
@@ -95,7 +95,7 @@ public final class OpendataSet implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Title'.
-	 * @param title String
+	 * @param title String <b>Obligatoire</b>
 	 */
 	public void setTitle(final String title) {
 		this.title = title;

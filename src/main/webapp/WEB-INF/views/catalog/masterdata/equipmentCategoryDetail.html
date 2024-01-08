@@ -49,6 +49,7 @@
 			
 			<vu:include-data object="champs" field="isDefault" />
 			<vu:include-data object="champs" field="isDisplay" />
+			<vu:include-data object="champs" field="isMandatory" />
 			<vu:table id="surveyFields" title="Survey fields" list="champs" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md">
 				<vu:slot name="top_right_slot">
 					<vu:button th:if="${!model.modeReadOnly}" icon="add" title="Add field" @click="addItem()"/>
@@ -64,14 +65,14 @@
 					           @click="deleteItem(props.rowIndex)" />
 				</vu:slot>
 				<vu:column field="codeChamp" label="Code" sortable="false">
-				     {{props.row.codeChamp}} <q-badge th:if="${!model.modeReadOnly}" v-if="props.row.isDefault" color="grey">Mandatory for the system</q-badge>
+				     <div :class="props.row.isMandatory?'v-block__required':''">{{props.row.codeChamp}}</div> <q-badge th:if="${!model.modeReadOnly}" v-if="props.row.isDefault" color="grey">Mandatory for the system</q-badge>
 				</vu:column>
 				<vu:column field="typeDeChampLabel" label="Type" sortable="false" />
 				<vu:column field="libelle" sortable="false" label="Label" />
 				<vu:column field="infobulle" label="Tooltip" sortable="false" />
 				<vu:column name="isDisplay" label="" sortable="false" auto-width>
 					<q-icon v-if="props.row.isDisplay" size="sm" color="primary" name="fa-brands fa-searchengin"
-						aria-label="Information incluse dans la recherche\n et présentée sur l'écran des réservations"> 
+						aria-label="Information included in the search"> 
 						<span class="sr-only">Information included in the search</span>
 						<q-tooltip>Information included in the search</q-tooltip></q-icon>
 				</vu:column>
@@ -120,6 +121,14 @@
 							:aria-title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
 							label="Information included in the search"></q-toggle>
 						<input type="hidden" name="vContext[champEdit][isDisplay]" v-bind:value="vueData.champEdit.isDisplay" />
+					</vu:grid-cell>
+					<vu:grid-cell>
+						<vu:include-data object="champEdit" field="isMandatory" modifiable="true" />
+						<q-toggle class="q-field" :disable="vueData.champEdit.isDefault" v-model="vueData.champEdit.isMandatory"
+							:title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
+							:aria-title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
+							label="Information mandatory"></q-toggle>
+						<input type="hidden" name="vContext[champEdit][isMandatory]" v-bind:value="vueData.champEdit.isMandatory" />
 					</vu:grid-cell>
 					<vu:grid-cell>
 						<vu:select-multiple-edit v-if="vueData.controleDeChampsEdit.length>0" object="champEdit" field="controleDeChamps" list="controleDeChampsEdit"

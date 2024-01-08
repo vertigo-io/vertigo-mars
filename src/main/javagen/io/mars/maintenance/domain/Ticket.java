@@ -81,9 +81,9 @@ public final class Ticket implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Number'.
-	 * @return String code
+	 * @return String code <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Number")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Number")
 	@io.vertigo.datamodel.structure.stereotype.SortField
 	public String getCode() {
 		return code;
@@ -92,7 +92,7 @@ public final class Ticket implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Number'.
-	 * @param code String
+	 * @param code String <b>Obligatoire</b>
 	 */
 	public void setCode(final String code) {
 		this.code = code;
@@ -101,9 +101,9 @@ public final class Ticket implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Title'.
-	 * @return String title
+	 * @return String title <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Title")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Title")
 	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	public String getTitle() {
 		return title;
@@ -112,7 +112,7 @@ public final class Ticket implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Title'.
-	 * @param title String
+	 * @param title String <b>Obligatoire</b>
 	 */
 	public void setTitle(final String title) {
 		this.title = title;

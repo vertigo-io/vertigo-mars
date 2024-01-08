@@ -3,9 +3,9 @@ package io.mars.hr.domain
 
 create DtDefinition DtPerson {
 	id personId {domain: DoId label:"Id"}
-	field firstName {domain: DoLabel label: "First Name" }
-	field lastName {domain: DoLabel label: "Last Name" }
-	field email {domain: DoEmail label:"E-mail" }
+	field firstName {domain: DoLabel label: "First Name" cardinality:"1"}
+	field lastName {domain: DoLabel label: "Last Name" cardinality:"1"}
+	field email {domain: DoEmail label:"E-mail" cardinality:"1"}
 	field picturefileId {domain: DoId label:"Picture" }
 	field picturefileIdTmp {domain: DoLabel label:"Picture"  persistent:"false"}
 	field tags {domain: DoMultipleIds label: "Tags" }

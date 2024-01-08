@@ -62,9 +62,9 @@ public final class EquipmentCategory implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Equipment Category Label'.
-	 * @return String label
+	 * @return String label <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Equipment Category Label")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Equipment Category Label")
 	public String getLabel() {
 		return label;
 	}
@@ -72,7 +72,7 @@ public final class EquipmentCategory implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Equipment Category Label'.
-	 * @param label String
+	 * @param label String <b>Obligatoire</b>
 	 */
 	public void setLabel(final String label) {
 		this.label = label;
@@ -81,9 +81,9 @@ public final class EquipmentCategory implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Equipment category is active'.
-	 * @return Boolean active
+	 * @return Boolean active <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyYesNo", label = "Equipment category is active")
+	@Field(smartType = "STyYesNo", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Equipment category is active")
 	public Boolean getActive() {
 		return active;
 	}
@@ -91,7 +91,7 @@ public final class EquipmentCategory implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Equipment category is active'.
-	 * @param active Boolean
+	 * @param active Boolean <b>Obligatoire</b>
 	 */
 	public void setActive(final Boolean active) {
 		this.active = active;

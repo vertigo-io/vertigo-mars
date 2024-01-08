@@ -83,9 +83,9 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Code'.
-	 * @return String code
+	 * @return String code <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Code")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Code")
 	public String getCode() {
 		return code;
 	}
@@ -93,7 +93,7 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Code'.
-	 * @param code String
+	 * @param code String <b>Obligatoire</b>
 	 */
 	public void setCode(final String code) {
 		this.code = code;
@@ -102,9 +102,9 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Number'.
-	 * @return String ticketCode
+	 * @return String ticketCode <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Number")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Number")
 	public String getTicketCode() {
 		return ticketCode;
 	}
@@ -112,7 +112,7 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Number'.
-	 * @param ticketCode String
+	 * @param ticketCode String <b>Obligatoire</b>
 	 */
 	public void setTicketCode(final String ticketCode) {
 		this.ticketCode = ticketCode;
@@ -121,9 +121,9 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Name'.
-	 * @return String name
+	 * @return String name <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Name")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -131,7 +131,7 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Name'.
-	 * @param name String
+	 * @param name String <b>Obligatoire</b>
 	 */
 	public void setName(final String name) {
 		this.name = name;

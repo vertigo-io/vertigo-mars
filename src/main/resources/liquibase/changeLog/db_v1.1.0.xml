@@ -10,4 +10,7 @@
 	<changeSet author="vertigo" id="v1.1.0">
 		<sqlFile encoding="utf8" path="/sql/update_1.1.0.sql" />
 	</changeSet>
+	<changeSet author="vertigo" id="v1.1.0b">
+		<sqlFile encoding="utf8" path="/sql/update_1.1.0b.sql" />
+	</changeSet>
 </databaseChangeLog>

@@ -67,9 +67,9 @@ public final class Person implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'First Name'.
-	 * @return String firstName
+	 * @return String firstName <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "First Name")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "First Name")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -77,7 +77,7 @@ public final class Person implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'First Name'.
-	 * @param firstName String
+	 * @param firstName String <b>Obligatoire</b>
 	 */
 	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
@@ -86,9 +86,9 @@ public final class Person implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Last Name'.
-	 * @return String lastName
+	 * @return String lastName <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Last Name")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Last Name")
 	public String getLastName() {
 		return lastName;
 	}
@@ -96,7 +96,7 @@ public final class Person implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Last Name'.
-	 * @param lastName String
+	 * @param lastName String <b>Obligatoire</b>
 	 */
 	public void setLastName(final String lastName) {
 		this.lastName = lastName;
@@ -105,9 +105,9 @@ public final class Person implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'E-mail'.
-	 * @return String email
+	 * @return String email <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyEmail", label = "E-mail")
+	@Field(smartType = "STyEmail", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "E-mail")
 	public String getEmail() {
 		return email;
 	}
@@ -115,7 +115,7 @@ public final class Person implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'E-mail'.
-	 * @param email String
+	 * @param email String <b>Obligatoire</b>
 	 */
 	public void setEmail(final String email) {
 		this.email = email;

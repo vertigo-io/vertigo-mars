@@ -45,9 +45,9 @@ public final class BaseType implements DtStaticMasterData {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Base Type Label'.
-	 * @return String label
+	 * @return String label <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Base Type Label")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Base Type Label")
 	@io.vertigo.datamodel.structure.stereotype.SortField
 	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	public String getLabel() {
@@ -57,7 +57,7 @@ public final class BaseType implements DtStaticMasterData {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Base Type Label'.
-	 * @param label String
+	 * @param label String <b>Obligatoire</b>
 	 */
 	public void setLabel(final String label) {
 		this.label = label;

@@ -117,7 +117,7 @@ create table BASE
 (
     BASE_ID     	 NUMERIC     	not null,
     CODE        	 VARCHAR(100)	not null,
-    NAME        	 VARCHAR(100)	,
+    NAME        	 VARCHAR(100)	not null,
     HEALTH_LEVEL	 NUMERIC     	,
     CREATION_DATE	 DATE        	,
     DESCRIPTION 	 VARCHAR(350)	,
@@ -172,7 +172,7 @@ comment on column BASE.GEOSECTOR_ID is
 create table BASE_TYPE
 (
     BASE_TYPE_ID	 VARCHAR(100)	not null,
-    LABEL       	 VARCHAR(100)	,
+    LABEL       	 VARCHAR(100)	not null,
     constraint PK_BASE_TYPE primary key (BASE_TYPE_ID)
 );
 
@@ -188,7 +188,7 @@ comment on column BASE_TYPE.LABEL is
 create table BUSINESS
 (
     BUSINESS_ID 	 NUMERIC     	not null,
-    NAME        	 VARCHAR(100)	,
+    NAME        	 VARCHAR(100)	not null,
     ICON        	 VARCHAR(100)	,
     constraint PK_BUSINESS primary key (BUSINESS_ID)
 );
@@ -208,8 +208,8 @@ comment on column BUSINESS.ICON is
 create table EQUIPMENT
 (
     EQUIPMENT_ID	 NUMERIC     	not null,
-    NAME        	 VARCHAR(100)	,
-    CODE        	 VARCHAR(100)	,
+    NAME        	 VARCHAR(100)	not null,
+    CODE        	 VARCHAR(100)	not null,
     HEALTH_LEVEL	 NUMERIC     	,
     PURCHASE_DATE	 DATE        	,
     DESCRIPTION 	 VARCHAR(350)	,
@@ -272,8 +272,8 @@ comment on column EQUIPMENT.EQUIPMENT_TYPE_ID is
 create table EQUIPMENT_CATEGORY
 (
     EQUIPMENT_CATEGORY_ID	 NUMERIC     	not null,
-    LABEL       	 VARCHAR(100)	,
-    ACTIVE      	 bool        	,
+    LABEL       	 VARCHAR(100)	not null,
+    ACTIVE      	 bool        	not null,
     MFO_ID      	 NUMERIC     	,
     constraint PK_EQUIPMENT_CATEGORY primary key (EQUIPMENT_CATEGORY_ID)
 );
@@ -296,7 +296,7 @@ comment on column EQUIPMENT_CATEGORY.MFO_ID is
 create table EQUIPMENT_FEATURE
 (
     EQUIPMENT_FEATURE_ID	 NUMERIC     	not null,
-    NAME        	 VARCHAR(100)	,
+    NAME        	 VARCHAR(100)	not null,
     EQUIPMENT_ID	 NUMERIC     	,
     constraint PK_EQUIPMENT_FEATURE primary key (EQUIPMENT_FEATURE_ID)
 );
@@ -344,8 +344,8 @@ comment on column EQUIPMENT_SURVEY.PERSON_ID is
 create table EQUIPMENT_TYPE
 (
     EQUIPMENT_TYPE_ID	 NUMERIC     	not null,
-    LABEL       	 VARCHAR(100)	,
-    ACTIVE      	 bool        	,
+    LABEL       	 VARCHAR(100)	not null,
+    ACTIVE      	 bool        	not null,
     EQUIPMENT_CATEGORY_ID	 NUMERIC     	,
     constraint PK_EQUIPMENT_TYPE primary key (EQUIPMENT_TYPE_ID)
 );
@@ -464,8 +464,8 @@ comment on column MISSION.ROLE_ID is
 create table OPENDATA_SET
 (
     ODS_ID      	 NUMERIC     	not null,
-    CODE        	 VARCHAR(100)	,
-    TITLE       	 VARCHAR(100)	,
+    CODE        	 VARCHAR(100)	not null,
+    TITLE       	 VARCHAR(100)	not null,
     DESCRIPTION 	 VARCHAR(350)	,
     END_POINT_URL	 TEXT        	,
     PICTUREFILE_ID	 NUMERIC     	,
@@ -520,9 +520,9 @@ comment on column OPENDATA_SET_STATUS.LABEL is
 create table PERSON
 (
     PERSON_ID   	 NUMERIC     	not null,
-    FIRST_NAME  	 VARCHAR(100)	,
-    LAST_NAME   	 VARCHAR(100)	,
-    EMAIL       	 VARCHAR(150)	,
+    FIRST_NAME  	 VARCHAR(100)	not null,
+    LAST_NAME   	 VARCHAR(100)	not null,
+    EMAIL       	 VARCHAR(150)	not null,
     PICTUREFILE_ID	 NUMERIC     	,
     TAGS        	 TEXT        	,
     DATE_HIRED  	 DATE        	,
@@ -680,7 +680,7 @@ comment on column SUPPLIER.CARACTERE_EMPLOYEUR is
 create table TAG
 (
     TAG_ID      	 NUMERIC     	not null,
-    LABEL       	 VARCHAR(100)	,
+    LABEL       	 VARCHAR(100)	not null,
     constraint PK_TAG primary key (TAG_ID)
 );
 
@@ -696,8 +696,8 @@ comment on column TAG.LABEL is
 create table TICKET
 (
     TICKET_ID   	 NUMERIC     	not null,
-    CODE        	 VARCHAR(100)	,
-    TITLE       	 VARCHAR(100)	,
+    CODE        	 VARCHAR(100)	not null,
+    TITLE       	 VARCHAR(100)	not null,
     DESCRIPTION 	 VARCHAR(350)	,
     DATE_CREATED	 DATE        	,
     DATE_CLOSED 	 DATE        	,
@@ -752,9 +752,9 @@ comment on column TICKET_STATUS.LABEL is
 create table WORK_ORDER
 (
     WO_ID       	 NUMERIC     	not null,
-    CODE        	 VARCHAR(100)	,
-    TICKET_CODE 	 VARCHAR(100)	,
-    NAME        	 VARCHAR(100)	,
+    CODE        	 VARCHAR(100)	not null,
+    TICKET_CODE 	 VARCHAR(100)	not null,
+    NAME        	 VARCHAR(100)	not null,
     DESCRIPTION 	 VARCHAR(350)	,
     DATE_CREATED	 DATE        	,
     DATE_CLOSED 	 DATE        	,

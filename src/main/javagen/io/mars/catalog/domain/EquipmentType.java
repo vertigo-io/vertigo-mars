@@ -62,9 +62,9 @@ public final class EquipmentType implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Equipment Type Label'.
-	 * @return String label
+	 * @return String label <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Equipment Type Label")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Equipment Type Label")
 	@io.vertigo.datamodel.structure.stereotype.SortField
 	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	public String getLabel() {
@@ -74,7 +74,7 @@ public final class EquipmentType implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Equipment Type Label'.
-	 * @param label String
+	 * @param label String <b>Obligatoire</b>
 	 */
 	public void setLabel(final String label) {
 		this.label = label;
@@ -83,9 +83,9 @@ public final class EquipmentType implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Equipment type is active'.
-	 * @return Boolean active
+	 * @return Boolean active <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyYesNo", label = "Equipment type is active")
+	@Field(smartType = "STyYesNo", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Equipment type is active")
 	public Boolean getActive() {
 		return active;
 	}
@@ -93,7 +93,7 @@ public final class EquipmentType implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Equipment type is active'.
-	 * @param active Boolean
+	 * @param active Boolean <b>Obligatoire</b>
 	 */
 	public void setActive(final Boolean active) {
 		this.active = active;

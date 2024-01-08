@@ -68,9 +68,9 @@
 				<vui-easy-forms v-model="vueData.survey.formulaire" class="full-width" id="formulaire" >
 					<template v-slot:default="slotProps">
 						<th:block th:each="champ : ${model.modeleFormulaire.champs}" th:with="typeChamp = ${model.mfoUiUtil.getTypeDeChampByNom(champ.typeChamp)}" >
-							<div  class="fr-input-group" th::class="|{'fr-input-group--error' : hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')}|">
+							<div  class="fr-input-group" th::class="|{'fr-input-group--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')}|">
 								<fieldset th:if='${typeChamp.isListOfType("CiviliteSexe") && "radio".equals(typeChamp.composantUi)}' class="fr-fieldset" role="group"
-										aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+										aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
 										th:id="|radio-input-${champ.codeChamp}-${champ.ordre}|">
 									<legend class="fr-fieldset__legend" th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-legend|" style="display: none;">
 										<span vu:text="${champ.libelle}"></span>
@@ -82,10 +82,10 @@
 													th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-${civilite.civCd}|"
 													th:value="${civilite.civCd}"
 													th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
-													th:v-autofocus="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
-													th::aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
-													th::aria-invalid="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
-													th::class="|{'fr-input--error' : hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')}|"
+													th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
+													th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+													th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
+													th::class="|{'fr-input--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')}|"
 													 >
 											<label class="fr-label"
 													th:for="|radio-input-${champ.codeChamp}-${champ.ordre}-${civilite.civCd}|"
@@ -96,35 +96,36 @@
 									</div>
 								</fieldset>
 								<select th:if='${typeChamp.isListOfType("MotifType") && "select".equals(typeChamp.composantUi)}'
-										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
+										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
 										th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
 										class="fr-select"
-										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'text-select-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
-										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|" 
+										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'text-select-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|" 
 										th:id="|text-select-${champ.codeChamp}-${champ.ordre}|"
-										th::class="|{'fr-select--error' : hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')}|" >
+										th::class="|{'fr-select--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')}|" >
 									<option value="" selected disabled hidden>Selectionnez une option</option>
 									<option th:each="motifValue: ${model['motifValues_' + champ.codeChamp]}" th:value="${motifValue.movId}" vu:text="${motifValue.label}"></option>
 								</select>
 								<q-input th:unless="${typeChamp.composantUi == 'radio' || typeChamp.composantUi == 'select'}"
 										label-slot
-										th:placeholder="${champ.infobulle}"
-										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
+										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
 										th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
-										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}') ? 'text-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
-										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|" 
+										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'text-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
+										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|" 
 										th:id="|text-input-${champ.codeChamp}-${champ.ordre}|"
-										th::error="|hasErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|" 
-										th::error-message="|getErreurFormulaire(uiMessageStack, '${champ.codeChamp}')|"
+										th::error="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|" 
+										th::error-message="|getErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
 										th:type="${typeChamp.composantUi == 'textfield' ? 'text' : (typeChamp.composantUi == 'date' ? 'date' : 'text')}"
 										th:autocomplete="${typeChamp.uiAutocompleteInputAttribute}"
 										th:maxlength="${model.mfoUiUtil.smartTypeMaxLength(champ.typeChamp)}"
 										orientation="vertical"
-										stack-label >
+										stack-label
+										th:classappend="${champ.isMandatory?'v-field__required':''}"
+										th:aria-required="${champ.isMandatory}" >
 										<template v-slot:label>
-										  <div class="row items-center all-pointer-events">
+										  <div class="row items-center all-pointer-events non-selectable" style="display: inline-block;">
 										    <div vu:text="${champ.libelle}" />
-										    <q-tooltip class="bg-grey-8" anchor="top left" self="bottom left" :delay="300" :offset="[0, 8]"><div vu:text="${champ.infobulle}"/></q-tooltip>
+										    <q-tooltip th:if="${champ.infobulle}" class="bg-grey-8" anchor="top left" self="bottom left" :delay="300" :offset="[0, 8]"><div vu:text="${champ.infobulle}"/></q-tooltip>
 										  </div>
 										</template>
 								</q-input>

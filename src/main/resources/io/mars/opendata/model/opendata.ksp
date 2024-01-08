@@ -2,8 +2,8 @@ package io.mars.opendata.domain
 
 create DtDefinition DtOpendataSet {
 	id odsId 			{domain: DoId 			label:"Id"}
-	field code 			{domain: DoCode 		label: "Code" 					}
-	field title 		{domain: DoLabel 		label: "Title" 					}
+	field code 			{domain: DoCode 		label: "Code" 					cardinality:"1"}
+	field title 		{domain: DoLabel 		label: "Title" 					cardinality:"1"}
 	field description 	{domain: DoDescription 	label: "Description" 			}
 	field endPointUrl 	{domain: DoUrl 			label:"Service Endpoint URL" 	}
 	field picturefileId {domain: DoId 			label:"Picture" 				}

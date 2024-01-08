@@ -41,17 +41,17 @@
 	</section>
 	<section layout:fragment="content">
 		<th:block th:if="${!model.modeCreate}">
-			<div id="health" class="col-xl-4 col-md-12 col-xs-12" >
+			<div id="health" class="col-lg-4 col-sm-12 col-xs-12" >
 				<vu:block title="Health" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<q-knob th::value="${model.equipment.healthLevel}" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2"></q-knob>
 				</vu:block>
 			</div>
-			<div class="col-xl-4 col-md-6 col-xs-12" th:if="${!model.modeCreate}">
+			<div class="col-lg-4 col-sm-6 col-xs-12" th:if="${!model.modeCreate}">
 				<vu:block title="Open tickets" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator" vu:text="${model.equipmentMaintenanceOverview.openedTickets}" />
 				</vu:block>
 			</div>
-			<div class="col-xl-4 col-md-6 col-xs-12" th:if="${!model.modeCreate}">
+			<div class="col-lg-4 col-sm-6 col-xs-12" th:if="${!model.modeCreate}">
 				<vu:block title="Active Work orders" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
 					<span class="indicator" vu:text="${model.equipmentMaintenanceOverview.workOrdersInprogress}" />
 				</vu:block>

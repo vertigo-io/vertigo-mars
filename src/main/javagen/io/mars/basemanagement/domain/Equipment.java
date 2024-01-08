@@ -114,9 +114,9 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Name'.
-	 * @return String name
+	 * @return String name <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyLabel", label = "Name")
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Name")
 	public String getName() {
 		return name;
 	}
@@ -124,7 +124,7 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Name'.
-	 * @param name String
+	 * @param name String <b>Obligatoire</b>
 	 */
 	public void setName(final String name) {
 		this.name = name;
@@ -133,9 +133,9 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Code'.
-	 * @return String code
+	 * @return String code <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyCode", label = "Code")
+	@Field(smartType = "STyCode", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Code")
 	public String getCode() {
 		return code;
 	}
@@ -143,7 +143,7 @@ public final class Equipment implements KeyConcept {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Code'.
-	 * @param code String
+	 * @param code String <b>Obligatoire</b>
 	 */
 	public void setCode(final String code) {
 		this.code = code;

@@ -1,7 +1,6 @@
 package io.mars.basemanagement.controllers.equipment;
 
 import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -27,6 +26,7 @@ import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
+import io.vertigo.vega.webservice.validation.UiMessageStack;
 
 @Controller
 @Secured("Equipment$read")
@@ -47,7 +47,6 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	// creation
 	private static final ViewContextKey<EquipmentSurvey> surveyKey = ViewContextKey.of("survey");
 	private static final ViewContextKey<ModeleFormulaire> modeleFormulaireKey = ViewContextKey.of("modeleFormulaire");
-	private static final ViewContextKey<String> controlMandatoryKey = ViewContextKey.of("controlMandatory");
 	private static final ViewContextKey<MetaFormulaireUiUtil> mfoUiUtilKey = ViewContextKey.of("mfoUiUtil");
 
 	// reading
@@ -90,25 +89,22 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 		} else {
 			final var metaFormulaire = metaFormulaireServices.getMetaFormulaireById(mfoUid);
 
-			final var controlMandatory = metaFormulaire.getModele().getChamps().stream()
-					.filter(c -> !c.isOptionel())
-					.map(c -> ("!vueData.reservation.formulaire['" + c.getCodeChamp() + "'] || vueData.reservation.formulaire['" + c.getCodeChamp() + "'] == ''"))
-					.collect(Collectors.joining(" || "));
-
 			viewContext
 					.publishRef(hasSurvey, true)
 					.publishDto(surveyKey, new EquipmentSurvey())
 					.publishRef(modeleFormulaireKey, metaFormulaire.getModele())
-					.publishRef(controlMandatoryKey, controlMandatory)
 					//---
 					.toModeCreate();
 		}
 	}
 
 	@PostMapping("/_save")
-	public String doSave(@ViewAttribute("survey") final EquipmentSurvey equipmentSurvey, @ViewAttribute("equipment") final Equipment equipment) {
+	public String doSave(final UiMessageStack uiMessageStack,
+			@ViewAttribute("survey") final EquipmentSurvey equipmentSurvey, @ViewAttribute("equipment") final Equipment equipment,
+			@ViewAttribute("modeleFormulaire") final ModeleFormulaire modeleFormulaire) {
+
 		equipmentSurvey.setEquipmentId(equipment.getEquipmentId());
-		equipmentSurveyServices.save(equipmentSurvey);
+		equipmentSurveyServices.save(uiMessageStack, equipmentSurvey, modeleFormulaire);
 		return "redirect:/basemanagement/equipment/" + equipment.getEquipmentId() + "/surveys/";
 	}
 

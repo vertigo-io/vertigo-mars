@@ -4,7 +4,7 @@ create DtDefinition DtBase {
 	stereotype: "KeyConcept"
 	id baseId {domain: DoId label: "Id"}
 	field code {domain: DoCode label: "Code" cardinality:"1"}
-	field name {domain: DoLabel label: "Name" }
+	field name {domain: DoLabel label: "Name" cardinality:"1"}
 	field healthLevel {domain: DoHealth label: "Health Level" }	
 	field creationDate {domain: DoLocaldate label: "Creation Date" }
 	field description {domain: DoDescription label: "Description" }
@@ -19,14 +19,14 @@ create DtDefinition DtBase {
 create DtDefinition DtTag {
 	stereotype: "KeyConcept"
 	id tagId {domain: DoId label: "Id"}
-	field label {domain: DoLabel label: "Label" }
+	field label {domain: DoLabel label: "Label" cardinality:"1"}
 }
 
 
 create DtDefinition DtBaseType {
 	stereotype : "StaticMasterData"
 	id baseTypeId {domain: DoCode label:"Id"}
-	field label {domain: DoLabel label:"Base Type Label" }	
+	field label {domain: DoLabel label:"Base Type Label" cardinality:"1"}	
 	values : `{ "hydro" : 		{ "baseTypeId" : "HYDRO",  		"label" : "Hydroponic"},
 				"mine" : 		{ "baseTypeId" : "MINE", 		"label" : "Mining Complex" },
         		"dwelling" : 	{ "baseTypeId" : "DWELLING", 	"label" : "Dwelling Complex"} }`
@@ -46,8 +46,8 @@ create DtDefinition DtGeosector {
 create DtDefinition DtEquipment {
 	stereotype: "KeyConcept"
 	id equipmentId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" }
-	field code {domain: DoCode label: "Code" }
+	field name {domain: DoLabel label: "Name" cardinality:"1"}
+	field code {domain: DoCode label: "Code" cardinality:"1"}
 	field healthLevel {domain: DoHealth label: "Health Level" }	
 	field purchaseDate {domain: DoLocaldate label: "Date of purchase" }
 	field description {domain: DoDescription label: "Description" }
@@ -67,13 +67,13 @@ create DtDefinition DtEquipmentSurvey {
 /* Exemple : "Long Range Antenna","High Res Camera", "All Terrain Tires" */
 create DtDefinition DtEquipmentFeature {
 	id equipmentFeatureId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" }
+	field name {domain: DoLabel label: "Name" cardinality:"1"}
 }
 
 
 create DtDefinition DtBusiness {
 	id businessId {domain: DoId label:"Id"}
-	field name {domain: DoLabel label: "Name" }
+	field name {domain: DoLabel label: "Name" cardinality:"1"}
 	field icon {domain: DoLabel label: "Icon" }
 }
 
