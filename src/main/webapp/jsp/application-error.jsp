@@ -1,4 +1,4 @@
-<%@ page session="false" import="java.util.*, javax.servlet.*" %>
+<%@ page session="false" import="java.util.*, javax.servlet.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%!
 	
 private String printException(Throwable t) throws Exception {
@@ -15,7 +15,7 @@ private String printException(Throwable t) throws Exception {
             sw.append("\n\t").append(stack[i]);
         }
         String res = sw.toString();
-        for (i = 0; (i = res.indexOf('à', i)) >= 0; i++) res = res.substring(0, i) + "&agrave;" + res.substring(i + 1);
+        for (i = 0; (i = res.indexOf('Ã ', i)) >= 0; i++) res = res.substring(0, i) + "&agrave;" + res.substring(i + 1);
         for (i = 0; (i = res.indexOf('&', i)) >= 0; i++) res = res.substring(0, i) + "&amp;" + res.substring(i + 1);
 	   	for (i = 0; (i = res.indexOf('\"', i)) >= 0;) res = res.substring(0, i) + "&quot;" + res.substring(i + 1);
     	for (i = 0; (i = res.indexOf('<', i)) >= 0;) res = res.substring(0, i) + "&lt;" + res.substring(i + 1);
@@ -98,8 +98,8 @@ private String printException(Throwable t) throws Exception {
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="Content-Script-Type" content="text/javascript"/>
 	
-	<base href="<%=baseUrl%>"></base>	
-    <script src="<%=baseUrl%>vertigo-ui/static/3rdParty/cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>	
+	<base href="<%=baseUrl%>" />	
+    <script src="vertigo-ui/static/3rdParty/cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>	
 	<link href="static/css/error.css" type="text/css" rel="stylesheet"/>
 	<title>Vertigo - <%=errorCode%></title>
 </head>
@@ -301,6 +301,5 @@ var particles = {
 	   });
 
 	</script>
-</script>
   </body>
   </html>
