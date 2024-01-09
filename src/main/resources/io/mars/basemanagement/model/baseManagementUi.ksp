@@ -1,6 +1,7 @@
 package io.mars.basemanagement.domain
 
 create DtDefinition DtBasesSummary {
+	field isLoaded 				{domain: DoYesNo label: "Is summary loaded" cardinality: "1"}
 	field baseCount 				{domain: DoCount label: "Bases count" cardinality: "1"}
 	field baseMeanHealth 			{domain: DoHealth label: "Name" cardinality: "1"}
 	field openedTickets		 	{domain: DoCount label: "Health Level" cardinality: "1"}	

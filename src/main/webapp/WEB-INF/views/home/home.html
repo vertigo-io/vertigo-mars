@@ -14,31 +14,32 @@
 	</head>
 	<body>
 		<section layout:fragment="page-container">
-		<q-page padding class="row col-12 q-col-gutter-md col justify-center" >			
+		<q-page padding class="row col-12 q-col-gutter-md col justify-center">
+			<vu:include-data object="basesSummary" field="'*'" />
 			<div class="col-lg-3 col-md-6 col-12">
-				<vu:block title="Bases" header_th:classappend="text-center" content_th:classappend="'row justify-center items-center'" card_style="height: 150px;">
-					<span class="text-secondary indicator" vu:text="${model.basesSummary.baseCount}"></span> 
+				<vu:block title="Bases" header_th:classappend="text-center" content_th:classappend="'row justify-center items-center'" card_style="height: 150px;" loading="!vueData.basesSummary.isLoaded" loading_height="100px">
+					<span class="text-secondary indicator">{{ vueData.basesSummary.baseCount }}</span> 
 				</vu:block>
 			</div>
 			<div class="col-lg-3 col-md-6 col-12">
-				<vu:block title="Global Health Level" header_th:classappend="text-center" content_th:class="'q-card__section row justify-center'" card_style="height: 150px;">
-					<q-rating readonly th::model-value="${model.basesSummary.baseMeanHealth} / 100 * 5 + 1" size="xl" icon="favorite" color="red" class="q-mt-lg"></q-rating>
+				<vu:block title="Global Health Level" header_th:classappend="text-center" content_th:class="'q-card__section row justify-center overflow-hidden'" card_style="height: 150px;" loading="!vueData.basesSummary.isLoaded" loading_height="100px">
+					<q-rating readonly :model-value="vueData.basesSummary.baseMeanHealth / 100 * 5 + 1" size="xl" icon="favorite" color="red" class="q-mt-lg"></q-rating>
 				</vu:block>
 			</div>
 			<div class="col-lg-3 col-md-6 col-12">
-				<vu:block title="Equipments online" header_th:classappend="text-center" content_th:classappend="'column items-center'" card_style="height: 150px;">
-					<div class="text-secondary indicator" vu:text="|${model.basesSummary.onlineEquipmentPercent} %|" ></div>
+				<vu:block title="Equipments online" header_th:classappend="text-center" content_th:classappend="'column items-center'" card_style="height: 150px;" loading="!vueData.basesSummary.isLoaded" loading_height="100px">
+					<div class="text-secondary indicator">{{ vueData.basesSummary.onlineEquipmentPercent }}</div>
 				</vu:block>
 			</div>
 			<div class="col-lg-3 col-md-6 col-12">
-				<vu:block title="Opened Tickets" header_th:classappend="text-center" content_th:classappend="'column items-center'" card_style="height: 150px;">
-					<div class="text-secondary indicator" vu:text="${model.basesSummary.openedTickets}" ></div>
+				<vu:block title="Opened Tickets" header_th:classappend="text-center" content_th:classappend="'column items-center'" card_style="height: 150px;" loading="!vueData.basesSummary.isLoaded" loading_height="100px">
+					<div class="text-secondary indicator">{{ vueData.basesSummary.openedTickets }}</div>
 				</vu:block>
 			</div>
 			<div class="col-12" >
 				<vu:include-data object="bases" field="geoLocation" />
 				<vu:include-data object="bases" field="name" />
-				<v-map tabindex="1" style="width:100%; height: 600px;" id="map" >
+				<v-map tabindex="1" style="width:100%; height: 600px;" id="map" overview>
 					<v-map-layer marker-color="#027BE3" :list="vueData.bases" field="geoLocation" name-field="name" th:base-url="@{/api/bases/}"></v-map-layer>
 				</v-map>
 			</div>
@@ -60,7 +61,6 @@
 			</div>
 			<div class="col-lg-7 col-12">
 				<vu:table list="lastWorkOrders" title="Lastest WorkOrder" componentId="lastWorkOrders" rowsPerPage="3">
-				<vu:slot name="header_slot"><div>aez</div></vu:slot>
 					<vu:column field="name" />
 					<vu:column field="dateCreated" label="Creation Date" />
 					<vu:column field="dateClosed" label="Closing Date" />
@@ -70,6 +70,19 @@
 				</vu:table>
 			</div>
 		</q-page>
+		</section>
+		<section layout:fragment="javascript-footer" >
+			<script type="text/javascript">
+				Quasar.dom.ready(() => {
+					VUiPage.httpPostAjax('_summary');
+					
+					VUiPage.componentStates.lastWorkOrders.loading = true;
+					VUiPage.httpPostAjax('_workOrder', null,
+							{ onSuccess: (response) => {
+								VUiPage.componentStates.lastWorkOrders.loading = false;
+							}});
+				})
+			</script>
 		</section>
 	</body>
 </html>

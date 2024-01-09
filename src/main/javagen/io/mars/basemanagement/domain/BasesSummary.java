@@ -13,10 +13,30 @@ import io.vertigo.datamodel.structure.util.DtObjectUtil;
 public final class BasesSummary implements DtObject {
 	private static final long serialVersionUID = 1L;
 
+	private Boolean isLoaded;
 	private Long baseCount;
 	private Integer baseMeanHealth;
 	private Long openedTickets;
 	private Integer onlineEquipmentPercent;
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Is summary loaded'.
+	 * @return Boolean isLoaded <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyYesNo", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Is summary loaded")
+	public Boolean getIsLoaded() {
+		return isLoaded;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Is summary loaded'.
+	 * @param isLoaded Boolean <b>Obligatoire</b>
+	 */
+	public void setIsLoaded(final Boolean isLoaded) {
+		this.isLoaded = isLoaded;
+	}
 	
 	/**
 	 * Champ : DATA.

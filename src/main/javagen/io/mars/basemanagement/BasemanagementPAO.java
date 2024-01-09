@@ -76,6 +76,7 @@ public final class BasemanagementPAO implements StoreServices {
 			request = """
 			with secbase as (<%=securedBase.asSqlFrom("base", ctx)%>)
             select 
+                1 as is_loaded,
 				(select count(1) from secbase) as base_count,
 				(select avg(health_level) from secbase) as base_mean_health,
 				(select count(1) from ticket tic where tic.ticket_status_id = 'OPEN' or tic.ticket_status_id = 'ASSIGNED') as opened_tickets,

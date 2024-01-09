@@ -173,6 +173,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	 * Enumération des champs de BasesSummary.
 	 */
 	public enum BasesSummaryFields implements DtFieldName<io.mars.basemanagement.domain.BasesSummary> {
+		/** Propriété 'Is summary loaded'. */
+		isLoaded,
 		/** Propriété 'Bases count'. */
 		baseCount,
 		/** Propriété 'Name'. */
