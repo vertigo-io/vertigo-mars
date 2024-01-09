@@ -63,7 +63,7 @@ img {
   border-top-width: 1px;
 }
 
-.q-card, .q-table__container {
+.q-card:not(.v-modal), .q-table__container {
   border-top: 3px var(--q-secondary) solid;
 }
 

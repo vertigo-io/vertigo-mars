@@ -19,6 +19,7 @@ VUiExtensions = {
             return height;
         },
         setIframeHeight : function(ifrm) {
+			// TODO: review this, onload is not triggered (at least in local)
             var doc = ifrm.contentDocument? ifrm.contentDocument: 
             ifrm.contentWindow.document;
             ifrm.style.visibility = 'hidden';

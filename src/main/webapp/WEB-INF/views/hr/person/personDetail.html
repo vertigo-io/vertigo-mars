@@ -80,7 +80,7 @@
 					<vu:button-submit th:if="${model.modeEdit}"   icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
 					<vu:button-submit th:if="${model.modeCreate}" icon="save" label="Create" action="@{_create}" size="lg" color="primary"/>
 				</q-page-sticky>				
-				<vu:modal componentId="missionEditModal" title="Mission" iframe_width="560" iframe_height="340"  />
+				<vu:modal componentId="missionEditModal" title="Mission" height="340px" />
 		</section>
 		<section layout:fragment="javascript-footer" >
 			<script type="text/javascript">
