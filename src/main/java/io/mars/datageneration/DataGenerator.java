@@ -63,7 +63,7 @@ public class DataGenerator implements Component {
 		Assertion.check().isNotNull(initialEquipmentUnits);
 		//---
 		this.initialEquipmentUnits = initialEquipmentUnits;
-		resourceRoot = "/io/mars/datageneration/" + datasetOpt.orElse("mars") + "/";
+		resourceRoot = "/io/mars/datasets/" + datasetOpt.orElse("mars") + "/datageneration/";
 	}
 
 	public void generateInitialData() {

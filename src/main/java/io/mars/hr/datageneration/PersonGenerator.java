@@ -62,10 +62,11 @@ public class PersonGenerator implements Component {
 		if (picturePath.isEmpty()) {
 			pictureId = null;
 		} else {
+			final var cvsFolder = csvFilePath.substring(0, csvFilePath.lastIndexOf('/') + 1);
 			final VFile pictureFile = StreamFile.of(
 					picturePath.substring(picturePath.lastIndexOf('/') + 1),
 					"image/" + picturePath.substring(picturePath.lastIndexOf('.') + 1),
-					this.getClass().getResource(picturePath));
+					this.getClass().getResource(cvsFolder + picturePath));
 			final FileInfo fileInfo = fileStoreManager.create(new FileInfoStd(pictureFile));
 			pictureId = (Long) fileInfo.getURI().getKey();
 		}

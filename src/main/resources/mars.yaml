@@ -163,7 +163,7 @@ modules:
           userTokenIdField: email
       - authentication.text:
           __flags__: ["!keycloak"]
-          filePath: /io/mars/support/userAccounts.txt
+          filePath: /io/mars/datasets/mars/userAccounts.txt
   io.vertigo.vega.VegaFeatures:
     features:
         - webservices:
@@ -260,6 +260,7 @@ modules:
     features:
       - datageneration:
           initialEquipmentUnits: 1500
+          dataset: mars
   io.mars.home.HomeFeatures:
   io.mars.command.CommandFeatures:
 initializers:
