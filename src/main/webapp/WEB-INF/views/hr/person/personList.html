@@ -53,9 +53,10 @@
 		<th:block th:if="${model.listRenderer == 'list'}">
 			<vu:include-data object="persons" field="personId" />
 			<vu:include-data-protected object="persons" field="picturefileId" />
-			<vu:list list="persons" componentId="personsList" sortUrl="@{/hr/persons/_sort}" rowsPerPage="8" pagination_:direction-links="true"
-				pagination_:boundary-links="true">
-				<q-item-section avatar > <q-avatar><img th::src="|'@{/hr/person/picture/}'+item.picturefileId|" class="avatar" alt="avatar"></img></q-avatar></q-item-section>
+			<vu:list list="persons" componentId="personsList" sortUrl="@{/hr/persons/_sort}"
+			         rowsPerPage="7" separator
+				     pagination_:direction-links="true" pagination_:boundary-links="true">
+				<q-item-section avatar > <q-avatar><img th::src="|'@{/hr/person/picture/}'+item.picturefileId|" class="avatar" alt="avatar" /></q-avatar></q-item-section>
 				<q-item-section>
 					<vu:include-data object="persons" field="fullName" />
 					<vu:include-data object="persons" field="dateHired" />

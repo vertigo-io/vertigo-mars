@@ -77,6 +77,9 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 
 	@GetMapping("/picture/{protectedUrl}")
 	public VFile loadFile(@PathVariable("protectedUrl") final String protectedUrl) {
+		if (protectedUrl == null || "null".equalsIgnoreCase(protectedUrl)) {
+			return personServices.getPersonPicture(null);
+		}
 		//project specific part
 		final Long fileKey = ProtectedValueUtil.readProtectedValue(protectedUrl, Long.class);
 		return personServices.getPersonPicture(fileKey);
