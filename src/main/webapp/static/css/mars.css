@@ -478,4 +478,11 @@ tr th.dom_id:nth-child(1){
 .v-modal iframe {
     transition: 0.225s ease-in height;
 }
+.v-modal {
+	border: 1px solid #9E9E9E;
+}
+.v-modal .q-toolbar {
+	background-color: var(--q-secondary) !important;
+}
+
 
