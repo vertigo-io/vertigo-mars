@@ -68,6 +68,7 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 		viewContext
 				.publishDto(personKey, personServices.initPerson())
 				.publishMdl(tagsKey, Tag.class, null) //all
+				.publishFileInfoURI(personPictureUri, null)
 				.publishDto(personInputKey, new PersonInput())
 				.publishDtList(groupsKey, GroupsFields.groupId, getFakeGroups())
 				//---
@@ -103,7 +104,8 @@ public class PersonDetailController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_save")
-	public String doSave(@ViewAttribute("person") final Person person, @ViewAttribute("personInput") final PersonInput personInput, @ViewAttribute("personPictureUri") final Optional<FileInfoURI> personPictureFile) {
+	public String doSave(@ViewAttribute("person") final Person person, @ViewAttribute("personInput") final PersonInput personInput,
+			@ViewAttribute("personPictureUri") final Optional<FileInfoURI> personPictureFile) {
 		personServices.updatePerson(person);
 		if (personPictureFile.isPresent()) {
 			personServices.savePersonPicture(person.getPersonId(), personPictureFile.get());

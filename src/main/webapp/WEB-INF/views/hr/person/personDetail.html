@@ -19,7 +19,7 @@
 		<section>
 				<div layout:fragment="content-header-left">
 					<vu:include-data-protected object="person" field="picturefileId"/>
-					<img th::src="|'@{/hr/person/picture/}'+vueData.person.picturefileId|" class="detailImg gt-md" alt="Avatar"/>
+					<img th:if="${!model.modeCreate}" th::src="|'@{/hr/person/picture/}'+vueData.person.picturefileId|" class="detailImg gt-md" :alt="Avatar"/>
 				</div>
 				<div layout:fragment="content-header-title">
 					<span class="text-bigger" vu:text="${model.modeCreate?'New Person':model.person.fullName}"></span> 
@@ -50,10 +50,10 @@
 						<vu:text-field object="person" field="lastName" />
 						<vu:text-field object="person" field="email" />
 						<vu:chips-autocomplete object="person" field="tags" list="tags" staticData="true"/>
-						<vu:label-edit object="person" field="picturefileId" th:if="${viewMode=='edit'}"  >
-							<vu:fileupload th:url="'@{/commons/upload}'" key="personPictureUri" />
-						</vu:label-edit>
 						<vu:select-multiple object="personInput" field="groups" list="groups" labelField="name" layout="horizontal"/>
+						<vu:label-edit object="person" field="picturefileId" th:if="${viewMode=='edit'}"  >
+							<vu:fileupload th:url="'@{/commons/upload}'" key="personPictureUri" th:with="object=null, field=null"/>
+						</vu:label-edit>
 					</vu:grid>
 				</vu:block>
 				<vu:block th:if="${!model.modeCreate}" id="contact" title="Contact actions">
