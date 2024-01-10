@@ -33,16 +33,16 @@ public class BaseGenerator implements Component {
 	@Inject
 	private FileStoreManager fileStoreManager;
 
-	public List<Base> generateInitialBases() {
+	public List<Base> generateInitialBases(final String resourceRoot) {
 		final List<GeoPoint> geoLocations = Collections.singletonList(new GeoPoint(2.333333, 48.866667)); //paris by default for everybody
 
 		final List<String> nameFirstPartDictionnary1 = List.of("Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta");
 		final List<String> nameSecondPartDictionnary2 = List.of("Aldebaran", "Centauri", "Pisces", "Cygnus", "Pegasus", "Dragon", "Andromeda");
 		final List<String> sampleTags = List.of("#mountain", "#crater", "#esa", "#cnsa", "#roscosmos", "#nasa", "#experimental");
 
-		final String exteriorPicturePrefix = "/io/mars/datageneration/files/bases/mars base ";
+		final String exteriorPicturePrefix = resourceRoot + "files/bases/mars base ";
 		final String exteriorPictureSuffix = ".jpg";
-		final String interiorPicturePrefix = "/io/mars/datageneration/files/bases/inner base ";
+		final String interiorPicturePrefix = resourceRoot + "files/bases/inner base ";
 		final String interiorPictureSuffix = ".jpg";
 
 		final FakeBaseListBuilder builder = new FakeBaseListBuilder()

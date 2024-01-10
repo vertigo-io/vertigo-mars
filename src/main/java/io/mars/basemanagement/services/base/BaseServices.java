@@ -72,7 +72,7 @@ public class BaseServices implements Component, Activeable {
 		defaultPhoto = StreamFile.of(
 				"defaultBase.png",
 				"image/png",
-				PersonServices.class.getResource("/io/mars/datageneration/files/bases/defaultBase.png"));
+				PersonServices.class.getResource("/io/mars/images/noImage.png"));
 	}
 
 	@Override

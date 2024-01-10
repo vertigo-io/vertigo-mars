@@ -33,11 +33,10 @@ public class OpendataSetServices implements Component, Activeable {
 
 	@Override
 	public void start() {
-
 		defaultOpendataSetPicture = StreamFile.of(
 				"defaultOpendataSetPhoto.png",
 				"image/png",
-				OpendataSetServices.class.getResource("/io/mars/datageneration/files/opendataset/defaultOpendataSetPhoto.png"));
+				OpendataSetServices.class.getResource("/io/mars/images/defaultOpendataSetPhoto.png"));
 	}
 
 	@Override

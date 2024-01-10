@@ -7,6 +7,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -53,13 +54,16 @@ public class DataGenerator implements Component {
 	private VTransactionManager transactionManager;
 
 	private final int initialEquipmentUnits;
+	private final String resourceRoot;
 
 	@Inject
 	public DataGenerator(
-			@ParamValue("initialEquipmentUnits") final Integer initialEquipmentUnits) {
+			@ParamValue("initialEquipmentUnits") final Integer initialEquipmentUnits,
+			@ParamValue("dataset") final Optional<String> datasetOpt) {
 		Assertion.check().isNotNull(initialEquipmentUnits);
 		//---
 		this.initialEquipmentUnits = initialEquipmentUnits;
+		resourceRoot = "/io/mars/datageneration/" + datasetOpt.orElse("mars") + "/";
 	}
 
 	public void generateInitialData() {
@@ -69,8 +73,8 @@ public class DataGenerator implements Component {
 		}
 
 		if (baseCount == 0) {
-			generateReferenceData();
-			final List<Base> bases = generateInitialBases();
+			generateReferenceData(resourceRoot);
+			final List<Base> bases = generateInitialBases(resourceRoot);
 			generateInitialEquipments(bases);
 			generateInitialPersons(bases);
 			generateInitialOpendataSets();
@@ -79,25 +83,25 @@ public class DataGenerator implements Component {
 	}
 
 	private void generateInitialOpendataSets() {
-		opendataSetGenerator.createInitialOpendataSetsFromCSV("io/mars/datageneration/opendataSets.csv");
+		opendataSetGenerator.createInitialOpendataSetsFromCSV(resourceRoot + "opendataSets.csv");
 	}
 
 	private void generateInitialEquipments(final List<Base> bases) {
 		equipmentGenerator.createInitialEquipmentCategories();
-		equipmentGenerator.createInitialEquipmentTypesFromCSV("io/mars/datageneration/equipmentTypes.csv");
+		equipmentGenerator.createInitialEquipmentTypesFromCSV(resourceRoot + "equipmentTypes.csv");
 		equipmentGenerator.createInitialEquipments(initialEquipmentUnits, bases);
 	}
 
 	private void generateInitialPersons(final List<Base> bases) {
-		personGenerator.createInitialPersonsFromCSV("io/mars/datageneration/persons.csv", bases);
+		personGenerator.createInitialPersonsFromCSV(resourceRoot + "persons.csv", bases);
 	}
 
-	private List<Base> generateInitialBases() {
-		return baseGenerator.generateInitialBases();
+	private List<Base> generateInitialBases(final String resourceRoot) {
+		return baseGenerator.generateInitialBases(resourceRoot);
 	}
 
-	private void generateReferenceData() {
-		referenceDataGenerator.generateReferenceData();
+	private void generateReferenceData(final String resourceRoot) {
+		referenceDataGenerator.generateReferenceData(resourceRoot);
 	}
 
 	private void generatePastData(final Instant from, final Instant to) {

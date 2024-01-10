@@ -50,7 +50,7 @@ public class PersonServices implements Component, Activeable {
 		defaultPhoto = StreamFile.of(
 				"defaultPhoto.png",
 				"image/png",
-				PersonServices.class.getResource("/io/mars/datageneration/files/persons/defaultPhoto.png"));
+				PersonServices.class.getResource("/io/mars/images/defaultPhoto.png"));
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class PersonServices implements Component, Activeable {
 		//if not AdmUsers, can only edit my info
 		AuthorizationUtil.assertOr(
 				AuthorizationUtil.hasAuthorization(GlobalAuthorizations.AtzAdmUsers),
-				() -> personId.equals(SecurityUtil.<MarsUserSession> getUserSession().getLoggedPerson().getPersonId()));
+				() -> personId.equals(SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson().getPersonId()));
 		//-----
 		return personDAO.get(personId);
 	}
@@ -77,7 +77,7 @@ public class PersonServices implements Component, Activeable {
 		//if not AdmUsers, can only edit my info
 		AuthorizationUtil.assertOr(
 				AuthorizationUtil.hasAuthorization(GlobalAuthorizations.AtzAdmUsers),
-				() -> person.getPersonId().equals(SecurityUtil.<MarsUserSession> getUserSession().getLoggedPerson().getPersonId()));
+				() -> person.getPersonId().equals(SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson().getPersonId()));
 		//-----
 		personDAO.update(person);
 	}
