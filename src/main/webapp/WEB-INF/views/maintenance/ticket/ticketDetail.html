@@ -58,7 +58,7 @@
 						<input type="hidden" name="vContext[ticket][description]" v-bind:value="vueData.ticket.description" />
 					</vu:block>
 					<vu:table th:if="${model.modeReadOnly}" list="workOrders" title="Work Orders" componentId="workOrders" rowsPerPage="10">
-						<vu:slot name="top_right_slot"><q-btn class="fab-block" round flat color="primary" icon="add" aria-label="Add work order" title="Add work order" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/new}', { 'ticketId' : vueData.ticket.ticketId, 'successCallback' : 'onWorkOrderSuccess' })|"></q-btn></vu:slot>
+						<vu:slot name="top_right_slot"><q-btn class="fab-block" round flat color="primary" icon="add" aria-label="Add work order" title="Add work order" th:@click="|openModal('workOrderCreateModal', '@{/maintenance/workorder/new}', { 'ticketId' : vueData.ticket.ticketId, 'successCallback' : 'onWorkOrderSuccess' })|"></q-btn></vu:slot>
 						<vu:slot name="actions_slot"><q-btn icon="edit" round flat color="primary" title="View detail" aria-label="View detail" th:@click="|openModal('workOrderEditModal', '@{/maintenance/workorder/}' + props.row.woId , {'successCallback' : 'onWorkOrderSuccess' })|"></q-btn></vu:slot>
 						<vu:include-data object="ticket" field="ticketId" />
 						<vu:include-data object="workOrders" field="woId" />
@@ -71,12 +71,14 @@
 						<vu:button-submit th:if="${model.modeEdit}"   icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
 						<vu:button-submit th:if="${model.modeCreate}" icon="save" label="Create" action="@{_create}" size="lg" color="primary"/>
 					</q-page-sticky>
+				<vu:modal componentId="workOrderCreateModal" title="Work Order" height="430px" iframe_onload="setIframeHeight(this)"  />
 				<vu:modal componentId="workOrderEditModal" title="Work Order" height="540px" iframe_onload="setIframeHeight(this)"  />
 			</div>
 		</section>
 		<section layout:fragment="javascript-footer" >
 			<script type="text/javascript">
 				function onWorkOrderSuccess() {
+					VUiPage.$data.componentStates.workOrderCreateModal.opened = false;
 					VUiPage.$data.componentStates.workOrderEditModal.opened = false;
 					VUiPage.httpPostAjax("[[@{/maintenance/ticket/_reloadWorkOrders}]]", {});
 				}
