@@ -753,7 +753,7 @@ create table WORK_ORDER
 (
     WO_ID       	 NUMERIC     	not null,
     CODE        	 VARCHAR(100)	not null,
-    TICKET_CODE 	 VARCHAR(100)	not null,
+    TICKET_CODE 	 VARCHAR(100)	,
     NAME        	 VARCHAR(100)	not null,
     DESCRIPTION 	 VARCHAR(350)	,
     DATE_CREATED	 DATE        	,

@@ -14,7 +14,7 @@ create DtDefinition DtTicket {
 create DtDefinition DtWorkOrder {
 	id woId {domain: DoId label:"Id"}
 	field code {domain: DoLabel label: "Code" cardinality:"1"}
-	field ticketCode {domain: DoLabel label: "Number" cardinality:"1"}
+	field ticketCode {domain: DoLabel label: "Number"}
 	field name {domain: DoLabel label: "Name" cardinality:"1"}
 	field description {domain: DoDescription label: "Description" }
 	field dateCreated {domain: DoLocaldate label: "Creation Date" }

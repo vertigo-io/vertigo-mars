@@ -102,9 +102,9 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Number'.
-	 * @return String ticketCode <b>Obligatoire</b>
+	 * @return String ticketCode
 	 */
-	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Number")
+	@Field(smartType = "STyLabel", label = "Number")
 	public String getTicketCode() {
 		return ticketCode;
 	}
@@ -112,7 +112,7 @@ public final class WorkOrder implements Entity {
 	/**
 	 * Champ : DATA.
 	 * Définit la valeur de la propriété 'Number'.
-	 * @param ticketCode String <b>Obligatoire</b>
+	 * @param ticketCode String
 	 */
 	public void setTicketCode(final String ticketCode) {
 		this.ticketCode = ticketCode;
