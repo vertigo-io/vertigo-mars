@@ -1,0 +1,27 @@
+:root {
+  	--v-color-body-background: #FFF;
+	--v-color-body-color: #0c0c0c;
+	--q-primary: var(--q-dark);
+	--v-primary-invert: #FFFFFF;
+	--q-secondary: #014d81; 
+	--v-secondary-invert: rgba(255, 255, 255, 0.9);
+	--q-accent:	var(--v-primary-invert);
+	--v-accent-invert: var(--q-primary);
+	
+	--q-dark: #1c3754;
+	
+	--q-positive:	#008000;
+	--q-negative:	#e60000;
+	--q-info:		#31CCEC;	
+	--q-warning:	#ad6216;
+	
+	--v-menu-icon-color: var(--q-accent);
+	--v-menu-active-color: var(--q-secondary);
+	
+	--m-detail-icon-color : var(--v-secondary-invert);
+	--m-detail-icon-background-color : transparent;
+}
+
+body {
+  font-family: "Poppins", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

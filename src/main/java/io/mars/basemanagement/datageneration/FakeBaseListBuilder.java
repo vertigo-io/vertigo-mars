@@ -115,7 +115,7 @@ public final class FakeBaseListBuilder implements Builder {
 	}
 
 	private static int getHealthLevel() {
-		return DataGenerator.RND.nextInt(101);
+		return DataGenerator.RND.nextInt(56) + 45;
 	}
 
 	private static String getDescription(final String firstPart, final String secondPart, final int healthLevel, final LocalDate creationDate) {

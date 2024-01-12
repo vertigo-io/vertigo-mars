@@ -30,7 +30,7 @@
 				<vu:block id="overview" title="Equipment Overview">
 					<vu:include-data object="equipmentOverviews" field='*' />
 					<div class="row gutter-md">
-						<div v-for="equipmentOverview in vueData.equipmentOverviews" :key="equipmentOverview.businessId" class="col-md-3 col-sm-4 col-xs-12 text-center" >
+						<div v-for="equipmentOverview in vueData.equipmentOverviews" :key="equipmentOverview.businessId" class="col-md-3 col-sm-4 col-xs-12 text-center q-my-sm" >
 							<q-knob
 								  :value="equipmentOverview.okCount"
 								  :min="0"
@@ -42,7 +42,7 @@
 								  :thickness="0.15"
 								  show-value><q-icon :name="equipmentOverview.businessIcon" size="54px" color="primary"></q-icon></q-knob>
 							<div class="text-primary small-caps">{{equipmentOverview.businessName}}</div>
-							<div class="text-italic">{{equipmentOverview.count}} Unit(s)</div>
+							<div class="text-italic">{{equipmentOverview.count}} Units</div>
 						</div>
 					</div>
 					

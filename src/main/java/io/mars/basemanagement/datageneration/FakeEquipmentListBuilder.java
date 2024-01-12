@@ -93,7 +93,7 @@ public class FakeEquipmentListBuilder implements Builder {
 	}
 
 	private static int getHealthLevel() {
-		return DataGenerator.RND.nextInt(101);
+		return DataGenerator.RND.nextInt(51) + 25;
 	}
 
 	private static BigDecimal getEquipmentValue() {

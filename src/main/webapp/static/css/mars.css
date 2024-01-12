@@ -1,34 +1,8 @@
 /******** CSS SPECIFIQUE A CERTAINES PAGES *******/
-:root {
-  	--v-color-body-background: #FFF;
-	--v-color-body-color: #0c0c0c;
-	/*--q-color-primary: #027be3;
-	--q-color-secondary:#fad9c2;*/
-	--q-primary: var(--q-dark);
-	--v-primary-invert: #FFFFFF;
-	--q-secondary: #014d81; 
-	--v-secondary-invert: rgba(255, 255, 255, 0.9);
-	--q-accent:	var(--v-primary-invert);
-	--v-accent-invert: var(--q-primary);
-	
-	--q-dark: #1c3754;
-	
-	
-	/*--q-color-primary:#2196F3;
-	--q-color-secondary:#64B5F6;
-	--q-color-tertiary:	#BBDEFB;*/
-	
-	--q-positive:	#008000;
-	--q-negative:	#e60000;
-	--q-info:		#31CCEC;	
-	--q-warning:	#ad6216;  
-}
-
 body {
   background: white !important;
   background: var(--v-color-body-background) !important;
   color: var(--v-color-body-color) !important;
-  font-family: "Poppins", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 img {
@@ -42,11 +16,11 @@ img {
 }
 
 .q-drawer i {
-	color: var(--q-accent);
+	color: var(--v-menu-icon-color);
 }
 
 .q-drawer .q-item__label--header {
-	color: var(--v-primary-invert);
+	color: inherit;
 }
 
 /* table */
@@ -154,9 +128,6 @@ img {
 	padding-bottom: 64px;
 }
 
-body.login {
-	background: fixed url(../img/bcf60b99d4_121619_mars-bfrs.jpg) center / cover no-repeat !important;
-}
 
 .login #page > div {
 	height:100vh;
@@ -165,22 +136,35 @@ body.login {
 .login .title {
 	position: absolute;
     top: 0;
+    font-size: 2.5em;
+    font-variant: small-caps;
 }
 
-.login .title img {
-	width:90vw;
-	max-width:700px;
-}
-.login form, .login img{
+
+.login form, .login .title {
 	background: rgba(255, 255, 255, 0.8);
 	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
        		box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
 	padding : 20px;
 	display:inline-block;
-	margin: auto;
 	min-width: 400px;
 	border-radius: 5px;
+	opacity: 0;
+	animation: fadein ease-in 750ms;
+	animation-fill-mode: forwards;
 }
+
+@keyframes fadein{
+	from {opacity:0}
+	to   {opacity:1}
+}
+
+
+.login form {
+	animation-delay: 150ms;
+}
+
+
 
 /*
 .q-list {
@@ -193,7 +177,7 @@ body.login {
 */
 
 .menu a.active {
-  background-color: var(--q-secondary);
+  background-color: var(--v-menu-active-color);
 }
 .menu a.active:after {
   content: 'arrow_left';
@@ -233,9 +217,9 @@ body.login {
     width: 80px;
     font-size: 55px;
     border-radius: 50%;
-    background-color: white;
-    color: black;
-    border: 4px solid black;
+    background-color: var(--m-detail-icon-background-color);
+    color: var(--m-detail-icon-color);
+    border: 4px solid var(--m-detail-icon-color);
 }
 .detailType {
     line-height: 100px;
@@ -327,11 +311,6 @@ nav a.q-item, .nav a.q_item {
 	/*transition: translate .2s, box-shadow .2s, -webkit-box-shadow .2s;*/
 }
 
-.marsCard .q-card .q-img {
-    height: 250px;
-    object-fit: cover;    
-}
-
 
 .marsCard:hover .q-card  {
     transform: translate(0,-5px);
@@ -340,18 +319,13 @@ nav a.q-item, .nav a.q_item {
 }
 
 
-@media (min-width: 1500px) {
-.row  .marsCard {
-	width: 25%;
-}}
-
 .fullHeight {
 	height:100%;
 }
 
 .m-title {
 	color: var(--q-color-primary);
-	text-transform:uppercase;
+	font-variant: small-caps;
 }
 
 .small-caps {

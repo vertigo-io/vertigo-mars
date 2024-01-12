@@ -20,6 +20,7 @@ package io.mars.support;
 
 import io.mars.support.boot.MarsMasterDataDefinitionProvider;
 import io.mars.support.services.MarsFileServices;
+import io.mars.support.theme.ThemeManager;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Features;
 import io.vertigo.datamodel.impl.smarttype.ModelDefinitionProvider;
@@ -38,7 +39,8 @@ public class SupportFeatures extends Features<SupportFeatures> {
 						.addDefinitionResource("dtobjects", "io.mars.domain.DtDefinitions")
 						.build())
 				.addDefinitionProvider(MarsMasterDataDefinitionProvider.class)
-				.addComponent(MarsFileServices.class);
+				.addComponent(MarsFileServices.class)
+				.addComponent(ThemeManager.class);
 
 	}
 

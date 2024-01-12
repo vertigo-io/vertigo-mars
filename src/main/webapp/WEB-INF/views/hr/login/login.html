@@ -11,6 +11,7 @@
     <meta name="author" content="Klee Group"/>
     
   	<link rel="stylesheet" th:href="@{/static/css/mars.css}"/>
+  	<link rel="stylesheet" th:href="@{/static/theme/__${model.theme.name}__/css/theme.css}"/>
 	<link rel="icon" th:href="@{/static/img/favicon.ico}"/>
     <title>Vertigo - Mars</title>
    	<script th:src="@{/static/js/mars.js}"></script>
@@ -18,20 +19,23 @@
 
 <body class="mat desktop no-touch platform-mat login" >
 		<vu:page vuiSsr="false" vuiDevMode="false">
+			<img th:src="@{/static/theme/__${model.theme.name}__/img/login_background.jpg}" class="absolute full-width full-height no-pointer-events non-selectable" style="object-fit: cover;" />
 			<div class="column justify-center items-center" v-cloak>
-		      	<div class="title"><h2><img th:src="@{/static/img/titleMarsBaseNetwork.png}" alt="Home mars network" style="background: rgba(255, 255, 255, 0.8)"></h2></div>
-		      	<vu:form>
-		      	<div class="q-gutter-y-md">
-			    		<vu:include-data-primitive key="login" />
-			      		<vu:include-data-primitive key="password" />
+		      	<div class="title text-center q-mt-xl">Mars</div>
+		      	<div style="z-index:1">
+			      	<vu:form>
+			      		<div class="q-gutter-y-md">
+				    		<vu:include-data-primitive key="login" />
+				      		<vu:include-data-primitive key="password" />
 			      			<vu:messages/>
 							<q-input v-model="vueData.login" name="login" label="Login" stack-label orientation="vertical"></q-input>
 							<q-input type="password" v-model="vueData.password" name="password" label="Password" stack-label orientation="vertical"></q-input>
 							<div class="float-right">
 								<vu:button-submit label="Login" action="@{_login}" class="bg-primary text-white" flat />
 							</div>
+						</div>
+					</vu:form>
 				</div>
-				</vu:form>
 			</div>
 		</vu:page>
 </body>

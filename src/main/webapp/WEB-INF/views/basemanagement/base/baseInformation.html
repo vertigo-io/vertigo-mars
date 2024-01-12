@@ -49,7 +49,7 @@
 		<th:block th:if="${!model.modeCreate}">
 			<div id="health" class="col-xl-3 col-sm-6 col-xs-12">
 				<vu:block title="Health" header_th:classappend="text-center" content_th:classappend="'row justify-center'" card_style="height: 150px;">
-				 	<q-knob th::value="${model.base.healthLevel}" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2"></q-knob>
+				 	<q-knob th::value="${model.base.healthLevel}" :min="0" :max="100" color="positive" track-color="grey-2" :readonly="true" show-value size="65px" :thickness="0.2"><div vu:text="|${model.base.healthLevel} %|"></div></q-knob>
 			 	</vu:block>
 			</div>
 			<div class="col-xl-3 col-sm-6 col-xs-12">

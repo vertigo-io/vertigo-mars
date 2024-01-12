@@ -20,16 +20,19 @@
 			<div class="m-title text-h6 q-mb-md">{{vueData.bases.length}} Bases</div>
 			<vu:cards list="bases" componentId="baseCards" cardClass="marsCard col-lg-3 col-md-6 col-xs-12"  sortUrl="@{/basemanagement/bases/_sort}" rowsPerPage="8" showMore="true" showMoreLabel="Show more" >
 					<div class="nav" th:@click="|goTo('@{/basemanagement/base/information/}'+item.baseId)|">
-						<q-img th::src="|'@{/basemanagement/base/}'+item.baseId+'/mainPicture'|"></q-img>
+						<div style="height: 300px">
+							<q-img th::src="|'@{/basemanagement/base/}'+item.baseId+'/mainPicture'|" class="absolute" height="300px" :img-style="{ filter: 'blur(8px)', transform: 'scale(1.1)' }" ></q-img>
+							<q-img th::src="|'@{/basemanagement/base/}'+item.baseId+'/mainPicture'|" fit="contain" height="300px"  ></q-img>
+						</div>
 						<q-card-section class="row" >
-							<div class="col-4 q-mr-sm" style="max-width: 100px;" >
+							<div class="q-mr-md" style="max-width: 100px;" >
 								<div><q-knob
 									  show-value
 									  :value="item.healthLevel"
 									  :min="0" :max="100"
 									  color="positive" track-color="grey-2" size="80px"
 									  :thickness="0.15"
-									  :readonly="true" ><q-icon name="fas fa-dice-d20" size="2rem" color="primary" ></q-icon></q-knob></div>
+									  :readonly="true" >{{ item.healthLevel }} %</q-knob></div>
 							</div>
 							<div class="col ellipsis" >
 								<span class="text-primary small-caps text-bigger">{{item.name}}</span><br/>

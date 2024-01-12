@@ -19,6 +19,7 @@ import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
+import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
@@ -53,7 +54,7 @@ public class PersonGenerator implements Component {
 		final String firstName = record[0];
 		final String lastName = record[1];
 		final String email = record[2];
-		final String tags = record[3];
+		final String tags = StringUtil.isBlank(record[3]) ? null : record[3];
 		final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		final LocalDate dateHired = LocalDate.parse(record[4], dateFormatter);
 		final String picturePath = record[5];

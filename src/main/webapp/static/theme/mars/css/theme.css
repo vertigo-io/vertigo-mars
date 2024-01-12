@@ -1,0 +1,32 @@
+:root {
+  	--v-color-body-background: #f5f5f5;
+	--v-color-body-color: #0c0c0c;
+	/*--q-color-primary: #027be3;
+	--q-color-secondary:#fad9c2;*/
+	--q-primary: #027be3;
+	--v-primary-invert: rgba(255, 255, 255, 0.9);
+	--q-secondary:#00BCD4;
+	--v-secondary-invert: rgba(255, 255, 255, 0.9);
+	--q-accent:	#B2EBF2;
+	--v-accent-invert:	rgba(60, 60, 60, 0.8);
+	
+	
+	/*--q-color-primary:#2196F3;
+	--q-color-secondary:#64B5F6;
+	--q-color-tertiary:	#BBDEFB;*/
+	
+	--q-positive:	#21BA45;
+	--q-negative:	#DB2828;
+	--q-info:		#31CCEC;	
+	--q-warning:	#F2C037;   
+	
+	--v-menu-icon-color: grey;
+	--v-menu-active-color: var(--q-accent);
+	
+	--m-detail-icon-color : black;
+	--m-detail-icon-background-color : white;
+}
+
+.q-drawer .q-item__label--header {
+	color: var(--q-primary) !important;
+}

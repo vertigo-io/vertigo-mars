@@ -18,11 +18,14 @@
  */
 package io.mars.support.controllers;
 
+import java.io.Serializable;
+
 import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import io.mars.support.theme.ThemeManager;
 import io.vertigo.core.param.ParamManager;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
@@ -34,8 +37,12 @@ public final class GlobalParamsControllerAdvice {
 	@Inject
 	private ParamManager paramManager;
 
+	@Inject
+	private ThemeManager themeManager;
+
 	@ModelAttribute
 	public void initContext(final ViewContext viewContext, final HttpServletRequest request) {
+		viewContext.publishRef(() -> "theme", (Serializable) themeManager.getProperties());
 		viewContext.publishRef(() -> "chatbotUrl", paramManager.getParam("chatbotUrl").getValueAsString());
 		viewContext.publishRef(() -> "apiManagementUrl", paramManager.getParam("apiManagementUrl").getValueAsString());
 		viewContext.publishRef(() -> "requestURI", request.getRequestURI());

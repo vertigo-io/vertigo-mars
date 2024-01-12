@@ -12,6 +12,7 @@
     
     <link th:href="@{/static/3rdParty/poppins/css/poppins.css}" rel="stylesheet" type="text/css"/>
   	<link rel="stylesheet" th:href="@{/static/css/mars.css}"/>
+  	<link rel="stylesheet" th:href="@{/static/theme/__${model.theme.name}__/css/theme.css}"/>
 	<link rel="icon" th:href="@{/static/img/favicon.ico}"/>
    	<script th:src="@{/static/js/mars.js}"></script>
    	<!-- 
@@ -128,14 +129,15 @@
 						</q-btn>
 					</div>
 				</q-toolbar>
-				<q-separator dark></q-separator>
+				<q-separator th::dark="${model.theme.menu.dark}"></q-separator>
 			</q-header>
         	<!-- END HEADER-->
         			
   			
   			<q-drawer
   			  class="menu"
-  			  dark
+  			  th::dark="${model.theme.menu.dark}"
+  			  th::elevated="${model.theme.menu.elevated}"
 		      side="left"
 		      ref="menuDrawer"
 		      show-if-above
@@ -143,7 +145,7 @@
   			  @on-layout="state => componentStates.navDrawer.displayed=state"
 		      :mini="componentStates.navDrawer.mini"
 		    >
-		      <q-scroll-area class="fit" dark>
+		      <q-scroll-area class="fit" th::dark="${model.theme.menu.dark}">
 			    <nav class="text-no-wrap">
 			      <q-list :class="{'dense-list-header':!componentStates.navDrawer.mini}" style="height:100%">
 			        <q-item tag="a" th:href="@{/home/}" th:class="${model.requestURI.equals('__@{/home/}__') ? 'active':''}">
@@ -153,7 +155,7 @@
 			          <q-item-section>Home</q-item-section>
 			        </q-item>
 			        
-			        <q-separator dark></q-separator>
+			        <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
 			        
 			       	<div>
 			       	    <q-item-label header>Base managment</q-item-label>
@@ -172,7 +174,7 @@
 				        </q-item>
 				    </div>
 				    
-				    <q-separator dark th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
+				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
 				    
 			       	<div th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}">
 			       	 	<q-item-label header>Users</q-item-label>
@@ -201,7 +203,7 @@
 				        </q-item>
 				    </div>
 				    
-				    <q-separator dark></q-separator>
+				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
 				    
 			        <div>
 			            <q-item-label header>Catalog</q-item-label>
@@ -220,7 +222,7 @@
 				        </q-item>
 				    </div>
 				    
-				    <q-separator dark></q-separator>
+				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
 				    
 			       	<div>
 			       	    <q-item-label header>Missions</q-item-label>
@@ -242,7 +244,7 @@
 				        </q-item>
 				    </div>
 				    <!-- 
-				    <q-separator dark></q-separator>
+				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
 				    <component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'"  label="Data Hub" default-opened >
 				        <q-item tag="a" th:href="@{/share/}">
 				          <q-item-section avatar>
@@ -265,7 +267,7 @@
 				    </component>
 				     -->
 				     
-				    <q-separator dark></q-separator>
+				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
 				    
 		       	    <q-item-label header>Marketplace</q-item-label>
 		       	    
@@ -287,7 +289,7 @@
 			        </q-item>
 			        
 			        <!-- Youtube integration
-			        <q-separator dark></q-separator>
+			        <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
 			        <q-item tag="a" th:href="@{/spiders/}">
 			          <q-item-section avatar>
 			          	<q-icon name="fas fa-spider" title="Spiders"></q-icon>

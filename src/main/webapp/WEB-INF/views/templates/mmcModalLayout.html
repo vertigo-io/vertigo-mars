@@ -8,6 +8,7 @@
 	<meta name="description" content="Demo Application of Vertigo UI powered by SpringMvc, Thymeleaf and Quasar Framework" />
 	<meta name="author" content="Klee Group" />
 	<link rel="stylesheet" th:href="@{/static/css/mars.css}" />
+	<link rel="stylesheet" th:href="@{/static/theme/__${model.theme.name}__/css/theme.css}"/>
 	<link rel="icon" th:href="@{/static/img/favicon.ico}" />
 	<script th:src="@{/static/js/mars.js}"></script>
 	<th:block th:if="${model.containsKey('closeSuccess') && model.closeSuccess}">
