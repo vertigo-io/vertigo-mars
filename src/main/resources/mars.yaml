@@ -18,8 +18,10 @@ boot:
     - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin: {}
     - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
         __flags__: ["klee"]
-        appName: mars-analytics
         hostName: ${boot.analyticsHost}
+        port: ${boot.portParam}
+        jsonLayout: false
+        compressOutputStream: false
 modules:
   io.vertigo.connectors.redis.RedisFeatures:
     __flags__: ["klee"]
