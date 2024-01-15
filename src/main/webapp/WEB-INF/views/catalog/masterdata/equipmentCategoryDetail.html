@@ -91,7 +91,7 @@
 				th:attr="objectKey=${model.vContext['componentStates'].addComponentState('itemModal').addPrimitive('opened', false)}, objectKey=${model.vContext['componentStates']['itemModal'].addPrimitive('editIndex', null)} ">
 				<vu:include-data object="typeDeChamps" field="'*'" />
 				<vu:include-data object="controleDeChampsEdit" field="*" />
-				<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right"> <q-card class="bg-white v-modal" style="width: min(800px, 100vw);"> <q-toolbar class="bg-primary"><vu:button flat dense v-close-popup icon="keyboard_arrow_left" text-color="white" title="Close"/> <q-toolbar-title vu:text="Fields" class="text-white"></q-toolbar-title> </q-toolbar>
+				<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right"> <q-card class="bg-white" style="width: min(800px, 100vw);"> <q-toolbar class="bg-primary"><vu:button flat dense v-close-popup icon="keyboard_arrow_left" text-color="white" title="Close"/> <q-toolbar-title vu:text="Fields" class="text-white"></q-toolbar-title> </q-toolbar>
 				<q-card-section class="q-layout-padding">
 				<vu:grid>
 					<vu:select-edit object="champEdit" field="typeDeChamp" label="Field type" list="typeDeChamps" valueField="nom" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
