@@ -80,7 +80,7 @@ public class EquipmentEnvironmentServices implements Component {
 				"mars-test",
 				Collections.singletonList("value:count"),
 				DataFilter.builder("temperature").build(),
-				TimeFilter.builder("now() - 365d", "now()").build());
+				TimeFilter.builder("-365d", "now()").build());
 
 		if (!totalMeasure.tabularDataSeries().isEmpty()) {
 			return ((Double) totalMeasure.tabularDataSeries().get(0).getValues().get("value:count")).intValue();
