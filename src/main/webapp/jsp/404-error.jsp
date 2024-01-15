@@ -1,7 +1,7 @@
 <%@ page session="false" import="java.util.*, javax.servlet.*" %>
 <!-- Icons purchased via Iconfinder under Basic License -->
 <%
-     String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().indexOf(request.getServletPath()))+"/";
+     String baseUrl = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="Content-Script-Type" content="text/javascript"/>
 	
-	<base href="<%=baseUrl%>"></base>	
+	<base href="<%=baseUrl%>" />	
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>	
 	<link href="static/css/error.css" type="text/css" rel="stylesheet"/>
 	<title>Vertigo - 404</title>
