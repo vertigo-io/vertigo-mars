@@ -17,7 +17,7 @@
 			<vu:include-data object="bases" field="geosectorId" />
 			<vu:include-data object="bases" field="healthLevel" />
 			<vu:include-data object="bases" field="creationDate" />
-			<div class="m-title text-h6 q-mb-md">{{vueData.bases.length}} Bases</div>
+			<div class="m-title text-h6 q-mb-md">{{vueData.bases.length.toLocaleString()}} Bases</div>
 			<vu:cards list="bases" componentId="baseCards" cardClass="marsCard col-lg-3 col-md-6 col-xs-12"  sortUrl="@{/basemanagement/bases/_sort}" rowsPerPage="8" showMore="true" showMoreLabel="Show more" >
 					<div class="nav" th:@click="|goTo('@{/basemanagement/base/information/}'+item.baseId)|">
 						<div style="height: 300px">

@@ -12,7 +12,7 @@
 		<section layout:fragment="content" >	
 			<vu:search resultKey="suppliers" searchUrl="@{/catalog/suppliers/_search}" collectionComponentId="suppliersTable">
 				<div class="row q-col-gutter-md">
-					<div class="text-h6 self-center" style="flex-basis: 300px;">{{vueData.suppliers_totalcount}} Suppliers</div>
+					<div class="text-h6 self-center" style="flex-basis: 300px;">{{vueData.suppliers_totalcount.toLocaleString()}} Suppliers</div>
 					<div class="col">
 						<vu:include-data-primitive key="criteria"/>
 						<q-search inverted-light color="white" icon="search" placeholder="Type, Name..." v-model="vueData.criteria" @input="search('suppliers')"></q-search>

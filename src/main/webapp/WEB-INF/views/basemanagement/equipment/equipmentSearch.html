@@ -15,7 +15,7 @@
 		<section layout:fragment="content" >	
 			<vu:search resultKey="equipments" searchUrl="@{/basemanagement/equipments/_search}" collectionComponentId="equipmentsTable">
 				<div class="row q-col-gutter-md">
-					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount}} Equipments</div>
+					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount.toLocaleString()}} Equipments</div>
 					<div class="col-md col-sm-12">
 						<vu:include-data object="criteria" field="criteria" modifiable/>
 						<q-input autofocus placeholder="Type, Name..." v-model="vueData.criteria.criteria" @update:model-value="search('equipments')" :debounce="300"  outlined bg-color="white" dense >

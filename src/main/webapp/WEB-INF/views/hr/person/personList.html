@@ -7,7 +7,7 @@
 <body>
 	<section layout:fragment="content">
 		<div class="row q-mb-md text-primary">
-			<div class="m-title text-h6 self-center">{{vueData.persons.length}} Persons</div>
+			<div class="m-title text-h6 self-center">{{vueData.persons.length.toLocaleString()}} Persons</div>
 			<div class="col"></div>
 			<div class="row justify-end items-center text-primary">
 				<vu:button-link url="@{/hr/person/new}" title="Add person" icon="far fa-user" text-color="primary" flat round  class="on-left" >+</vu:button-link>
