@@ -60,7 +60,7 @@ create DtDefinition DtEquipment {
 create DtDefinition DtEquipmentSurvey {
 	id esuId {domain: DoId label:"Id"}
 	field dateAnswer {domain: DoInstant label: "Date" cardinality:"1"}
-	field formulaire {domain: DoEfFormulaire label:"Informations" cardinality:"1"}
+	field formulaire {domain: DoEfFormData label:"Informations" cardinality:"1"}
 }
 
 

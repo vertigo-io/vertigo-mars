@@ -238,8 +238,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		label,
 		/** Propriété 'Equipment category is active'. */
 		active,
-		/** Propriété 'Equipment Category Meta Formulaire'. */
-		mfoId	}
+		/** Propriété 'Equipment Category Meta Form'. */
+		efoId	}
 
 	/**
 	 * Enumération des champs de EquipmentFeature.

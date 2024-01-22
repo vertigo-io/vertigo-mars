@@ -18,15 +18,15 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.datamodel.structure.model.DtListState;
-import io.vertigo.easyforms.metaformulaire.domain.ModeleFormulaire;
-import io.vertigo.easyforms.metaformulaire.services.FormulaireServices;
+import io.vertigo.easyforms.easyformsrunner.model.EasyFormsTemplate;
+import io.vertigo.easyforms.impl.easyformsrunner.services.EasyFormsRunnerServices;
 import io.vertigo.vega.webservice.validation.UiMessageStack;
 
 @Transactional
 public class EquipmentSurveyServices implements Component {
 
 	@Inject
-	private FormulaireServices formulaireServices;
+	private EasyFormsRunnerServices formulaireServices;
 
 	@Inject
 	private EquipmentSurveyDAO equipmentSurveyDAO;
@@ -45,7 +45,7 @@ public class EquipmentSurveyServices implements Component {
 		return equipmentSurvey;
 	}
 
-	public Long save(final UiMessageStack uiMessageStack, final EquipmentSurvey survey, final ModeleFormulaire modeleFormulaire) {
+	public Long save(final UiMessageStack uiMessageStack, final EquipmentSurvey survey, final EasyFormsTemplate modeleFormulaire) {
 		Assertion.check()
 				.isNull(survey.getEsuId(), "Cannot edit survey");
 		// ---

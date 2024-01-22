@@ -17,7 +17,7 @@
 				<div layout:fragment="content-header-actions">
 					<vu:button-link th:if="${model.modeCreate}" url="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/}"
 								:round size="lg" color="secondary-inverted" icon="fas fa-ban" :flat title="Cancel" class="on-left" 
-								v-alert-unsaved-updates="'champs'" />	
+								v-alert-unsaved-updates="'fields'" />	
 				</div>
 				<div th:if="${!model.modeCreate}" layout:fragment="content-header-tabs">
 					<vu:button-link flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}"/>
@@ -67,65 +67,65 @@
 				
 				<vui-easy-forms v-model="vueData.survey.formulaire" class="full-width" id="formulaire" >
 					<template v-slot:default="slotProps">
-						<th:block th:each="champ : ${model.modeleFormulaire.champs}" th:with="typeChamp = ${model.mfoUiUtil.getTypeDeChampByNom(champ.typeChamp)}" >
-							<div  class="fr-input-group" th::class="|{'fr-input-group--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')}|">
-								<fieldset th:if='${typeChamp.isListOfType("CiviliteSexe") && "radio".equals(typeChamp.composantUi)}' class="fr-fieldset" role="group"
-										aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
-										th:id="|radio-input-${champ.codeChamp}-${champ.ordre}|">
-									<legend class="fr-fieldset__legend" th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-legend|" style="display: none;">
-										<span vu:text="${champ.libelle}"></span>
+						<th:block th:each="field : ${model.modeleFormulaire.fields}" th:with="fieldType = ${model.efoUiUtil.getFieldTypeByName(field.fieldType)}" >
+							<div  class="fr-input-group" th::class="|{'fr-input-group--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')}|">
+								<fieldset th:if='${fieldType.isListOfType("CiviliteSexe") && "radio".equals(fieldType.uiComponent)}' class="fr-fieldset" role="group"
+										aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}') ? 'radio-input-${field.fieldCode}-${field.order}-desc-error' : null|"
+										th:id="|radio-input-${field.fieldCode}-${field.order}|">
+									<legend class="fr-fieldset__legend" th:id="|radio-input-${field.fieldCode}-${field.order}-legend|" style="display: none;">
+										<span vu:text="${field.label}"></span>
 									</legend>
 									<div th:each="civilite : ${model.civiliteSexeList} " class="fr-fieldset__element">
 										<div class="fr-radio-group">
 											<input type="radio"
-													th:name="${champ.codeChamp}"
-													th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-${civilite.civCd}|"
+													th:name="${field.fieldCode}"
+													th:id="|radio-input-${field.fieldCode}-${field.order}-${civilite.civCd}|"
 													th:value="${civilite.civCd}"
-													th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
-													th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
-													th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'radio-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
-													th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
-													th::class="|{'fr-input--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')}|"
+													th:v-model="|slotProps.formulaire['${field.fieldCode}']|"
+													th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|"
+													th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}') ? 'radio-input-${field.fieldCode}-${field.order}-desc-error' : null|"
+													th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|"
+													th::class="|{'fr-input--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')}|"
 													 >
 											<label class="fr-label"
-													th:for="|radio-input-${champ.codeChamp}-${champ.ordre}-${civilite.civCd}|"
+													th:for="|radio-input-${field.fieldCode}-${field.order}-${civilite.civCd}|"
 													th:text="${civilite.label}" />
 										</div>
 									</div>
-									<div class="fr-messages-group" assert-live="assertive" th:id="|radio-input-${champ.codeChamp}-${champ.ordre}-messages|">
+									<div class="fr-messages-group" assert-live="assertive" th:id="|radio-input-${field.fieldCode}-${field.order}-messages|">
 									</div>
 								</fieldset>
-								<select th:if='${typeChamp.isListOfType("MotifType") && "select".equals(typeChamp.composantUi)}'
-										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
-										th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
+								<select th:if='${fieldType.isListOfType("MotifType") && "select".equals(fieldType.uiComponent)}'
+										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|"
+										th:v-model="|slotProps.formulaire['${field.fieldCode}']|"
 										class="fr-select"
-										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'text-select-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
-										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|" 
-										th:id="|text-select-${champ.codeChamp}-${champ.ordre}|"
-										th::class="|{'fr-select--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')}|" >
+										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}') ? 'text-select-${field.fieldCode}-${field.order}-desc-error' : null|"
+										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|" 
+										th:id="|text-select-${field.fieldCode}-${field.order}|"
+										th::class="|{'fr-select--error' : hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')}|" >
 									<option value="" selected disabled hidden>Selectionnez une option</option>
-									<option th:each="motifValue: ${model['motifValues_' + champ.codeChamp]}" th:value="${motifValue.movId}" vu:text="${motifValue.label}"></option>
+									<option th:each="motifValue: ${model['motifValues_' + field.fieldCode]}" th:value="${motifValue.movId}" vu:text="${motifValue.label}"></option>
 								</select>
-								<q-input th:unless="${typeChamp.composantUi == 'radio' || typeChamp.composantUi == 'select'}"
+								<q-input th:unless="${fieldType.uiComponent == 'radio' || fieldType.uiComponent == 'select'}"
 										label-slot
-										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
-										th:v-model="|slotProps.formulaire['${champ.codeChamp}']|"
-										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}') ? 'text-input-${champ.codeChamp}-${champ.ordre}-desc-error' : null|"
-										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|" 
-										th:id="|text-input-${champ.codeChamp}-${champ.ordre}|"
-										th::error="|hasErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|" 
-										th::error-message="|getErreurFormulaire(uiMessageStack, 'survey', '${champ.codeChamp}')|"
-										th:type="${typeChamp.composantUi == 'textfield' ? 'text' : (typeChamp.composantUi == 'date' ? 'date' : 'text')}"
-										th:autocomplete="${typeChamp.uiAutocompleteInputAttribute}"
-										th:maxlength="${model.mfoUiUtil.smartTypeMaxLength(champ.typeChamp)}"
+										th:v-autofocus="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|"
+										th:v-model="|slotProps.formulaire['${field.fieldCode}']|"
+										th::aria-describedby="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}') ? 'text-input-${field.fieldCode}-${field.order}-desc-error' : null|"
+										th::aria-invalid="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|" 
+										th:id="|text-input-${field.fieldCode}-${field.order}|"
+										th::error="|hasErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|" 
+										th::error-message="|getErreurFormulaire(uiMessageStack, 'survey', '${field.fieldCode}')|"
+										th:type="${fieldType.uiComponent == 'textfield' ? 'text' : (fieldType.uiComponent == 'date' ? 'date' : 'text')}"
+										th:autocomplete="${fieldType.uiAutocompleteInputAttribute}"
+										th:maxlength="${model.efoUiUtil.smartTypeMaxLength(field.fieldType)}"
 										orientation="vertical"
 										stack-label
-										th:classappend="${champ.isMandatory?'v-field__required':''}"
-										th:aria-required="${champ.isMandatory}" >
+										th:classappend="${field.isMandatory?'v-field__required':''}"
+										th:aria-required="${field.isMandatory}" >
 										<template v-slot:label>
 										  <div class="row items-center all-pointer-events non-selectable" style="display: inline-block;">
-										    <div vu:text="${champ.libelle}" />
-										    <q-tooltip th:if="${champ.infobulle}" class="bg-grey-8" anchor="top left" self="bottom left" :delay="300" :offset="[0, 8]"><div vu:text="${champ.infobulle}"/></q-tooltip>
+										    <div vu:text="${field.label}" />
+										    <q-tooltip th:if="${field.tooltip}" class="bg-grey-8" anchor="top left" self="bottom left" :delay="300" :offset="[0, 8]"><div vu:text="${field.tooltip}"/></q-tooltip>
 										  </div>
 										</template>
 								</q-input>

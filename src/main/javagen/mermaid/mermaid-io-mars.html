@@ -285,9 +285,9 @@ class EquipmentCategory:::entity {
 		+Long equipmentCategoryId
 		+String label
 		+Boolean active
-		+Long mfoId
+		+Long efoId
 }
-EquipmentCategory "*" --> "0..1" MetaFormulaire : MetaFormulaire
+EquipmentCategory "*" --> "0..1" EasyForm : EasyForm
 class EquipmentType:::entity {
 		+Long equipmentTypeId
 		+String label
@@ -441,7 +441,7 @@ EquipmentFeature "*" --> "0..1" Equipment : Equipment
 class EquipmentSurvey:::entity {
 		+Long esuId
 		+java.time.Instant dateAnswer
-		+io.vertigo.easyforms.smarttypes.Formulaire formulaire
+		+io.vertigo.easyforms.easyformsrunner.model.EasyFormsData formulaire
 		+Long equipmentId
 		+Long personId
 }

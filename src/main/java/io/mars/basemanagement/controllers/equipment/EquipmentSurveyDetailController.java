@@ -18,10 +18,10 @@ import io.mars.catalog.services.equipment.EquipmentCategoryServices;
 import io.mars.hr.domain.Person;
 import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.easyforms.metaformulaire.domain.MetaFormulaire;
-import io.vertigo.easyforms.metaformulaire.domain.ModeleFormulaire;
-import io.vertigo.easyforms.metaformulaire.services.MetaFormulaireServices;
-import io.vertigo.easyforms.metaformulaire.services.MetaFormulaireUiUtil;
+import io.vertigo.easyforms.domain.EasyForm;
+import io.vertigo.easyforms.easyformsrunner.model.EasyFormsTemplate;
+import io.vertigo.easyforms.impl.easyformsdesigner.services.EasyFormsDesignerServices;
+import io.vertigo.easyforms.impl.easyformsrunner.util.EasyFormsUiUtil;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
@@ -38,7 +38,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	@Inject
 	private EquipmentDetailController equipmentDetailController;
 	@Inject
-	private MetaFormulaireServices metaFormulaireServices;
+	private EasyFormsDesignerServices easyFormsDesignerServices;
 	@Inject
 	private EquipmentCategoryServices equipmentCategoryServices;
 
@@ -46,8 +46,8 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 
 	// creation
 	private static final ViewContextKey<EquipmentSurvey> surveyKey = ViewContextKey.of("survey");
-	private static final ViewContextKey<ModeleFormulaire> modeleFormulaireKey = ViewContextKey.of("modeleFormulaire");
-	private static final ViewContextKey<MetaFormulaireUiUtil> mfoUiUtilKey = ViewContextKey.of("mfoUiUtil");
+	private static final ViewContextKey<EasyFormsTemplate> modeleFormulaireKey = ViewContextKey.of("modeleFormulaire");
+	private static final ViewContextKey<EasyFormsUiUtil> efoUiUtilKey = ViewContextKey.of("efoUiUtil");
 
 	// reading
 	private static final ViewContextKey<LinkedHashMap<String, String>> surveyDisplayKey = ViewContextKey.of("surveyDisplay");
@@ -57,14 +57,14 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId, @PathVariable("esuId") final Long esuId) {
 		//--
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
-		final var metaFormulaireUiUtil = new MetaFormulaireUiUtil();
+		final var easyFormsUiUtil = new EasyFormsUiUtil();
 
 		final EquipmentCategory equipmentCategory = equipmentCategoryServices.getEquipmentCategoryFromEquipmentId(equipmentId);
-		final UID<MetaFormulaire> mfoUid = equipmentCategory.metaFormulaire().getUID();
-		final var metaFormulaire = metaFormulaireServices.getMetaFormulaireById(mfoUid);
+		final UID<EasyForm> mfoUid = equipmentCategory.easyForm().getUID();
+		final var easyForm = easyFormsDesignerServices.getEasyFormById(mfoUid);
 		final var survey = equipmentSurveyServices.getById(esuId);
 
-		final LinkedHashMap<String, String> surveyDisplay = metaFormulaireUiUtil.getFormulaireDisplay(metaFormulaire.getModele(), survey.getFormulaire());
+		final LinkedHashMap<String, String> surveyDisplay = easyFormsUiUtil.getEasyForm(easyForm.getTemplate(), survey.getFormulaire());
 
 		viewContext
 				.publishRef(hasSurvey, true)
@@ -78,21 +78,21 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	public void initContext(final ViewContext viewContext, @PathVariable("equipmentId") final Long equipmentId) {
 		//--
 		equipmentDetailController.initCommonContext(viewContext, equipmentId);
-		viewContext.publishRef(mfoUiUtilKey, new MetaFormulaireUiUtil());
+		viewContext.publishRef(efoUiUtilKey, new EasyFormsUiUtil());
 
 		final EquipmentCategory equipmentCategory = equipmentCategoryServices.getEquipmentCategoryFromEquipmentId(equipmentId);
-		final UID<MetaFormulaire> mfoUid = equipmentCategory.metaFormulaire().getUID();
+		final UID<EasyForm> mfoUid = equipmentCategory.easyForm().getUID();
 
 		if (mfoUid == null) {
 			viewContext.publishRef(hasSurvey, false)
 					.toModeReadOnly();
 		} else {
-			final var metaFormulaire = metaFormulaireServices.getMetaFormulaireById(mfoUid);
+			final var easyForm = easyFormsDesignerServices.getEasyFormById(mfoUid);
 
 			viewContext
 					.publishRef(hasSurvey, true)
 					.publishDto(surveyKey, new EquipmentSurvey())
-					.publishRef(modeleFormulaireKey, metaFormulaire.getModele())
+					.publishRef(modeleFormulaireKey, easyForm.getTemplate())
 					//---
 					.toModeCreate();
 		}
@@ -101,7 +101,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	@PostMapping("/_save")
 	public String doSave(final UiMessageStack uiMessageStack,
 			@ViewAttribute("survey") final EquipmentSurvey equipmentSurvey, @ViewAttribute("equipment") final Equipment equipment,
-			@ViewAttribute("modeleFormulaire") final ModeleFormulaire modeleFormulaire) {
+			@ViewAttribute("modeleFormulaire") final EasyFormsTemplate modeleFormulaire) {
 
 		equipmentSurvey.setEquipmentId(equipment.getEquipmentId());
 		equipmentSurveyServices.save(uiMessageStack, equipmentSurvey, modeleFormulaire);

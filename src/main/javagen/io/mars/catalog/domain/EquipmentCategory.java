@@ -20,19 +20,19 @@ public final class EquipmentCategory implements Entity {
 	private Boolean active;
 
 	@io.vertigo.datamodel.structure.stereotype.Association(
-			name = "AEquipmentTypeMetaFormulaire",
-			fkFieldName = "mfoId",
-			primaryDtDefinitionName = "DtMetaFormulaire",
+			name = "AEquipmentTypeEasyForm",
+			fkFieldName = "efoId",
+			primaryDtDefinitionName = "DtEasyForm",
 			primaryIsNavigable = true,
-			primaryRole = "MetaFormulaire",
-			primaryLabel = "Equipment Category Meta Formulaire",
+			primaryRole = "EasyForm",
+			primaryLabel = "Equipment Category Meta Form",
 			primaryMultiplicity = "0..1",
 			foreignDtDefinitionName = "DtEquipmentCategory",
 			foreignIsNavigable = false,
 			foreignRole = "EquipmentCategory",
 			foreignLabel = "EquipmentCategory",
 			foreignMultiplicity = "0..*")
-	private final StoreVAccessor<io.vertigo.easyforms.metaformulaire.domain.MetaFormulaire> mfoIdAccessor = new StoreVAccessor<>(io.vertigo.easyforms.metaformulaire.domain.MetaFormulaire.class, "MetaFormulaire");
+	private final StoreVAccessor<io.vertigo.easyforms.domain.EasyForm> efoIdAccessor = new StoreVAccessor<>(io.vertigo.easyforms.domain.EasyForm.class, "EasyForm");
 
 	/** {@inheritDoc} */
 	@Override
@@ -99,29 +99,29 @@ public final class EquipmentCategory implements Entity {
 	
 	/**
 	 * Champ : FOREIGN_KEY.
-	 * Récupère la valeur de la propriété 'Equipment Category Meta Formulaire'.
-	 * @return Long mfoId
+	 * Récupère la valeur de la propriété 'Equipment Category Meta Form'.
+	 * @return Long efoId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyEfId", label = "Equipment Category Meta Formulaire", fkDefinition = "DtMetaFormulaire" )
-	public Long getMfoId() {
-		return (Long) mfoIdAccessor.getId();
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyEfId", label = "Equipment Category Meta Form", fkDefinition = "DtEasyForm" )
+	public Long getEfoId() {
+		return (Long) efoIdAccessor.getId();
 	}
 
 	/**
 	 * Champ : FOREIGN_KEY.
-	 * Définit la valeur de la propriété 'Equipment Category Meta Formulaire'.
-	 * @param mfoId Long
+	 * Définit la valeur de la propriété 'Equipment Category Meta Form'.
+	 * @param efoId Long
 	 */
-	public void setMfoId(final Long mfoId) {
-		mfoIdAccessor.setId(mfoId);
+	public void setEfoId(final Long efoId) {
+		efoIdAccessor.setId(efoId);
 	}
 
  	/**
-	 * Association : Equipment Category Meta Formulaire.
-	 * @return l'accesseur vers la propriété 'Equipment Category Meta Formulaire'
+	 * Association : Equipment Category Meta Form.
+	 * @return l'accesseur vers la propriété 'Equipment Category Meta Form'
 	 */
-	public StoreVAccessor<io.vertigo.easyforms.metaformulaire.domain.MetaFormulaire> metaFormulaire() {
-		return mfoIdAccessor;
+	public StoreVAccessor<io.vertigo.easyforms.domain.EasyForm> easyForm() {
+		return efoIdAccessor;
 	}
 	
 	/** {@inheritDoc} */

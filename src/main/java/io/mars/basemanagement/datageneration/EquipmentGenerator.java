@@ -21,11 +21,11 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
-import io.vertigo.easyforms.metaformulaire.domain.MetaFormulaire;
-import io.vertigo.easyforms.metaformulaire.domain.ModeleFormulaire;
-import io.vertigo.easyforms.metaformulaire.domain.ModeleFormulaireBuilder;
-import io.vertigo.easyforms.metaformulaire.domain.TypeDeChamp;
-import io.vertigo.easyforms.metaformulaire.services.MetaFormulaireServices;
+import io.vertigo.easyforms.domain.EasyForm;
+import io.vertigo.easyforms.easyformsrunner.model.EasyFormsTemplate;
+import io.vertigo.easyforms.easyformsrunner.model.EasyFormsTemplateBuilder;
+import io.vertigo.easyforms.impl.easyformsdesigner.services.EasyFormsDesignerServices;
+import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldTypeDefinitionProvider.FieldTypeEnum;
 
 @Transactional
 public class EquipmentGenerator implements Component {
@@ -45,7 +45,7 @@ public class EquipmentGenerator implements Component {
 	@Inject
 	private ResourceManager resourceManager;
 	@Inject
-	private MetaFormulaireServices metaFormulaireServices;
+	private EasyFormsDesignerServices easyFormsAdminServices;
 
 	public void createInitialEquipments(final int equipmentUnitsToGenerate, final List<Base> bases) {
 		final DtList<EquipmentType> equipmentTypes = equipmentTypeDAO.selectEquipmentType();
@@ -63,21 +63,21 @@ public class EquipmentGenerator implements Component {
 	}
 
 	public void createInitialEquipmentCategories() {
-		createEquipmentCategory(true, "Bot", new ModeleFormulaireBuilder()
-				.ajouterChamp("iaAutonomy", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "IA autonomy", null, false, false, false, List.of())
-				.ajouterChamp("easyness", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Easyness of use", null, false, false, false, List.of())
-				.ajouterChamp("obsolete", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Is obsolete", null, false, false, true, List.of())
+		createEquipmentCategory(true, "Bot", new EasyFormsTemplateBuilder()
+				.addField("iaAutonomy", FieldTypeEnum.LABEL.get(), "IA autonomy", null, false, false, List.of())
+				.addField("easyness", FieldTypeEnum.LABEL.get(), "Easyness of use", null, false, false, List.of())
+				.addField("obsolete", FieldTypeEnum.LABEL.get(), "Is obsolete", null, false, true, List.of())
 				.build());
-		createEquipmentCategory(true, "Building", new ModeleFormulaireBuilder()
-				.ajouterChamp("equipment", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Completude of equipment", null, false, false, true, List.of())
-				.ajouterChamp("temperature", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Temperature inside", null, false, false, false, List.of())
-				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, false, List.of())
+		createEquipmentCategory(true, "Building", new EasyFormsTemplateBuilder()
+				.addField("equipment", FieldTypeEnum.LABEL.get(), "Completude of equipment", null, false, true, List.of())
+				.addField("temperature", FieldTypeEnum.LABEL.get(), "Temperature inside", null, false, false, List.of())
+				.addField("wearState", FieldTypeEnum.LABEL.get(), "State of wear", null, false, false, List.of())
 				.build());
-		createEquipmentCategory(true, "Vehicle", new ModeleFormulaireBuilder()
-				.ajouterChamp("comfort", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Comfort", null, false, false, true, List.of())
-				.ajouterChamp("speed", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Speed", null, false, false, false, List.of())
-				.ajouterChamp("storageCapacity", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "Storage capacity", null, false, false, false, List.of())
-				.ajouterChamp("wearState", TypeDeChamp.of(MetaFormulaireServices.PREFIX_CODE_TYPE_CHAMP + "Label"), null, "State of wear", null, false, false, false, List.of())
+		createEquipmentCategory(true, "Vehicle", new EasyFormsTemplateBuilder()
+				.addField("comfort", FieldTypeEnum.LABEL.get(), "Comfort", null, false, true, List.of())
+				.addField("speed", FieldTypeEnum.LABEL.get(), "Speed", null, false, false, List.of())
+				.addField("storageCapacity", FieldTypeEnum.LABEL.get(), "Storage capacity", null, false, false, List.of())
+				.addField("wearState", FieldTypeEnum.LABEL.get(), "State of wear", null, false, false, List.of())
 				.build());
 	}
 
@@ -97,13 +97,13 @@ public class EquipmentGenerator implements Component {
 		CSVReaderUtil.parseCSV(resourceManager, csvFilePath, this::consume);
 	}
 
-	private EquipmentCategory createEquipmentCategory(final boolean active, final String label, final ModeleFormulaire modeleFormulaire) {
+	private EquipmentCategory createEquipmentCategory(final boolean active, final String label, final EasyFormsTemplate easyFormsTemplate) {
 		final EquipmentCategory equipmentCategory = new EquipmentCategory();
 
-		if (modeleFormulaire != null) {
-			final MetaFormulaire metaFormulaire = new MetaFormulaire();
-			metaFormulaire.setModele(modeleFormulaire);
-			equipmentCategory.metaFormulaire().set(metaFormulaireServices.creerMetaFormulaire(metaFormulaire));
+		if (easyFormsTemplate != null) {
+			final EasyForm easyForm = new EasyForm();
+			easyForm.setTemplate(easyFormsTemplate);
+			equipmentCategory.easyForm().set(easyFormsAdminServices.createEasyForm(easyForm));
 		}
 
 		equipmentCategory.setActive(active);

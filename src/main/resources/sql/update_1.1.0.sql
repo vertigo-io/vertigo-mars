@@ -3,7 +3,16 @@
 -- ============================================================
 
 alter table EQUIPMENT_CATEGORY
-	add column MFO_ID		NUMERIC;
+	add column EFO_ID		NUMERIC;
+
+comment on column EQUIPMENT_CATEGORY.EFO_ID is
+'Equipment Category Meta Form';
+
+alter table EQUIPMENT_CATEGORY
+	add constraint FK_A_EQUIPMENT_TYPE_EASY_FORM_EASY_FORM foreign key (EFO_ID)
+	references EASY_FORM (EFO_ID);
+	
+create index A_EQUIPMENT_TYPE_EASY_FORM_EASY_FORM_FK on EQUIPMENT_CATEGORY (EFO_ID asc);
 
 -- ============================================================
 --   Table : EQUIPMENT_SURVEY                                        

@@ -26,8 +26,8 @@ public class EquipmentCategoryServices implements Component {
 	}
 
 	public void saveEquipmentCategory(final EquipmentCategory equipmentCategory, final Producer<Long> mfoSaver) {
-		final Long mfoId = mfoSaver.produce();
-		equipmentCategory.setMfoId(mfoId);
+		final Long efoId = mfoSaver.produce();
+		equipmentCategory.setEfoId(efoId);
 		equipmentCategoryDAO.save(equipmentCategory);
 	}
 

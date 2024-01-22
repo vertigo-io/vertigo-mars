@@ -28,7 +28,7 @@
 			<div layout:fragment="content-header-actions">
 				<vu:button-link th:if="${model.modeEdit}" url="@{/catalog/masterdata/equipmentCategory/} + ${model.category.equipmentCategoryId}"
 								:round size="lg" color="secondary-inverted" icon="fas fa-ban" :flat title="Cancel" class="on-left" 
-								v-alert-unsaved-updates="'champs'" />					
+								v-alert-unsaved-updates="'fields'" />					
 				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" round flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" title="Edit" class="on-left"/>
 			</div>
 		</section>
@@ -47,41 +47,34 @@
 				</div>
 			</div>
 			
-			<vu:include-data object="champs" field="isDefault" />
-			<vu:include-data object="champs" field="isDisplay" />
-			<vu:include-data object="champs" field="isMandatory" />
-			<vu:table id="surveyFields" title="Survey fields" list="champs" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md">
+			<vu:include-data object="fields" field="isDefault" />
+			<vu:include-data object="fields" field="isMandatory" />
+			<vu:table id="surveyFields" title="Survey fields" list="fields" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md">
 				<vu:slot name="top_right_slot">
 					<vu:button th:if="${!model.modeReadOnly}" icon="add" title="Add field" @click="addItem()"/>
 				</vu:slot>
 				<vu:slot th:if="${!model.modeReadOnly}" name="actions_slot">
 					<vu:button :disabled="!(props.rowIndex > 0)"
 					           flat icon="fas fa-arrow-up" title="Move field up" @click="moveItem(props.rowIndex,-1)"/>
-					<vu:button :disabled="!(props.rowIndex < vueData.champs.length - 1)"
+					<vu:button :disabled="!(props.rowIndex < vueData.fields.length - 1)"
 					           flat icon="fas fa-arrow-down" title="Move field down" @click="moveItem(props.rowIndex,1)"/>
 					<vu:button flat icon="fas fa-pencil-alt" title="Edit field" @click="editItem(props.rowIndex)"/>
 					<vu:button :disabled="props.row.isDefault"
 					           flat icon="fas fa-trash-alt" v-title="props.row.isDefault?'Field required by the system, cannot be deleted':'Delete'"
 					           @click="deleteItem(props.rowIndex)" />
 				</vu:slot>
-				<vu:column field="codeChamp" label="Code" sortable="false">
-				     <div :class="props.row.isMandatory?'v-block__required':''">{{props.row.codeChamp}}</div> <q-badge th:if="${!model.modeReadOnly}" v-if="props.row.isDefault" color="grey">Mandatory for the system</q-badge>
+				<vu:column field="fieldCode" label="Code" sortable="false">
+				     <div :class="props.row.isMandatory?'v-block__required':''">{{props.row.fieldCode}}</div> <q-badge th:if="${!model.modeReadOnly}" v-if="props.row.isDefault" color="grey">Mandatory for the system</q-badge>
 				</vu:column>
-				<vu:column field="typeDeChampLabel" label="Type" sortable="false" />
-				<vu:column field="libelle" sortable="false" label="Label" />
-				<vu:column field="infobulle" label="Tooltip" sortable="false" />
-				<vu:column name="isDisplay" label="" sortable="false" auto-width>
-					<q-icon v-if="props.row.isDisplay" size="sm" color="primary" name="fa-brands fa-searchengin"
-						aria-label="Information included in the search"> 
-						<span class="sr-only">Information included in the search</span>
-						<q-tooltip>Information included in the search</q-tooltip></q-icon>
-				</vu:column>
-				<vu:column name="controleDeChamps" auto-width label="" sortable="false" th:with="modifiableTable='true', rowIndex='props.rowIndex'">
-					<q-icon v-if="props.row.controleDeChamps.length>0" size="sm" color="primary" name="fas fa-file-shield" aria-label="Contrôles appliqués">
+				<vu:column field="fieldTypeLabel" label="Type" sortable="false" />
+				<vu:column field="label" sortable="false" label="Label" />
+				<vu:column field="tooltip" label="Tooltip" sortable="false" />
+				<vu:column name="fieldConstraints" auto-width label="" sortable="false" th:with="modifiableTable='true', rowIndex='props.rowIndex'">
+					<q-icon v-if="props.row.fieldConstraints.length>0" size="sm" color="primary" name="fas fa-file-shield" aria-label="Contrôles appliqués">
 					   <span class="sr-only">Des contrôles complémentaires sont appliqués sur ce champ</span>
-					   <q-badge color="secondary" rounded>{{props.row.controleDeChamps.length}}</q-badge> 
+					   <q-badge color="secondary" rounded>{{props.row.fieldConstraints.length}}</q-badge> 
 					   <q-tooltip>Des contrôles complémentaires sont appliqués sur ce champ:<br />
-							<vu:select-multiple-read object="champs" field="controleDeChamps" list="controleDeChamps" valueField="code" labelField="label" input_dense class="column items-start" />
+							<vu:select-multiple-read object="fields" field="fieldConstraints" list="fieldConstraints" valueField="code" labelField="label" input_dense class="column items-start" />
 					   </q-tooltip>
 				    </q-icon>
 				</vu:column>
@@ -89,68 +82,67 @@
 			
 			<th:block id="modalEditItem" th:if="${!model.modeReadOnly}"
 				th:attr="objectKey=${model.vContext['componentStates'].addComponentState('itemModal').addPrimitive('opened', false)}, objectKey=${model.vContext['componentStates']['itemModal'].addPrimitive('editIndex', null)} ">
-				<vu:include-data object="typeDeChamps" field="'*'" />
-				<vu:include-data object="controleDeChampsEdit" field="*" />
-				<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right"> <q-card class="bg-white" style="width: min(800px, 100vw);"> <q-toolbar class="bg-primary"><vu:button flat dense v-close-popup icon="keyboard_arrow_left" text-color="white" title="Close"/> <q-toolbar-title vu:text="Fields" class="text-white"></q-toolbar-title> </q-toolbar>
-				<q-card-section class="q-layout-padding">
-				<vu:grid>
-					<vu:select-edit object="champEdit" field="typeDeChamp" label="Field type" list="typeDeChamps" valueField="nom" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
-					@update:model-value="refreshItem()" 
-					searchable="true"/>
-					
-					<vu:text-field-edit object="champEdit" field="codeChamp" label="Field code"
-					:hint="(componentStates.itemModal.editIndex == -1)?`Unique code in the form relating to the expected information (e.g. name, birthname, lastcheck date, etc.)`:``" 
-					title="Information required by the system and cannot be modified"
-	                aria-title="Technical and unique code of the field"
-					:disable="componentStates.itemModal.editIndex != -1 || vueData.champEdit.typeDeChamp==null" />
-	                
-	                <vu:grid-cell v-if="vueData.champEdit.typeDeChamp === 'Taxonomie'">
-						<vu:select-edit object="champEdit" field="listId" list="taxonomyTypes" valueField="motId" label="List of values" required="true" />
-					</vu:grid-cell>
-					<vu:grid-cell>
-					    <vu:text-field-edit object="champEdit" field="libelle" label="Label"/>
-					</vu:grid-cell>
-					<vu:grid-cell>
-						<vu:text-field-edit object="champEdit" field="infobulle" label="Tooltip" />
-					</vu:grid-cell>
-					<vu:grid-cell>
-						<vu:include-data object="champEdit" field="isDisplay" modifiable="true" />
-						<vu:include-data object="champEdit" field="isDefault" />
-						<q-toggle class="q-field" :disable="vueData.champEdit.isDefault" v-model="vueData.champEdit.isDisplay"
-							:title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
-							:aria-title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
-							label="Information included in the search"></q-toggle>
-						<input type="hidden" name="vContext[champEdit][isDisplay]" v-bind:value="vueData.champEdit.isDisplay" />
-					</vu:grid-cell>
-					<vu:grid-cell>
-						<vu:include-data object="champEdit" field="isMandatory" modifiable="true" />
-						<q-toggle class="q-field" :disable="vueData.champEdit.isDefault" v-model="vueData.champEdit.isMandatory"
-							:title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
-							:aria-title="vueData.champEdit.isDefault?'Information required by the system and cannot be modified':''"
-							label="Information mandatory"></q-toggle>
-						<input type="hidden" name="vContext[champEdit][isMandatory]" v-bind:value="vueData.champEdit.isMandatory" />
-					</vu:grid-cell>
-					<vu:grid-cell>
-						<vu:select-multiple-edit v-if="vueData.controleDeChampsEdit.length>0" object="champEdit" field="controleDeChamps" list="controleDeChampsEdit"
-							valueField="code" labelField="label" popup-content-class="popupDescriptionControleDeChamps">
-							<vu:slot name="edit_content_slot">
-								<template v-slot:option="scope">
-									<q-item v-bind="scope.itemProps"> <q-item-section> <q-item-label v-html="scope.opt.label"></q-item-label>
-									<q-item-label caption>{{ vueData.controleDeChampsEdit[scope.index].description}}</q-item-label> </q-item-section> </q-item>
-								</template>
-							</vu:slot>
-						</vu:select-multiple-edit>
-					</vu:grid-cell>
-				</vu:grid>
-				</q-card-section>
-				<q-card-section class="flex justify-end">
-					<q-btn @click="saveEditItem" color="primary" label="Save" rounded></q-btn>
-				</q-card-section>
-				</q-card> </q-dialog>
+				<vu:include-data object="fieldTypes" field="'*'" />
+				<vu:include-data object="editFieldConstraints" field="*" />
+				<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right">
+					<q-card class="bg-white" style="width: min(800px, 100vw);">
+						<q-toolbar class="bg-primary">
+							<vu:button flat dense v-close-popup icon="keyboard_arrow_left" text-color="white" title="Close"/>
+							<q-toolbar-title vu:text="Fields" class="text-white"></q-toolbar-title>
+						</q-toolbar>
+						<q-card-section class="q-layout-padding">
+							<vu:grid>
+								<vu:select-edit object="editField" field="fieldType" label="Field type" list="fieldTypes" valueField="name" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
+								@update:model-value="refreshItem()" 
+								searchable="true"/>
+								
+								<vu:text-field-edit object="editField" field="fieldCode" label="Field code"
+								:hint="(componentStates.itemModal.editIndex == -1)?`Unique code in the form relating to the expected information (e.g. name, birthname, lastcheck date, etc.)`:``" 
+								title="Information required by the system and cannot be modified"
+				                aria-title="Technical and unique code of the field"
+								:disable="componentStates.itemModal.editIndex != -1 || vueData.editField.fieldType==null" />
+				                
+				               <!--/*  <vu:grid-cell v-if="vueData.editField.fieldType === 'Taxonomie'">
+									<vu:select-edit object="editField" field="listId" list="taxonomyTypes" valueField="motId" label="List of values" required="true" />
+								</vu:grid-cell>
+								 */-->
+								<vu:grid-cell>
+								    <vu:text-field-edit object="editField" field="label" label="Label"/>
+								</vu:grid-cell>
+								<vu:grid-cell>
+									<vu:text-field-edit object="editField" field="tooltip" label="Tooltip" />
+								</vu:grid-cell>
+								<vu:grid-cell>
+									<vu:include-data object="editField" field="isDefault" />
+									<vu:include-data object="editField" field="isMandatory" modifiable="true" />
+									<q-toggle class="q-field" :disable="vueData.editField.isDefault" v-model="vueData.editField.isMandatory"
+										:title="vueData.editField.isDefault?'Information required by the system and cannot be modified':''"
+										:aria-title="vueData.editField.isDefault?'Information required by the system and cannot be modified':''"
+										label="Information mandatory"></q-toggle>
+									<input type="hidden" name="vContext[editField][isMandatory]" v-bind:value="vueData.editField.isMandatory" />
+								</vu:grid-cell>
+								<vu:grid-cell>
+									<vu:select-multiple-edit v-if="vueData.editFieldConstraints.length>0" object="editField" field="fieldConstraints" list="editFieldConstraints"
+										valueField="code" labelField="label" popup-content-class="popupDescriptionFieldConstraints">
+										<vu:slot name="edit_content_slot">
+											<template v-slot:option="scope">
+												<q-item v-bind="scope.itemProps"> <q-item-section> <q-item-label v-html="scope.opt.label"></q-item-label>
+												<q-item-label caption>{{ vueData.editFieldConstraints[scope.index].description}}</q-item-label> </q-item-section> </q-item>
+											</template>
+										</vu:slot>
+									</vu:select-multiple-edit>
+								</vu:grid-cell>
+							</vu:grid>
+						</q-card-section>
+						<q-card-section class="flex justify-end">
+							<q-btn @click="saveEditItem" color="primary" label="Save" rounded></q-btn>
+						</q-card-section>
+					</q-card>
+				</q-dialog>
 			</th:block>
 				
 			<q-page-sticky position="bottom-right">
-				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" v-alert-unsaved-updates="'champs'" action="@{_save}" size="lg" color="primary" />
+				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" v-alert-unsaved-updates="'fields'" action="@{_save}" size="lg" color="primary" />
 			</q-page-sticky>
 		</section>
 	</body>

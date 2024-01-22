@@ -25,12 +25,12 @@ create Association AEquipmentTypeEquipmentCategory {
 	labelB : "Equipment Category"
 }
 
-create Association AEquipmentTypeMetaFormulaire {
-	fkFieldName : "mfoId"
+create Association AEquipmentTypeEasyForm {
+	fkFieldName : "efoId"
     
  	dtDefinitionA : DtEquipmentCategory
  	type : "*>?"
-	dtDefinitionB : DtMetaFormulaire
+	dtDefinitionB : DtEasyForm
 			
-	labelB : "Equipment Category Meta Formulaire"
+	labelB : "Equipment Category Meta Form"
 }

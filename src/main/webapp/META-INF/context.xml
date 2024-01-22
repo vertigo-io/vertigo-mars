@@ -8,7 +8,7 @@
 		username="mars"
 		password="mars" />
 				
-		<Resource name="jdbc/DataSourceHomePg"
+	<Resource name="jdbc/DataSourceHomePg"
 		auth="SERVLET"
 		type="javax.sql.DataSource"
 		driverClassName="org.postgresql.Driver"
@@ -21,6 +21,8 @@
 		type="javax.sql.DataSource"
 		driverClassName="org.h2.Driver"
 		url="jdbc:h2:~/marsdb/mars;MODE=PostgreSQL;AUTO_SERVER=TRUE" />
+		
+	<Resources cacheMaxSize="51200" />
 		
 	<Parameter name="boot.apiKeysUrl" value="w:\\Digital Factory\\02 - Solutions\\Vertigo\\apiKeys\\marsApiKeys.properties" override="false"/>
 	<Parameter name="boot.walletParamsUrl" value="W:\\Digital Factory\\02 - Solutions\\Vertigo\\Blockchain\\accounts\\marsWalletAccount.properties" override="false"/>

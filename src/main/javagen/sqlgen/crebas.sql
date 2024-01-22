@@ -274,7 +274,7 @@ create table EQUIPMENT_CATEGORY
     EQUIPMENT_CATEGORY_ID	 NUMERIC     	not null,
     LABEL       	 VARCHAR(100)	not null,
     ACTIVE      	 bool        	not null,
-    MFO_ID      	 NUMERIC     	,
+    EFO_ID      	 NUMERIC     	,
     constraint PK_EQUIPMENT_CATEGORY primary key (EQUIPMENT_CATEGORY_ID)
 );
 
@@ -287,8 +287,8 @@ comment on column EQUIPMENT_CATEGORY.LABEL is
 comment on column EQUIPMENT_CATEGORY.ACTIVE is
 'Equipment category is active';
 
-comment on column EQUIPMENT_CATEGORY.MFO_ID is
-'Equipment Category Meta Formulaire';
+comment on column EQUIPMENT_CATEGORY.EFO_ID is
+'Equipment Category Meta Form';
 
 -- ============================================================
 --   Table : EQUIPMENT_FEATURE                                        
@@ -883,17 +883,17 @@ alter table TICKET
 
 create index A_EQUIPMENT_TICKET_EQUIPMENT_FK on TICKET (EQUIPMENT_ID asc);
 
+alter table EQUIPMENT_CATEGORY
+	add constraint FK_A_EQUIPMENT_TYPE_EASY_FORM_EASY_FORM foreign key (EFO_ID)
+	references EASY_FORM (EFO_ID);
+
+create index A_EQUIPMENT_TYPE_EASY_FORM_EASY_FORM_FK on EQUIPMENT_CATEGORY (EFO_ID asc);
+
 alter table EQUIPMENT_TYPE
 	add constraint FK_A_EQUIPMENT_TYPE_EQUIPMENT_CATEGORY_EQUIPMENT_CATEGORY foreign key (EQUIPMENT_CATEGORY_ID)
 	references EQUIPMENT_CATEGORY (EQUIPMENT_CATEGORY_ID);
 
 create index A_EQUIPMENT_TYPE_EQUIPMENT_CATEGORY_EQUIPMENT_CATEGORY_FK on EQUIPMENT_TYPE (EQUIPMENT_CATEGORY_ID asc);
-
-alter table EQUIPMENT_CATEGORY
-	add constraint FK_A_EQUIPMENT_TYPE_META_FORMULAIRE_META_FORMULAIRE foreign key (MFO_ID)
-	references META_FORMULAIRE (MFO_ID);
-
-create index A_EQUIPMENT_TYPE_META_FORMULAIRE_META_FORMULAIRE_FK on EQUIPMENT_CATEGORY (MFO_ID asc);
 
 alter table MISSION
 	add constraint FK_A_MISSION_BASE_BASE foreign key (BASE_ID)
@@ -924,12 +924,6 @@ alter table MISSION
 	references PERSON (PERSON_ID);
 
 create index A_PERSON_MISSION_PERSON_FK on MISSION (PERSON_ID asc);
-
-alter table TAXONOMY
-	add constraint FK_A_TAXONOMY_VALUE_TYPE_TAXONOMY_TYPE foreign key (TAT_ID)
-	references TAXONOMY_TYPE (TAT_ID);
-
-create index A_TAXONOMY_VALUE_TYPE_TAXONOMY_TYPE_FK on TAXONOMY (TAT_ID asc);
 
 alter table TICKET
 	add constraint FK_A_TICKET_TICKET_STATUS_TICKET_STATUS foreign key (TICKET_STATUS_ID)
