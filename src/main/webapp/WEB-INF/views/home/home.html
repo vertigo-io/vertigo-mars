@@ -40,7 +40,7 @@
 				<vu:include-data object="bases" field="geoLocation" />
 				<vu:include-data object="bases" field="name" />
 				<v-map tabindex="1" style="width:100%; height: 600px;" id="map" overview>
-					<v-map-layer marker-color="#027BE3" :list="vueData.bases" field="geoLocation" name-field="name" th:base-url="@{/api/bases/}"></v-map-layer>
+					<v-map-layer marker-color="#027BE3" :list="vueData.bases" field="geoLocation" name-field="name" <!--/* th:base-url="@{/api/bases/}"  */-->></v-map-layer>
 				</v-map>
 			</div>
 			<div class="col-lg-5 col-12">
