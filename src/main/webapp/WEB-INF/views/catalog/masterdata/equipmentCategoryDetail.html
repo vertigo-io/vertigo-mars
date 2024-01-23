@@ -69,12 +69,12 @@
 				<vu:column field="fieldTypeLabel" label="Type" sortable="false" />
 				<vu:column field="label" sortable="false" label="Label" />
 				<vu:column field="tooltip" label="Tooltip" sortable="false" />
-				<vu:column name="fieldConstraints" auto-width label="" sortable="false" th:with="modifiableTable='true', rowIndex='props.rowIndex'">
-					<q-icon v-if="props.row.fieldConstraints.length>0" size="sm" color="primary" name="fas fa-file-shield" aria-label="Contrôles appliqués">
+				<vu:column name="fieldValidators" auto-width label="" sortable="false" th:with="modifiableTable='true', rowIndex='props.rowIndex'">
+					<q-icon v-if="props.row.fieldValidators.length>0" size="sm" color="primary" name="fas fa-file-shield" aria-label="Contrôles appliqués">
 					   <span class="sr-only">Des contrôles complémentaires sont appliqués sur ce champ</span>
-					   <q-badge color="secondary" rounded>{{props.row.fieldConstraints.length}}</q-badge> 
+					   <q-badge color="secondary" rounded>{{props.row.fieldValidators.length}}</q-badge> 
 					   <q-tooltip>Des contrôles complémentaires sont appliqués sur ce champ:<br />
-							<vu:select-multiple-read object="fields" field="fieldConstraints" list="fieldConstraints" valueField="code" labelField="label" input_dense class="column items-start" />
+							<vu:select-multiple-read object="fields" field="fieldValidators" list="fieldValidators" valueField="code" labelField="label" input_dense class="column items-start" />
 					   </q-tooltip>
 				    </q-icon>
 				</vu:column>
@@ -83,7 +83,7 @@
 			<th:block id="modalEditItem" th:if="${!model.modeReadOnly}"
 				th:attr="objectKey=${model.vContext['componentStates'].addComponentState('itemModal').addPrimitive('opened', false)}, objectKey=${model.vContext['componentStates']['itemModal'].addPrimitive('editIndex', null)} ">
 				<vu:include-data object="fieldTypes" field="'*'" />
-				<vu:include-data object="editFieldConstraints" field="*" />
+				<vu:include-data object="editFieldValidators" field="*" />
 				<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right">
 					<q-card class="bg-white" style="width: min(800px, 100vw);">
 						<q-toolbar class="bg-primary">
@@ -122,12 +122,12 @@
 									<input type="hidden" name="vContext[editField][isMandatory]" v-bind:value="vueData.editField.isMandatory" />
 								</vu:grid-cell>
 								<vu:grid-cell>
-									<vu:select-multiple-edit v-if="vueData.editFieldConstraints.length>0" object="editField" field="fieldConstraints" list="editFieldConstraints"
-										valueField="code" labelField="label" popup-content-class="popupDescriptionFieldConstraints">
+									<vu:select-multiple-edit v-if="vueData.editFieldValidators.length>0" object="editField" field="fieldValidators" list="editFieldValidators"
+										valueField="code" labelField="label" popup-content-class="popupDescriptionFieldValidators">
 										<vu:slot name="edit_content_slot">
 											<template v-slot:option="scope">
 												<q-item v-bind="scope.itemProps"> <q-item-section> <q-item-label v-html="scope.opt.label"></q-item-label>
-												<q-item-label caption>{{ vueData.editFieldConstraints[scope.index].description}}</q-item-label> </q-item-section> </q-item>
+												<q-item-label caption>{{ vueData.editFieldValidators[scope.index].description}}</q-item-label> </q-item-section> </q-item>
 											</template>
 										</vu:slot>
 									</vu:select-multiple-edit>
