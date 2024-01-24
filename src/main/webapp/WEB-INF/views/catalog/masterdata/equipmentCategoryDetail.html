@@ -51,17 +51,17 @@
 			<vu:include-data object="fields" field="isMandatory" />
 			<vu:table id="surveyFields" title="Survey fields" list="fields" componentId="champTable" rowsPerPage="0" hide-pagination class="auto-ellipsis" gridBreak="md">
 				<vu:slot name="top_right_slot">
-					<vu:button th:if="${!model.modeReadOnly}" icon="add" title="Add field" @click="addItem()"/>
+					<vu:button th:if="${!model.modeReadOnly}" icon="add" title="Add field" @click="efAddItem()"/>
 				</vu:slot>
 				<vu:slot th:if="${!model.modeReadOnly}" name="actions_slot">
 					<vu:button :disabled="!(props.rowIndex > 0)"
-					           flat icon="fas fa-arrow-up" title="Move field up" @click="moveItem(props.rowIndex,-1)"/>
+					           flat icon="fas fa-arrow-up" title="Move field up" @click="efMoveItem(props.rowIndex,-1)"/>
 					<vu:button :disabled="!(props.rowIndex < vueData.fields.length - 1)"
-					           flat icon="fas fa-arrow-down" title="Move field down" @click="moveItem(props.rowIndex,1)"/>
-					<vu:button flat icon="fas fa-pencil-alt" title="Edit field" @click="editItem(props.rowIndex)"/>
+					           flat icon="fas fa-arrow-down" title="Move field down" @click="efMoveItem(props.rowIndex,1)"/>
+					<vu:button flat icon="fas fa-pencil-alt" title="Edit field" @click="efEditItem(props.rowIndex)"/>
 					<vu:button :disabled="props.row.isDefault"
 					           flat icon="fas fa-trash-alt" v-title="props.row.isDefault?'Field required by the system, cannot be deleted':'Delete'"
-					           @click="deleteItem(props.rowIndex)" />
+					           @click="efDeleteItem(props.rowIndex)" />
 				</vu:slot>
 				<vu:column field="fieldCode" label="Code" sortable="false">
 				     <div :class="props.row.isMandatory?'v-block__required':''">{{props.row.fieldCode}}</div> <q-badge th:if="${!model.modeReadOnly}" v-if="props.row.isDefault" color="grey">Mandatory for the system</q-badge>
@@ -93,7 +93,7 @@
 						<q-card-section class="q-layout-padding">
 							<vu:grid>
 								<vu:select-edit object="editField" field="fieldType" label="Field type" list="fieldTypes" valueField="name" labelField="label"  :disable="componentStates.itemModal.editIndex != -1" 
-								@update:model-value="refreshItem()" 
+								@update:model-value="efRefreshItem()" 
 								searchable="true"/>
 								
 								<vu:text-field-edit object="editField" field="fieldCode" label="Field code"
@@ -135,7 +135,7 @@
 							</vu:grid>
 						</q-card-section>
 						<q-card-section class="flex justify-end">
-							<q-btn @click="saveEditItem" color="primary" label="Save" rounded></q-btn>
+							<q-btn @click="efSaveEditItem" color="primary" label="Save" rounded></q-btn>
 						</q-card-section>
 					</q-card>
 				</q-dialog>
