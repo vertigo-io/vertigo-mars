@@ -67,59 +67,59 @@
 				
 				<vui-easy-forms v-model="vueData.survey.formulaire" class="full-width" id="formulaire" >
 					<template v-slot:default="slotProps">
-						<th:block th:each="field : ${model.modeleFormulaire.fields}" th:with="fieldType = ${model.efoUiUtil.getFieldTypeByName(field.fieldType)}" >
-							<div  class="fr-input-group" th::class="|{'fr-input-group--error' : efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')}|">
+						<th:block th:each="field : ${model.modeleFormulaire.fields}" th:with="fieldType = ${model.efoUiUtil.getFieldTypeByName(field.fieldTypeName)}" >
+							<div  class="fr-input-group" th::class="|{'fr-input-group--error' : efHasFormError(uiMessageStack, 'survey', '${field.code}')}|">
 							    <!--/* 
-								<fieldset th:if='${fieldType.isListOfType("CiviliteSexe") && "radio".equals(fieldType.uiComponent)}' class="fr-fieldset" role="group"
-										aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}') ? 'radio-input-${field.fieldCode}-${field.order}-desc-error' : null|"
-										th:id="|radio-input-${field.fieldCode}-${field.order}|">
-									<legend class="fr-fieldset__legend" th:id="|radio-input-${field.fieldCode}-${field.order}-legend|" style="display: none;">
+								<fieldset th:if='${fieldType.isListOfType("CiviliteSexe") && "radio".equals(fieldType.uiComponentName)}' class="fr-fieldset" role="group"
+										aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.code}') ? 'radio-input-${field.code}-${field.order}-desc-error' : null|"
+										th:id="|radio-input-${field.code}-${field.order}|">
+									<legend class="fr-fieldset__legend" th:id="|radio-input-${field.code}-${field.order}-legend|" style="display: none;">
 										<span vu:text="${field.label}"></span>
 									</legend>
 									<div th:each="civilite : ${model.civiliteSexeList} " class="fr-fieldset__element">
 										<div class="fr-radio-group">
 											<input type="radio"
-													th:name="${field.fieldCode}"
-													th:id="|radio-input-${field.fieldCode}-${field.order}-${civilite.civCd}|"
+													th:name="${field.code}"
+													th:id="|radio-input-${field.code}-${field.order}-${civilite.civCd}|"
 													th:value="${civilite.civCd}"
-													th:v-model="|slotProps.formulaire['${field.fieldCode}']|"
-													th:v-autofocus="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')|"
-													th::aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}') ? 'radio-input-${field.fieldCode}-${field.order}-desc-error' : null|"
-													th::aria-invalid="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')|"
-													th::class="|{'fr-input--error' : efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')}|"
+													th:v-model="|slotProps.formulaire['${field.code}']|"
+													th:v-autofocus="|efHasFormError(uiMessageStack, 'survey', '${field.code}')|"
+													th::aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.code}') ? 'radio-input-${field.code}-${field.order}-desc-error' : null|"
+													th::aria-invalid="|efHasFormError(uiMessageStack, 'survey', '${field.code}')|"
+													th::class="|{'fr-input--error' : efHasFormError(uiMessageStack, 'survey', '${field.code}')}|"
 													 >
 											<label class="fr-label"
-													th:for="|radio-input-${field.fieldCode}-${field.order}-${civilite.civCd}|"
+													th:for="|radio-input-${field.code}-${field.order}-${civilite.civCd}|"
 													th:text="${civilite.label}" />
 										</div>
 									</div>
-									<div class="fr-messages-group" assert-live="assertive" th:id="|radio-input-${field.fieldCode}-${field.order}-messages|">
+									<div class="fr-messages-group" assert-live="assertive" th:id="|radio-input-${field.code}-${field.order}-messages|">
 									</div>
 								</fieldset>
-								<select th:if='${fieldType.isListOfType("MotifType") && "select".equals(fieldType.uiComponent)}'
-										th:v-autofocus="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')|"
-										th:v-model="|slotProps.formulaire['${field.fieldCode}']|"
+								<select th:if='${fieldType.isListOfType("MotifType") && "select".equals(fieldType.uiComponentName)}'
+										th:v-autofocus="|efHasFormError(uiMessageStack, 'survey', '${field.code}')|"
+										th:v-model="|slotProps.formulaire['${field.code}']|"
 										class="fr-select"
-										th::aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}') ? 'text-select-${field.fieldCode}-${field.order}-desc-error' : null|"
-										th::aria-invalid="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')|" 
-										th:id="|text-select-${field.fieldCode}-${field.order}|"
-										th::class="|{'fr-select--error' : efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')}|" >
+										th::aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.code}') ? 'text-select-${field.code}-${field.order}-desc-error' : null|"
+										th::aria-invalid="|efHasFormError(uiMessageStack, 'survey', '${field.code}')|" 
+										th:id="|text-select-${field.code}-${field.order}|"
+										th::class="|{'fr-select--error' : efHasFormError(uiMessageStack, 'survey', '${field.code}')}|" >
 									<option value="" selected disabled hidden>Selectionnez une option</option>
-									<option th:each="motifValue: ${model['motifValues_' + field.fieldCode]}" th:value="${motifValue.movId}" vu:text="${motifValue.label}"></option>
+									<option th:each="motifValue: ${model['motifValues_' + field.code]}" th:value="${motifValue.movId}" vu:text="${motifValue.label}"></option>
 								</select>
 								 */-->
-								<q-input th:unless="${fieldType.uiComponent == 'radio' || fieldType.uiComponent == 'select'}"
+								<q-input th:unless="${fieldType.uiComponentName == 'radio' || fieldType.uiComponentName == 'select'}"
 										label-slot
-										th:v-autofocus="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')|"
-										th:v-model="|slotProps.formulaire['${field.fieldCode}']|"
-										th::aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}') ? 'text-input-${field.fieldCode}-${field.order}-desc-error' : null|"
-										th::aria-invalid="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')|" 
-										th:id="|text-input-${field.fieldCode}-${field.order}|"
-										th::error="|efHasFormError(uiMessageStack, 'survey', '${field.fieldCode}')|" 
-										th::error-message="|efGetFormError(uiMessageStack, 'survey', '${field.fieldCode}')|"
-										th:type="${fieldType.uiComponent == 'textfield' ? 'text' : (fieldType.uiComponent == 'date' ? 'date' : 'text')}"
-										th:autocomplete="${fieldType.uiAutocompleteInputAttribute}"
-										th:maxlength="${model.efoUiUtil.smartTypeMaxLength(field.fieldType)}"
+										th:v-autofocus="|efHasFormError(uiMessageStack, 'survey', '${field.code}')|"
+										th:v-model="|slotProps.formulaire['${field.code}']|"
+										th::aria-describedby="|efHasFormError(uiMessageStack, 'survey', '${field.code}') ? 'text-input-${field.code}-${field.order}-desc-error' : null|"
+										th::aria-invalid="|efHasFormError(uiMessageStack, 'survey', '${field.code}')|" 
+										th:id="|text-input-${field.code}-${field.order}|"
+										th::error="|efHasFormError(uiMessageStack, 'survey', '${field.code}')|" 
+										th::error-message="|efGetFormError(uiMessageStack, 'survey', '${field.code}')|"
+										th:type="${fieldType.uiComponentName == 'textfield' ? 'text' : (fieldType.uiComponentName == 'date' ? 'date' : 'text')}"
+										th:autocomplete="${fieldType.uiParameters[textFieldAutocomplete]}"
+										th:maxlength="${model.efoUiUtil.smartTypeMaxLength(field.fieldTypeName)}"
 										orientation="vertical"
 										stack-label
 										th:classappend="${field.isMandatory?'v-field__required':''}"
