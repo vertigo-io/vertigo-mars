@@ -82,8 +82,11 @@
 			
 			<th:block id="modalEditItem" th:if="${!model.modeReadOnly}"
 				th:attr="objectKey=${model.vContext['componentStates'].addComponentState('itemModal').addPrimitive('opened', false)}, objectKey=${model.vContext['componentStates']['itemModal'].addPrimitive('editIndex', null)} ">
-				<vu:include-data object="fieldTypes" field="'*'" />
+				<vu:include-data object="fieldTypes" field="name" />
+				<vu:include-data object="fieldTypes" field="label" />
+				<vu:include-data object="fieldTypes" field="hasTemplate" />
 				<vu:include-data object="editFieldValidators" field="*" />
+				<vu:include-data object="fields" field="parameters" />
 				<q-dialog th:v-model="componentStates.itemModal.opened" maximized position="right">
 					<q-card class="bg-white" style="width: min(800px, 100vw);">
 						<q-toolbar class="bg-primary">
@@ -118,7 +121,7 @@
 									<q-toggle class="q-field" :disable="vueData.editField.isDefault" v-model="vueData.editField.isMandatory"
 										:title="vueData.editField.isDefault?'Information required by the system and cannot be modified':''"
 										:aria-title="vueData.editField.isDefault?'Information required by the system and cannot be modified':''"
-										label="Information mandatory"></q-toggle>
+										th:label="#{EF_DESIGNER_MANDATORY}"></q-toggle>
 									<input type="hidden" name="vContext[editField][isMandatory]" v-bind:value="vueData.editField.isMandatory" />
 								</vu:grid-cell>
 								<vu:grid-cell>
@@ -131,6 +134,13 @@
 											</template>
 										</vu:slot>
 									</vu:select-multiple-edit>
+								</vu:grid-cell>
+								<vu:grid-cell>
+									<div th:each="parentFieldType : ${model.fieldTypes}" th:if="${parentFieldType.hasTemplate}" th:v-if="|vueData.editField.fieldType === '${parentFieldType.name}'|">
+										Parameters :
+										<vu:easy-forms object="editField" field="parameters" template="${model.fieldTypesTemplate['__${parentFieldType.name}__']}" i18nLabel="true"/>
+										
+									</div>
 								</vu:grid-cell>
 							</vu:grid>
 						</q-card-section>

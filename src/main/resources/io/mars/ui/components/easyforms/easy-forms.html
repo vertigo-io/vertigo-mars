@@ -1,0 +1,52 @@
+<th:block th:fragment="easy-forms-edit(object, field, rowIndex, template, i18nLabel)" 
+	vu:alias="easy-forms" vu:selector="${viewMode=='edit'}"
+	th:assert="${object} != null and ${field} != null">
+	<vu:include-data object="${object}" field="${field}" modifiable="true"/>
+	
+	<vui-easy-forms th:v-model="${model.util.vueDataKey(object, field, rowIndex)}" class="full-width" >
+		<template v-slot:default="slotProps">
+			<th:block th:each="templateField : ${template.fields}" th:with="fieldType = ${model.efoUiUtil.getFieldTypeByName(templateField.fieldTypeName)}">
+				<div  class="fr-input-group" th::class="|{'fr-input-group--error' : efHasFormError(uiMessageStack, 'editField', '${templateField.code}')}|"
+				      th:switch="${fieldType.uiComponentName}">
+					<div th:case="'EfUicIMap'">
+						<vui-ef-map th:v-model="|slotProps.formData['${templateField.code}']|"></vui-ef-map>
+					</div>
+					<div th:case="'EfUicRadio'">
+						<vu:label-edit object="${object}" field="${field}" th:label="${i18nLabel != null ? '__#{${templateField.label}}__' : templateField.label}" required="${templateField.isMandatory}">
+							<q-option-group
+						      th:v-model="|slotProps.formData['${templateField.code}']|" inline
+						      th::options="${model.efoUiUtil.getDynamicList(template,templateField.code)}"
+						      color="primary"
+						    ></q-option-group>
+						</vu:label-edit>
+					</div>
+					<div th:case="*">
+						<q-input label-slot
+								th:v-autofocus="|efHasFormError(uiMessageStack, ${field}, '${templateField.code}')|"
+								th:v-model="|slotProps.formData['${templateField.code}']|"
+								th::aria-describedby="|efHasFormError(uiMessageStack, ${field}, '${templateField.code}') ? 'text-input-${templateField.code}-${templateField.order}-desc-error' : null|"
+								th::aria-invalid="|efHasFormError(uiMessageStack, ${field}, '${templateField.code}')|" 
+								th:id="|text-input-${templateField.code}-${templateField.order}|"
+								th::error="|efHasFormError(uiMessageStack, ${field}, '${templateField.code}')|" 
+								th::error-message="|efGetFormError(uiMessageStack, ${field}, '${templateField.code}')|"
+								th:type="${fieldType.uiComponentName == 'textfield' ? 'text' : (fieldType.uiComponentName == 'date' ? 'date' : 'text')}"
+								th:autocomplete="${templateField.parameters != null ? templateField.parameters['textFieldAutocomplete'] : ''}"
+								th:maxlength="${model.efoUiUtil.smartTypeMaxLength(templateField.fieldTypeName)}"
+								orientation="vertical"
+								stack-label
+								th:classappend="${templateField.isMandatory?'v-field__required':''}"
+								th:aria-required="${templateField.isMandatory}" >
+								<template v-slot:label>
+								  <div class="row items-center all-pointer-events non-selectable" style="display: inline-block;">
+								    <div vu:text="${templateField.label}" />
+								    <q-tooltip th:if="${templateField.tooltip}" class="bg-grey-8" anchor="top left" self="bottom left" :delay="300" :offset="[0, 8]"><div vu:text="${templateField.tooltip}"/></q-tooltip>
+								  </div>
+								</template>
+						</q-input>
+					</div>
+				</div>
+			</th:block>
+		</template>
+	</vui-easy-forms>
+	<input type="hidden" th::name="${model.util.contextKey(object, field, rowIndex)}" th:v-bind:value="|JSON.stringify(${model.util.vueDataKey(object, field, rowIndex)})|" />
+</th:block>

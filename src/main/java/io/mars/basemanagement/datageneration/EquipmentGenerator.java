@@ -64,20 +64,20 @@ public class EquipmentGenerator implements Component {
 
 	public void createInitialEquipmentCategories() {
 		createEquipmentCategory(true, "Bot", new EasyFormsTemplateBuilder()
-				.addField("iaAutonomy", FieldTypeEnum.LABEL, "IA autonomy", null, false, false, List.of())
-				.addField("easyness", FieldTypeEnum.LABEL, "Easyness of use", null, false, false, List.of())
-				.addField("obsolete", FieldTypeEnum.LABEL, "Is obsolete", null, false, true, List.of())
+				.addField("iaAutonomy", FieldTypeEnum.LABEL, "IA autonomy", null, false, false, null, List.of())
+				.addField("easyness", FieldTypeEnum.LABEL, "Easyness of use", null, false, false, null, List.of())
+				.addField("obsolete", FieldTypeEnum.LABEL, "Is obsolete", null, false, true, null, List.of())
 				.build());
 		createEquipmentCategory(true, "Building", new EasyFormsTemplateBuilder()
-				.addField("equipment", FieldTypeEnum.LABEL, "Completude of equipment", null, false, true, List.of())
-				.addField("temperature", FieldTypeEnum.LABEL, "Temperature inside", null, false, false, List.of())
-				.addField("wearState", FieldTypeEnum.LABEL, "State of wear", null, false, false, List.of())
+				.addField("equipment", FieldTypeEnum.LABEL, "Completude of equipment", null, false, true, null, List.of())
+				.addField("temperature", FieldTypeEnum.LABEL, "Temperature inside", null, false, false, null, List.of())
+				.addField("wearState", FieldTypeEnum.LABEL, "State of wear", null, false, false, null, List.of())
 				.build());
 		createEquipmentCategory(true, "Vehicle", new EasyFormsTemplateBuilder()
-				.addField("comfort", FieldTypeEnum.LABEL, "Comfort", null, false, true, List.of())
-				.addField("speed", FieldTypeEnum.LABEL, "Speed", null, false, false, List.of())
-				.addField("storageCapacity", FieldTypeEnum.LABEL, "Storage capacity", null, false, false, List.of())
-				.addField("wearState", FieldTypeEnum.LABEL, "State of wear", null, false, false, List.of())
+				.addField("comfort", FieldTypeEnum.LABEL, "Comfort", null, false, true, null, List.of())
+				.addField("speed", FieldTypeEnum.LABEL, "Speed", null, false, false, null, List.of())
+				.addField("storageCapacity", FieldTypeEnum.LABEL, "Storage capacity", null, false, false, null, List.of())
+				.addField("wearState", FieldTypeEnum.LABEL, "State of wear", null, false, false, null, List.of())
 				.build());
 	}
 

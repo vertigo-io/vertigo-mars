@@ -1,6 +1,7 @@
 package io.mars.support.boot;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.context.annotation.ComponentScan;
 
@@ -26,7 +27,6 @@ import io.vertigo.ui.impl.springmvc.config.VSpringWebConfig;
 		"io.mars.opendata.controllers",
 		"io.mars.command.controllers" })
 public class MarsVSpringWebConfig extends VSpringWebConfig {
-	// nothing basic config is enough
 
 	@Override
 	protected boolean isDevMode() {
@@ -41,5 +41,10 @@ public class MarsVSpringWebConfig extends VSpringWebConfig {
 	@Override
 	protected String getCustomComponentsPathPrefix() {
 		return "io/mars/ui/";
+	}
+
+	@Override
+	protected Set<String> getCustomComponentNames() {
+		return Set.of("easyforms/easy-forms");
 	}
 }
