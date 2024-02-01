@@ -222,6 +222,7 @@ public final class Person implements Entity {
 	 * @return String fullName
 	 */
 	@Field(smartType = "STyLabel", type = "COMPUTED", persistent = false, label = "Full name")
+	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
 	}

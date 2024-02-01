@@ -13,6 +13,8 @@ create DtDefinition DtPerson {
 	computed fullName {domain : DoLabel, label:"Full name" 
         expression:"return getFirstName() + \" \" + getLastName();"
     }
+    
+    displayField: "fullName"
 }
 
 create DtDefinition DtGroups {

@@ -5,7 +5,7 @@
 	
 	<vui-easy-forms th:v-model="${model.util.vueDataKey(object, field, rowIndex)}" class="full-width" >
 		<template v-slot:default="slotProps">
-			<th:block th:each="templateField : ${template.fields}" th:with="fieldType = ${model.efoUiUtil.getFieldTypeByName(templateField.fieldTypeName)}">
+			<th:block th:each="templateField : ${template.fields}" th:with="fieldType = ${model.efoUiUtil.getFieldTypeByName(templateField.fieldTypeName)}, fieldParameters = ${model.efoUiUtil.getParametersForField(templateField)}">
 				<div  class="fr-input-group" th::class="|{'fr-input-group--error' : efHasFormError(uiMessageStack, 'editField', '${templateField.code}')}|"
 				      th:switch="${fieldType.uiComponentName}">
 					<div th:case="'EfUicIMap'">
@@ -14,9 +14,10 @@
 					<div th:case="'EfUicRadio'">
 						<vu:label-edit object="${object}" field="${field}" th:label="${i18nLabel != null ? '__#{${templateField.label}}__' : templateField.label}" required="${templateField.isMandatory}">
 							<q-option-group
-						      th:v-model="|slotProps.formData['${templateField.code}']|" inline
-						      th::options="${model.efoUiUtil.getDynamicList(template,templateField.code)}"
-						      color="primary"
+						    	th:v-model="|slotProps.formData['${templateField.code}']|"
+						    	th::options="${model.efoUiUtil.getDynamicListForField(templateField)}"
+								th::inline="${(fieldParameters['radioLayout'] != null && fieldParameters['radioLayout'] == 'horizontal') ? true : false }"
+						    	color="primary"
 						    ></q-option-group>
 						</vu:label-edit>
 					</div>
@@ -30,7 +31,7 @@
 								th::error="|efHasFormError(uiMessageStack, ${field}, '${templateField.code}')|" 
 								th::error-message="|efGetFormError(uiMessageStack, ${field}, '${templateField.code}')|"
 								th:type="${fieldType.uiComponentName == 'textfield' ? 'text' : (fieldType.uiComponentName == 'date' ? 'date' : 'text')}"
-								th:autocomplete="${templateField.parameters != null ? templateField.parameters['textFieldAutocomplete'] : ''}"
+								th:autocomplete="${fieldParameters['textFieldAutocomplete']}"
 								th:maxlength="${model.efoUiUtil.smartTypeMaxLength(templateField.fieldTypeName)}"
 								orientation="vertical"
 								stack-label
