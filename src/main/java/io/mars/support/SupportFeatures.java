@@ -18,6 +18,7 @@
  */
 package io.mars.support;
 
+import io.mars.support.boot.MarsEasyFormsFieldTypeDefinitionProvider;
 import io.mars.support.boot.MarsMasterDataDefinitionProvider;
 import io.mars.support.services.MarsFileServices;
 import io.mars.support.theme.ThemeManager;
@@ -39,6 +40,7 @@ public class SupportFeatures extends Features<SupportFeatures> {
 						.addDefinitionResource("dtobjects", "io.mars.domain.DtDefinitions")
 						.build())
 				.addDefinitionProvider(MarsMasterDataDefinitionProvider.class)
+				.addDefinitionProvider(MarsEasyFormsFieldTypeDefinitionProvider.class)
 				.addComponent(MarsFileServices.class)
 				.addComponent(ThemeManager.class);
 

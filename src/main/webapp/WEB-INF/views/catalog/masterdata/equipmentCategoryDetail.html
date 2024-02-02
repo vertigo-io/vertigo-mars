@@ -138,7 +138,7 @@
 								<vu:grid-cell>
 									<div th:each="parentFieldType : ${model.fieldTypes}" th:if="${parentFieldType.hasTemplate}" th:v-if="|vueData.editField.fieldType === '${parentFieldType.name}'|">
 										Parameters :
-										<vu:easy-forms object="editField" field="parameters" template="${model.fieldTypesTemplate['__${parentFieldType.name}__']}" i18nLabel="true"/>
+										<vu:easy-forms object="editField" field="parameters" template="${model.fieldTypesTemplate['__${parentFieldType.name}__']}" isI18nLabel="true"/>
 										
 									</div>
 								</vu:grid-cell>

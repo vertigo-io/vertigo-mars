@@ -51,20 +51,11 @@
 				</div>
 			</vu:block>
 			
-			<vu:block id="survey" title="Survey" th:if="${model.modeReadOnly and model.hasSurvey}" content_th:classappend="row">
-				<vu:include-data-primitive key="surveyDisplay"/>
-                <div class="col-12 col-md-6" v-for="(value, name) in vueData.surveyDisplay">
-                     <q-field :label="name" orientation="vertical" stack-label readonly borderless >
-                         {{ value }}
-                     </q-field>
-                </div>   
+			<vu:block id="survey" title="Survey" th:if="${model.hasSurvey}">
+				<vu:easy-forms object="survey" field="formulaire" template="${model.modeleFormulaire}" th:elem_class="|col-12 ${model.modeReadOnly ? 'col-md-6':''}|"/>
 			</vu:block>
 			
 			<vu:block id="survey" title="No survey in progress" th:if="${model.modeReadOnly and !model.hasSurvey}"></vu:block>
-			
-			<vu:block id="survey" title="Survey" th:if="${model.modeCreate and model.hasSurvey}">
-				<vu:easy-forms object="survey" field="formulaire" template="${model.modeleFormulaire}"/>
-			</vu:block>
 			
 			<q-page-sticky position="bottom-right">
 				<vu:button-submit th:if="${model.modeCreate}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />

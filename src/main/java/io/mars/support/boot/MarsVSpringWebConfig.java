@@ -40,11 +40,11 @@ public class MarsVSpringWebConfig extends VSpringWebConfig {
 
 	@Override
 	protected String getCustomComponentsPathPrefix() {
-		return "io/mars/ui/";
+		return "/io/vertigo/easyforms/ui/";
 	}
 
 	@Override
 	protected Set<String> getCustomComponentNames() {
-		return Set.of("easyforms/easy-forms");
+		return Set.of("easy-forms");
 	}
 }
