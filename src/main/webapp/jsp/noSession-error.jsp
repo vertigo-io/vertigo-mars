@@ -1,4 +1,4 @@
-<%@ page session="false" import="java.util.*, javax.servlet.*" %>
+<%@ page session="false" import="java.util.*, jakarta.servlet.*" %>
 <!-- Icons purchased via Iconfinder under Basic License -->
 <%
     String baseUrl = request.getContextPath() + "/";	

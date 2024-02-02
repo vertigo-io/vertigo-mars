@@ -1,4 +1,4 @@
-<%@ page session="false" import="java.util.*, javax.servlet.*" %>
+<%@ page session="false" %>
 <!-- Icons purchased via Iconfinder under Basic License -->
 <%
      String baseUrl = request.getContextPath() + "/";
@@ -12,7 +12,7 @@
 	<base href="<%=baseUrl%>" />	
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>	
 	<link href="static/css/error.css" type="text/css" rel="stylesheet"/>
-	<title>Vertigo - 404</title>
+	<title>Vertigo Mars - 404</title>
 </head>
 
 <body class="permission_denied">

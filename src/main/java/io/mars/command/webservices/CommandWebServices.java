@@ -21,7 +21,6 @@ import io.vertigo.commons.command.definitions.CommandParam;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.util.ClassUtil;
 import io.vertigo.datafactory.collections.CollectionsManager;
 import io.vertigo.datamodel.structure.definitions.DtDefinition;
 import io.vertigo.datamodel.structure.definitions.DtField;
@@ -143,7 +142,7 @@ public class CommandWebServices implements WebServices {
 
 	@GET("/params/_autocomplete")
 	public List<Map<String, String>> autocompleteMdList(@QueryParam("terms") final String terms, @QueryParam("entityClass") final String entityClass) {
-		final DtDefinition dtDefinition = DtObjectUtil.findDtDefinition(ClassUtil.classForName(entityClass, Entity.class));
+		final DtDefinition dtDefinition = DtObjectUtil.findDtDefinition(entityClass);
 		final DtField labelDtField = dtDefinition.getDisplayField().get();
 		return autocompleteParam(terms, dtDefinition)
 				.stream()
