@@ -17,7 +17,7 @@ public final class EquipmentSurvey implements Entity {
 
 	private Long esuId;
 	private java.time.Instant dateAnswer;
-	private io.vertigo.easyforms.easyformsrunner.model.EasyFormsData formulaire;
+	private io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsData formulaire;
 
 	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AEquipmentSurveyEquipment",
@@ -99,7 +99,7 @@ public final class EquipmentSurvey implements Entity {
 	 * @return EasyFormsData formulaire <b>Obligatoire</b>
 	 */
 	@Field(smartType = "STyEfFormData", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Informations")
-	public io.vertigo.easyforms.easyformsrunner.model.EasyFormsData getFormulaire() {
+	public io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsData getFormulaire() {
 		return formulaire;
 	}
 
@@ -108,7 +108,7 @@ public final class EquipmentSurvey implements Entity {
 	 * Définit la valeur de la propriété 'Informations'.
 	 * @param formulaire EasyFormsData <b>Obligatoire</b>
 	 */
-	public void setFormulaire(final io.vertigo.easyforms.easyformsrunner.model.EasyFormsData formulaire) {
+	public void setFormulaire(final io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsData formulaire) {
 		this.formulaire = formulaire;
 	}
 	

@@ -74,7 +74,7 @@
 					   <span class="sr-only">Des contrôles complémentaires sont appliqués sur ce champ</span>
 					   <q-badge color="secondary" rounded>{{props.row.fieldValidators.length}}</q-badge> 
 					   <q-tooltip>Des contrôles complémentaires sont appliqués sur ce champ:<br />
-							<vu:select-multiple-read object="fields" field="fieldValidators" list="fieldValidators" valueField="code" labelField="label" input_dense class="column items-start" />
+							<vu:select-multiple-read object="fields" field="fieldValidators" list="fieldValidators" valueField="name" labelField="label" input_dense class="column items-start" />
 					   </q-tooltip>
 				    </q-icon>
 				</vu:column>
@@ -105,10 +105,6 @@
 				                aria-title="Technical and unique code of the field"
 								:disable="componentStates.itemModal.editIndex != -1 || vueData.editField.fieldType==null" />
 				                
-				               <!--/*  <vu:grid-cell v-if="vueData.editField.fieldType === 'Taxonomie'">
-									<vu:select-edit object="editField" field="listId" list="taxonomyTypes" valueField="motId" label="List of values" required="true" />
-								</vu:grid-cell>
-								 */-->
 								<vu:grid-cell>
 								    <vu:text-field-edit object="editField" field="label" label="Label"/>
 								</vu:grid-cell>
@@ -121,23 +117,27 @@
 									<q-toggle class="q-field" :disable="vueData.editField.isDefault" v-model="vueData.editField.isMandatory"
 										:title="vueData.editField.isDefault?'Information required by the system and cannot be modified':''"
 										:aria-title="vueData.editField.isDefault?'Information required by the system and cannot be modified':''"
-										th:label="#{EF_DESIGNER_MANDATORY}"></q-toggle>
+										th:label="#{EfDesignerMandatory}"></q-toggle>
 									<input type="hidden" name="vContext[editField][isMandatory]" v-bind:value="vueData.editField.isMandatory" />
 								</vu:grid-cell>
 								<vu:grid-cell>
 									<vu:select-multiple-edit v-if="vueData.editFieldValidators.length>0" object="editField" field="fieldValidators" list="editFieldValidators"
-										valueField="code" labelField="label" popup-content-class="popupDescriptionFieldValidators">
+										valueField="name" labelField="label" popup-content-class="popupDescriptionFieldValidators">
 										<vu:slot name="edit_content_slot">
 											<template v-slot:option="scope">
-												<q-item v-bind="scope.itemProps"> <q-item-section> <q-item-label v-html="scope.opt.label"></q-item-label>
-												<q-item-label caption>{{ vueData.editFieldValidators[scope.index].description}}</q-item-label> </q-item-section> </q-item>
+												<q-item v-bind="scope.itemProps">
+													<q-item-section>
+														<q-item-label v-text="scope.opt.label"></q-item-label>
+														<q-item-label caption v-text="scope.opt.description"></q-item-label>
+													 </q-item-section>
+												 </q-item>
 											</template>
 										</vu:slot>
 									</vu:select-multiple-edit>
 								</vu:grid-cell>
 								<vu:grid-cell>
 									<div th:each="parentFieldType : ${model.fieldTypes}" th:if="${parentFieldType.hasTemplate}" th:v-if="|vueData.editField.fieldType === '${parentFieldType.name}'|">
-										Parameters :
+										<th:block th:text="#{EfDesignerParameters}"/> :
 										<vu:easy-forms object="editField" field="parameters" template="${model.fieldTypesTemplate['__${parentFieldType.name}__']}" isI18nLabel="true"/>
 										
 									</div>

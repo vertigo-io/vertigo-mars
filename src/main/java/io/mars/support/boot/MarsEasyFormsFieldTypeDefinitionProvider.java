@@ -1,16 +1,15 @@
 package io.mars.support.boot;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import io.mars.basemanagement.domain.Business;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.SimpleEnumDefinitionProvider;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.easyforms.easyformsrunner.model.EasyFormsFieldType;
-import io.vertigo.easyforms.easyformsrunner.model.EasyFormsUiComponent;
-import io.vertigo.easyforms.easyformsrunner.model.IEasyFormsFieldTypeSupplier;
-import io.vertigo.easyforms.easyformsrunner.model.IEasyFormsUiComponentSupplier;
+import io.vertigo.easyforms.easyformsrunner.model.definitions.EasyFormsFieldType;
+import io.vertigo.easyforms.easyformsrunner.model.definitions.EasyFormsUiComponent;
+import io.vertigo.easyforms.easyformsrunner.model.definitions.IEasyFormsFieldTypeSupplier;
+import io.vertigo.easyforms.easyformsrunner.model.definitions.IEasyFormsUiComponentSupplier;
 import io.vertigo.easyforms.impl.easyformsrunner.library.EasyFormsSmartTypes;
 import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldTypeDefinitionProvider.SimpleFieldType;
 import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldValidatorDefinitionProvider.FieldValidatorEnum;
@@ -70,7 +69,7 @@ public class MarsEasyFormsFieldTypeDefinitionProvider implements SimpleEnumDefin
 		}
 
 		@Override
-		public Map<String, Serializable> getUiParams() {
+		public Map<String, Object> getUiParams() {
 			return Map.of(IEasyFormsUiComponentSupplier.LIST_SUPPLIER, IEasyFormsUiComponentSupplier.getMdlSupplier(Business.class));
 			//			return Map.of(IEasyFormsUiComponentSupplier.LIST_SUPPLIER, IEasyFormsUiComponentSupplier.getCtxSupplier("persons"));
 		}

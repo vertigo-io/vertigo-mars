@@ -22,8 +22,8 @@ import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.easyforms.domain.EasyForm;
-import io.vertigo.easyforms.easyformsrunner.model.EasyFormsTemplate;
-import io.vertigo.easyforms.easyformsrunner.model.EasyFormsTemplateBuilder;
+import io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsTemplate;
+import io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsTemplateBuilder;
 import io.vertigo.easyforms.impl.easyformsdesigner.services.EasyFormsDesignerServices;
 import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldTypeDefinitionProvider.FieldTypeEnum;
 

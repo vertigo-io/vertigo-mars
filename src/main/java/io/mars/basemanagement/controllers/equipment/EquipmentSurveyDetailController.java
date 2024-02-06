@@ -17,7 +17,7 @@ import io.mars.hr.domain.Person;
 import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.easyforms.domain.EasyForm;
-import io.vertigo.easyforms.easyformsrunner.model.EasyFormsTemplate;
+import io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsTemplate;
 import io.vertigo.easyforms.impl.easyformsrunner.controllers.EasyFormsRunnerController;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
