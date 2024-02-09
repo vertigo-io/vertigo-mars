@@ -1,11 +1,11 @@
 package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.KeyConcept;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.KeyConcept;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -26,7 +26,7 @@ public final class Equipment implements KeyConcept {
 	private java.math.BigDecimal rentingFee;
 	private java.math.BigDecimal equipmentValue;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ABaseEquipment",
 			fkFieldName = "baseId",
 			primaryDtDefinitionName = "DtBase",
@@ -41,7 +41,7 @@ public final class Equipment implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentGeosector",
 			fkFieldName = "geosectorId",
 			primaryDtDefinitionName = "DtGeosector",
@@ -56,7 +56,7 @@ public final class Equipment implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.basemanagement.domain.Geosector> geosectorIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Geosector.class, "Geosector");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ABusinessEquipment",
 			fkFieldName = "businessId",
 			primaryDtDefinitionName = "DtBusiness",
@@ -71,7 +71,7 @@ public final class Equipment implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.basemanagement.domain.Business> businessIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Business.class, "Business");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentEquipmentType",
 			fkFieldName = "equipmentTypeId",
 			primaryDtDefinitionName = "DtEquipmentType",
@@ -287,7 +287,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return Long baseId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}
@@ -306,7 +306,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Equipment Geosector'.
 	 * @return Long geosectorId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Geosector", fkDefinition = "DtGeosector" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Geosector", fkDefinition = "DtGeosector" )
 	public Long getGeosectorId() {
 		return (Long) geosectorIdAccessor.getId();
 	}
@@ -325,7 +325,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Business'.
 	 * @return Long businessId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Business", fkDefinition = "DtBusiness" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Business", fkDefinition = "DtBusiness" )
 	public Long getBusinessId() {
 		return (Long) businessIdAccessor.getId();
 	}
@@ -344,7 +344,7 @@ public final class Equipment implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Equipment Type'.
 	 * @return Long equipmentTypeId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Type", fkDefinition = "DtEquipmentType", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Type", fkDefinition = "DtEquipmentType", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getEquipmentTypeId() {
 		return (Long) equipmentTypeIdAccessor.getId();
 	}
@@ -393,6 +393,6 @@ public final class Equipment implements KeyConcept {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

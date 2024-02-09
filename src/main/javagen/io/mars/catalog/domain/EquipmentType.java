@@ -1,11 +1,11 @@
 package io.mars.catalog.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -19,7 +19,7 @@ public final class EquipmentType implements Entity {
 	private String label;
 	private Boolean active;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentTypeEquipmentCategory",
 			fkFieldName = "equipmentCategoryId",
 			primaryDtDefinitionName = "DtEquipmentCategory",
@@ -65,8 +65,8 @@ public final class EquipmentType implements Entity {
 	 * @return String label <b>Obligatoire</b>
 	 */
 	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Equipment Type Label")
-	@io.vertigo.datamodel.structure.stereotype.SortField
-	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	@io.vertigo.datamodel.data.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.DisplayField
 	public String getLabel() {
 		return label;
 	}
@@ -104,7 +104,7 @@ public final class EquipmentType implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment Category'.
 	 * @return Long equipmentCategoryId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Category", fkDefinition = "DtEquipmentCategory" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Equipment Category", fkDefinition = "DtEquipmentCategory" )
 	public Long getEquipmentCategoryId() {
 		return (Long) equipmentCategoryIdAccessor.getId();
 	}
@@ -129,6 +129,6 @@ public final class EquipmentType implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

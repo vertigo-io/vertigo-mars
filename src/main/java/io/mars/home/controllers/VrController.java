@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.services.base.BaseServices;
-import io.vertigo.datamodel.structure.model.DtList;
-import io.vertigo.datamodel.structure.model.DtListState;
+import io.vertigo.datamodel.data.model.DtList;
+import io.vertigo.datamodel.data.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 

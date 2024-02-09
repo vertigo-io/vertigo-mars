@@ -14,7 +14,7 @@ import io.mars.catalog.domain.EquipmentCategory;
 import io.mars.catalog.services.equipment.EquipmentCategoryServices;
 import io.mars.domain.DtDefinitions.EquipmentCategoryFields;
 import io.vertigo.account.authorization.annotations.Secured;
-import io.vertigo.datamodel.structure.model.DtListState;
+import io.vertigo.datamodel.data.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;

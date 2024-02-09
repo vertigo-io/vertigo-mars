@@ -1,11 +1,11 @@
 package io.mars.catalog.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -19,7 +19,7 @@ public final class EquipmentCategory implements Entity {
 	private String label;
 	private Boolean active;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentTypeEasyForm",
 			fkFieldName = "efoId",
 			primaryDtDefinitionName = "DtEasyForm",
@@ -102,7 +102,7 @@ public final class EquipmentCategory implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment Category Meta Form'.
 	 * @return Long efoId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyEfId", label = "Equipment Category Meta Form", fkDefinition = "DtEasyForm" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyEfId", label = "Equipment Category Meta Form", fkDefinition = "DtEasyForm" )
 	public Long getEfoId() {
 		return (Long) efoIdAccessor.getId();
 	}
@@ -127,6 +127,6 @@ public final class EquipmentCategory implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

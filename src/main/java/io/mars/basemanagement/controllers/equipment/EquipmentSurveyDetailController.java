@@ -15,7 +15,7 @@ import io.mars.catalog.domain.EquipmentCategory;
 import io.mars.catalog.services.equipment.EquipmentCategoryServices;
 import io.mars.hr.domain.Person;
 import io.vertigo.account.authorization.annotations.Secured;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.easyforms.domain.EasyForm;
 import io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsTemplate;
 import io.vertigo.easyforms.impl.easyformsrunner.controllers.EasyFormsRunnerController;

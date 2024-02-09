@@ -2,8 +2,8 @@ package io.mars.maintenance.domain;
 
 import java.io.Serializable;
 
-import io.vertigo.datamodel.structure.model.MasterDataEnum;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.MasterDataEnum;
+import io.vertigo.datamodel.data.model.UID;
 
 public enum WorkOrderStatusEnum implements MasterDataEnum<io.mars.maintenance.domain.WorkOrderStatus> {
 

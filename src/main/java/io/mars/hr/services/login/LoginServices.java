@@ -32,7 +32,7 @@ import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.node.definition.DefinitionSpace;
-import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
 import io.vertigo.vega.plugins.authentication.oidc.OIDCAppLoginHandler;

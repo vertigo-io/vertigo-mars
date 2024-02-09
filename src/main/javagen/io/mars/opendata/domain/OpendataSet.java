@@ -1,11 +1,11 @@
 package io.mars.opendata.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.data.model.Entity;
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.UID;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -23,7 +23,7 @@ public final class OpendataSet implements Entity {
 	private Long picturefileId;
 	private String tags;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AOpendataSetOpendataSetStatus",
 			fkFieldName = "opendataSetStatusId",
 			primaryDtDefinitionName = "DtOpendataSetStatus",
@@ -182,7 +182,7 @@ public final class OpendataSet implements Entity {
 	 * Récupère la valeur de la propriété 'Opendata Set Status'.
 	 * @return String opendataSetStatusId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Opendata Set Status", fkDefinition = "DtOpendataSetStatus" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyCode", label = "Opendata Set Status", fkDefinition = "DtOpendataSetStatus" )
 	public String getOpendataSetStatusId() {
 		return (String) opendataSetStatusIdAccessor.getId();
 	}
@@ -207,6 +207,6 @@ public final class OpendataSet implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

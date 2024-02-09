@@ -13,7 +13,7 @@ import io.mars.datageneration.DataGenerator;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.data.model.DtList;
 
 @SuppressWarnings("rawtypes")
 public class FakeEquipmentListBuilder implements Builder {

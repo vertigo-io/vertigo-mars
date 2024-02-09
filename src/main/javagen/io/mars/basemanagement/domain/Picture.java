@@ -1,11 +1,11 @@
 package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -18,7 +18,7 @@ public final class Picture implements Entity {
 	private Long pictureId;
 	private Long picturefileId;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ABasePicture",
 			fkFieldName = "baseId",
 			primaryDtDefinitionName = "DtBase",
@@ -82,7 +82,7 @@ public final class Picture implements Entity {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return Long baseId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}
@@ -107,6 +107,6 @@ public final class Picture implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

@@ -7,7 +7,7 @@ import io.vertigo.core.node.Node;
 import io.vertigo.datamodel.task.definitions.TaskDefinition;
 import io.vertigo.datamodel.task.model.Task;
 import io.vertigo.datamodel.task.model.TaskBuilder;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
@@ -52,7 +52,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 	 * @return KeyConcept à modifier
 	 */
 	public Equipment readOneForUpdate(final java.lang.Long id) {
-		return readOneForUpdate(createDtObjectUID(id));
+		return readOneForUpdate(createUID(id));
 	}
 
 	/**
@@ -81,7 +81,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 			where bas.code = #code# and <%=securedEquipment.asSqlWhere("equ", ctx)%>""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment", name = "equipments")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.datamodel.task.proxy.TaskInput(name = "code", smartType = "STyCode") final String code, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.Equipment> getEquipmentsByBaseCode(@io.vertigo.datamodel.task.proxy.TaskInput(name = "code", smartType = "STyCode") final String code, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetEquipmentsByBaseCode")
 				.addValue("code", code)
 				.addValue("securedEquipment", securedEquipment)
@@ -108,7 +108,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 			limit 50""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment", name = "equipments")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.Equipment> getLastPurchasedEquipmentsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetLastPurchasedEquipmentsByBaseId")
 				.addValue("baseId", baseId)
 				.addValue("securedEquipment", securedEquipment)
@@ -153,7 +153,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
         														#equipmentsList.businessId#,
         														#equipmentsList.equipmentTypeId#)""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineProcBatch.class)
-	public void insertEquipmentsBatch(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentsList", smartType = "STyDtEquipment") final io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> equipmentsList) {
+	public void insertEquipmentsBatch(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentsList", smartType = "STyDtEquipment") final io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.Equipment> equipmentsList) {
 		final Task task = createTaskBuilder("TkInsertEquipmentsBatch")
 				.addValue("equipmentsList", equipmentsList)
 				.build();
@@ -177,7 +177,7 @@ public final class EquipmentDAO extends DAO<Equipment, java.lang.Long> implement
 			limit #limit#""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipment", name = "equipmentList")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(@io.vertigo.datamodel.task.proxy.TaskInput(name = "limit", smartType = "STyId") final Long limit, @io.vertigo.datamodel.task.proxy.TaskInput(name = "offset", smartType = "STyId") final Long offset, @io.vertigo.datamodel.task.proxy.TaskInput(name = "dateExist", smartType = "STyInstant") final java.time.Instant dateExist) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.Equipment> loadEquipmentsByChunk(@io.vertigo.datamodel.task.proxy.TaskInput(name = "limit", smartType = "STyId") final Long limit, @io.vertigo.datamodel.task.proxy.TaskInput(name = "offset", smartType = "STyId") final Long offset, @io.vertigo.datamodel.task.proxy.TaskInput(name = "dateExist", smartType = "STyInstant") final java.time.Instant dateExist) {
 		final Task task = createTaskBuilder("TkLoadEquipmentsByChunk")
 				.addValue("limit", limit)
 				.addValue("offset", offset)

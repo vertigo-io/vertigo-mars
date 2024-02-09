@@ -3,7 +3,7 @@ package io.mars.catalog.dao;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
@@ -48,6 +48,6 @@ public final class SupplierDAO extends DAO<Supplier, java.lang.String> implement
 	 * @return KeyConcept à modifier
 	 */
 	public Supplier readOneForUpdate(final java.lang.String id) {
-		return readOneForUpdate(createDtObjectUID(id));
+		return readOneForUpdate(createUID(id));
 	}
 }

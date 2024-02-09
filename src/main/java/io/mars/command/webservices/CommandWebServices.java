@@ -22,13 +22,13 @@ import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.datafactory.collections.CollectionsManager;
-import io.vertigo.datamodel.structure.definitions.DtDefinition;
-import io.vertigo.datamodel.structure.definitions.DtField;
-import io.vertigo.datamodel.structure.model.DtList;
-import io.vertigo.datamodel.structure.model.DtListURIForMasterData;
-import io.vertigo.datamodel.structure.model.DtObject;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.definitions.DataDefinition;
+import io.vertigo.datamodel.data.definitions.DataField;
+import io.vertigo.datamodel.data.model.DtList;
+import io.vertigo.datamodel.data.model.DtListURIForMasterData;
+import io.vertigo.datamodel.data.model.Data;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.util.DataUtil;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.AnonymousAccessAllowed;
@@ -84,7 +84,7 @@ public class CommandWebServices implements WebServices {
 	}
 
 	private final String evaluateParam(final String rawValue, final Class entityClass) {
-		final DtList<Entity> results = autocompleteParam(rawValue, DtObjectUtil.findDtDefinition(entityClass));
+		final DtList<Entity> results = autocompleteParam(rawValue, DataUtil.findDataDefinition(entityClass));
 		Assertion.check().isTrue(results.size() == 1, "Impossible to evaluate param '{0}' as a '{1}'", rawValue, entityClass);
 		return results.get(0).getUID().urn();
 	}
@@ -142,31 +142,31 @@ public class CommandWebServices implements WebServices {
 
 	@GET("/params/_autocomplete")
 	public List<Map<String, String>> autocompleteMdList(@QueryParam("terms") final String terms, @QueryParam("entityClass") final String entityClass) {
-		final DtDefinition dtDefinition = DtObjectUtil.findDtDefinition(entityClass);
-		final DtField labelDtField = dtDefinition.getDisplayField().get();
+		final DataDefinition dtDefinition = DataUtil.findDataDefinition(entityClass);
+		final DataField labelDataField = dtDefinition.getDisplayField().get();
 		return autocompleteParam(terms, dtDefinition)
 				.stream()
 				.map(element -> {
 					final Map<String, String> asMap = new HashMap<>();
 					asMap.put("urn", element.getUID().urn());
-					asMap.put("label", String.valueOf(labelDtField.getDataAccessor().getValue(element)));
+					asMap.put("label", String.valueOf(labelDataField.getDataAccessor().getValue(element)));
 					return asMap;
 				}).collect(Collectors.toList());
 	}
 
-	private final DtList<Entity> autocompleteParam(final String terms, final DtDefinition dtDefinition) {
+	private final DtList<Entity> autocompleteParam(final String terms, final DataDefinition dtDefinition) {
 		final DtListURIForMasterData dtListURIForMasterData = new DtListURIForMasterData(dtDefinition, null);
 		//Assertion.check().isTrue(entityStoreManager.getMasterDataConfig().containsMasterData(dtListURIForMasterData.getDtDefinition()), "Autocomplete can't be use with {0}, it's not a MasterDataList.",
 		//		dtListURIForMasterData.getDtDefinition().getName());
 
 		//-----
-		final DtField labelDtField = dtDefinition.getDisplayField().get();
+		final DataField labelDataField = dtDefinition.getDisplayField().get();
 
-		final Collection<DtField> searchedFields = Collections.singletonList(labelDtField);
+		final Collection<DataField> searchedFields = Collections.singletonList(labelDataField);
 		final DtList<Entity> results;
 		try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) { //Open a transaction because all fields are indexed. If there is a MDL it was load too.
 			final DtList dtList = entityStoreManager.findAll(dtListURIForMasterData);
-			final UnaryOperator<DtList<DtObject>> fullTextFilter = collectionsManager.createIndexDtListFunctionBuilder()
+			final UnaryOperator<DtList<Data>> fullTextFilter = collectionsManager.createIndexDtListFunctionBuilder()
 					.filter(terms != null ? terms : "", 20, searchedFields)
 					.build();
 			results = fullTextFilter.apply(dtList);

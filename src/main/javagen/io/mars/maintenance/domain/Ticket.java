@@ -1,12 +1,12 @@
 package io.mars.maintenance.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.data.model.Entity;
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -23,7 +23,7 @@ public final class Ticket implements Entity {
 	private java.time.LocalDate dateCreated;
 	private java.time.LocalDate dateClosed;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ATicketTicketStatus",
 			fkFieldName = "ticketStatusId",
 			primaryDtDefinitionName = "DtTicketStatus",
@@ -38,7 +38,7 @@ public final class Ticket implements Entity {
 			foreignMultiplicity = "0..*")
 	private final EnumStoreVAccessor<io.mars.maintenance.domain.TicketStatus, io.mars.maintenance.domain.TicketStatusEnum> ticketStatusIdAccessor = new EnumStoreVAccessor<>(io.mars.maintenance.domain.TicketStatus.class, "TicketStatus", io.mars.maintenance.domain.TicketStatusEnum.class);
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentTicket",
 			fkFieldName = "equipmentId",
 			primaryDtDefinitionName = "DtEquipment",
@@ -84,7 +84,7 @@ public final class Ticket implements Entity {
 	 * @return String code <b>Obligatoire</b>
 	 */
 	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Number")
-	@io.vertigo.datamodel.structure.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.SortField
 	public String getCode() {
 		return code;
 	}
@@ -104,7 +104,7 @@ public final class Ticket implements Entity {
 	 * @return String title <b>Obligatoire</b>
 	 */
 	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Title")
-	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	@io.vertigo.datamodel.data.stereotype.DisplayField
 	public String getTitle() {
 		return title;
 	}
@@ -180,7 +180,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Ticket Status'.
 	 * @return String ticketStatusId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Ticket Status", fkDefinition = "DtTicketStatus" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyCode", label = "Ticket Status", fkDefinition = "DtTicketStatus" )
 	public String getTicketStatusId() {
 		return (String) ticketStatusIdAccessor.getId();
 	}
@@ -199,7 +199,7 @@ public final class Ticket implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment'.
 	 * @return Long equipmentId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment", fkDefinition = "DtEquipment" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Equipment", fkDefinition = "DtEquipment" )
 	public Long getEquipmentId() {
 		return (Long) equipmentIdAccessor.getId();
 	}
@@ -232,6 +232,6 @@ public final class Ticket implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

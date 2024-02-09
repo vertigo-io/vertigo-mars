@@ -1,10 +1,10 @@
 package io.mars.maintenance.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.DtStaticMasterData;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.DtStaticMasterData;
+import io.vertigo.datamodel.data.model.UID;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -48,8 +48,8 @@ public final class TicketStatus implements DtStaticMasterData {
 	 * @return String label
 	 */
 	@Field(smartType = "STyLabel", label = "Status Label")
-	@io.vertigo.datamodel.structure.stereotype.SortField
-	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	@io.vertigo.datamodel.data.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.DisplayField
 	public String getLabel() {
 		return label;
 	}
@@ -66,6 +66,6 @@ public final class TicketStatus implements DtStaticMasterData {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

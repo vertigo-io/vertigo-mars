@@ -1,12 +1,12 @@
 package io.mars.hr.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.data.model.Entity;
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -18,7 +18,7 @@ public final class Mission implements Entity {
 
 	private Long missionId;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "APersonMission",
 			fkFieldName = "personId",
 			primaryDtDefinitionName = "DtPerson",
@@ -33,7 +33,7 @@ public final class Mission implements Entity {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.hr.domain.Person> personIdAccessor = new StoreVAccessor<>(io.mars.hr.domain.Person.class, "Person");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AMissionBase",
 			fkFieldName = "baseId",
 			primaryDtDefinitionName = "DtBase",
@@ -48,7 +48,7 @@ public final class Mission implements Entity {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.basemanagement.domain.Base> baseIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Base.class, "Base");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ABusinessMission",
 			fkFieldName = "businessId",
 			primaryDtDefinitionName = "DtBusiness",
@@ -63,7 +63,7 @@ public final class Mission implements Entity {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.basemanagement.domain.Business> businessIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Business.class, "Business");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AMissionRole",
 			fkFieldName = "roleId",
 			primaryDtDefinitionName = "DtRole",
@@ -108,7 +108,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Person'.
 	 * @return Long personId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Person", fkDefinition = "DtPerson" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Person", fkDefinition = "DtPerson" )
 	public Long getPersonId() {
 		return (Long) personIdAccessor.getId();
 	}
@@ -127,7 +127,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Base'.
 	 * @return Long baseId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Base", fkDefinition = "DtBase" )
 	public Long getBaseId() {
 		return (Long) baseIdAccessor.getId();
 	}
@@ -146,7 +146,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Business'.
 	 * @return Long businessId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Business", fkDefinition = "DtBusiness" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Business", fkDefinition = "DtBusiness" )
 	public Long getBusinessId() {
 		return (Long) businessIdAccessor.getId();
 	}
@@ -165,7 +165,7 @@ public final class Mission implements Entity {
 	 * Récupère la valeur de la propriété 'Role'.
 	 * @return String roleId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Role", fkDefinition = "DtRole", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyCode", label = "Role", fkDefinition = "DtRole", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public String getRoleId() {
 		return (String) roleIdAccessor.getId();
 	}
@@ -214,6 +214,6 @@ public final class Mission implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

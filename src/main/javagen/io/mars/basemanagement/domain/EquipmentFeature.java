@@ -1,11 +1,11 @@
 package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -18,7 +18,7 @@ public final class EquipmentFeature implements Entity {
 	private Long equipmentFeatureId;
 	private String name;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentEquipmentFeature",
 			fkFieldName = "equipmentId",
 			primaryDtDefinitionName = "DtEquipment",
@@ -82,7 +82,7 @@ public final class EquipmentFeature implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment'.
 	 * @return Long equipmentId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment", fkDefinition = "DtEquipment" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Equipment", fkDefinition = "DtEquipment" )
 	public Long getEquipmentId() {
 		return (Long) equipmentIdAccessor.getId();
 	}
@@ -107,6 +107,6 @@ public final class EquipmentFeature implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

@@ -39,11 +39,11 @@ public class TrainingConfiguration extends HashMap<String, CommandTrainingConfig
 			this.dtDefinition = dtDefinition;
 		}
 
-		public String getDtField() {
+		public String getDataField() {
 			return dtField;
 		}
 
-		public void setDtField(final String dtField) {
+		public void setDataField(final String dtField) {
 			this.dtField = dtField;
 		}
 

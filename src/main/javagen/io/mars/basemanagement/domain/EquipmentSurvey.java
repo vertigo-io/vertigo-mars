@@ -1,11 +1,11 @@
 package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -19,7 +19,7 @@ public final class EquipmentSurvey implements Entity {
 	private java.time.Instant dateAnswer;
 	private io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsData formulaire;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentSurveyEquipment",
 			fkFieldName = "equipmentId",
 			primaryDtDefinitionName = "DtEquipment",
@@ -34,7 +34,7 @@ public final class EquipmentSurvey implements Entity {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.basemanagement.domain.Equipment> equipmentIdAccessor = new StoreVAccessor<>(io.mars.basemanagement.domain.Equipment.class, "Equipment");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AEquipmentSurveyPerson",
 			fkFieldName = "personId",
 			primaryDtDefinitionName = "DtPerson",
@@ -117,7 +117,7 @@ public final class EquipmentSurvey implements Entity {
 	 * Récupère la valeur de la propriété 'Equipment'.
 	 * @return Long equipmentId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Equipment", fkDefinition = "DtEquipment", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Equipment", fkDefinition = "DtEquipment", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getEquipmentId() {
 		return (Long) equipmentIdAccessor.getId();
 	}
@@ -136,7 +136,7 @@ public final class EquipmentSurvey implements Entity {
 	 * Récupère la valeur de la propriété 'Respondent'.
 	 * @return Long personId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Respondent", fkDefinition = "DtPerson", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Respondent", fkDefinition = "DtPerson", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getPersonId() {
 		return (Long) personIdAccessor.getId();
 	}
@@ -169,6 +169,6 @@ public final class EquipmentSurvey implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

@@ -1,11 +1,11 @@
 package io.mars.hr.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -24,7 +24,7 @@ public final class Person implements Entity {
 	private String tags;
 	private java.time.LocalDate dateHired;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "APersonGroups",
 			fkFieldName = "groupId",
 			primaryDtDefinitionName = "DtGroups",
@@ -202,7 +202,7 @@ public final class Person implements Entity {
 	 * Récupère la valeur de la propriété 'Group'.
 	 * @return Long groupId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Group", fkDefinition = "DtGroups" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Group", fkDefinition = "DtGroups" )
 	public Long getGroupId() {
 		return (Long) groupIdAccessor.getId();
 	}
@@ -222,7 +222,7 @@ public final class Person implements Entity {
 	 * @return String fullName
 	 */
 	@Field(smartType = "STyLabel", type = "COMPUTED", persistent = false, label = "Full name")
-	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	@io.vertigo.datamodel.data.stereotype.DisplayField
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
 	}
@@ -238,6 +238,6 @@ public final class Person implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

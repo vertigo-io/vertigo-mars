@@ -59,7 +59,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 			limit 50""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtTicket", name = "tickets")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTickets(@io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.maintenance.domain.Ticket> getLastTickets(@io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetLastTickets")
 				.addValue("securedEquipment", securedEquipment)
 				.build();
@@ -86,7 +86,7 @@ public final class TicketDAO extends DAO<Ticket, java.lang.Long> implements Stor
 			limit 50""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtTicket", name = "tickets")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.maintenance.domain.Ticket> getLastTicketsByBaseId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetLastTicketsByBaseId")
 				.addValue("baseId", baseId)
 				.addValue("securedEquipment", securedEquipment)

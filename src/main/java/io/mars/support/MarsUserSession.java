@@ -28,7 +28,7 @@ import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.account.security.UserSession;
 import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.node.Node;
-import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.data.model.DtList;
 
 /**
  * UserSession.

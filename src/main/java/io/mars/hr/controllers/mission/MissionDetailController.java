@@ -16,7 +16,7 @@ import io.mars.hr.domain.Mission;
 import io.mars.hr.domain.Role;
 import io.mars.hr.services.mission.MissionServices;
 import io.vertigo.account.authorization.annotations.Secured;
-import io.vertigo.datamodel.structure.model.DtListState;
+import io.vertigo.datamodel.data.model.DtListState;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;

@@ -17,7 +17,7 @@ import io.vertigo.core.param.ParamManager;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.DateUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.orchestra.impl.services.execution.AbstractActivityEngine;
 import io.vertigo.orchestra.services.execution.ActivityExecutionWorkspace;
 

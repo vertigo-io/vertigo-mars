@@ -1,12 +1,12 @@
 package io.mars.maintenance.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.data.model.Entity;
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -25,7 +25,7 @@ public final class WorkOrder implements Entity {
 	private java.time.LocalDate dateClosed;
 	private java.time.LocalDate dueDate;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ATicketWorkOrder",
 			fkFieldName = "ticketId",
 			primaryDtDefinitionName = "DtTicket",
@@ -40,7 +40,7 @@ public final class WorkOrder implements Entity {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.mars.maintenance.domain.Ticket> ticketIdAccessor = new StoreVAccessor<>(io.mars.maintenance.domain.Ticket.class, "Ticket");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AWorkOrderWorkOrderStatus",
 			fkFieldName = "workOrderStatusId",
 			primaryDtDefinitionName = "DtWorkOrderStatus",
@@ -218,7 +218,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Ticket'.
 	 * @return Long ticketId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Ticket", fkDefinition = "DtTicket" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Ticket", fkDefinition = "DtTicket" )
 	public Long getTicketId() {
 		return (Long) ticketIdAccessor.getId();
 	}
@@ -237,7 +237,7 @@ public final class WorkOrder implements Entity {
 	 * Récupère la valeur de la propriété 'Work Order Status'.
 	 * @return String workOrderStatusId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Work Order Status", fkDefinition = "DtWorkOrderStatus" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyCode", label = "Work Order Status", fkDefinition = "DtWorkOrderStatus" )
 	public String getWorkOrderStatusId() {
 		return (String) workOrderStatusIdAccessor.getId();
 	}
@@ -270,6 +270,6 @@ public final class WorkOrder implements Entity {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

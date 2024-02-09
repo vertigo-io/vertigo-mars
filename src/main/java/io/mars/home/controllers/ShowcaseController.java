@@ -14,7 +14,7 @@ import io.mars.basemanagement.domain.Geosector;
 import io.mars.basemanagement.domain.Tag;
 import io.mars.basemanagement.services.base.BaseServices;
 import io.mars.domain.DtDefinitions.BaseFields;
-import io.vertigo.datamodel.structure.model.DtListState;
+import io.vertigo.datamodel.data.model.DtListState;
 import io.vertigo.orchestra.monitoring.domain.uidefinitions.OProcessUi;
 import io.vertigo.orchestra.monitoring.domain.uiexecutions.OProcessExecutionUi;
 import io.vertigo.ui.core.ViewContext;

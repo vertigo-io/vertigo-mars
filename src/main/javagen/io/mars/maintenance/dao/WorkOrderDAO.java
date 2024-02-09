@@ -57,7 +57,7 @@ public final class WorkOrderDAO extends DAO<WorkOrder, java.lang.Long> implement
 			limit 20""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtWorkOrder", name = "workOrders")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.maintenance.domain.WorkOrder> getLastWorkOrders() {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.maintenance.domain.WorkOrder> getLastWorkOrders() {
 		final Task task = createTaskBuilder("TkGetLastWorkOrders")
 				.build();
 		return getTaskManager()

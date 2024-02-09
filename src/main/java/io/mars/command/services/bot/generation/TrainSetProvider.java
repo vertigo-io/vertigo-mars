@@ -15,9 +15,9 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.criteria.Criterions;
-import io.vertigo.datamodel.structure.definitions.DataAccessor;
-import io.vertigo.datamodel.structure.definitions.DtDefinition;
-import io.vertigo.datamodel.structure.model.DtListState;
+import io.vertigo.datamodel.data.definitions.DataAccessor;
+import io.vertigo.datamodel.data.definitions.DataDefinition;
+import io.vertigo.datamodel.data.model.DtListState;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 
 public class TrainSetProvider implements Component {
@@ -73,8 +73,8 @@ public class TrainSetProvider implements Component {
 		switch (commandParamTrainingConfiguration.getType()) {
 			case "fromDb":
 				try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) {
-					final DtDefinition dtDefinition = Node.getNode().getDefinitionSpace().resolve(commandParamTrainingConfiguration.getDtDefinition(), DtDefinition.class);
-					final DataAccessor dtFieldDataAccessor = dtDefinition.getField(commandParamTrainingConfiguration.getDtField()).getDataAccessor();
+					final DataDefinition dtDefinition = Node.getNode().getDefinitionSpace().resolve(commandParamTrainingConfiguration.getDtDefinition(), DataDefinition.class);
+					final DataAccessor dtFieldDataAccessor = dtDefinition.getField(commandParamTrainingConfiguration.getDataField()).getDataAccessor();
 					return entityStoreManager.find(dtDefinition, Criterions.alwaysTrue(), DtListState.of(commandParamTrainingConfiguration.getLimit()))
 							.stream()
 							.map(entity -> String.valueOf(dtFieldDataAccessor.getValue(entity)))

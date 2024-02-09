@@ -2,8 +2,8 @@ package io.mars.hr.domain;
 
 import java.io.Serializable;
 
-import io.vertigo.datamodel.structure.model.MasterDataEnum;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.MasterDataEnum;
+import io.vertigo.datamodel.data.model.UID;
 
 public enum RoleEnum implements MasterDataEnum<io.mars.hr.domain.Role> {
 

@@ -137,7 +137,7 @@ public final class BasemanagementPAO implements StoreServices {
 			group by business_name, bus.business_id""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentOverview", name = "overview")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.EquipmentOverview> getEquipmentsOverview(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseId", smartType = "STyId") final Long baseId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkGetEquipmentsOverview")
 				.addValue("baseId", baseId)
 				.addValue("securedEquipment", securedEquipment)
@@ -169,7 +169,7 @@ public final class BasemanagementPAO implements StoreServices {
 				and <%=securedEquipment.asSqlWhere("equ", ctx)%>""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentSurveyDisplay", name = "surveys")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentSurveyDisplay> listSurveysFromEquipmentId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.EquipmentSurveyDisplay> listSurveysFromEquipmentId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentId", smartType = "STyId") final Long equipmentId, @io.vertigo.datamodel.task.proxy.TaskInput(name = "securedEquipment", smartType = "STyAuthorizationCriteria") final io.vertigo.account.authorization.AuthorizationCriteria securedEquipment) {
 		final Task task = createTaskBuilder("TkListSurveysFromEquipmentId")
 				.addValue("equipmentId", equipmentId)
 				.addValue("securedEquipment", securedEquipment)
@@ -199,7 +199,7 @@ public final class BasemanagementPAO implements StoreServices {
 				where BASE_ID in (#baseIds.rownum#);""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtBaseIndex", name = "dtcIndex")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.BaseIndex> loadBaseIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseIds", smartType = "STyId") final java.util.List<Long> baseIds) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.BaseIndex> loadBaseIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "baseIds", smartType = "STyId") final java.util.List<Long> baseIds) {
 		final Task task = createTaskBuilder("TkLoadBaseIndex")
 				.addValue("baseIds", baseIds)
 				.build();
@@ -234,7 +234,7 @@ public final class BasemanagementPAO implements StoreServices {
 				where EQUIPMENT_ID in (#equipmentIds.rownum#);""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtEquipmentIndex", name = "dtcIndex")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.basemanagement.domain.EquipmentIndex> loadEquipmentIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentIds", smartType = "STyId") final java.util.List<Long> equipmentIds) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.basemanagement.domain.EquipmentIndex> loadEquipmentIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "equipmentIds", smartType = "STyId") final java.util.List<Long> equipmentIds) {
 		final Task task = createTaskBuilder("TkLoadEquipmentIndex")
 				.addValue("equipmentIds", equipmentIds)
 				.build();

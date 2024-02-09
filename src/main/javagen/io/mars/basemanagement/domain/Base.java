@@ -1,12 +1,12 @@
 package io.mars.basemanagement.domain;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.KeyConcept;
+import io.vertigo.datamodel.data.model.KeyConcept;
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -27,7 +27,7 @@ public final class Base implements KeyConcept {
 	private java.math.BigDecimal rentingFee;
 	private String tags;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ABaseBasetype",
 			fkFieldName = "baseTypeId",
 			primaryDtDefinitionName = "DtBaseType",
@@ -42,7 +42,7 @@ public final class Base implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final EnumStoreVAccessor<io.mars.basemanagement.domain.BaseType, io.mars.basemanagement.domain.BaseTypeEnum> baseTypeIdAccessor = new EnumStoreVAccessor<>(io.mars.basemanagement.domain.BaseType.class, "BaseType", io.mars.basemanagement.domain.BaseTypeEnum.class);
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ABaseGeosector",
 			fkFieldName = "geosectorId",
 			primaryDtDefinitionName = "DtGeosector",
@@ -107,8 +107,8 @@ public final class Base implements KeyConcept {
 	 * @return String name <b>Obligatoire</b>
 	 */
 	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Name")
-	@io.vertigo.datamodel.structure.stereotype.SortField
-	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	@io.vertigo.datamodel.data.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.DisplayField
 	public String getName() {
 		return name;
 	}
@@ -260,7 +260,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Base Type'.
 	 * @return String baseTypeId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Base Type", fkDefinition = "DtBaseType", cardinality = io.vertigo.core.lang.Cardinality.ONE )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyCode", label = "Base Type", fkDefinition = "DtBaseType", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public String getBaseTypeId() {
 		return (String) baseTypeIdAccessor.getId();
 	}
@@ -279,7 +279,7 @@ public final class Base implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Base Geosector'.
 	 * @return Long geosectorId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Base Geosector", fkDefinition = "DtGeosector" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Base Geosector", fkDefinition = "DtGeosector" )
 	public Long getGeosectorId() {
 		return (Long) geosectorIdAccessor.getId();
 	}
@@ -322,6 +322,6 @@ public final class Base implements KeyConcept {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

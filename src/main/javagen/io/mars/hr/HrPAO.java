@@ -61,7 +61,7 @@ public final class HrPAO implements StoreServices {
             	where mis.person_id = #personId#;""",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtMissionDisplay", name = "missions")
-	public io.vertigo.datamodel.structure.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "personId", smartType = "STyId") final Long personId) {
+	public io.vertigo.datamodel.data.model.DtList<io.mars.hr.domain.MissionDisplay> getMissionsDisplayByPersonId(@io.vertigo.datamodel.task.proxy.TaskInput(name = "personId", smartType = "STyId") final Long personId) {
 		final Task task = createTaskBuilder("TkGetMissionsDisplayByPersonId")
 				.addValue("personId", personId)
 				.build();
