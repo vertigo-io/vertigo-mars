@@ -18,17 +18,12 @@
  */
 package io.mars.job;
 
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class JobFeatures extends ModuleDiscoveryFeatures<JobFeatures> {
+public class JobFeatures extends DefaultUiModuleFeatures<JobFeatures> {
 
 	public JobFeatures() {
 		super("mars-jobs");
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 }

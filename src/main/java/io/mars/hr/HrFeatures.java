@@ -21,18 +21,13 @@ package io.mars.hr;
 import io.vertigo.account.plugins.authorization.loaders.JsonSecurityDefinitionProvider;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Feature;
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 import io.vertigo.core.param.Param;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class HrFeatures extends ModuleDiscoveryFeatures {
+public class HrFeatures extends DefaultUiModuleFeatures<HrFeatures> {
 
 	public HrFeatures() {
 		super("hr");
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 	@Feature("auth")

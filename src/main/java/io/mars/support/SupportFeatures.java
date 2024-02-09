@@ -20,13 +20,11 @@ package io.mars.support;
 
 import io.mars.support.boot.MarsEasyFormsFieldTypeDefinitionProvider;
 import io.mars.support.boot.MarsMasterDataDefinitionProvider;
-import io.mars.support.services.MarsFileServices;
-import io.mars.support.theme.ThemeManager;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.Features;
 import io.vertigo.datamodel.impl.smarttype.ModelDefinitionProvider;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class SupportFeatures extends Features<SupportFeatures> {
+public class SupportFeatures extends DefaultUiModuleFeatures<SupportFeatures> {
 
 	public SupportFeatures() {
 		super("mars-support");
@@ -34,15 +32,14 @@ public class SupportFeatures extends Features<SupportFeatures> {
 
 	@Override
 	protected void buildFeatures() {
+		super.buildFeatures();
 		getModuleConfigBuilder()
 				.addDefinitionProvider(DefinitionProviderConfig.builder(ModelDefinitionProvider.class)
 						.addDefinitionResource("smarttypes", MarsSmartTypes.class.getName())
 						.addDefinitionResource("dtobjects", "io.mars.domain.DtDefinitions")
 						.build())
 				.addDefinitionProvider(MarsMasterDataDefinitionProvider.class)
-				.addDefinitionProvider(MarsEasyFormsFieldTypeDefinitionProvider.class)
-				.addComponent(MarsFileServices.class)
-				.addComponent(ThemeManager.class);
+				.addDefinitionProvider(MarsEasyFormsFieldTypeDefinitionProvider.class);
 
 	}
 

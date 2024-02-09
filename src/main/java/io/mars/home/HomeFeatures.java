@@ -18,17 +18,12 @@
  */
 package io.mars.home;
 
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class HomeFeatures extends ModuleDiscoveryFeatures<HomeFeatures> {
+public class HomeFeatures extends DefaultUiModuleFeatures<HomeFeatures> {
 
 	public HomeFeatures() {
 		super("home");
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 }

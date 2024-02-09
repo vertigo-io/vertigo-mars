@@ -23,10 +23,10 @@ import io.mars.support.boot.MarsRoleDefinitionProvider;
 import io.vertigo.account.plugins.authorization.loaders.JsonSecurityDefinitionProvider;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.Feature;
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
 import io.vertigo.core.param.Param;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class BasemanagementFeatures extends ModuleDiscoveryFeatures<BasemanagementFeatures> {
+public class BasemanagementFeatures extends DefaultUiModuleFeatures<BasemanagementFeatures> {
 
 	public BasemanagementFeatures() {
 		super("basemanagement");
@@ -46,11 +46,6 @@ public class BasemanagementFeatures extends ModuleDiscoveryFeatures<Basemanageme
 						.build())
 				.addDefinitionProvider(MarsRoleDefinitionProvider.class);//TODO load roles after all authorizations
 		return this;
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 }

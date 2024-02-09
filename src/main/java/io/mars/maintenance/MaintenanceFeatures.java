@@ -18,17 +18,12 @@
  */
 package io.mars.maintenance;
 
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class MaintenanceFeatures extends ModuleDiscoveryFeatures<MaintenanceFeatures> {
+public class MaintenanceFeatures extends DefaultUiModuleFeatures<MaintenanceFeatures> {
 
 	public MaintenanceFeatures() {
 		super("maintenance");
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 }

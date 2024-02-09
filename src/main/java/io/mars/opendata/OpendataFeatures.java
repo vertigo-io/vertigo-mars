@@ -18,17 +18,12 @@
  */
 package io.mars.opendata;
 
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class OpendataFeatures extends ModuleDiscoveryFeatures<OpendataFeatures> {
+public class OpendataFeatures extends DefaultUiModuleFeatures<OpendataFeatures> {
 
 	public OpendataFeatures() {
 		super("opendata");
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 }

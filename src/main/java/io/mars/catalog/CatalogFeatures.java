@@ -18,17 +18,12 @@
  */
 package io.mars.catalog;
 
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class CatalogFeatures extends ModuleDiscoveryFeatures<CatalogFeatures> {
+public class CatalogFeatures extends DefaultUiModuleFeatures<CatalogFeatures> {
 
 	public CatalogFeatures() {
 		super("catalog");
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 }

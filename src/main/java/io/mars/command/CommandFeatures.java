@@ -18,17 +18,12 @@
  */
 package io.mars.command;
 
-import io.vertigo.core.node.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
 
-public class CommandFeatures extends ModuleDiscoveryFeatures<CommandFeatures> {
+public class CommandFeatures extends DefaultUiModuleFeatures<CommandFeatures> {
 
 	public CommandFeatures() {
 		super("Commands");
-	}
-
-	@Override
-	protected String getPackageRoot() {
-		return this.getClass().getPackage().getName();
 	}
 
 }
