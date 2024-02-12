@@ -1,4 +1,4 @@
-package io.mars.support.boot;
+package io.mars.support.easyforms;
 
 import java.util.Map;
 

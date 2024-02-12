@@ -18,8 +18,8 @@
  */
 package io.mars.support;
 
-import io.mars.support.boot.MarsEasyFormsFieldTypeDefinitionProvider;
 import io.mars.support.boot.MarsMasterDataDefinitionProvider;
+import io.mars.support.easyforms.MarsEasyFormsFieldTypeDefinitionProvider;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.datamodel.impl.smarttype.ModelDefinitionProvider;
 import io.vertigo.ui.impl.springmvc.config.DefaultUiModuleFeatures;
