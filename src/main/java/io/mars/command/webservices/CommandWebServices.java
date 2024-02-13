@@ -26,9 +26,9 @@ import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.datamodel.data.definitions.DataField;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datamodel.data.model.DtListURIForMasterData;
-import io.vertigo.datamodel.data.model.Data;
+import io.vertigo.datamodel.data.model.DataObject;
 import io.vertigo.datamodel.data.model.Entity;
-import io.vertigo.datamodel.data.util.DataUtil;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.AnonymousAccessAllowed;
@@ -84,7 +84,7 @@ public class CommandWebServices implements WebServices {
 	}
 
 	private final String evaluateParam(final String rawValue, final Class entityClass) {
-		final DtList<Entity> results = autocompleteParam(rawValue, DataUtil.findDataDefinition(entityClass));
+		final DtList<Entity> results = autocompleteParam(rawValue, DataModelUtil.findDataDefinition(entityClass));
 		Assertion.check().isTrue(results.size() == 1, "Impossible to evaluate param '{0}' as a '{1}'", rawValue, entityClass);
 		return results.get(0).getUID().urn();
 	}
@@ -142,7 +142,7 @@ public class CommandWebServices implements WebServices {
 
 	@GET("/params/_autocomplete")
 	public List<Map<String, String>> autocompleteMdList(@QueryParam("terms") final String terms, @QueryParam("entityClass") final String entityClass) {
-		final DataDefinition dtDefinition = DataUtil.findDataDefinition(entityClass);
+		final DataDefinition dtDefinition = DataModelUtil.findDataDefinition(entityClass);
 		final DataField labelDataField = dtDefinition.getDisplayField().get();
 		return autocompleteParam(terms, dtDefinition)
 				.stream()
@@ -166,7 +166,7 @@ public class CommandWebServices implements WebServices {
 		final DtList<Entity> results;
 		try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) { //Open a transaction because all fields are indexed. If there is a MDL it was load too.
 			final DtList dtList = entityStoreManager.findAll(dtListURIForMasterData);
-			final UnaryOperator<DtList<Data>> fullTextFilter = collectionsManager.createIndexDtListFunctionBuilder()
+			final UnaryOperator<DtList<DataObject>> fullTextFilter = collectionsManager.createIndexDtListFunctionBuilder()
 					.filter(terms != null ? terms : "", 20, searchedFields)
 					.build();
 			results = fullTextFilter.apply(dtList);

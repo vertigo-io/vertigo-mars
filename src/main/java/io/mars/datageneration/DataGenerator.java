@@ -24,7 +24,7 @@ import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.core.param.ParamValue;
-import io.vertigo.datamodel.data.util.DataUtil;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 
 public class DataGenerator implements Component {
@@ -69,7 +69,7 @@ public class DataGenerator implements Component {
 	public void generateInitialData() {
 		final int baseCount;
 		try (VTransactionWritable transaction = transactionManager.createCurrentTransaction()) {
-			baseCount = entityStoreManager.count(DataUtil.findDataDefinition(Base.class));
+			baseCount = entityStoreManager.count(DataModelUtil.findDataDefinition(Base.class));
 		}
 
 		if (baseCount == 0) {
