@@ -13,6 +13,7 @@ import io.vertigo.easyforms.easyformsrunner.model.definitions.IEasyFormsUiCompon
 import io.vertigo.easyforms.impl.easyformsrunner.library.EasyFormsSmartTypes;
 import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldTypeDefinitionProvider.SimpleFieldType;
 import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldValidatorDefinitionProvider.FieldValidatorEnum;
+import io.vertigo.easyforms.impl.easyformsrunner.library.provider.UiComponentDefinitionProvider.SelectUiComponent;
 import io.vertigo.easyforms.impl.easyformsrunner.library.provider.UiComponentDefinitionProvider.UiComponentEnum;
 
 public class MarsEasyFormsFieldTypeDefinitionProvider implements SimpleEnumDefinitionProvider<EasyFormsFieldType> {
@@ -65,13 +66,14 @@ public class MarsEasyFormsFieldTypeDefinitionProvider implements SimpleEnumDefin
 
 		@Override
 		public EnumDefinition<EasyFormsUiComponent, ?> getUiComponent() {
-			return UiComponentEnum.RADIO;
+			return UiComponentEnum.SELECT;
 		}
 
 		@Override
 		public Map<String, Object> getUiParams() {
-			return Map.of(IEasyFormsUiComponentSupplier.LIST_SUPPLIER, IEasyFormsUiComponentSupplier.getMdlSupplier(Business.class));
-			//			return Map.of(IEasyFormsUiComponentSupplier.LIST_SUPPLIER, IEasyFormsUiComponentSupplier.getCtxSupplier("persons"));
+			return Map.of(
+					IEasyFormsUiComponentSupplier.LIST_SUPPLIER, IEasyFormsUiComponentSupplier.getMdlSupplier(Business.class),
+					SelectUiComponent.SEARCHABLE, true);
 		}
 
 		@Override

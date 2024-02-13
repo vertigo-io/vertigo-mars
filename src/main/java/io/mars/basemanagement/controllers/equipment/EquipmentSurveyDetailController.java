@@ -97,7 +97,8 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 
 	@PostMapping("/_save")
 	public String doSave(final UiMessageStack uiMessageStack,
-			@ViewAttribute("survey") final EquipmentSurvey equipmentSurvey, @ViewAttribute("equipment") final Equipment equipment,
+			@ViewAttribute("survey") final EquipmentSurvey equipmentSurvey,
+			@ViewAttribute("equipment") final Equipment equipment,
 			@ViewAttribute("modeleFormulaire") final EasyFormsTemplate modeleFormulaire) {
 
 		equipmentSurvey.setEquipmentId(equipment.getEquipmentId());
