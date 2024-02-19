@@ -23,7 +23,6 @@ import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
-import io.vertigo.vega.webservice.validation.UiMessageStack;
 
 @Controller
 @Secured("Equipment$read")
@@ -96,13 +95,15 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	}
 
 	@PostMapping("/_save")
-	public String doSave(final UiMessageStack uiMessageStack,
+	public String doSave(final ViewContext viewContext,
 			@ViewAttribute("survey") final EquipmentSurvey equipmentSurvey,
 			@ViewAttribute("equipment") final Equipment equipment,
 			@ViewAttribute("modeleFormulaire") final EasyFormsTemplate modeleFormulaire) {
 
+		easyFormsRunnerController.checkForm(viewContext, modeleFormulaireKey, equipmentSurvey, EquipmentSurvey::getFormulaire);
+
 		equipmentSurvey.setEquipmentId(equipment.getEquipmentId());
-		equipmentSurveyServices.save(uiMessageStack, equipmentSurvey, modeleFormulaire);
+		equipmentSurveyServices.save(equipmentSurvey);
 		return "redirect:/basemanagement/equipment/" + equipment.getEquipmentId() + "/surveys/";
 	}
 

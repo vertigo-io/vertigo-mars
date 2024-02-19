@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.mars.catalog.domain.EquipmentCategory;
 import io.mars.catalog.services.equipment.EquipmentCategoryServices;
 import io.vertigo.account.authorization.annotations.Secured;
-import io.vertigo.easyforms.impl.easyformsdesigner.controllers.AbstractEasyFormsController;
+import io.vertigo.easyforms.impl.easyformsdesigner.controllers.EasyFormsDesignerController;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
@@ -30,7 +30,7 @@ public class EquipmentCategoryDetailController extends AbstractVSpringMvcControl
 	private EquipmentCategoryServices equipmentCategoryServices;
 
 	@Inject
-	private AbstractEasyFormsController easyformsController;
+	private EasyFormsDesignerController easyformsController;
 
 	@GetMapping("/{categoryId}")
 	public void initContext(final ViewContext viewContext, @PathVariable("categoryId") final Long categoryId) {
