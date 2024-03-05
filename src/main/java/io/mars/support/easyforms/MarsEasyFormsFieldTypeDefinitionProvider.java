@@ -6,44 +6,44 @@ import io.mars.basemanagement.domain.Business;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.SimpleEnumDefinitionProvider;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.easyforms.easyformsrunner.model.definitions.EasyFormsFieldType;
-import io.vertigo.easyforms.easyformsrunner.model.definitions.EasyFormsUiComponent;
-import io.vertigo.easyforms.easyformsrunner.model.definitions.IEasyFormsFieldTypeSupplier;
-import io.vertigo.easyforms.easyformsrunner.model.definitions.IEasyFormsUiComponentSupplier;
-import io.vertigo.easyforms.impl.easyformsrunner.library.EasyFormsSmartTypes;
-import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldTypeDefinitionProvider.SimpleFieldType;
-import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldValidatorTypeDefinitionProvider.FieldValidatorEnum;
-import io.vertigo.easyforms.impl.easyformsrunner.library.provider.UiComponentDefinitionProvider.SelectUiComponent;
-import io.vertigo.easyforms.impl.easyformsrunner.library.provider.UiComponentDefinitionProvider.UiComponentEnum;
+import io.vertigo.easyforms.impl.runner.library.EasyFormsSmartTypes;
+import io.vertigo.easyforms.impl.runner.library.provider.FieldTypeDefinitionProvider.SimpleFieldType;
+import io.vertigo.easyforms.impl.runner.library.provider.FieldValidatorTypeDefinitionProvider.FieldValidatorEnum;
+import io.vertigo.easyforms.impl.runner.library.provider.UiComponentDefinitionProvider.SelectUiComponent;
+import io.vertigo.easyforms.impl.runner.library.provider.UiComponentDefinitionProvider.UiComponentEnum;
+import io.vertigo.easyforms.impl.runner.suppliers.IEasyFormsFieldTypeDefinitionSupplier;
+import io.vertigo.easyforms.impl.runner.suppliers.IEasyFormsUiComponentDefinitionSupplier;
+import io.vertigo.easyforms.runner.model.definitions.EasyFormsFieldTypeDefinition;
+import io.vertigo.easyforms.runner.model.definitions.EasyFormsUiComponentDefinition;
 
-public class MarsEasyFormsFieldTypeDefinitionProvider implements SimpleEnumDefinitionProvider<EasyFormsFieldType> {
+public class MarsEasyFormsFieldTypeDefinitionProvider implements SimpleEnumDefinitionProvider<EasyFormsFieldTypeDefinition> {
 
-	public enum FieldTypeEnum implements EnumDefinition<EasyFormsFieldType, FieldValidatorEnum> {
+	public enum FieldTypeEnum implements EnumDefinition<EasyFormsFieldTypeDefinition, FieldValidatorEnum> {
 
 		BUSINESS_LIST(new BusinessFieldType()),
 		;
 		// ---
 
 		private final String definitionName;
-		private final IEasyFormsFieldTypeSupplier typeSupplier;
+		private final IEasyFormsFieldTypeDefinitionSupplier typeSupplier;
 
-		private FieldTypeEnum(final EasyFormsSmartTypes smartType, final EnumDefinition<EasyFormsUiComponent, ?> uiComponent) {
+		private FieldTypeEnum(final EasyFormsSmartTypes smartType, final EnumDefinition<EasyFormsUiComponentDefinition, ?> uiComponent) {
 			this(new SimpleFieldType(smartType, uiComponent));
 		}
 
-		private FieldTypeEnum(final IEasyFormsFieldTypeSupplier typeSupplier) {
-			definitionName = EasyFormsFieldType.PREFIX + StringUtil.constToUpperCamelCase(name());
+		private FieldTypeEnum(final IEasyFormsFieldTypeDefinitionSupplier typeSupplier) {
+			definitionName = EasyFormsFieldTypeDefinition.PREFIX + StringUtil.constToUpperCamelCase(name());
 			this.typeSupplier = typeSupplier;
 		}
 
 		@Override
-		public EasyFormsFieldType buildDefinition(final DefinitionSpace definitionSpace) {
+		public EasyFormsFieldTypeDefinition buildDefinition(final DefinitionSpace definitionSpace) {
 			return typeSupplier.get(definitionName);
 		}
 
 		@Override
-		public EasyFormsFieldType get() {
-			return EasyFormsFieldType.resolve(definitionName);
+		public EasyFormsFieldTypeDefinition get() {
+			return EasyFormsFieldTypeDefinition.resolve(definitionName);
 		}
 
 		@Override
@@ -58,21 +58,21 @@ public class MarsEasyFormsFieldTypeDefinitionProvider implements SimpleEnumDefin
 		return FieldTypeEnum.class;
 	}
 
-	private static class BusinessFieldType implements IEasyFormsFieldTypeSupplier {
+	private static class BusinessFieldType implements IEasyFormsFieldTypeDefinitionSupplier {
 		@Override
 		public EasyFormsSmartTypes getSmartType() {
 			return EasyFormsSmartTypes.EfId;
 		}
 
 		@Override
-		public EnumDefinition<EasyFormsUiComponent, ?> getUiComponent() {
+		public EnumDefinition<EasyFormsUiComponentDefinition, ?> getUiComponent() {
 			return UiComponentEnum.SELECT;
 		}
 
 		@Override
 		public Map<String, Object> getUiParams() {
 			return Map.of(
-					IEasyFormsUiComponentSupplier.LIST_SUPPLIER, IEasyFormsUiComponentSupplier.getMdlSupplier(Business.class),
+					IEasyFormsUiComponentDefinitionSupplier.LIST_SUPPLIER, IEasyFormsUiComponentDefinitionSupplier.getMdlSupplier(Business.class),
 					SelectUiComponent.SEARCHABLE, true);
 		}
 

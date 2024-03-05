@@ -10,6 +10,6 @@
 		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_ticket_status.sql" />
 		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_work_order_status.sql" />
 		<sqlFile encoding="utf8" path="/sqlgen/init_masterdata_opendata_set_status.sql" />
-		<sqlFile encoding="utf8" path="/io/vertigo/orchestra/sql/orchestra_create_init.sql" />
+		<sqlFile encoding="utf8" path="/sql/orchestra_create_init_v1.0.0.sql" />
 	</changeSet>
 </databaseChangeLog>

@@ -1,5 +1,6 @@
 package io.mars.basemanagement.datageneration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,11 +22,11 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.data.model.DtList;
+import io.vertigo.easyforms.designer.services.IEasyFormsDesignerServices;
 import io.vertigo.easyforms.domain.EasyForm;
-import io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsTemplate;
-import io.vertigo.easyforms.easyformsrunner.model.template.EasyFormsTemplateBuilder;
-import io.vertigo.easyforms.impl.easyformsdesigner.services.EasyFormsDesignerServices;
-import io.vertigo.easyforms.impl.easyformsrunner.library.provider.FieldTypeDefinitionProvider.FieldTypeEnum;
+import io.vertigo.easyforms.impl.runner.library.provider.FieldTypeDefinitionProvider.FieldTypeEnum;
+import io.vertigo.easyforms.runner.model.template.EasyFormsTemplate;
+import io.vertigo.easyforms.runner.model.template.EasyFormsTemplateField;
 
 @Transactional
 public class EquipmentGenerator implements Component {
@@ -45,7 +46,7 @@ public class EquipmentGenerator implements Component {
 	@Inject
 	private ResourceManager resourceManager;
 	@Inject
-	private EasyFormsDesignerServices easyFormsAdminServices;
+	private IEasyFormsDesignerServices easyFormsAdminServices;
 
 	public void createInitialEquipments(final int equipmentUnitsToGenerate, final List<Base> bases) {
 		final DtList<EquipmentType> equipmentTypes = equipmentTypeDAO.selectEquipmentType();
@@ -63,22 +64,24 @@ public class EquipmentGenerator implements Component {
 	}
 
 	public void createInitialEquipmentCategories() {
-		createEquipmentCategory(true, "Bot", new EasyFormsTemplateBuilder()
-				.addField("iaAutonomy", FieldTypeEnum.LABEL, "IA autonomy", null, false, false, null, List.of())
-				.addField("easyness", FieldTypeEnum.LABEL, "Easyness of use", null, false, false, null, List.of())
-				.addField("obsolete", FieldTypeEnum.LABEL, "Is obsolete", null, false, true, null, List.of())
-				.build());
-		createEquipmentCategory(true, "Building", new EasyFormsTemplateBuilder()
-				.addField("equipment", FieldTypeEnum.LABEL, "Completude of equipment", null, false, true, null, List.of())
-				.addField("temperature", FieldTypeEnum.LABEL, "Temperature inside", null, false, false, null, List.of())
-				.addField("wearState", FieldTypeEnum.LABEL, "State of wear", null, false, false, null, List.of())
-				.build());
-		createEquipmentCategory(true, "Vehicle", new EasyFormsTemplateBuilder()
-				.addField("comfort", FieldTypeEnum.LABEL, "Comfort", null, false, true, null, List.of())
-				.addField("speed", FieldTypeEnum.LABEL, "Speed", null, false, false, null, List.of())
-				.addField("storageCapacity", FieldTypeEnum.LABEL, "Storage capacity", null, false, false, null, List.of())
-				.addField("wearState", FieldTypeEnum.LABEL, "State of wear", null, false, false, null, List.of())
-				.build());
+		final List<EasyFormsTemplateField> botFields = new ArrayList<>();
+		botFields.add(new EasyFormsTemplateField("iaAutonomy", FieldTypeEnum.LABEL).withLabel("IA autonomy"));
+		botFields.add(new EasyFormsTemplateField("easyness", FieldTypeEnum.LABEL).withLabel("Easyness of use"));
+		botFields.add(new EasyFormsTemplateField("obsolete", FieldTypeEnum.LABEL).withLabel("Is obsolete").withMandatory());
+		createEquipmentCategory(true, "Bot", new EasyFormsTemplate(botFields));
+
+		final List<EasyFormsTemplateField> buildingFields = new ArrayList<>();
+		buildingFields.add(new EasyFormsTemplateField("equipment", FieldTypeEnum.LABEL).withLabel("Completude of equipment").withMandatory());
+		buildingFields.add(new EasyFormsTemplateField("temperature", FieldTypeEnum.LABEL).withLabel("Temperature inside"));
+		buildingFields.add(new EasyFormsTemplateField("wearState", FieldTypeEnum.LABEL).withLabel("State of wear"));
+		createEquipmentCategory(true, "Building", new EasyFormsTemplate(buildingFields));
+
+		final List<EasyFormsTemplateField> vehicleFields = new ArrayList<>();
+		vehicleFields.add(new EasyFormsTemplateField("comfort", FieldTypeEnum.LABEL).withLabel("Comfort").withMandatory());
+		vehicleFields.add(new EasyFormsTemplateField("speed", FieldTypeEnum.LABEL).withLabel("Speed"));
+		vehicleFields.add(new EasyFormsTemplateField("storageCapacity", FieldTypeEnum.LABEL).withLabel("Storage capacity"));
+		vehicleFields.add(new EasyFormsTemplateField("wearState", FieldTypeEnum.LABEL).withLabel("State of wear"));
+		createEquipmentCategory(true, "Vehicle", new EasyFormsTemplate(vehicleFields));
 	}
 
 	private void consume(final String csvFilePath, final String[] record) {
