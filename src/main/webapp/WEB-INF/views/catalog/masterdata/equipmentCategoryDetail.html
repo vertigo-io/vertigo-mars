@@ -39,7 +39,7 @@
 				<vu:checkbox object="category" field="active" label="Active"/>
 			</vu:block>
 			
-			<vu:easy-forms-admin title="Survey fields" />
+			<vu:easy-forms-admin id="surveyFields" title="Survey fields"/>
 			
 			<q-page-sticky position="bottom-right">
 				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" v-alert-unsaved-updates="'fields'" action="@{_save}" size="lg" color="primary" />

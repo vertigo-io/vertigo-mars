@@ -51,9 +51,7 @@
 				</div>
 			</vu:block>
 			
-			<vu:block id="survey" title="Survey" th:if="${model.hasSurvey}">
-				<vu:easy-forms object="survey" field="formulaire" template="${model.modeleFormulaire}" th:elem_class="|col-12 ${model.modeReadOnly ? 'col-md-6':''}|"/>
-			</vu:block>
+			<vu:easy-forms th:if="${model.hasSurvey}" object="survey" field="formulaire" template="${model.modeleFormulaire}" th:elem_class="|col-12 ${model.modeReadOnly ? 'col-md-6':''}|"/>
 			
 			<vu:block id="survey" title="No survey in progress" th:if="${model.modeReadOnly and !model.hasSurvey}"></vu:block>
 			
