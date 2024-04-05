@@ -28,7 +28,7 @@
 			<div layout:fragment="content-header-actions">
 				<vu:button-link th:if="${model.modeEdit}" url="@{/catalog/masterdata/equipmentCategory/} + ${model.category.equipmentCategoryId}"
 								:round size="lg" color="secondary-inverted" icon="fas fa-ban" :flat title="Cancel" class="on-left" 
-								v-alert-unsaved-updates="'fields'" />					
+								v-alert-unsaved-updates="'efo'" />					
 				<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" round flat size="lg" color="secondary-inverted" icon="far fa-pen-to-square" title="Edit" class="on-left"/>
 			</div>
 		</section>
@@ -39,10 +39,20 @@
 				<vu:checkbox object="category" field="active" label="Active"/>
 			</vu:block>
 			
-			<vu:easy-forms-admin id="surveyFields" title="Survey fields"/>
+			<vu:block id="surveyFields" title="Survey fields" content_th:classappend="q-col-gutter-md">
+				<div class="col-12" v-if-unsaved-updates>
+					<div th:if="${viewMode == 'edit'}" class="q-card bg-info text-white col">
+						<div class="q-card-main q-pa-md">
+							<div class="q-item-label" vu:text="#{EfDesignerPendingChanges}"></div>
+						</div>
+					</div>
+				</div>
+				
+				<vu:easy-forms-admin />
+			</vu:block>
 			
 			<q-page-sticky position="bottom-right">
-				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" v-alert-unsaved-updates="'fields'" action="@{_save}" size="lg" color="primary" />
+				<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" v-alert-unsaved-updates="'efo'" action="@{_save}" size="lg" color="primary" />
 			</q-page-sticky>
 		</section>
 	</body>
