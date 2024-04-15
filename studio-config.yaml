@@ -1,5 +1,5 @@
 resources: 
-  - { type: kpr, path: ../vertigo-modules/vertigo-easyforms/src/main/resources/io/vertigo/easyforms/studio/application.kpr}
+  - { type: kpr, path: classpath:io/vertigo/easyforms/studio/application.kpr}
   - { type: kpr, path: src/main/resources/io/mars/application.kpr}
   - { type: security, path: src/main/resources/io/mars/basemanagement/base-auth-config.json}
   - { type: security, path: src/main/resources/io/mars/hr/hr-auth-config.json}
