@@ -73,8 +73,8 @@ public class DataGenerator implements Component {
 		}
 
 		if (baseCount == 0) {
-			generateReferenceData(resourceRoot);
-			final List<Base> bases = generateInitialBases(resourceRoot);
+			generateReferenceData();
+			final List<Base> bases = generateInitialBases();
 			generateInitialEquipments(bases);
 			generateInitialPersons(bases);
 			generateInitialOpendataSets();
@@ -96,11 +96,11 @@ public class DataGenerator implements Component {
 		personGenerator.createInitialPersonsFromCSV(resourceRoot + "persons.csv", bases);
 	}
 
-	private List<Base> generateInitialBases(final String resourceRoot) {
+	private List<Base> generateInitialBases() {
 		return baseGenerator.generateInitialBases(resourceRoot);
 	}
 
-	private void generateReferenceData(final String resourceRoot) {
+	private void generateReferenceData() {
 		referenceDataGenerator.generateReferenceData(resourceRoot);
 	}
 
