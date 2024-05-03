@@ -8,17 +8,13 @@ import javax.inject.Inject;
 
 import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
 
-import io.mars.basemanagement.domain.Base;
-import io.mars.hr.domain.Mission;
 import io.mars.hr.domain.MissionDisplay;
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.mission.MissionServices;
 import io.mars.hr.services.person.PersonServices;
 import io.mars.support.MarsUserSession;
-import io.vertigo.account.account.Account;
 import io.vertigo.account.authentication.AuthenticationManager;
 import io.vertigo.account.authorization.AuthorizationManager;
-import io.vertigo.account.authorization.UserAuthorizations;
 import io.vertigo.account.authorization.VSecurityException;
 import io.vertigo.account.authorization.definitions.Role;
 import io.vertigo.account.impl.authentication.UsernameAuthenticationToken;
@@ -31,7 +27,6 @@ import io.vertigo.core.lang.VUserException;
 import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.Component;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.social.notification.Notification;
 import io.vertigo.social.notification.NotificationManager;
@@ -68,8 +63,8 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 	}
 
 	@Override
-	public String doLogout(final HttpServletRequest request) {
-		return "/";
+	public Optional<String> doLogout(final HttpServletRequest request) {
+		return Optional.of("/");
 	}
 
 	public void loginWithLoginPassword(final String login, final String password) {
@@ -78,7 +73,7 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 						keycloakDeploymentConnectorOpt.isEmpty(),
 						"Cannot login with local authentication when keycloak is enabled");
 		// ---
-		final Optional<Account> loggedAccount = authenticationManager
+		final var loggedAccount = authenticationManager
 				.login(new UsernamePasswordAuthenticationToken(login, password));
 		if (!loggedAccount.isPresent()) {
 			sendNotificationToAll(Notification.builder()
@@ -91,9 +86,9 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 					.build());
 			throw new VUserException("Login or Password invalid");
 		}
-		final Account account = loggedAccount.get();
-		final Person person = personServices.getLoggedPerson(Long.valueOf(account.getId()));
-		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
+		final var account = loggedAccount.get();
+		final var person = personServices.getLoggedPerson(Long.valueOf(account.getId()));
+		final var availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);
 		changeProfile(availableProfiles.get(0).getMissionId());
@@ -110,10 +105,10 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 	}
 
 	private void loginWithPrincipal(final Map<String, Object> claims) {
-		final String email = (String) claims.get("email");
-		final String firstName = (String) claims.get("given_name");
-		final String lastName = (String) claims.get("family_name");
-		final Account loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(email)).orElseGet(
+		final var email = (String) claims.get("email");
+		final var firstName = (String) claims.get("given_name");
+		final var lastName = (String) claims.get("family_name");
+		final var loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(email)).orElseGet(
 				() -> {
 					// auto provisionning an account when using keycloak
 					final Person newPerson = personServices.initPerson();
@@ -125,8 +120,8 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 					return authenticationManager.login(new UsernameAuthenticationToken(email)).get();
 
 				});
-		final Person person = personServices.getLoggedPerson(Long.valueOf(loggedAccount.getId()));
-		final DtList<MissionDisplay> availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
+		final var person = personServices.getLoggedPerson(Long.valueOf(loggedAccount.getId()));
+		final var availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);
 		changeProfile(availableProfiles.get(0).getMissionId());
@@ -137,7 +132,7 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 	}
 
 	public boolean isAuthenticated() {
-		final Optional<MarsUserSession> userSession = securityManager.<MarsUserSession>getCurrentUserSession();
+		final Optional<MarsUserSession> userSession = securityManager.<MarsUserSession> getCurrentUserSession();
 		return !userSession.isPresent() ? false : userSession.get().isAuthenticated();
 	}
 
@@ -161,13 +156,13 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 
 	public MissionDisplay changeProfile(final long profileId) {
 		// may check profile is available is IPD (don't trust session for ever)
-		final MissionDisplay activeProfile = getUserSession().getAvailableProfiles().stream()
+		final var activeProfile = getUserSession().getAvailableProfiles().stream()
 				.filter(m -> m.getMissionId() == profileId)
 				.findFirst().get();
 		getUserSession().setCurrentProfile(activeProfile);
-		final Mission mission = missionServices.get(activeProfile.getMissionId());
+		final var mission = missionServices.get(activeProfile.getMissionId());
 
-		final UserAuthorizations userAuthorizations = authorizationManager.obtainUserAuthorizations()
+		final var userAuthorizations = authorizationManager.obtainUserAuthorizations()
 				.clearRoles()
 				.clearSecurityKeys()
 				.addRole(getRole(mission.getRoleId()))
@@ -175,14 +170,14 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 				.withSecurityKeys("personId", getUserSession().getLoggedPerson().getPersonId());
 		if (mission.getBaseId() != null) {
 			mission.base().load();
-			final Base base = mission.base().get();
+			final var base = mission.base().get();
 			userAuthorizations.withSecurityKeys("assetsValue", base.getAssetsValue());
 		}
 		return activeProfile;
 	}
 
 	private Role getRole(final String roleId) {
-		final DefinitionSpace definitionSpace = Node.getNode().getDefinitionSpace();
+		final var definitionSpace = Node.getNode().getDefinitionSpace();
 		return definitionSpace.resolve("R" + roleId, Role.class);
 	}
 
@@ -191,7 +186,7 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 	}
 
 	private MarsUserSession getUserSession() {
-		return securityManager.<MarsUserSession>getCurrentUserSession()
+		return securityManager.<MarsUserSession> getCurrentUserSession()
 				.orElseThrow(() -> new VSecurityException(LocaleMessageText.of("No active session found")));
 	}
 
