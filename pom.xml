@@ -30,6 +30,19 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.vertigo</groupId>
+				<artifactId>vertigo-ui</artifactId>
+				<version>${vertigo.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -133,7 +146,6 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.6.0</version>
 		</dependency>
 
 		<dependency>
@@ -206,24 +218,6 @@
 
 	</dependencies>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>io.vertigo</groupId>
-				<artifactId>vertigo-libs</artifactId>
-				<version>${vertigo.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>io.vertigo</groupId>
-				<artifactId>vertigo-connectors</artifactId>
-				<version>${vertigo.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
