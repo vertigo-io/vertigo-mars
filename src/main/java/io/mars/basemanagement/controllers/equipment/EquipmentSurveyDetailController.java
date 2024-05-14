@@ -14,6 +14,8 @@ import io.mars.basemanagement.services.equipment.EquipmentSurveyServices;
 import io.mars.catalog.domain.EquipmentCategory;
 import io.mars.catalog.services.equipment.EquipmentCategoryServices;
 import io.mars.hr.domain.Person;
+import io.mars.support.MarsUserSession;
+import io.mars.support.util.SecurityUtil;
 import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.easyforms.domain.EasyForm;
@@ -41,6 +43,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 	private EasyFormsRunnerController easyFormsRunnerController;
 
 	private static final ViewContextKey<Boolean> hasSurvey = ViewContextKey.of("hasSurvey");
+	private static final ViewContextKey<Person> userKey = ViewContextKey.of("user");
 
 	// creation
 	private static final ViewContextKey<EquipmentSurvey> surveyKey = ViewContextKey.of("survey");
@@ -61,6 +64,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 
 		viewContext
 				.publishRef(hasSurvey, true)
+				.publishDto(userKey, SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson())
 				.publishDto(surveyKey, survey)
 				.publishDto(surveyRespondantKey, survey.person().get())
 				//---
@@ -88,6 +92,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 
 			viewContext
 					.publishRef(hasSurvey, true)
+					.publishDto(userKey, SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson())
 					.publishDto(surveyKey, survey)
 					//---
 					.toModeCreate();

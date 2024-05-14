@@ -1,5 +1,6 @@
 package io.mars.catalog.controllers.masterdata;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.mars.catalog.domain.EquipmentCategory;
 import io.mars.catalog.services.equipment.EquipmentCategoryServices;
+import io.mars.support.MarsUserSession;
+import io.mars.support.util.SecurityUtil;
 import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.easyforms.impl.designer.controllers.EasyFormsDesignerController;
 import io.vertigo.ui.core.ViewContext;
@@ -39,7 +42,9 @@ public class EquipmentCategoryDetailController extends AbstractVSpringMvcControl
 				.publishDto(categoryKey, equipmentCategory)
 				.toModeReadOnly();
 
-		easyformsController.initContext(viewContext, Optional.ofNullable(equipmentCategory.easyForm().getUID())); // init easyforms context
+		easyformsController.initContext(viewContext,
+				Optional.ofNullable(equipmentCategory.easyForm().getUID()),
+				Map.of("user", SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson())); // init easyforms context
 	}
 
 	@PostMapping("/_edit")
