@@ -1,5 +1,7 @@
 package io.mars.basemanagement.controllers.equipment;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -70,7 +72,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 				//---
 				.toModeReadOnly();
 
-		easyFormsRunnerController.initReadContext(viewContext, efoUid, modeleFormulaireKey);
+		easyFormsRunnerController.initReadContext(viewContext, efoUid, List.of("en", "fr"), modeleFormulaireKey);
 	}
 
 	@GetMapping("/new")
@@ -85,7 +87,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 			viewContext.publishRef(hasSurvey, false)
 					.toModeReadOnly();
 		} else {
-			easyFormsRunnerController.initEditContext(viewContext, efoUid, modeleFormulaireKey);
+			easyFormsRunnerController.initEditContext(viewContext, efoUid, List.of("en", "fr"), modeleFormulaireKey);
 
 			final var survey = new EquipmentSurvey();
 			survey.setFormulaire(easyFormsRunnerController.getDefaultDataValues(viewContext, modeleFormulaireKey));

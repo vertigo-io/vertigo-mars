@@ -2,6 +2,7 @@ package io.mars.basemanagement.datageneration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -67,23 +68,23 @@ public class EquipmentGenerator implements Component {
 
 	public void createInitialEquipmentCategories() {
 		final List<AbstractEasyFormsTemplateItem> botFields = new ArrayList<>();
-		botFields.add(new EasyFormsTemplateItemField("iaAutonomy", FieldTypeEnum.LABEL).withLabel("IA autonomy"));
-		botFields.add(new EasyFormsTemplateItemField("easyness", FieldTypeEnum.LABEL).withLabel("Easyness of use"));
-		botFields.add(new EasyFormsTemplateItemField("obsolete", FieldTypeEnum.LABEL).withLabel("Is obsolete").withMandatory());
-		createEquipmentCategory(true, "Bot", new EasyFormsTemplate(List.of(new EasyFormsTemplateSection("general", "General informations", null, botFields))));
+		botFields.add(new EasyFormsTemplateItemField("iaAutonomy", FieldTypeEnum.LABEL).withLabel(Map.of("en", "IA autonomy")));
+		botFields.add(new EasyFormsTemplateItemField("easyness", FieldTypeEnum.LABEL).withLabel(Map.of("en", "Easyness of use")));
+		botFields.add(new EasyFormsTemplateItemField("obsolete", FieldTypeEnum.LABEL).withLabel(Map.of("en", "Is obsolete")).withMandatory());
+		createEquipmentCategory(true, "Bot", new EasyFormsTemplate(List.of(new EasyFormsTemplateSection("general", Map.of("en", "General informations"), null, botFields))));
 
 		final List<AbstractEasyFormsTemplateItem> buildingFields = new ArrayList<>();
-		buildingFields.add(new EasyFormsTemplateItemField("equipment", FieldTypeEnum.LABEL).withLabel("Completude of equipment").withMandatory());
-		buildingFields.add(new EasyFormsTemplateItemField("temperature", FieldTypeEnum.LABEL).withLabel("Temperature inside"));
-		buildingFields.add(new EasyFormsTemplateItemField("wearState", FieldTypeEnum.LABEL).withLabel("State of wear"));
-		createEquipmentCategory(true, "Building", new EasyFormsTemplate(List.of(new EasyFormsTemplateSection("general", "General informations", null, buildingFields))));
+		buildingFields.add(new EasyFormsTemplateItemField("equipment", FieldTypeEnum.LABEL).withLabel(Map.of("en", "Completude of equipment")).withMandatory());
+		buildingFields.add(new EasyFormsTemplateItemField("temperature", FieldTypeEnum.LABEL).withLabel(Map.of("en", "Temperature inside")));
+		buildingFields.add(new EasyFormsTemplateItemField("wearState", FieldTypeEnum.LABEL).withLabel(Map.of("en", "State of wear")));
+		createEquipmentCategory(true, "Building", new EasyFormsTemplate(List.of(new EasyFormsTemplateSection("general", Map.of("en", "General informations"), null, buildingFields))));
 
 		final List<AbstractEasyFormsTemplateItem> vehicleFields = new ArrayList<>();
-		vehicleFields.add(new EasyFormsTemplateItemField("comfort", FieldTypeEnum.LABEL).withLabel("Comfort").withMandatory());
-		vehicleFields.add(new EasyFormsTemplateItemField("speed", FieldTypeEnum.LABEL).withLabel("Speed"));
-		vehicleFields.add(new EasyFormsTemplateItemField("storageCapacity", FieldTypeEnum.LABEL).withLabel("Storage capacity"));
-		vehicleFields.add(new EasyFormsTemplateItemField("wearState", FieldTypeEnum.LABEL).withLabel("State of wear"));
-		createEquipmentCategory(true, "Vehicle", new EasyFormsTemplate(List.of(new EasyFormsTemplateSection("general", "General informations", null, vehicleFields))));
+		vehicleFields.add(new EasyFormsTemplateItemField("comfort", FieldTypeEnum.LABEL).withLabel(Map.of("en", "Comfort")).withMandatory());
+		vehicleFields.add(new EasyFormsTemplateItemField("speed", FieldTypeEnum.LABEL).withLabel(Map.of("en", "Speed")));
+		vehicleFields.add(new EasyFormsTemplateItemField("storageCapacity", FieldTypeEnum.LABEL).withLabel(Map.of("en", "Storage capacity")));
+		vehicleFields.add(new EasyFormsTemplateItemField("wearState", FieldTypeEnum.LABEL).withLabel(Map.of("en", "State of wear")));
+		createEquipmentCategory(true, "Vehicle", new EasyFormsTemplate(List.of(new EasyFormsTemplateSection("general", Map.of("en", "General informations"), null, vehicleFields))));
 	}
 
 	private void consume(final String csvFilePath, final String[] record) {
