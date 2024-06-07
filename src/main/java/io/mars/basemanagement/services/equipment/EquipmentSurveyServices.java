@@ -1,6 +1,7 @@
 package io.mars.basemanagement.services.equipment;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -18,6 +19,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datamodel.data.model.DtListState;
+import io.vertigo.easyforms.runner.services.IEasyFormsRunnerServices;
 
 @Transactional
 public class EquipmentSurveyServices implements Component {
@@ -27,6 +29,9 @@ public class EquipmentSurveyServices implements Component {
 
 	@Inject
 	private BasemanagementPAO basemanagementPAO;
+
+	@Inject
+	private IEasyFormsRunnerServices easyFormsRunnerServices;
 
 	public DtList<EquipmentSurveyDisplay> getListByEquipment(final Long equipmentId, final DtListState dtListState) {
 		return basemanagementPAO.listSurveysFromEquipmentId(equipmentId, AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read));
@@ -45,6 +50,7 @@ public class EquipmentSurveyServices implements Component {
 		// ---
 		survey.setDateAnswer(Instant.now());
 		survey.setPersonId(SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson().getPersonId());
+		easyFormsRunnerServices.persistFiles(Optional.empty(), survey.getFormulaire()); // Save files (no edit)
 		return equipmentSurveyDAO.save(survey).getEsuId();
 	}
 

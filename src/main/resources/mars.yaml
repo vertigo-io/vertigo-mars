@@ -244,6 +244,10 @@ modules:
           apiKey: ${iftttApiKey}
   
   io.vertigo.easyforms.EasyFormsFeatures:
+    features:
+      - easyforms:
+          filestore.tmp: temp
+          filestore.persist: main
   
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:
