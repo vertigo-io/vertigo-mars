@@ -246,6 +246,7 @@ modules:
   io.vertigo.easyforms.EasyFormsFeatures:
     features:
       - easyforms:
+          languages: en, fr
           filestore.tmp: temp
           filestore.persist: main
   
