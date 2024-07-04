@@ -105,7 +105,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 			@ViewAttribute("equipment") final Equipment equipment,
 			@ViewAttribute("modeleFormulaire") final EasyFormsTemplate modeleFormulaire) {
 
-		easyFormsRunnerController.checkForm(viewContext, modeleFormulaireKey, equipmentSurvey, EquipmentSurvey::getFormulaire);
+		easyFormsRunnerController.checkForm(modeleFormulaire, equipmentSurvey, EquipmentSurvey::getFormulaire);
 
 		equipmentSurvey.setEquipmentId(equipment.getEquipmentId());
 		equipmentSurveyServices.save(equipmentSurvey);
