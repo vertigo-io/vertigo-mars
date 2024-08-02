@@ -13,6 +13,7 @@ import io.mars.basemanagement.domain.EquipmentSurvey;
 import io.mars.basemanagement.services.equipment.EquipmentSurveyServices;
 import io.mars.catalog.domain.EquipmentCategory;
 import io.mars.catalog.services.equipment.EquipmentCategoryServices;
+import io.mars.domain.DtDefinitions.EquipmentSurveyFields;
 import io.mars.hr.domain.Person;
 import io.mars.support.MarsUserSession;
 import io.mars.support.util.SecurityUtil;
@@ -105,7 +106,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 			@ViewAttribute("equipment") final Equipment equipment,
 			@ViewAttribute("modeleFormulaire") final EasyFormsTemplate modeleFormulaire) {
 
-		easyFormsRunnerController.checkForm(modeleFormulaire, equipmentSurvey, EquipmentSurvey::getFormulaire);
+		easyFormsRunnerController.checkAndProcessUiFormResponse(modeleFormulaire, equipmentSurvey, EquipmentSurveyFields.formulaire, true);
 
 		equipmentSurvey.setEquipmentId(equipment.getEquipmentId());
 		equipmentSurveyServices.save(equipmentSurvey);
