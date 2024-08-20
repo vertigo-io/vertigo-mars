@@ -13,13 +13,18 @@ but the simplest way is to change its activeFlags from configuration.
 </context-param>
 ```
 
-2- change param-value to `home;initialData`. With this flags all components switch to an local hostable version (base H2, memory cache, embedded ES, ...)
+2- Change param-value to `home`. With this flags all components switch to an local hostable version (base H2, memory cache, embedded ES, ...)
 
-3- boot your app server
+3- Change the value in the `mars.yaml` for `url: ${user.home}\mars\marsconf\marsApiKeys.properties`  
+Here is a template propertie file
+```properties
+iftttApiUrl=http://localhost
+iftttApiKey=0
+```
 
-4- Login with JTKirk / Enterprise
+4- Boot your app server
 
-5- Enjoy !!
+5- You’ll find logins in the `neutral/userAccounts.txt` file
+adupont / VertigoMarsDemo
 
-
-> If you want to restart multiple times your server, think to remove the `initdb` flag :-)
+6- Enjoy !!
