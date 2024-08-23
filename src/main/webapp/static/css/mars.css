@@ -449,9 +449,6 @@ tr th.dom_id:nth-child(1){
     width: initial !important;
 }
 
-.v-modal iframe {
-    transition: 0.225s ease-in height;
-}
 .v-modal {
 	border: 1px solid #9E9E9E;
 }

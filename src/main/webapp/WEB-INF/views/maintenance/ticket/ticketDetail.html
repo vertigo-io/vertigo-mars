@@ -71,8 +71,8 @@
 						<vu:button-submit th:if="${model.modeEdit}"   icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
 						<vu:button-submit th:if="${model.modeCreate}" icon="save" label="Create" action="@{_create}" size="lg" color="primary"/>
 					</q-page-sticky>
-				<vu:modal componentId="workOrderCreateModal" title="Work Order" height="430px" iframe_onload="setIframeHeight(this)"  />
-				<vu:modal componentId="workOrderEditModal" title="Work Order" height="540px" iframe_onload="setIframeHeight(this)"  />
+				<vu:modal componentId="workOrderCreateModal" title="Work Order" autoHeight />
+				<vu:modal componentId="workOrderEditModal" title="Work Order" autoHeight />
 			</div>
 		</section>
 		<section layout:fragment="javascript-footer" >
