@@ -3,7 +3,7 @@
   xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <vu:head-meta/>
+    <vu:head-meta vuiSsr="false" vuiDevMode="false"/>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -25,7 +25,7 @@
 
 <body class="mat desktop no-touch platform-mat">
 
-	<vu:page vuiSsr="false" vuiDevMode="false" > 
+	<vu:page vuiSsr="false"> 
       <q-layout view="hHh LpR fff" v-cloak>
 			<!-- BEGIN HEADER-->
 			<q-header>

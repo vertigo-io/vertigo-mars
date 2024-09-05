@@ -73,14 +73,14 @@
 		</section>
 		<section layout:fragment="javascript-footer" >
 			<script type="text/javascript">
-				Quasar.dom.ready(() => {
+				window.addEventListener('vui-after-page-mounted', function(event) {
 					VUiPage.httpPostAjax('_summary');
 					
 					VUiPage.componentStates.lastWorkOrders.loading = true;
 					VUiPage.httpPostAjax('_workOrder', null,
-							{ onSuccess: (response) => {
-								VUiPage.componentStates.lastWorkOrders.loading = false;
-							}});
+						{ onSuccess: (response) => {
+							VUiPage.componentStates.lastWorkOrders.loading = false;
+						}});
 				})
 			</script>
 		</section>

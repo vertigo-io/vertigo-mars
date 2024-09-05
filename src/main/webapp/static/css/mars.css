@@ -1,3 +1,8 @@
+@view-transition {
+  navigation: auto;
+}
+
+
 /******** CSS SPECIFIQUE A CERTAINES PAGES *******/
 body {
   background: white !important;
