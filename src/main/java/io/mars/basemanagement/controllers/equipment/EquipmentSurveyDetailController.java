@@ -86,10 +86,8 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 			viewContext.publishRef(hasSurvey, false)
 					.toModeReadOnly();
 		} else {
-			easyFormsRunnerController.initEditContext(viewContext, efoUid, modeleFormulaireKey);
-
 			final var survey = new EquipmentSurvey();
-			survey.setFormulaire(easyFormsRunnerController.getDefaultDataValues(viewContext, modeleFormulaireKey));
+			easyFormsRunnerController.initEditContext(viewContext, efoUid, modeleFormulaireKey, survey.getFormulaire(), true);
 
 			viewContext
 					.publishRef(hasSurvey, true)
