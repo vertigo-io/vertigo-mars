@@ -21,6 +21,7 @@ import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.easyforms.domain.EasyForm;
 import io.vertigo.easyforms.impl.runner.controllers.EasyFormsRunnerController;
+import io.vertigo.easyforms.runner.model.template.EasyFormsData;
 import io.vertigo.easyforms.runner.model.template.EasyFormsTemplate;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
@@ -87,6 +88,7 @@ public class EquipmentSurveyDetailController extends AbstractVSpringMvcControlle
 					.toModeReadOnly();
 		} else {
 			final var survey = new EquipmentSurvey();
+			survey.setFormulaire(new EasyFormsData());
 			easyFormsRunnerController.initEditContext(viewContext, efoUid, modeleFormulaireKey, survey.getFormulaire(), true);
 
 			viewContext
