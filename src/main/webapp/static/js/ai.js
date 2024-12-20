@@ -1,0 +1,37 @@
+console.log("starting AI");
+
+
+window.addEventListener('vui-after-page-mounted', function(event) {
+    VUiPage.$watch('vueData.aiQuery.docAllUris',
+        (newValue, oldValue) => {
+			// we read from component to have file names without asking serverside
+			const files = VUiPage.$refs.aiFileUpload.files;
+			
+			// do analyze if needed
+			for (const file of files) {
+				const uri = file.fileUri;
+				if (!getCardByUri(uri)) {
+					console.log("Analyzing " + uri);
+					const newCard = { fileUri: uri, fileName: file.name, loading: true };
+					const index = VUiPage.vueData.aiFileResponses.push(newCard) - 1;
+										
+					VUiPage.$http.post('_analyze', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, fileUri: uri }))
+						.then(response => {
+							VUiPage.vueData.aiFileResponses[index] = {...response.data, ...VUiPage.vueData.aiFileResponses[index]};
+							VUiPage.vueData.aiFileResponses[index].loading = false;
+						})
+						.catch(error => {
+							const card = VUiPage.vueData.aiFileResponses[index];
+							card.loading = false;
+							card.error = error;
+						});
+
+				}
+			}
+        });
+});
+
+
+function getCardByUri(uri) {
+	return VUiPage.vueData.aiFileResponses.find(card => card.fileUri === uri);
+}

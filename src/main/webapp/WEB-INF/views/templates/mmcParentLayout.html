@@ -176,6 +176,19 @@
 				    
 				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
 				    
+			       	<div>
+			       	    <q-item-label header>AI</q-item-label>
+			       	    
+				        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/ai/extract/}" th:class="${model.requestURI.startsWith('__@{/ai/}__') ? 'active':''}" >
+				          <q-item-section avatar>
+				          	<q-icon name="mdi-robot" title="AI" size="md"></q-icon>
+				          </q-item-section>
+				          <q-item-section><div style="font-size: 14px; color: red; transform: rotate(-25deg); position: absolute; top: 0px; left: 50px;">NEW</div>AI</q-item-section>
+				        </q-item>
+				    </div>
+				    
+				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
+				    
 			       	<div th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}">
 			       	 	<q-item-label header>Users</q-item-label>
 			       	 	

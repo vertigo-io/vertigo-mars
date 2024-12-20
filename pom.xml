@@ -92,6 +92,12 @@
 			<artifactId>vertigo-easyforms</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-ai-langchain4j</artifactId>
+			<version>${vertigo.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>io.vertigo</groupId>

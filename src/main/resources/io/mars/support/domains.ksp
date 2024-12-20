@@ -116,3 +116,9 @@ create Domain DoGeoPoint {
 	type : "io.mars.support.smarttypes.GeoPoint"
 	storeType : "TEXT"
 }
+
+create Domain DoFileInfoURI {
+	dataType: ValueObject
+	type: "io.vertigo.datastore.filestore.model.FileInfoURI"
+	storeType: "VARCHAR(400)"
+}

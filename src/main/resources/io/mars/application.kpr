@@ -2,5 +2,6 @@ support/support.kpr
 basemanagement/basemanagement.kpr
 catalog/catalog.kpr
 hr/hr.kpr
+ai/ai.kpr
 maintenance/maintenance.kpr
 opendata/opendata.kpr

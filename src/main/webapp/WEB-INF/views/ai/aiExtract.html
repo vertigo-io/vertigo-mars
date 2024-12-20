@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{templates/mmcDetailNavLayout}">
+<head>
+<title>AI</title>
+	<script th:src="@{/static/js/ai.js}"></script>
+	<!-- maps -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
+	<link rel="stylesheet" href="https://unpkg.com/ol-geocoder@4.3.1/dist/ol-geocoder.min.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+	<script src="https://unpkg.com/ol-geocoder@4.3.1/dist/ol-geocoder.js"></script>
+</head>
+<body>
+	<section layout:fragment="content-nav">
+		<q-item tag="a" href="#files">Files</q-item>
+		<template v-if="vueData.aiFileResponses.length > 0">
+			<q-item tag="a" href="#infos">Informations</q-item>
+			<q-item tag="a" href="#map">Map</q-item>
+			<q-item tag="a" href="#timeline">Timeline</q-item>
+			<q-item tag="a" href="#query">Query</q-item>
+		</template>
+	</section>
+	<section>
+		<div layout:fragment="content-header-tabs">
+			<vu:button-link class="active" flat label="Extract" url="@{/ai/extract/}" />
+		</div>
+	</section>
+	<section layout:fragment="content">
+		<vu:block id="files" title="Files" th:with="viewMode='edit'">
+			<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docAllUris" multiple componentId="aiFileUpload"/>
+        </vu:block>			
+		<template v-if="vueData.aiFileResponses.length > 0">
+			<vu:block id="infos" title="Informations" th:with="viewMode='edit'">
+				<vu:include-data object="aiFileResponses" field="'*'" />
+				<vu:cards list="aiFileResponses" componentId="fileCards" rowsPerPage="100" showMore="true" cardClass="col-xl-6 col-12" >
+					<q-card-section>
+	                    <div class="text-bold">{{item.fileName}}</div>
+		            </q-card-section>
+		            <q-separator></q-separator>
+		            <template v-if="item.loading">
+						<q-card-section class="q-pa-none">
+		                   	<q-skeleton height="200px" square ><div class="text-center">Analyzing...</div></q-skeleton>
+		            	</q-card-section>
+		            </template>
+		            <template v-else>
+		            	<template v-if="item.date != null">
+		            		<q-card-section>
+                                <q-icon name="event" class="q-mr-xs"></q-icon>{{item.date}}
+		                    </q-card-section>
+			                <q-separator></q-separator>
+		            	</template>
+		            	
+		            	<template v-if="item.location != null && item.location.address != null">
+		            		<q-card-section>
+                                <q-icon name="location_on" class="q-mr-xs"></q-icon>{{item.location.address}}
+		                    </q-card-section>
+			                <q-separator></q-separator>
+		            	</template>
+		            	
+		            	<template v-if="item.tags != null">
+                    		<q-card-section>
+                                <q-icon name="label" class="q-mr-xs"></q-icon><q-chip v-for="tag in item.tags.split(';')" :label="tag"></q-chip>
+                            </q-card-section>
+                            <q-separator></q-separator>
+                        </template>
+                        
+                        <template v-if="item.persons != null">
+							<q-card-section>
+								<q-icon name="person" class="q-mr-xs"></q-icon><q-chip v-for="person in item.persons.split(';')" :label="person"></q-chip>
+							</q-card-section>
+							<q-separator></q-separator>
+		            	</template>
+		            	
+						<q-card-section>
+	                        <div class="text-weight-bold" v-html="item.description"></div>
+	                        
+	                        <div :class="{'ellipsis': !item.expanded}" v-html="item.summary"></div>
+	                        
+	                        <q-btn color="grey" round flat dense
+								:icon="item.expanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+								@click="item.expanded = !item.expanded" ></q-btn>
+						</q-card-section>
+					</template>
+				</vu:cards>
+			</vu:block>
+			<vu:block id="map" title="Map">
+			</vu:block>
+			<vu:block id="timeline" title="Timeline">
+			</vu:block>
+			<vu:block id="query" title="Query">
+			</vu:block>
+		</template>
+		<q-page-sticky position="bottom-right"> <vu:button-submit th:if="${model.modeEdit}" size="lg" icon="save" label="Save" action="@{_save}"
+			color="primary" /> <vu:button-submit th:if="${model.modeCreate}" size="lg" icon="save" label="Create" action="@{_create}" color="primary" /> </q-page-sticky>
+	</section>
+</body>
+</html>

@@ -250,6 +250,13 @@ modules:
           filestore.tmp: temp
           filestore.persist: main
   
+  io.vertigo.ai.AiFeatures:
+    features:
+      - llm:
+    plugins:
+      - io.vertigo.ai.llm.plugin.lc4j.Lc4jPlugin:
+          apiKey: demo
+  
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:
   io.mars.hr.HrFeatures:
@@ -260,6 +267,7 @@ modules:
       - auth:
       - mqtt:
           __flags__: ["klee"]
+  io.mars.ai.AiFeatures:
   io.mars.maintenance.MaintenanceFeatures:
   io.mars.opendata.OpendataFeatures:
   io.mars.job.JobFeatures:
