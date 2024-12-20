@@ -17,6 +17,10 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	 * Enumération des DtDefinitions.
 	 */
 	public enum Definitions {
+		/** Objet de données AiQuery. */
+		AiQuery(io.mars.ai.domain.AiQuery.class),
+		/** Objet de données AiResponse. */
+		AiResponse(io.mars.ai.domain.AiResponse.class),
 		/** Objet de données Base. */
 		Base(io.mars.basemanagement.domain.Base.class),
 		/** Objet de données BaseIndex. */
@@ -53,6 +57,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		Geosector(io.mars.basemanagement.domain.Geosector.class),
 		/** Objet de données Groups. */
 		Groups(io.mars.hr.domain.Groups.class),
+		/** Objet de données Location. */
+		Location(io.mars.ai.domain.Location.class),
 		/** Objet de données MediaFileInfo. */
 		MediaFileInfo(io.mars.common.domain.tools.file.MediaFileInfo.class),
 		/** Objet de données Mission. */
@@ -98,6 +104,40 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 			return clazz;
 		}
 	}
+
+	/**
+	 * Enumération des champs de AiQuery.
+	 */
+	public enum AiQueryFields implements DataFieldName<io.mars.ai.domain.AiQuery> {
+		/** Propriété 'Files'. */
+		docAllUris,
+		/** Propriété 'Files'. */
+		docUris,
+		/** Propriété 'Prompt'. */
+		prompt	}
+
+	/**
+	 * Enumération des champs de AiResponse.
+	 */
+	public enum AiResponseFields implements DataFieldName<io.mars.ai.domain.AiResponse> {
+		/** Propriété 'File'. */
+		docUri,
+		/** Propriété 'Is loading'. */
+		loading,
+		/** Propriété 'File'. */
+		fileName,
+		/** Propriété 'Description'. */
+		description,
+		/** Propriété 'Summary'. */
+		summary,
+		/** Propriété 'Location'. */
+		location,
+		/** Propriété 'Date'. */
+		date,
+		/** Propriété 'Tags'. */
+		tags,
+		/** Propriété 'Persons'. */
+		persons	}
 
 	/**
 	 * Enumération des champs de Base.
@@ -384,6 +424,15 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		groupId,
 		/** Propriété 'Name'. */
 		name	}
+
+	/**
+	 * Enumération des champs de Location.
+	 */
+	public enum LocationFields implements DataFieldName<io.mars.ai.domain.Location> {
+		/** Propriété 'Address'. */
+		address,
+		/** Propriété 'Coordinates'. */
+		gps	}
 
 	/**
 	 * Enumération des champs de MediaFileInfo.
