@@ -18,7 +18,8 @@ public final class AiResponse implements DataObject {
 	private String fileName;
 	private String description;
 	private String summary;
-	private io.mars.ai.domain.Location location;
+	private String address;
+	private io.mars.support.smarttypes.GeoPoint gps;
 	private java.time.LocalDate date;
 	private String tags;
 	private String persons;
@@ -120,21 +121,40 @@ public final class AiResponse implements DataObject {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Location'.
-	 * @return Location location <b>Obligatoire</b>
+	 * Récupère la valeur de la propriété 'Address'.
+	 * @return String address <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyDtLocation", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Location")
-	public io.mars.ai.domain.Location getLocation() {
-		return location;
+	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Address")
+	public String getAddress() {
+		return address;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Location'.
-	 * @param location Location <b>Obligatoire</b>
+	 * Définit la valeur de la propriété 'Address'.
+	 * @param address String <b>Obligatoire</b>
 	 */
-	public void setLocation(final io.mars.ai.domain.Location location) {
-		this.location = location;
+	public void setAddress(final String address) {
+		this.address = address;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'GPS'.
+	 * @return GeoPoint gps <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyGeoPoint", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "GPS")
+	public io.mars.support.smarttypes.GeoPoint getGps() {
+		return gps;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'GPS'.
+	 * @param gps GeoPoint <b>Obligatoire</b>
+	 */
+	public void setGps(final io.mars.support.smarttypes.GeoPoint gps) {
+		this.gps = gps;
 	}
 	
 	/**

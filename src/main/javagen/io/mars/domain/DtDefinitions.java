@@ -57,8 +57,6 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		Geosector(io.mars.basemanagement.domain.Geosector.class),
 		/** Objet de données Groups. */
 		Groups(io.mars.hr.domain.Groups.class),
-		/** Objet de données Location. */
-		Location(io.mars.ai.domain.Location.class),
 		/** Objet de données MediaFileInfo. */
 		MediaFileInfo(io.mars.common.domain.tools.file.MediaFileInfo.class),
 		/** Objet de données Mission. */
@@ -130,8 +128,10 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		description,
 		/** Propriété 'Summary'. */
 		summary,
-		/** Propriété 'Location'. */
-		location,
+		/** Propriété 'Address'. */
+		address,
+		/** Propriété 'GPS'. */
+		gps,
 		/** Propriété 'Date'. */
 		date,
 		/** Propriété 'Tags'. */
@@ -424,15 +424,6 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		groupId,
 		/** Propriété 'Name'. */
 		name	}
-
-	/**
-	 * Enumération des champs de Location.
-	 */
-	public enum LocationFields implements DataFieldName<io.mars.ai.domain.Location> {
-		/** Propriété 'Address'. */
-		address,
-		/** Propriété 'Coordinates'. */
-		gps	}
 
 	/**
 	 * Enumération des champs de MediaFileInfo.

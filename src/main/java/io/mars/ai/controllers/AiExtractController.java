@@ -1,6 +1,14 @@
 package io.mars.ai.controllers;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,9 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.mars.ai.domain.AiQuery;
 import io.mars.ai.domain.AiResponse;
-import io.mars.ai.domain.Location;
+import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.ai.impl.llm.VPrompt;
 import io.vertigo.ai.llm.LlmManager;
+import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datastore.filestore.FileStoreManager;
@@ -64,11 +73,19 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 8 mots max ce qu'est ce fichier", null), file));
 		response.setSummary(llmManager.summarize(file));
 
-		final var location = new Location();
 		final var fileAddress = llmManager.promptOnFiles(
-				new VPrompt("Quelle est l'adresse principale du document ? répond uniquement l'adresse sans autre texte ni mise en forme. Exemple : '123 rue du Soleil 75000 Paris'", null), file);
-		location.setAddress(fileAddress);
-		response.setLocation(location);
+				new VPrompt(
+						"Quelle est l'adresse principale ou de destination du document ? répond uniquement l'adresse sans autre texte ni mise en forme. Exemple : '123 rue du Soleil 75000 Paris'. Si aucune adresse complète n'est présente, ne rien répondre, sans autre texte ni mise en forme",
+						null),
+				file);
+		if (!StringUtil.isBlank(fileAddress)) {
+			response.setAddress(fileAddress);
+
+			final var point = getGeoPoint(fileAddress);
+			if (point != null) {
+				response.setGps(point);
+			}
+		}
 
 		final String dateString = llmManager.promptOnFiles(new VPrompt(
 				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-03 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme",
@@ -82,7 +99,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		}
 
 		final var rawTags = llmManager.promptOnFiles(new VPrompt(
-				"Donne moi entre 1 et 3 tags correspondant le mieux au fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme",
+				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme",
 				null), file);
 		response.setTags(rawTags);
 
@@ -94,6 +111,40 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		}
 
 		return jsonEngine.toJson(response);
+	}
+
+	private java.util.Map<String, ?> getBanInfos(final String fileAddress) {
+		final StringBuilder content = new StringBuilder();
+		try {
+			final URL url = new URL("https://api-adresse.data.gouv.fr/search/?limit=1&q=" + URLEncoder.encode(fileAddress, "UTF-8"));
+			final HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			//final int status = con.getResponseCode();
+			final BufferedReader in = new BufferedReader(
+					new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			while ((inputLine = in.readLine()) != null) {
+				content.append(inputLine);
+			}
+			in.close();
+			con.disconnect();
+		} catch (final IOException e) {
+			throw new VSystemException(e, "Unable to call BAN API");
+		}
+		return jsonEngine.fromJson(content.toString(), Map.class);
+	}
+
+	private GeoPoint getGeoPoint(final String fileAddress) {
+		try {
+			final var infos = getBanInfos(fileAddress);
+			final List<Map<String, ?>> features = (List<Map<String, ?>>) infos.get("features");
+			final Map<String, ?> geometry = (Map<String, ?>) features.get(0).get("geometry");
+			final List<Double> coordinates = (List<Double>) geometry.get("coordinates");
+			final var point = new GeoPoint(coordinates.get(0), coordinates.get(1));
+			return point;
+		} catch (final Exception e) {
+			return null; // for demo only, need to be improved with correct checks
+		}
 	}
 
 	@PostMapping("/_ask")
