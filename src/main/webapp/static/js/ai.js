@@ -28,6 +28,14 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 
 				}
 			}
+			
+			// remove, removed
+			for (const card of VUiPage.vueData.aiFileResponses) {
+				if (!files.find(file => file.fileUri === card.fileUri)) {
+					console.log("Removing " + card.fileUri);
+					VUiPage.vueData.aiFileResponses.splice(VUiPage.vueData.aiFileResponses.indexOf(card), 1);
+				}
+			}
         });
 });
 
