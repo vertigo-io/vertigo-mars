@@ -108,9 +108,9 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	 */
 	public enum AiQueryFields implements DataFieldName<io.mars.ai.domain.AiQuery> {
 		/** Propriété 'Files'. */
-		docAllUris,
-		/** Propriété 'Files'. */
 		docUris,
+		/** Propriété 'File'. */
+		docUri,
 		/** Propriété 'Prompt'. */
 		prompt	}
 
@@ -122,10 +122,16 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		docUri,
 		/** Propriété 'Is loading'. */
 		loading,
-		/** Propriété 'File'. */
+		/** Propriété 'File name'. */
 		fileName,
+		/** Propriété 'Name'. */
+		name,
 		/** Propriété 'Description'. */
 		description,
+		/** Propriété 'Description 2'. */
+		description2,
+		/** Propriété 'Description 3'. */
+		description3,
 		/** Propriété 'Summary'. */
 		summary,
 		/** Propriété 'Address'. */
@@ -137,7 +143,11 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Tags'. */
 		tags,
 		/** Propriété 'Persons'. */
-		persons	}
+		persons,
+		/** Propriété 'Category'. */
+		category,
+		/** Propriété 'CTX'. */
+		ctx	}
 
 	/**
 	 * Enumération des champs de Base.

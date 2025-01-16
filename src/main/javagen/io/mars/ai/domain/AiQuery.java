@@ -13,30 +13,9 @@ import io.vertigo.datamodel.data.util.DataModelUtil;
 public final class AiQuery implements DataObject {
 	private static final long serialVersionUID = 1L;
 
-	private java.util.List<io.vertigo.datastore.filestore.model.FileInfoURI> docAllUris = new java.util.ArrayList<>();
 	private java.util.List<io.vertigo.datastore.filestore.model.FileInfoURI> docUris = new java.util.ArrayList<>();
+	private io.vertigo.datastore.filestore.model.FileInfoURI docUri;
 	private String prompt;
-	
-	/**
-	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Files'.
-	 * @return List de FileInfoURI docAllUris
-	 */
-	@Field(smartType = "STyFileInfoURI", cardinality = io.vertigo.core.lang.Cardinality.MANY, label = "Files")
-	public java.util.List<io.vertigo.datastore.filestore.model.FileInfoURI> getDocAllUris() {
-		return docAllUris;
-	}
-
-	/**
-	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Files'.
-	 * @param docAllUris List de FileInfoURI
-	 */
-	public void setDocAllUris(final java.util.List<io.vertigo.datastore.filestore.model.FileInfoURI> docAllUris) {
-		io.vertigo.core.lang.Assertion.check().isNotNull(docAllUris);
-		//---
-		this.docAllUris = docAllUris;
-	}
 	
 	/**
 	 * Champ : DATA.
@@ -57,6 +36,25 @@ public final class AiQuery implements DataObject {
 		io.vertigo.core.lang.Assertion.check().isNotNull(docUris);
 		//---
 		this.docUris = docUris;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'File'.
+	 * @return FileInfoURI docUri <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyFileInfoURI", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "File")
+	public io.vertigo.datastore.filestore.model.FileInfoURI getDocUri() {
+		return docUri;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'File'.
+	 * @param docUri FileInfoURI <b>Obligatoire</b>
+	 */
+	public void setDocUri(final io.vertigo.datastore.filestore.model.FileInfoURI docUri) {
+		this.docUri = docUri;
 	}
 	
 	/**

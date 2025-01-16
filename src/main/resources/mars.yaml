@@ -215,9 +215,11 @@ modules:
   io.vertigo.geo.GeoFeatures:
     features:
       - geosearch:
+      - geocoding:
     featuresConfig:
       - geosearch.es:
           envIndexPrefix: mars
+      - geocoding.ban:
   io.vertigo.dashboard.DashboardFeatures:
     features:
       - analytics:
@@ -255,7 +257,7 @@ modules:
       - llm:
     plugins:
       - io.vertigo.ai.llm.plugin.lc4j.Lc4jPlugin:
-          apiKey: demo
+          apiKey: ${openAiApiKey}
   
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:

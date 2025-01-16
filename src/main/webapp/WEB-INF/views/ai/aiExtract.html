@@ -15,24 +15,19 @@
 			<q-item tag="a" href="#infos">Informations</q-item>
 			<q-item tag="a" href="#timeline">Timeline</q-item>
 			<q-item tag="a" href="#map">Map</q-item>
-			<q-item tag="a" href="#query">Query</q-item>
+			<q-item tag="a" href="#ask">Ask</q-item>
 		</template>
-	</section>
-	<section>
-		<div layout:fragment="content-header-tabs">
-			<vu:button-link class="active" flat label="Extract" url="@{/ai/extract/}" />
-		</div>
 	</section>
 	<section layout:fragment="content">
 		<vu:block id="files" title="Files" th:with="viewMode='edit'">
 			<div class="row">
 				<div class="col-xl-6 col-12">
-					<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docAllUris" multiple componentId="aiFileUpload"/>
+					<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUris" multiple componentId="aiFileUpload"/>
 				</div>
 			</div>
         </vu:block>			
 		<template v-if="vueData.aiFileResponses.length > 0">
-			<vu:block id="infos" title="Informations" th:with="viewMode='edit'">
+			<vu:block id="infos" title="Informations">
 				<vu:include-data object="aiFileResponses" field="'*'" />
 				<vu:cards list="aiFileResponses" componentId="fileCards" rowsPerPage="100" showMore="true" cardClass="col-xl-6 col-12" >
 					<q-card-section>
@@ -102,12 +97,10 @@
 					</v-map>
 				</div>
 			</vu:block>
-			<vu:block id="query" title="Query">
+			<vu:block id="ask" title="Ask a question on documents">
 				Prochainement
 			</vu:block>
 		</template>
-		<q-page-sticky position="bottom-right"> <vu:button-submit th:if="${model.modeEdit}" size="lg" icon="save" label="Save" action="@{_save}"
-			color="primary" /> <vu:button-submit th:if="${model.modeCreate}" size="lg" icon="save" label="Create" action="@{_create}" color="primary" /> </q-page-sticky>
 	</section>
 </body>
 </html>
