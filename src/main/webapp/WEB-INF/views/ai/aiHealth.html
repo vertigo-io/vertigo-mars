@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{templates/mmcDetailLayout}">
+<head>
+<title>AI</title>
+	<script th:src="@{/static/js/ai.js}"></script>
+	<!-- maps -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+	<style>
+		h3 {
+		    font-size: 1.2rem !important;
+		    line-height: 1.1rem !important;
+		}
+	</style>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="col-12">
+			<div class="q-card">
+				<q-stepper th:attr="objectKey=${model.vContext['componentStates'].addComponentState('stepper').put('step', 1)}"
+				      v-model="componentStates.stepper.step"
+				      ref="stepper"
+				      color="primary" 
+				      done-color="green"
+				      animated
+				    >
+			
+					<q-step
+					  :name="1"
+					  title="Indexer les notices"
+					  icon="cloud_upload"
+					  :done="componentStates.stepper.step > 1"
+					>
+						<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUris" multiple componentId="aiFileUpload"/>
+						
+						<div class="q-mt-md" v-if="vueData.aiFileResponses.length > 0">
+							<vu:block title="Notices">
+								<vu:include-data object="aiFileResponses" field="'*'" />
+								<vu:cards list="aiFileResponses" componentId="fileCards" rowsPerPage="100" showMore="true" cardClass="col-xl-6 col-12" >
+						            <template v-if="item.loading">
+										<q-card-section class="q-pa-none">
+						                   	<q-skeleton height="200px" square ><div class="text-center">Indexation...</div></q-skeleton>
+						            	</q-card-section>
+						            </template>
+						            <template v-else>
+						            	<q-card-section class="bg-grey-3">
+						                    <div class="text-bold">{{item.name}}</div>
+							            </q-card-section>
+							            <q-separator></q-separator>
+						            	<template v-if="item.summary != null">
+						            		<q-card-section>
+				                                <div v-html="item.summary"></div>
+						                    </q-card-section>
+							                <q-separator></q-separator>
+						            	</template>
+						            	<template v-if="item.description != null">
+						            		<q-card-section class="bg-grey-3">
+						            			<b>Posologie</b>
+						            		</q-card-section>
+							                <q-separator></q-separator>
+						            		<q-card-section>
+				                                <div v-html="item.description"></div>
+						                    </q-card-section>
+							                <q-separator></q-separator>
+						            	</template>
+						            	<template v-if="item.description2 != null">
+											<q-card-section class="bg-grey-3">
+						            			<b>Effets indésirables</b>
+						            		</q-card-section>
+							                <q-separator></q-separator>
+						            		<q-card-section>
+				                                <div v-html="item.description2"></div>
+						                    </q-card-section>
+							                <q-separator></q-separator>
+						            	</template>
+						            	<template v-if="item.description3 != null">
+						            		<q-card-section class="bg-grey-3">
+						            			<b>Contre indications</b>
+						            		</q-card-section>
+							                <q-separator></q-separator>
+						            		<q-card-section>
+				                                <div v-html="item.description3"></div>
+						                    </q-card-section>
+							                <q-separator></q-separator>
+						            	</template>
+									</template>
+								</vu:cards>
+							</vu:block>
+						</div>
+					</q-step>
+					
+					<q-step
+					  :name="2"
+					  title="Ajouter sa prescription"
+					  icon="cloud_upload"
+					  :done="componentStates.stepper.step > 2"
+					>
+						<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUri" componentId="aiFileUploadOrdo"/>
+					  
+						<div class="q-mt-md" v-if="vueData.aiOrdoResponse.loading != null">
+						  	<vu:block title="Informations">
+								<vu:include-data object="aiOrdoResponse" field="'*'" />
+								
+								<template v-if="vueData.aiOrdoResponse.loading">
+									<q-card-section class="q-pa-none">
+					                   	<q-skeleton height="200px" square ><div class="text-center">Analyse en cours...</div></q-skeleton>
+					            	</q-card-section>
+					            </template>
+					            <template v-else>
+					            	<q-card class="q-col-6">
+						            	<template v-if="vueData.aiOrdoResponse.category!= name">
+						            		<q-card-section>
+				                                {{vueData.aiOrdoResponse.name}} (RPPS : {{vueData.aiOrdoResponse.category}})
+						                    </q-card-section>
+							                <q-separator></q-separator>
+						            	</template>
+					            		<template v-if="vueData.aiOrdoResponse.date != null">
+						            		<q-card-section>
+				                                <q-icon name="event" class="q-mr-xs"></q-icon>{{vueData.aiOrdoResponse.date}}
+						                    </q-card-section>
+							                <q-separator></q-separator>
+						            	</template>
+						            	
+						            	<template v-if="vueData.aiOrdoResponse.address != null">
+						            		<q-card-section>
+				                                <q-icon name="location_on" class="q-mr-xs"></q-icon>{{vueData.aiOrdoResponse.address}}
+						                    </q-card-section>
+							                <q-separator></q-separator>
+						            	</template>
+					            	</q-card>
+						        </template>
+								
+							</vu:block>
+						</div>
+					</q-step>
+					
+					<q-step
+					  :name="3"
+					  title="Plan de traitement"
+					  icon="medication"
+					>
+						<q-card>
+							<q-card-section class="bg-grey-3">
+			                    <div class="text-bold">Plan de traitement</div>
+				            </q-card-section>
+				            <q-separator></q-separator>
+				            <q-card-section>
+								<div v-html="vueData.aiOrdoResponse.summary"></div>
+							</q-card-section>
+							<q-separator></q-separator>
+							<q-card-section class="bg-grey-3">
+			                    <div class="text-bold">Principaux effets indésirables</div>
+				            </q-card-section>
+				            <q-separator></q-separator>
+				            <q-card-section>
+								<div v-html="vueData.aiOrdoResponse.description"></div>
+						    </q-card-section>
+                            <q-separator></q-separator>
+                            <q-card-section class="bg-grey-3">
+			                    <div class="text-bold">Principales contre-indications</div>
+				            </q-card-section>
+				            <q-separator></q-separator>
+				            <q-card-section>
+								<div v-html="vueData.aiOrdoResponse.description2"></div>
+							</q-card-section>
+					</q-step>
+					
+					<template v-slot:navigation>
+					  <q-stepper-navigation>
+					    <q-btn v-if="componentStates.stepper.step > 1" @click="$refs.stepper.previous()" flat color="primary" label="Précédent" class="q-ml-sm" ></q-btn>
+					    <q-btn v-if="componentStates.stepper.step < 3" @click="$refs.stepper.next()" color="primary" label="Suivant" ></q-btn>
+					  </q-stepper-navigation>
+					</template>
+			    </q-stepper>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

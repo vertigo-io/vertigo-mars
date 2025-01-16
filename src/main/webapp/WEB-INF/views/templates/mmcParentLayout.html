@@ -177,14 +177,32 @@
 				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
 				    
 			       	<div>
-			       	    <q-item-label header>AI</q-item-label>
+			       	    <q-item-label header>AI center<span class="q-pl-md" style="font-size: 14px; color: red;">NEW</span></q-item-label>
 			       	    
-				        <q-item th:if="${authz.hasAuthorization('ViewBases')}" tag="a" th:href="@{/ai/extract/}" th:class="${model.requestURI.startsWith('__@{/ai/}__') ? 'active':''}" >
+				        <q-item tag="a" th:href="@{/ai/extract/}" th:class="${model.requestURI.startsWith('__@{/ai/extract}__') ? 'active':''}" >
 				          <q-item-section avatar>
-				          	<q-icon name="mdi-robot" title="AI" size="md"></q-icon>
+				          	<q-icon name="mdi-brain" title="AI" size="md"></q-icon>
 				          </q-item-section>
-				          <q-item-section><div style="font-size: 14px; color: red; transform: rotate(-25deg); position: absolute; top: 0px; left: 50px;">NEW</div>AI</q-item-section>
+				          <q-item-section>File analysis</q-item-section>
 				        </q-item>
+				        <q-item tag="a" th:href="@{/ai/health/}" th:class="${model.requestURI.startsWith('__@{/ai/health}__') ? 'active':''}" >
+                          <q-item-section avatar>
+                          	<q-icon name="mdi-heart-pulse" title="Health" size="md"></q-icon>
+                          </q-item-section>
+                          <q-item-section>Health</q-item-section>
+                        </q-item>
+                        <q-item tag="a" th:href="@{/ai/transport/}" th:class="${model.requestURI.startsWith('__@{/ai/transport}__') ? 'active':''}" >
+                          <q-item-section avatar>
+                          	<q-icon name="mdi-train-car" title="Transport" size="md"></q-icon>
+                          </q-item-section>
+                          <q-item-section>Transport</q-item-section>
+                        </q-item>
+                        <q-item tag="a" th:href="@{/ai/energy/}" th:class="${model.requestURI.startsWith('__@{/ai/energy}__') ? 'active':''}" >
+                          <q-item-section avatar>
+                          	<q-icon name="mdi-flash" title="Energy" size="md"></q-icon>
+                          </q-item-section>
+                          <q-item-section>Energy</q-item-section>
+                        </q-item>
 				    </div>
 				    
 				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>

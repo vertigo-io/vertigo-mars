@@ -16,13 +16,18 @@ public final class AiResponse implements DataObject {
 	private io.vertigo.datastore.filestore.model.FileInfoURI docUri;
 	private Boolean loading;
 	private String fileName;
+	private String name;
 	private String description;
+	private String description2;
+	private String description3;
 	private String summary;
 	private String address;
 	private io.mars.support.smarttypes.GeoPoint gps;
 	private java.time.LocalDate date;
 	private String tags;
 	private String persons;
+	private String category;
+	private String ctx;
 	
 	/**
 	 * Champ : DATA.
@@ -64,21 +69,40 @@ public final class AiResponse implements DataObject {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'File'.
+	 * Récupère la valeur de la propriété 'File name'.
 	 * @return String fileName <b>Obligatoire</b>
 	 */
-	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "File")
+	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "File name")
 	public String getFileName() {
 		return fileName;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'File'.
+	 * Définit la valeur de la propriété 'File name'.
 	 * @param fileName String <b>Obligatoire</b>
 	 */
 	public void setFileName(final String fileName) {
 		this.fileName = fileName;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Name'.
+	 * @return String name <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Name")
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Name'.
+	 * @param name String <b>Obligatoire</b>
+	 */
+	public void setName(final String name) {
+		this.name = name;
 	}
 	
 	/**
@@ -98,6 +122,44 @@ public final class AiResponse implements DataObject {
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Description 2'.
+	 * @return String description2 <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Description 2")
+	public String getDescription2() {
+		return description2;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Description 2'.
+	 * @param description2 String <b>Obligatoire</b>
+	 */
+	public void setDescription2(final String description2) {
+		this.description2 = description2;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Description 3'.
+	 * @return String description3 <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Description 3")
+	public String getDescription3() {
+		return description3;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Description 3'.
+	 * @param description3 String <b>Obligatoire</b>
+	 */
+	public void setDescription3(final String description3) {
+		this.description3 = description3;
 	}
 	
 	/**
@@ -212,6 +274,44 @@ public final class AiResponse implements DataObject {
 	 */
 	public void setPersons(final String persons) {
 		this.persons = persons;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Category'.
+	 * @return String category <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyLabel", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Category")
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Category'.
+	 * @param category String <b>Obligatoire</b>
+	 */
+	public void setCategory(final String category) {
+		this.category = category;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'CTX'.
+	 * @return String ctx <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "CTX")
+	public String getCtx() {
+		return ctx;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'CTX'.
+	 * @param ctx String <b>Obligatoire</b>
+	 */
+	public void setCtx(final String ctx) {
+		this.ctx = ctx;
 	}
 	
 	/** {@inheritDoc} */

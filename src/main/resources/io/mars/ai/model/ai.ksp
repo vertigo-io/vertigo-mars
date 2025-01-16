@@ -1,21 +1,26 @@
 package io.mars.ai.domain
 
 create DtDefinition DtAiQuery {
-	field docAllUris 	{domain: DoFileInfoURI 	label: "Files" 		cardinality:"*"}
 	field docUris		{domain: DoFileInfoURI 	label: "Files" 		cardinality:"*"}
+	field docUri		{domain: DoFileInfoURI 	label: "File" 		cardinality:"1"}
 	field prompt 		{domain: DoText	 		label: "Prompt" 	cardinality:"1"}
 }
 
 create DtDefinition DtAiResponse {
 	field docUri  		{domain: DoFileInfoURI 	label: "File" 			cardinality:"1"}
 	field loading 		{domain: DoYesNo 		label: "Is loading" 	cardinality:"1"}
-	field fileName 		{domain: DoText			label: "File" 			cardinality:"1"}
+	field fileName 		{domain: DoText			label: "File name" 		cardinality:"1"}
+	field name 			{domain: DoText			label: "Name" 			cardinality:"1"}
 	field description 	{domain: DoText	 		label: "Description" 	cardinality:"1"}
+	field description2 	{domain: DoText	 		label: "Description 2" 	cardinality:"1"}
+	field description3 	{domain: DoText	 		label: "Description 3" 	cardinality:"1"}
 	field summary  		{domain: DoText	 		label: "Summary" 		cardinality:"1"}
 	field address 		{domain: DoText 		label: "Address"		cardinality:"1"}
 	field gps 			{domain: DoGeoPoint 	label: "GPS"			cardinality:"1"}
 	field date 	   		{domain: DoLocaldate	label: "Date" 			cardinality:"1"}
 	field tags 			{domain: DoMultipleIds 	label: "Tags" 			cardinality:"1"}
 	field persons 		{domain: DoMultipleIds 	label: "Persons" 		cardinality:"1"}
+	field category 		{domain: DoLabel 	 	label: "Category" 		cardinality:"1"}
+	field ctx 			{domain: DoText 	 	label: "CTX" 			cardinality:"1"}
 }
 
