@@ -145,9 +145,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Persons'. */
 		persons,
 		/** Propriété 'Category'. */
-		category,
-		/** Propriété 'CTX'. */
-		ctx	}
+		category	}
 
 	/**
 	 * Enumération des champs de Base.

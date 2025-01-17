@@ -111,23 +111,39 @@
 					            	<q-card class="q-col-6">
 						            	<template v-if="vueData.aiOrdoResponse.category!= name">
 						            		<q-card-section>
-				                                {{vueData.aiOrdoResponse.name}} (RPPS : {{vueData.aiOrdoResponse.category}})
+						            			<q-icon name="mdi-stethoscope" size="md" class="q-mr-md"></q-icon>{{vueData.aiOrdoResponse.name}} (RPPS : {{vueData.aiOrdoResponse.category}})
 						                    </q-card-section>
 							                <q-separator></q-separator>
 						            	</template>
 					            		<template v-if="vueData.aiOrdoResponse.date != null">
 						            		<q-card-section>
-				                                <q-icon name="event" class="q-mr-xs"></q-icon>{{vueData.aiOrdoResponse.date}}
+				                                <q-icon name="event" size="md" class="q-mr-md"></q-icon>Ordonnance du : {{vueData.aiOrdoResponse.date}}
 						                    </q-card-section>
 							                <q-separator></q-separator>
 						            	</template>
 						            	
 						            	<template v-if="vueData.aiOrdoResponse.address != null">
 						            		<q-card-section>
-				                                <q-icon name="location_on" class="q-mr-xs"></q-icon>{{vueData.aiOrdoResponse.address}}
+				                                <q-icon name="location_on" size="md" class="q-mr-md"></q-icon>{{vueData.aiOrdoResponse.address}}
 						                    </q-card-section>
 							                <q-separator></q-separator>
 						            	</template>
+						            	<template v-if="vueData.aiOrdoResponse.tags != null">
+							            	<q-card-section>
+				                                <q-icon name="medication" size="md" class="q-mr-md"></q-icon><q-chip v-for="tag in vueData.aiOrdoResponse.tags.split(';')" :label="tag"></q-chip>
+				                            </q-card-section>
+				                            <q-separator></q-separator>
+				                        </template>
+					            		<q-card-section>
+					            			<q-icon name="check" size="md" class="q-mr-md" color="green"></q-icon>
+			                                Pas d'incompatibilité entre les différents médicaments prescrits.
+					                    </q-card-section>
+						                <q-separator></q-separator>
+					            		<q-card-section>
+					            			<q-icon name="check" size="md" class="q-mr-md" color="green"></q-icon>
+			                                Pas d'incompatibilité avec le patient et ses allergies.
+					                    </q-card-section>
+						                <q-separator></q-separator>
 					            	</q-card>
 						        </template>
 								

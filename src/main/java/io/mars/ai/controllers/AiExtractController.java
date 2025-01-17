@@ -64,19 +64,19 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 		final var file = fileStoreManager.read(fileUri).getVFile();
 
-		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 8 mots max ce qu'est ce fichier", null, null), file));
-		response.setSummary(llmManager.summarize(file));
+		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 8 mots max ce qu'est ce fichier", null, null), file).getHtml());
+		response.setSummary(llmManager.summarize(file).getHtml());
 
 		final var fileAddress = llmManager.promptOnFiles(
 				new VPrompt(
 						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme",
 						null, null),
 				file);
-		if (!StringUtil.isBlank(fileAddress)) {
-			response.setAddress(fileAddress);
+		if (!StringUtil.isBlank(fileAddress.getText())) {
+			response.setAddress(fileAddress.getText());
 
 			try {
-				final var geoLocation = geoCoderManager.findLocation(fileAddress);
+				final var geoLocation = geoCoderManager.findLocation(fileAddress.getText());
 				if (geoLocation != GeoLocation.UNDEFINED) {
 					final var point = new GeoPoint(geoLocation.getLongitude(), geoLocation.getLatitude());
 					response.setGps(point);
@@ -87,8 +87,8 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		}
 
 		final String dateString = llmManager.promptOnFiles(new VPrompt(
-				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-03 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme",
-				null, null), file);
+				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.",
+				null, null), file).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
 				response.setDate(LocalDate.parse(dateString));
@@ -97,16 +97,15 @@ public class AiExtractController extends AbstractVSpringMvcController {
 			}
 		}
 
-		final var rawTags = llmManager.promptOnFiles(new VPrompt(
+		response.setTags(llmManager.promptOnFiles(new VPrompt(
 				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme",
-				null, null), file);
-		response.setTags(rawTags);
+				null, null), file).getText());
 
 		final var rawPersons = llmManager.promptOnFiles(new VPrompt(
 				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme",
 				null, null), file);
-		if (!StringUtil.isBlank(rawPersons)) {
-			response.setPersons(rawPersons);
+		if (!StringUtil.isBlank(rawPersons.getText())) {
+			response.setPersons(rawPersons.getText());
 		}
 
 		return jsonEngine.toJson(response);
