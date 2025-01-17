@@ -1,7 +1,9 @@
 package io.mars.ai.controllers;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -26,7 +28,6 @@ import io.vertigo.geo.geocoder.GeoCoderManager;
 import io.vertigo.geo.geocoder.GeoLocation;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
-import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 import io.vertigo.vega.engines.webservice.json.JsonEngine;
 
@@ -62,51 +63,52 @@ public class AiHealthController extends AbstractVSpringMvcController {
 
 	@PostMapping("/_analyze")
 	@ResponseBody
-	public String doAnalyze(@RequestParam("fileUri") final FileInfoURI fileUri, final ViewContext viewContext, @ViewAttribute("aiFileResponses") final DtList<AiResponse> aiFileResponses) {
-		// save fileUri for later
-		final var aiResponse = new AiResponse();
-		aiResponse.setDocUri(fileUri);
-		aiFileResponses.add(aiResponse);
-		viewContext.publishDtList(aiFileResponsesKey, aiFileResponses);
-
-		// respond for display to user
-		final var response = aiResponse;
+	public String doAnalyze(@RequestParam("fileUri") final FileInfoURI fileUri) {
+		final var response = new AiResponse();
 		response.setDocUri(fileUri);
 
 		final var file = fileStoreManager.read(fileUri).getVFile();
 
 		response.setName(llmManager
-				.promptOnFiles(new VPrompt("Donne moi le nom du médicament en français, traduit le si nécessaire. Répond uniquement son nom sans autre texte ni formatage", null, null), file));
-		response.setSummary(llmManager.promptOnFiles(new VPrompt("A quoi sert ce médicament ? répond en français uniquement", null, null), file));
-		response.setDescription(llmManager.promptOnFiles(new VPrompt("Quelle est la posologie du médicament ?", null, null), file));
-		response.setDescription2(llmManager.promptOnFiles(new VPrompt("Quels sont ses effets indésirables ?", null, null), file));
-		response.setDescription3(llmManager.promptOnFiles(new VPrompt("Quels sont ses contres indications ?", null, null), file));
+				.promptOnFiles(new VPrompt("Donne moi le nom du médicament en français, traduit le si nécessaire. Répond uniquement son nom sans autre texte ni formatage", null, null), file)
+				.getText());
+		response.setSummary(llmManager.promptOnFiles(new VPrompt("A quoi sert ce médicament ? Répond uniquement en français.", null, null), file).getHtml());
+		response.setDescription(llmManager.promptOnFiles(new VPrompt("Quelle est la posologie du médicament ? Répond uniquement en français.", null, null), file).getHtml());
+		response.setDescription2(llmManager.promptOnFiles(new VPrompt("Quels sont ses effets indésirables ? Répond uniquement en français.", null, null), file).getHtml());
+		response.setDescription3(llmManager.promptOnFiles(new VPrompt("Quels sont ses contres indications ? Répond uniquement en français.", null, null), file).getHtml());
 
-		response.setCtx(viewContext.getId());
 		return jsonEngine.toJson(response);
 	}
 
 	@PostMapping("/_analyzeOrdo")
 	@ResponseBody
-	public String doAnalyzeOrdo(@RequestParam("fileUri") final FileInfoURI fileUri, @ViewAttribute("aiFileResponses") final DtList<AiResponse> aiFileResponses) {
+	public String doAnalyzeOrdo(@RequestParam("fileUri") final FileInfoURI fileUri, @RequestParam("fileUris") final List<FileInfoURI> fileUris) {
 		final var response = new AiResponse();
 		response.setDocUri(fileUri);
 
 		// Ordo only
 		final var file = fileStoreManager.read(fileUri).getVFile();
-		response.setName(llmManager.promptOnFiles(new VPrompt("Quel est le nom du médecin. Répond uniquement son nom sans autre texte ni formatage", null, null), file));
-		response.setCategory(llmManager.promptOnFiles(new VPrompt("Quel est le numéro RPPS du médecin ? Répond uniquement le numéro sans autre texte ni formatage", null, null), file));
-		response.setPersons(llmManager.promptOnFiles(new VPrompt("Quel est le nom du patient ? Répond uniquement son nom sans autre texte ni formatage", null, null), file));
+		response.setName(
+				llmManager.promptOnFiles(new VPrompt("Quel est le nom/prénom/titre du médecin. Répond uniquement sous la forme 'Dr. Jean DUPONT' sans autre texte ni formatage", null, null), file)
+						.getText());
+		response.setCategory(llmManager.promptOnFiles(new VPrompt("Quel est le numéro RPPS du médecin ? Répond uniquement le numéro sans autre texte ni formatage", null, null), file).getText());
+		response.setPersons(llmManager.promptOnFiles(new VPrompt("Quel est le nom du patient ? Répond uniquement son nom sans autre texte ni formatage", null, null), file).getText());
+		response.setTags(llmManager.promptOnFiles(
+				new VPrompt(
+						"Donne moi la liste de médicaments prescrits, donne moi la molécule active et ajoute entre parenthèse le nom du médicament prescrit. Répond sous la forme 'Molecule 1 (Medicament1);Molecule 2 (Medicament2);Molecule 3 (Medicament3);...' sans autre texte ni mise en forme",
+						null, null),
+				file).getText());
+
 		final var fileAddress = llmManager.promptOnFiles(
 				new VPrompt(
 						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme",
 						null, null),
 				file);
-		if (!StringUtil.isBlank(fileAddress)) {
-			response.setAddress(fileAddress);
+		if (!StringUtil.isBlank(fileAddress.getText())) {
+			response.setAddress(fileAddress.getText());
 
 			try {
-				final var geoLocation = geoCoderManager.findLocation(fileAddress);
+				final var geoLocation = geoCoderManager.findLocation(fileAddress.getText());
 				if (geoLocation != GeoLocation.UNDEFINED) {
 					final var point = new GeoPoint(geoLocation.getLongitude(), geoLocation.getLatitude());
 					response.setGps(point);
@@ -117,7 +119,7 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		}
 		final String dateString = llmManager.promptOnFiles(new VPrompt(
 				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-03 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme",
-				null, null), file);
+				null, null), file).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
 				response.setDate(LocalDate.parse(dateString));
@@ -127,8 +129,7 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		}
 
 		// all docs
-		final var files = aiFileResponses.stream()
-				.map(AiResponse::getDocUri)
+		final var files = Stream.concat(Stream.of(fileUri), fileUris.stream())
 				.map(fileStoreManager::read)
 				.map(FileInfo::getVFile)
 				.collect(Collectors.toList());
@@ -136,22 +137,46 @@ public class AiHealthController extends AbstractVSpringMvcController {
 
 		response.setSummary(llmManager.promptOnFiles(new VPrompt(
 				"""
-						Peux tu me donner un schéma de médication sous le format suivant, sans inclure aucune autre information dans la réponse :
+						Reporte l'ordonnance prescrite mais ordonnée sous forme d'un planning journalier. Fait attention a bien reporter tous les médicaments dans les catégories "matin", "midi" et "soir" en fonction de l'ordonnance, à ne pas oublier de médicament et que le nombre total de prises sur la journée corresponde bien à l'ordonnance.
+						Un médicament devant être pris 2 fois par jour sera mis dans les catégories "matin" et "soir" afin de les espacer au maximum.
+						Répond uniquement sous le format suivant, sans inclure aucune autre information dans la réponse :
 						Matin :
-						- Médicament 1 du matin
-						- Médicament 2 du matin
+						- tous les médicaments du matin
 						- ...
 						Midi :
-						- Médicament 1 du midi
-						- Médicament 2 du midi
+						- tous les médicaments du midi
 						- ...
 						Soir :
-						- Médicament 1 du soir
-						- Médicament 2 du soir
+						- tous les médicaments du soir
 						- ...
-						""", null, null), files));
-		response.setDescription(llmManager.promptOnFiles(new VPrompt("Quels sont les principaux effets indésirables les plus courant des médicaments de l'ordonnance ?", null, null), files));
-		response.setDescription2(llmManager.promptOnFiles(new VPrompt("Quels sont les principales contre-indications des médicaments de l'ordonnance?", null, null), files));
+						""",
+				null, null), file).getHtml());
+
+		final var effetsIndesirables = llmManager.promptOnFiles(new VPrompt("Quels sont les principaux effets indésirables les plus courant des médicaments de l'ordonnance ?", null, null), files);
+		final var effetsIndesirablesHtml = new StringBuilder(effetsIndesirables.getHtml());
+		if (!effetsIndesirables.getSources().isEmpty()) {
+			effetsIndesirablesHtml.append("<hr class=\"q-separator q-separator--horizontal q-mb-sm\"><p><strong class=\"text-deep-purple\">> Sources :</strong></p><ul>");
+			for (final var source : effetsIndesirables.getSources()) {
+				effetsIndesirablesHtml.append("<li>");
+				effetsIndesirablesHtml.append(source);
+				effetsIndesirablesHtml.append("</li>");
+			}
+			effetsIndesirablesHtml.append("</ul>");
+		}
+		response.setDescription(effetsIndesirablesHtml.toString());
+
+		final var contreIndications = llmManager.promptOnFiles(new VPrompt("Quels sont les principales contre-indications des médicaments de l'ordonnance ?", null, null), files);
+		final var contreIndicationsHtml = new StringBuilder(contreIndications.getHtml());
+		if (!contreIndications.getSources().isEmpty()) {
+			contreIndicationsHtml.append("<hr class=\"q-separator q-separator--horizontal q-mb-sm\"><p><strong class=\"text-deep-purple\">> Sources :</strong></p><ul>");
+			for (final var source : contreIndications.getSources()) {
+				contreIndicationsHtml.append("<li>");
+				contreIndicationsHtml.append(source);
+				contreIndicationsHtml.append("</li>");
+			}
+			contreIndicationsHtml.append("</ul>");
+		}
+		response.setDescription2(contreIndicationsHtml.toString());
 
 		return jsonEngine.toJson(response);
 	}

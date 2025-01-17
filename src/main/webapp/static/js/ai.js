@@ -12,16 +12,13 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 				const uri = file.fileUri;
 				if (!getCardByUri(uri)) {
 					console.log("Analyzing " + uri);
-					const newCard = { fileUri: uri, fileName: file.fileName, loading: true };
+					const newCard = { fileUri: uri, fileName: file.name, loading: true };
 					const index = VUiPage.vueData.aiFileResponses.push(newCard) - 1;
 										
 					VUiPage.$http.post('_analyze', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, fileUri: uri }))
 						.then(response => {
 							VUiPage.vueData.aiFileResponses[index] = {...response.data, ...VUiPage.vueData.aiFileResponses[index]};
 							VUiPage.vueData.aiFileResponses[index].loading = false;
-							if (index == VUiPage.vueData.aiFileResponses.length - 1) {
-								VUiPage.vueData.CTX = response.data.ctx;
-							}
 						})
 						.catch(error => {
 							const card = VUiPage.vueData.aiFileResponses[index];
@@ -50,10 +47,10 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 					for (const file of files) {
 						const uri = file.fileUri;
 						console.log("Analyzing " + uri);
-						const newCard = { fileUri: uri, fileName: file.fileName, loading: true };
+						const newCard = { fileUri: uri, fileName: file.name, loading: true };
 						VUiPage.vueData.aiOrdoResponse = newCard;
 											
-						VUiPage.$http.post('_analyzeOrdo', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, fileUri: uri }))
+						VUiPage.$http.post('_analyzeOrdo', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, fileUri: uri, fileUris: VUiPage.vueData.aiQuery.docUris }))
 							.then(response => {
 								VUiPage.vueData.aiOrdoResponse = {...response.data, ...VUiPage.vueData.aiOrdoResponse};
 								VUiPage.vueData.aiOrdoResponse.loading = false;

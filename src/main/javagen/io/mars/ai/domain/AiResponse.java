@@ -27,7 +27,6 @@ public final class AiResponse implements DataObject {
 	private String tags;
 	private String persons;
 	private String category;
-	private String ctx;
 	
 	/**
 	 * Champ : DATA.
@@ -293,25 +292,6 @@ public final class AiResponse implements DataObject {
 	 */
 	public void setCategory(final String category) {
 		this.category = category;
-	}
-	
-	/**
-	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'CTX'.
-	 * @return String ctx <b>Obligatoire</b>
-	 */
-	@Field(smartType = "STyText", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "CTX")
-	public String getCtx() {
-		return ctx;
-	}
-
-	/**
-	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'CTX'.
-	 * @param ctx String <b>Obligatoire</b>
-	 */
-	public void setCtx(final String ctx) {
-		this.ctx = ctx;
 	}
 	
 	/** {@inheritDoc} */

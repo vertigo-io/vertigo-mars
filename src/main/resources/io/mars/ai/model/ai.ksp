@@ -21,6 +21,5 @@ create DtDefinition DtAiResponse {
 	field tags 			{domain: DoMultipleIds 	label: "Tags" 			cardinality:"1"}
 	field persons 		{domain: DoMultipleIds 	label: "Persons" 		cardinality:"1"}
 	field category 		{domain: DoLabel 	 	label: "Category" 		cardinality:"1"}
-	field ctx 			{domain: DoText 	 	label: "CTX" 			cardinality:"1"}
 }
 
