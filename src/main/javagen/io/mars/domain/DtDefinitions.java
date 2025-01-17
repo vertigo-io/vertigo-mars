@@ -140,6 +140,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		gps,
 		/** Propriété 'Date'. */
 		date,
+		/** Propriété 'Date 2'. */
+		date2,
 		/** Propriété 'Tags'. */
 		tags,
 		/** Propriété 'Persons'. */

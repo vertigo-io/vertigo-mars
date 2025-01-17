@@ -42,28 +42,28 @@
 		            <template v-else>
 		            	<template v-if="item.date != null">
 		            		<q-card-section>
-                                <q-icon name="event" class="q-mr-xs"></q-icon>{{item.date}}
+                                <q-icon name="event" class="q-mr-xs" size="md"></q-icon>{{item.date}}
 		                    </q-card-section>
 			                <q-separator></q-separator>
 		            	</template>
 		            	
 		            	<template v-if="item.address != null">
 		            		<q-card-section>
-                                <q-icon name="location_on" class="q-mr-xs"></q-icon>{{item.address}}
+                                <q-icon name="location_on" class="q-mr-xs" size="md"></q-icon>{{item.address}}
 		                    </q-card-section>
 			                <q-separator></q-separator>
 		            	</template>
 		            	
 		            	<template v-if="item.tags != null">
                     		<q-card-section>
-                                <q-icon name="label" class="q-mr-xs"></q-icon><q-chip v-for="tag in item.tags.split(';')" :label="tag"></q-chip>
+                                <q-icon name="label" class="q-mr-xs" size="md"></q-icon><q-chip v-for="tag in item.tags.split(';')" :label="tag"></q-chip>
                             </q-card-section>
                             <q-separator></q-separator>
                         </template>
                         
                         <template v-if="item.persons != null">
 							<q-card-section>
-								<q-icon name="person" class="q-mr-xs"></q-icon><q-chip v-for="person in item.persons.split(';')" :label="person"></q-chip>
+								<q-icon name="person" class="q-mr-xs" size="md"></q-icon><q-chip v-for="person in item.persons.split(';')" :label="person"></q-chip>
 							</q-card-section>
 							<q-separator></q-separator>
 		            	</template>
