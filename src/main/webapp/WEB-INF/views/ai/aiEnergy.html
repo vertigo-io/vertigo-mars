@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{templates/mmcDetailLayout}">
+<head>
+<title>AI</title>
+	<script th:src="@{/static/js/ai.js}"></script>
+	<!-- maps -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+		<vu:block id="files" title="Files" th:with="viewMode='edit'">
+			<div class="row">
+				<div class="col-xl-6 col-12">
+					<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUris" multiple componentId="aiFileUpload"/>
+				</div>
+			</div>
+        </vu:block>
+        <vu:include-data object="aiFileResponses" field="'*'" />
+		<template v-if="vueData.aiFileResponses.length > 0">
+			<vu:block id="timeline" title="Timeline">
+				<template v-if="vueData.aiFileResponses.filter(r => r.loading == true).length > 0">
+					<q-skeleton height="200px" square ><div class="text-center">Analyse en cours... ({{vueData.aiFileResponses.filter(r => r.loading == false).length}}/{{vueData.aiFileResponses.length}})</div></q-skeleton>
+			    </template>
+			    <template v-else>
+			    	<div class="row">
+			    		<div class="col-6 text-right">
+			    			<h6 class="q-timeline__title q-px-lg">GAZ</h6>
+			    		</div>
+			    		<div class="col-6">
+			    			<h6 class="q-timeline__title q-px-lg">ELEC</h6>
+			    		</div>
+			    	</div>
+					<q-timeline layout="loose">
+						<q-timeline-entry v-for="file in vueData.aiFileResponses.filter(e => e.date != null).sort((a,b) => a.date.localeCompare(b.date))"
+											:title="file.fileName"
+											:subtitle="file.date"
+											:side="file.category == 'GAZ' ? 'left' : 'right'">
+							<p>{{file.description}}</p>
+							<p>Facture à payer avant le : {{file.date2}}</p>
+							<p>{{file.description2}}</p>
+							<p><q-chip v-for="tag in file.tags.split(';')" :label="tag"></q-chip></p>
+						</q-timeline-entry>
+					</q-timeline>
+				</template>
+			</vu:block>
+			<vu:block id="ask" title="Ask a question on documents">
+				Prochainement
+			</vu:block>
+		</template>
+	</section>
+</body>
+</html>

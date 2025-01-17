@@ -24,6 +24,7 @@ public final class AiResponse implements DataObject {
 	private String address;
 	private io.mars.support.smarttypes.GeoPoint gps;
 	private java.time.LocalDate date;
+	private java.time.LocalDate date2;
 	private String tags;
 	private String persons;
 	private String category;
@@ -235,6 +236,25 @@ public final class AiResponse implements DataObject {
 	 */
 	public void setDate(final java.time.LocalDate date) {
 		this.date = date;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Date 2'.
+	 * @return LocalDate date2 <b>Obligatoire</b>
+	 */
+	@Field(smartType = "STyLocaldate", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Date 2")
+	public java.time.LocalDate getDate2() {
+		return date2;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Date 2'.
+	 * @param date2 LocalDate <b>Obligatoire</b>
+	 */
+	public void setDate2(final java.time.LocalDate date2) {
+		this.date2 = date2;
 	}
 	
 	/**

@@ -18,6 +18,7 @@ create DtDefinition DtAiResponse {
 	field address 		{domain: DoText 		label: "Address"		cardinality:"1"}
 	field gps 			{domain: DoGeoPoint 	label: "GPS"			cardinality:"1"}
 	field date 	   		{domain: DoLocaldate	label: "Date" 			cardinality:"1"}
+	field date2 	   	{domain: DoLocaldate	label: "Date 2" 		cardinality:"1"}
 	field tags 			{domain: DoMultipleIds 	label: "Tags" 			cardinality:"1"}
 	field persons 		{domain: DoMultipleIds 	label: "Persons" 		cardinality:"1"}
 	field category 		{domain: DoLabel 	 	label: "Category" 		cardinality:"1"}
