@@ -58,16 +58,20 @@ public class AiEnergyController extends AbstractVSpringMvcController {
 
 		final var file = fileStoreManager.read(fileUri).getVFile();
 
+		response.setName(llmManager.promptOnFiles(
+				new VPrompt("Donne moi le numéro de facture. Répond uniquement le numéro de facture sans autre texte ni mise en forme.", null, null),
+				file).getText());
+
 		response.setDescription(llmManager.promptOnFiles(
 				new VPrompt("Donne moi la période de consommation concernée. Répond sur le format suivant 'Consommation du 01 janvier au 31 mars 2024' sans autre texte ni mise en forme.", null, null),
-				file).getHtml());
+				file).getText());
 
 		response.setDescription2(llmManager.promptOnFiles(
 				new VPrompt("Quel est le montant de la facture hors taxes. Répond sur le format suivant '1 234,56 € (HT)' sans autre texte ni mise en forme.", null, null),
-				file).getHtml());
+				file).getText());
 
 		final String dateString = llmManager.promptOnFiles(new VPrompt(
-				"Quelle est la date d'émission de la facture ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.",
+				"A quelle date a été envoyée la facture ? Ne donne pas la date de consommation mais bien la date d'émission de la facture. Répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.",
 				null, null), file).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
@@ -92,10 +96,11 @@ public class AiEnergyController extends AbstractVSpringMvcController {
 				"Si le document est en rapport avec l'électricité, répond ELEC. S'il est en rapport avec le gaz, répond GAZ. Sinon répond INCONNU. Répond uniquement ce mot en majuscule sans autre texte ni mise en forme",
 				null, null), file).getText());
 
+		/*
 		response.setTags(llmManager.promptOnFiles(new VPrompt(
 				"Quels sont les différents moyens de paiement acceptés ? Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme",
 				null, null), file).getText());
-
+		*/
 		return jsonEngine.toJson(response);
 	}
 

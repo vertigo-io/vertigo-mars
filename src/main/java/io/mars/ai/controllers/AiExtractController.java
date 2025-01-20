@@ -64,7 +64,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 		final var file = fileStoreManager.read(fileUri).getVFile();
 
-		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 8 mots max ce qu'est ce fichier", null, null), file).getHtml());
+		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 10 mots maximum ce qu'est ce fichier", null, null), file).getHtml());
 		response.setSummary(llmManager.summarize(file).getHtml());
 
 		final var fileAddress = llmManager.promptOnFiles(
