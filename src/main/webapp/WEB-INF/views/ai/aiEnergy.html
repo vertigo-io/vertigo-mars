@@ -10,7 +10,7 @@
 </head>
 <body>
 	<section layout:fragment="content">
-		<vu:block id="files" title="Files" th:with="viewMode='edit'">
+		<vu:block id="files" title="Factures" th:with="viewMode='edit'">
 			<div class="row">
 				<div class="col-xl-6 col-12">
 					<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUris" multiple componentId="aiFileUpload"/>
@@ -19,35 +19,47 @@
         </vu:block>
         <vu:include-data object="aiFileResponses" field="'*'" />
 		<template v-if="vueData.aiFileResponses.length > 0">
-			<vu:block id="timeline" title="Timeline">
+			<vu:block id="timeline" title="Echéancier des factures">
 				<template v-if="vueData.aiFileResponses.filter(r => r.loading == true).length > 0">
-					<q-skeleton height="200px" square ><div class="text-center">Analyse en cours... ({{vueData.aiFileResponses.filter(r => r.loading == false).length}}/{{vueData.aiFileResponses.length}})</div></q-skeleton>
+					<q-skeleton height="calc(65vh + 50px)" square ><div class="text-center">Analyse en cours... ({{vueData.aiFileResponses.filter(r => r.loading == false).length}}/{{vueData.aiFileResponses.length}})</div></q-skeleton>
 			    </template>
 			    <template v-else>
+ 					<div class="absolute-top-right q-pa-xl">
+						<div><q-icon name="check" size="md" color="green" class="q-mr-md"></q-icon>Payé</div>
+						<div><q-icon name="close" size="md" color="orange" class="q-mr-md"></q-icon>A payer</div>
+						<div><q-icon name="error" size="md" color="red" class="q-mr-md"></q-icon>En retard</div>
+					</div>
 			    	<div class="row">
 			    		<div class="col-6 text-right">
-			    			<h6 class="q-timeline__title q-px-lg">GAZ</h6>
+			    			<h6 class="q-timeline__title q-px-lg">GAZ <q-icon name="mdi-fire" size="md" color="blue" class="q-ml-md"></q-icon></h6>
 			    		</div>
 			    		<div class="col-6">
-			    			<h6 class="q-timeline__title q-px-lg">ELEC</h6>
+			    			<h6 class="q-timeline__title q-px-lg"><q-icon name="mdi-lightning-bolt" size="md" color="amber" class="q-mr-md"></q-icon>ELEC</h6>
 			    		</div>
 			    	</div>
-					<q-timeline layout="loose">
-						<q-timeline-entry v-for="file in vueData.aiFileResponses.filter(e => e.date != null).sort((a,b) => a.date.localeCompare(b.date))"
-											:title="file.fileName"
-											:subtitle="file.date"
-											:side="file.category == 'GAZ' ? 'left' : 'right'">
-							<p>{{file.description}}</p>
-							<p>Facture à payer avant le : {{file.date2}}</p>
-							<p>{{file.description2}}</p>
-							<p><q-chip v-for="tag in file.tags.split(';')" :label="tag"></q-chip></p>
-						</q-timeline-entry>
-					</q-timeline>
+			    	<q-scroll-area style="height: 65vh">
+						<q-timeline layout="loose">
+							<q-timeline-entry v-for="(file, index) in vueData.aiFileResponses.filter(e => e.date != null).sort((a,b) => -a.date.localeCompare(b.date))"
+												:subtitle="file.date"
+												:side="file.category == 'GAZ' ? 'left' : 'right'"
+												:color="index > 2 ? 'green' : index < 2 ? 'orange' : 'red'"
+												:icon="index > 2 ? 'check' : index < 2 ? 'close' : 'error'">
+								<template v-slot:title>
+						        	<span class="text-body1">Facture N° : </span><b>{{file.name}}</b>
+						        </template>
+								<div>{{file.description}}</div>
+								<div>{{file.description2}}</div>
+								<div v-if="index < 3" :class="index < 2 ? 'text-orange' : 'text-red'">Facture à payer avant le : {{file.date2}}</div>
+							</q-timeline-entry>
+						</q-timeline>
+					</q-scroll-area>
 				</template>
 			</vu:block>
+			<!--/* 
 			<vu:block id="ask" title="Ask a question on documents">
 				Prochainement
 			</vu:block>
+			 */-->
 		</template>
 	</section>
 </body>
