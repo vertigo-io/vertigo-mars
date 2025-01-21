@@ -185,11 +185,11 @@
 				          </q-item-section>
 				          <q-item-section>File analysis</q-item-section>
 				        </q-item>
-				        <q-item tag="a" th:href="@{/ai/health/}" th:class="${model.requestURI.startsWith('__@{/ai/health}__') ? 'active':''}" >
+                        <q-item tag="a" th:href="@{/ai/energy/}" th:class="${model.requestURI.startsWith('__@{/ai/energy}__') ? 'active':''}" >
                           <q-item-section avatar>
-                          	<q-icon name="mdi-heart-pulse" title="Health" size="md"></q-icon>
+                          	<q-icon name="mdi-flash" title="Energy" size="md"></q-icon>
                           </q-item-section>
-                          <q-item-section>Health</q-item-section>
+                          <q-item-section>Energy</q-item-section>
                         </q-item>
                         <q-item tag="a" th:href="@{/ai/transport/}" th:class="${model.requestURI.startsWith('__@{/ai/transport}__') ? 'active':''}" >
                           <q-item-section avatar>
@@ -197,11 +197,11 @@
                           </q-item-section>
                           <q-item-section>Transport</q-item-section>
                         </q-item>
-                        <q-item tag="a" th:href="@{/ai/energy/}" th:class="${model.requestURI.startsWith('__@{/ai/energy}__') ? 'active':''}" >
+				        <q-item tag="a" th:href="@{/ai/health/}" th:class="${model.requestURI.startsWith('__@{/ai/health}__') ? 'active':''}" >
                           <q-item-section avatar>
-                          	<q-icon name="mdi-flash" title="Energy" size="md"></q-icon>
+                          	<q-icon name="mdi-heart-pulse" title="Health" size="md"></q-icon>
                           </q-item-section>
-                          <q-item-section>Energy</q-item-section>
+                          <q-item-section>Health</q-item-section>
                         </q-item>
 				    </div>
 				    

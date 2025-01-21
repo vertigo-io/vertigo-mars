@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{templates/mmcDetailLayout}">
+<head>
+<title>AI</title>
+	<script th:src="@{/static/js/ai.js}"></script>
+	<!-- maps -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+		<vu:block title="Déclarations d'incident" th:with="viewMode='edit'">
+			<div class="row">
+				<div class="col-xl-6 col-12" v-if="!vueData.receivingCalls || vueData.receivingCalls.length == 0">
+			        <vu:include-data object="aiQuery" field="'*'" />
+					<q-input type="textarea" v-model="vueData.aiQuery.prompt" ></q-input><br/>
+					<div class="q-gutter-md">
+						<q-btn @click="analyzeTransportText(vueData.aiQuery.prompt); vueData.aiQuery.prompt=''" label="Envoyer" color="primary" :disabled="!vueData.aiQuery.prompt"></q-btn>
+						<q-btn @click="connectToCallCenter(); vueData.clicked=true" :label="vueData.clicked ? 'Connexion en cours...' : 'Connecter'" color="grey-4" text-color="black"></q-btn>
+					</div>
+				</div>
+				<div v-if="vueData.receivingCalls && vueData.receivingCalls.length > 0"
+				     class="col-12 row q-gutter-md" style="min-height: 300px">
+					<q-card v-for="item in vueData.receivingCalls" class="col-3">
+						<div class="q-pa-md" style="white-space: pre-line">
+							<q-icon :name="item.text.split(' ').length % 4 < 2 ? 'phone_in_talk' : 'call'" class="q-mb-md" size="md"></q-icon><br/>
+							{{ item.text }}
+						</div>
+					</q-card>
+				</div>
+			</div>
+        </vu:block>
+        
+        <vu:include-data object="aiResponses" field="'*'" />
+		<vu:block title="Tickets" v-if="vueData.aiResponses.length > 0">
+			<vu:cards list="aiResponses" componentId="fileCards" rowsPerPage="100" showMore="true" cardClass="col-4" >
+				<q-card-section>
+	                   <div :class="{'ellipsis' : !item.loading}" :style="item.loading ? 'white-space: pre-line':''">{{item.text}}</div>
+	            </q-card-section>
+	            <q-separator></q-separator>
+	            <template v-if="item.loading">
+					<q-card-section class="q-pa-none">
+	                   	<q-skeleton height="400px" square ><div class="text-center">Création du ticket en cours...</div></q-skeleton>
+	            	</q-card-section>
+	            </template>
+	            <template v-else>
+	                <q-card-section horizontal>
+	            		<q-card-section>
+	                              <q-icon name="confirmation_number" class="q-mr-xs" size="md"></q-icon>{{item.name}}
+	                    </q-card-section>
+		                <q-separator vertical></q-separator>
+	            		<q-card-section>
+	                              <q-icon :name="item.persons.startsWith('PL') ? 'local_shipping' : 'directions_car'" class="q-mr-xs" size="md"></q-icon>{{item.persons}}
+	                    </q-card-section>
+		                <q-separator vertical></q-separator>
+	            		<q-card-section>
+	                              <q-chip :color="item.tags == 'URGENT' ? 'red' : item.tags == 'ELEVE' ? 'orange' : item.tags == 'FAIBLE' ? 'blue' :''" :text-color="item.tags == 'URGENT' || item.tags == 'FAIBLE' ? 'white' :'black'">{{item.tags}}</q-chip>
+	                    </q-card-section>
+		                <q-separator vertical></q-separator>
+	            		<q-card-section>
+	                              <q-chip>{{item.category}}</q-chip>
+	                    </q-card-section>
+	                </q-card-section>
+	                <q-separator></q-separator>
+	           		<q-card-section>
+	                             <q-icon name="description" class="q-mr-xs" size="md"></q-icon>{{item.description}}
+	                   </q-card-section>
+	                <q-separator></q-separator>
+	           		<q-card-section>
+	                  		<q-icon name="location_on" class="q-mr-xs" size="md"></q-icon>{{item.address}}
+	                  	</q-card-section>
+	                <q-separator></q-separator>
+	           		<q-card-section>
+	                       <v-map style="width:100%; height: 300px;" :id="'map_ol' + Math.round(Math.random() * 10000000)" initial-zoom-level="15">
+							<v-map-layer marker-color="#027BE3" :object="item" field="gps" ></v-map-layer>
+						</v-map>
+	                   </q-card-section>
+	            	
+				</template>
+			</vu:cards>
+		</vu:block>
+	</section>
+</body>
+</html>
