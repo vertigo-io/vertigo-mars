@@ -143,13 +143,13 @@ function appendCall(text) {
 	var words = text.split(' ');
 	let receivingText  = { text: ''};
 	VUiPage.vueData.receivingCalls.push(receivingText);
-	setTimeout(() => addWord(receivingText, words, 0), Math.random() * 200 + 150);
+	setTimeout(() => addWord(receivingText, words, 0), words[0].length * 8 + 150);
 }
 
 function addWord(obj, texts, index) {
 	VUiPage.vueData.receivingCalls[VUiPage.vueData.receivingCalls.indexOf(obj)].text = obj.text + ' ' + texts[index];
 	if (index < texts.length - 1) {
-		setTimeout(() => addWord(obj, texts, index + 1), Math.random() * 200 + 150);
+		setTimeout(() => addWord(obj, texts, index + 1), words[index + 1].length * 8 + 150);
 	} else {
 		setTimeout(() => {
 			VUiExtensions.methods.analyzeTransportText (obj.text.substring(obj.text.indexOf("\n") + 1));
