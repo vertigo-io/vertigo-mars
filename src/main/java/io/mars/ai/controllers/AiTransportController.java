@@ -53,7 +53,7 @@ public class AiTransportController extends AbstractVSpringMvcController {
 		final String prePrompt = "En prennant en compte le texte suivant :\n'\n" + text + "\n'\n";
 
 		final var response = new AiResponse();
-		response.setName("TI_IN_" + "%05d".formatted(RANDOM.nextInt(100000)));
+		response.setName("TI_" + "%04d".formatted(RANDOM.nextInt(10000)));
 
 		response.setDescription(llmManager.promptOnFiles(new VPrompt(
 				prePrompt + "Décrit moi en 10 mots maximum la raison de l'appel. N'ajoute pas de détail non précisé, par exemple si le type de vehicule n'est pas précisé, ne le donne pas.", null,

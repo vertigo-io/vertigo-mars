@@ -149,7 +149,7 @@ function appendCall(text) {
 function addWord(obj, texts, index) {
 	VUiPage.vueData.receivingCalls[VUiPage.vueData.receivingCalls.indexOf(obj)].text = obj.text + ' ' + texts[index];
 	if (index < texts.length - 1) {
-		setTimeout(() => addWord(obj, texts, index + 1), words[index + 1].length * 8 + 150);
+		setTimeout(() => addWord(obj, texts, index + 1), texts[index + 1].length * 8 + 150);
 	} else {
 		setTimeout(() => {
 			VUiExtensions.methods.analyzeTransportText (obj.text.substring(obj.text.indexOf("\n") + 1));
