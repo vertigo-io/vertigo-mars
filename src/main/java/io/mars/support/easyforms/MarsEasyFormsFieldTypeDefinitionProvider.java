@@ -6,15 +6,15 @@ import io.mars.basemanagement.domain.Business;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.SimpleEnumDefinitionProvider;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.easyforms.impl.runner.pack.EasyFormsSmartTypes;
-import io.vertigo.easyforms.impl.runner.pack.provider.FieldValidatorTypeDefinitionProvider.FieldValidatorEnum;
-import io.vertigo.easyforms.impl.runner.pack.provider.UiComponentDefinitionProvider.UiComponentEnum;
-import io.vertigo.easyforms.impl.runner.pack.provider.fieldtype.SimpleFieldType;
-import io.vertigo.easyforms.impl.runner.pack.provider.uicomponent.SelectUiComponent;
-import io.vertigo.easyforms.impl.runner.suppliers.IEasyFormsFieldTypeDefinitionSupplier;
-import io.vertigo.easyforms.impl.runner.suppliers.IEasyFormsUiComponentDefinitionSupplier;
 import io.vertigo.easyforms.runner.model.definitions.EasyFormsFieldTypeDefinition;
 import io.vertigo.easyforms.runner.model.definitions.EasyFormsUiComponentDefinition;
+import io.vertigo.easyforms.runner.pack.EasyFormsSmartTypes;
+import io.vertigo.easyforms.runner.pack.provider.FieldValidatorTypeDefinitionProvider.FieldValidatorEnum;
+import io.vertigo.easyforms.runner.pack.provider.UiComponentDefinitionProvider.UiComponentEnum;
+import io.vertigo.easyforms.runner.pack.provider.fieldtype.SimpleFieldType;
+import io.vertigo.easyforms.runner.pack.provider.uicomponent.SelectUiComponent;
+import io.vertigo.easyforms.runner.suppliers.IEasyFormsFieldTypeDefinitionSupplier;
+import io.vertigo.easyforms.runner.suppliers.IEasyFormsUiComponentDefinitionSupplier;
 
 public class MarsEasyFormsFieldTypeDefinitionProvider implements SimpleEnumDefinitionProvider<EasyFormsFieldTypeDefinition> {
 

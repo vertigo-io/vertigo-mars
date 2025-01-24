@@ -20,7 +20,7 @@ import io.mars.support.util.SecurityUtil;
 import io.vertigo.account.authorization.annotations.Secured;
 import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.easyforms.domain.EasyForm;
-import io.vertigo.easyforms.impl.runner.controllers.EasyFormsRunnerController;
+import io.vertigo.easyforms.runner.controllers.EasyFormsRunnerController;
 import io.vertigo.easyforms.runner.model.template.EasyFormsData;
 import io.vertigo.easyforms.runner.model.template.EasyFormsTemplate;
 import io.vertigo.ui.core.ViewContext;

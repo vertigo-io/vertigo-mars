@@ -16,7 +16,7 @@ import io.mars.catalog.services.equipment.EquipmentCategoryServices;
 import io.mars.support.MarsUserSession;
 import io.mars.support.util.SecurityUtil;
 import io.vertigo.account.authorization.annotations.Secured;
-import io.vertigo.easyforms.impl.designer.controllers.EasyFormsDesignerController;
+import io.vertigo.easyforms.designer.controllers.EasyFormsDesignerController;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
