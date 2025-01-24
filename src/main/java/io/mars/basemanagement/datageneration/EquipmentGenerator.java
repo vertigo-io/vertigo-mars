@@ -23,13 +23,13 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.data.model.DtList;
-import io.vertigo.easyforms.designer.services.IEasyFormsDesignerServices;
+import io.vertigo.easyforms.designer.services.EasyFormsDesignerServices;
 import io.vertigo.easyforms.domain.EasyForm;
-import io.vertigo.easyforms.impl.runner.pack.provider.FieldTypeDefinitionProvider.FieldTypeEnum;
 import io.vertigo.easyforms.runner.model.template.AbstractEasyFormsTemplateItem;
 import io.vertigo.easyforms.runner.model.template.EasyFormsTemplate;
 import io.vertigo.easyforms.runner.model.template.EasyFormsTemplateSection;
 import io.vertigo.easyforms.runner.model.template.item.EasyFormsTemplateItemField;
+import io.vertigo.easyforms.runner.pack.provider.FieldTypeDefinitionProvider.FieldTypeEnum;
 
 @Transactional
 public class EquipmentGenerator implements Component {
@@ -49,7 +49,7 @@ public class EquipmentGenerator implements Component {
 	@Inject
 	private ResourceManager resourceManager;
 	@Inject
-	private IEasyFormsDesignerServices easyFormsAdminServices;
+	private EasyFormsDesignerServices easyFormsAdminServices;
 
 	public void createInitialEquipments(final int equipmentUnitsToGenerate, final List<Base> bases) {
 		final DtList<EquipmentType> equipmentTypes = equipmentTypeDAO.selectEquipmentType();

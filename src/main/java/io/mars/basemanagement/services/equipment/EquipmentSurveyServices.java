@@ -19,7 +19,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datamodel.data.model.DtListState;
-import io.vertigo.easyforms.runner.services.IEasyFormsRunnerServices;
+import io.vertigo.easyforms.runner.services.EasyFormsRunnerServices;
 
 @Transactional
 public class EquipmentSurveyServices implements Component {
@@ -31,7 +31,7 @@ public class EquipmentSurveyServices implements Component {
 	private BasemanagementPAO basemanagementPAO;
 
 	@Inject
-	private IEasyFormsRunnerServices easyFormsRunnerServices;
+	private EasyFormsRunnerServices easyFormsRunnerServices;
 
 	public DtList<EquipmentSurveyDisplay> getListByEquipment(final Long equipmentId, final DtListState dtListState) {
 		return basemanagementPAO.listSurveysFromEquipmentId(equipmentId, AuthorizationUtil.authorizationCriteria(Equipment.class, SecuredEntities.EquipmentOperations.read));
