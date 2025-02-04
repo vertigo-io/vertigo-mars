@@ -78,7 +78,19 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 	}
 	
 	VUiPage.vueData.receivingCalls = [];
+	VUiPage.vueData.chat=[];
 	
+	VUiPage.$watch('vueData.chat',
+		(newValue, oldValue) => {
+			VUiPage.$nextTick(() => {
+				const scrollHeight = VUiPage.$refs.scroller.$el.children[0].children[0].scrollHeight; // workaround
+				VUiPage.$refs.scroller.setScrollPosition('vertical',scrollHeight, 400);
+				//VUiPage.$refs.scroller.setScrollPercentage('vertical',1);
+			});
+		},
+		{ deep: true }
+    );
+			
 });
 
 VUiExtensions.methods.analyzeTransportText = function(text) {
@@ -158,3 +170,16 @@ function addWord(obj, texts, index) {
 	}
 }
 
+
+VUiExtensions.methods.openChat = function(files, resultFn) {
+	VUiPage.httpPostAjax('_initChat', { fileUris: files}, {onSuccess: resultFn});
+}
+
+VUiExtensions.methods.chat = function(text, resultFn) {
+	VUiPage.$http.post('_ask', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, prompt: text}))
+			.then(response => resultFn(response.data))
+			.catch(error => {
+				console.log("error : " + error);
+				// nope, only for demo
+			});
+}
