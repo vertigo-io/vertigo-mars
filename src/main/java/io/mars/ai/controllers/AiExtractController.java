@@ -1,6 +1,7 @@
 package io.mars.ai.controllers;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import io.mars.ai.domain.AiQuery;
 import io.mars.ai.domain.AiResponse;
 import io.mars.support.smarttypes.GeoPoint;
-import io.vertigo.ai.impl.llm.VPrompt;
+import io.vertigo.ai.impl.llm.StandardPrompts;
 import io.vertigo.ai.llm.LlmManager;
+import io.vertigo.ai.llm.model.VPrompt;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datastore.filestore.FileStoreManager;
+import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.geo.geocoder.GeoCoderManager;
 import io.vertigo.geo.geocoder.GeoLocation;
@@ -45,6 +48,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<AiQuery> aiQueryKey = ViewContextKey.of("aiQuery");
 	private static final ViewContextKey<AiResponse> aiFileResponsesKey = ViewContextKey.of("aiFileResponses");
+	private static final ViewContextKey<Long> chatIdKey = ViewContextKey.of("chatId");
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
@@ -65,7 +69,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		final var file = fileStoreManager.read(fileUri).getVFile();
 
 		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 10 mots maximum ce qu'est ce fichier", null, null), file).getHtml());
-		response.setSummary(llmManager.summarize(file).getHtml());
+		response.setSummary(llmManager.promptOnFiles(new VPrompt(StandardPrompts.SUMMARY_PROMPT, null, null), file).getHtml());
 
 		final var fileAddress = llmManager.promptOnFiles(
 				new VPrompt(
@@ -111,9 +115,21 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		return jsonEngine.toJson(response);
 	}
 
-	@PostMapping("/_ask")
-	public void doExtract(final ViewContext viewContext, @ViewAttribute("aiQuery") final AiQuery aiQuery) {
+	@PostMapping("/_initChat")
+	public ViewContext initChat(final ViewContext viewContext, @RequestParam("fileUris") final List<FileInfoURI> fileUris) {
+		final var files = fileUris.stream()
+				.map(fileStoreManager::read)
+				.map(FileInfo::getVFile)
+				.toList();
 
+		return viewContext
+				.publishRef(chatIdKey, llmManager.initChat(files).getId());
+	}
+
+	@PostMapping("/_ask")
+	@ResponseBody
+	public String doExtract(@RequestParam("prompt") final String prompt, @ViewAttribute("chatId") final Long chatId) {
+		return llmManager.getChat(chatId).chat(new VPrompt(prompt, null, null)).getHtml();
 	}
 
 }
