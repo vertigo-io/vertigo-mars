@@ -2,6 +2,7 @@ package io.mars.ai.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,7 +18,9 @@ import io.mars.ai.domain.AiResponse;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.ai.impl.llm.StandardPrompts;
 import io.vertigo.ai.llm.LlmManager;
+import io.vertigo.ai.llm.model.VPersona;
 import io.vertigo.ai.llm.model.VPrompt;
+import io.vertigo.ai.llm.model.VPromptContext;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datastore.filestore.FileStoreManager;
@@ -27,7 +30,6 @@ import io.vertigo.geo.geocoder.GeoCoderManager;
 import io.vertigo.geo.geocoder.GeoLocation;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
-import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 import io.vertigo.vega.engines.webservice.json.JsonEngine;
 
@@ -48,7 +50,26 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<AiQuery> aiQueryKey = ViewContextKey.of("aiQuery");
 	private static final ViewContextKey<AiResponse> aiFileResponsesKey = ViewContextKey.of("aiFileResponses");
-	private static final ViewContextKey<Long> chatIdKey = ViewContextKey.of("chatId");
+
+	private static final String COMMON_STYLE = "la réponse ne doit comporter que du markdown, il ne faut pas écrire de formules en LaTeX par exemple. Quand un montant est présent sans précisions, il s'agit d'un montant TTC.";
+
+	private static final Map<String, VPersona> personaMap = Map.of(
+			"MAR",
+			new VPersona("Marie", null,
+					"Tu es une chef comptable, tu t'intéresses à la comptabilité et à la finance, tu es très précise et tu n'hésite pas à mettre des tableaux pour expliquer les choses, détailler les prix HT et TTC.",
+					COMMON_STYLE),
+			"DAN",
+			new VPersona("Daniel", null,
+					"Tu es un directeur de projets, à ce titre tu à une vision organisationnelle et financière des projets, tu es très orienté sur les coûts et les délais.",
+					COMMON_STYLE),
+			"ISA",
+			new VPersona("Isabelle", null,
+					"Tu es une architecte informatique, tu as une vision globale des systèmes d'information et des architectures techniques, tu es très orientée sur les normes et les standards.",
+					COMMON_STYLE),
+			"JUL",
+			new VPersona("Julia", null,
+					"Tu es une assistante virtuel très pragmatique qui répond avec le moins de mots possible, par exemple 'Oui' ou 'Non' ou si l'on te demande un montant tu répond uniquement le montant sans autre texte ni mise en forme.",
+					COMMON_STYLE));
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
@@ -67,14 +88,12 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		response.setDocUri(fileUri);
 
 		final var file = fileStoreManager.read(fileUri).getVFile();
-
-		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 10 mots maximum ce qu'est ce fichier", null, null), file).getHtml());
-		response.setSummary(llmManager.promptOnFiles(new VPrompt(StandardPrompts.SUMMARY_PROMPT, null, null), file).getHtml());
+		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 10 mots maximum ce qu'est ce fichier"), file).getHtml());
+		response.setSummary(llmManager.promptOnFiles(new VPrompt(StandardPrompts.SUMMARY_PROMPT), file).getHtml());
 
 		final var fileAddress = llmManager.promptOnFiles(
 				new VPrompt(
-						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme",
-						null, null),
+						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme"),
 				file);
 		if (!StringUtil.isBlank(fileAddress.getText())) {
 			response.setAddress(fileAddress.getText());
@@ -91,8 +110,8 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		}
 
 		final String dateString = llmManager.promptOnFiles(new VPrompt(
-				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.",
-				null, null), file).getText();
+				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre."),
+				file).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
 				response.setDate(LocalDate.parse(dateString));
@@ -102,12 +121,12 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		}
 
 		response.setTags(llmManager.promptOnFiles(new VPrompt(
-				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme",
-				null, null), file).getText());
+				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme"),
+				file).getText());
 
 		final var rawPersons = llmManager.promptOnFiles(new VPrompt(
-				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme",
-				null, null), file);
+				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme"),
+				file);
 		if (!StringUtil.isBlank(rawPersons.getText())) {
 			response.setPersons(rawPersons.getText());
 		}
@@ -116,20 +135,26 @@ public class AiExtractController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_initChat")
-	public ViewContext initChat(final ViewContext viewContext, @RequestParam("fileUris") final List<FileInfoURI> fileUris) {
+	@ResponseBody
+	public String initChat(@RequestParam("fileUris") final List<FileInfoURI> fileUris, @RequestParam("persona") final String personaCode) {
 		final var files = fileUris.stream()
 				.map(fileStoreManager::read)
 				.map(FileInfo::getVFile)
 				.toList();
 
-		return viewContext
-				.publishRef(chatIdKey, llmManager.initChat(files).getId());
+		final var persona = personaMap.get(personaCode);
+		final VPromptContext context = new VPromptContext();
+		if (personaCode != null) {
+			context.setPersona(persona);
+		}
+
+		return "{\"id\":\"" + llmManager.initChat(files, context).getId() + "\"}"; // String because Java Long is too big for javascript numbers
 	}
 
 	@PostMapping("/_ask")
 	@ResponseBody
-	public String doExtract(@RequestParam("prompt") final String prompt, @ViewAttribute("chatId") final Long chatId) {
-		return llmManager.getChat(chatId).chat(new VPrompt(prompt, null, null)).getHtml();
+	public String doExtract(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final Long chatId) {
+		return llmManager.getChat(chatId).chat(instructions).getHtml();
 	}
 
 }

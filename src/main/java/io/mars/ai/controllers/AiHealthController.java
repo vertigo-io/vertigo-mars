@@ -70,12 +70,12 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		final var file = fileStoreManager.read(fileUri).getVFile();
 
 		response.setName(llmManager
-				.promptOnFiles(new VPrompt("Donne moi le nom du médicament en français, traduit le si nécessaire. Répond uniquement son nom sans autre texte ni formatage", null, null), file)
+				.promptOnFiles(new VPrompt("Donne moi le nom du médicament en français, traduit le si nécessaire. Répond uniquement son nom sans autre texte ni formatage"), file)
 				.getText());
-		response.setSummary(llmManager.promptOnFiles(new VPrompt("A quoi sert ce médicament ? Répond uniquement en français.", null, null), file).getHtml());
-		response.setDescription(llmManager.promptOnFiles(new VPrompt("Quelle est la posologie du médicament ? Répond uniquement en français.", null, null), file).getHtml());
-		response.setDescription2(llmManager.promptOnFiles(new VPrompt("Quels sont ses effets indésirables ? Répond uniquement en français.", null, null), file).getHtml());
-		response.setDescription3(llmManager.promptOnFiles(new VPrompt("Quels sont ses contres indications ? Répond uniquement en français.", null, null), file).getHtml());
+		response.setSummary(llmManager.promptOnFiles(new VPrompt("A quoi sert ce médicament ? Répond uniquement en français."), file).getHtml());
+		response.setDescription(llmManager.promptOnFiles(new VPrompt("Quelle est la posologie du médicament ? Répond uniquement en français."), file).getHtml());
+		response.setDescription2(llmManager.promptOnFiles(new VPrompt("Quels sont ses effets indésirables ? Répond uniquement en français."), file).getHtml());
+		response.setDescription3(llmManager.promptOnFiles(new VPrompt("Quels sont ses contres indications ? Répond uniquement en français."), file).getHtml());
 
 		return jsonEngine.toJson(response);
 	}
@@ -89,20 +89,18 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		// Ordo only
 		final var file = fileStoreManager.read(fileUri).getVFile();
 		response.setName(
-				llmManager.promptOnFiles(new VPrompt("Quel est le nom/prénom/titre du médecin. Répond uniquement sous la forme 'Dr. Jean DUPONT' sans autre texte ni formatage", null, null), file)
+				llmManager.promptOnFiles(new VPrompt("Quel est le nom/prénom/titre du médecin. Répond uniquement sous la forme 'Dr. Jean DUPONT' sans autre texte ni formatage"), file)
 						.getText());
-		response.setCategory(llmManager.promptOnFiles(new VPrompt("Quel est le numéro RPPS du médecin ? Répond uniquement le numéro sans autre texte ni formatage", null, null), file).getText());
-		response.setPersons(llmManager.promptOnFiles(new VPrompt("Quel est le nom du patient ? Répond uniquement son nom sans autre texte ni formatage", null, null), file).getText());
+		response.setCategory(llmManager.promptOnFiles(new VPrompt("Quel est le numéro RPPS du médecin ? Répond uniquement le numéro sans autre texte ni formatage"), file).getText());
+		response.setPersons(llmManager.promptOnFiles(new VPrompt("Quel est le nom du patient ? Répond uniquement son nom sans autre texte ni formatage"), file).getText());
 		response.setTags(llmManager.promptOnFiles(
 				new VPrompt(
-						"Donne moi la liste de médicaments prescrits, donne moi la molécule active et ajoute entre parenthèse le nom du médicament prescrit. Répond sous la forme 'Molecule 1 (Medicament1);Molecule 2 (Medicament2);Molecule 3 (Medicament3);...' sans autre texte ni mise en forme",
-						null, null),
+						"Donne moi la liste de médicaments prescrits, donne moi la molécule active et ajoute entre parenthèse le nom du médicament prescrit. Répond sous la forme 'Molecule 1 (Medicament1);Molecule 2 (Medicament2);Molecule 3 (Medicament3);...' sans autre texte ni mise en forme"),
 				file).getText());
 
 		final var fileAddress = llmManager.promptOnFiles(
 				new VPrompt(
-						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme",
-						null, null),
+						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme"),
 				file);
 		if (!StringUtil.isBlank(fileAddress.getText())) {
 			response.setAddress(fileAddress.getText());
@@ -118,8 +116,8 @@ public class AiHealthController extends AbstractVSpringMvcController {
 			}
 		}
 		final String dateString = llmManager.promptOnFiles(new VPrompt(
-				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-03 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme",
-				null, null), file).getText();
+				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-03 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme"),
+				file).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
 				response.setDate(LocalDate.parse(dateString));
@@ -149,10 +147,10 @@ public class AiHealthController extends AbstractVSpringMvcController {
 						Soir :
 						- tous les médicaments du soir
 						- ...
-						""",
-				null, null), file).getHtml());
+						"""),
+				file).getHtml());
 
-		final var effetsIndesirables = llmManager.promptOnFiles(new VPrompt("Quels sont les principaux effets indésirables les plus courant des médicaments de l'ordonnance ?", null, null), files);
+		final var effetsIndesirables = llmManager.promptOnFiles(new VPrompt("Quels sont les principaux effets indésirables les plus courant des médicaments de l'ordonnance ?"), files);
 		final var effetsIndesirablesHtml = new StringBuilder(effetsIndesirables.getHtml());
 		if (!effetsIndesirables.getSources().isEmpty()) {
 			effetsIndesirablesHtml.append("<hr class=\"q-separator q-separator--horizontal q-mb-sm\"><p><strong class=\"text-deep-purple\">> Sources :</strong></p><ul>");
@@ -165,7 +163,7 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		}
 		response.setDescription(effetsIndesirablesHtml.toString());
 
-		final var contreIndications = llmManager.promptOnFiles(new VPrompt("Quels sont les principales contre-indications des médicaments de l'ordonnance ?", null, null), files);
+		final var contreIndications = llmManager.promptOnFiles(new VPrompt("Quels sont les principales contre-indications des médicaments de l'ordonnance ?"), files);
 		final var contreIndicationsHtml = new StringBuilder(contreIndications.getHtml());
 		if (!contreIndications.getSources().isEmpty()) {
 			contreIndicationsHtml.append("<hr class=\"q-separator q-separator--horizontal q-mb-sm\"><p><strong class=\"text-deep-purple\">> Sources :</strong></p><ul>");

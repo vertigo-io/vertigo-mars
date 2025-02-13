@@ -74,18 +74,24 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 
 
 	function getCardByUri(uri) {
-		return VUiPage.vueData.aiFileResponses.find(card => card.fileUri === uri);
+		return VUiPage.vueData.aiFileResponses.find(card => card.fileUri === uri);	
 	}
 	
 	VUiPage.vueData.receivingCalls = [];
-	VUiPage.vueData.chat=[];
+	VUiPage.vueData.chats=[
+		{ messages: [], persona: { code: 'MAR', name: 'Marie', avatar: 'https://cdn.quasar.dev/img/avatar6.jpg', welcome: 'Bonjour, je suis Marie, chef comptable, comment puis-je vous aider ?' }},
+		{ messages: [], persona: { code: 'DAN', name: 'Daniel', avatar: 'https://cdn.quasar.dev/img/avatar4.jpg', welcome: 'Bonjour, je suis Daniel, directeur de projets, je vous écoute.' }},
+		{ messages: [], persona: { code: "ISA", name: "Isabelle", avatar: 'https://cdn.quasar.dev/img/avatar2.jpg', welcome: 'Bonjour, je suis Isabelle, architecte en informatique, comment puis-je vous aider ?' }},
+		{ messages: [], persona: { code: 'JUL', name: 'Julia', avatar: 'https://cdn.quasar.dev/img/avatar3.jpg', welcome: 'Bonjour, je suis Julia, quel est votre question ?' }},
+	];
+	VUiPage.vueData.tab = VUiPage.vueData.chats[0].persona.code;
 	
-	VUiPage.$watch('vueData.chat',
+	VUiPage.$watch('vueData.chats',
 		(newValue, oldValue) => {
 			VUiPage.$nextTick(() => {
-				const scrollHeight = VUiPage.$refs.scroller.$el.children[0].children[0].scrollHeight; // workaround
-				VUiPage.$refs.scroller.setScrollPosition('vertical',scrollHeight, 400);
-				//VUiPage.$refs.scroller.setScrollPercentage('vertical',1);
+				const scrollHeight = VUiPage.$refs.scroller[0].$el.children[0].children[0].scrollHeight; // workaround
+				VUiPage.$refs.scroller[0].setScrollPosition('vertical',scrollHeight, 400);
+				//VUiPage.$refs.scroller[0].setScrollPercentage('vertical',1);
 			});
 		},
 		{ deep: true }
@@ -171,13 +177,36 @@ function addWord(obj, texts, index) {
 }
 
 
-VUiExtensions.methods.openChat = function(files, resultFn) {
-	VUiPage.httpPostAjax('_initChat', { fileUris: files}, {onSuccess: resultFn});
+VUiExtensions.methods.chat = function(chatIdx, text, files, resultFn) {
+	let chat = VUiPage.vueData.chats[chatIdx];
+	chat.chatting = true;
+	chat.messages.push({text:text, type:'user'});
+	
+	// init chat if needed
+	if (chat.id == null) {
+		VUiPage.$http.post('_initChat', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, fileUris: files, persona: chat.persona.code }))
+			.then(response => {
+					chat.id = response.data.id;
+					doChat(chat, text, resultFn);
+				})
+			.catch(error => {
+				console.log("error : " + error);
+				// nope, only for demo
+			});
+	} else {
+		doChat(chat, text, resultFn);
+	}
+		
 }
 
-VUiExtensions.methods.chat = function(text, resultFn) {
-	VUiPage.$http.post('_ask', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, prompt: text}))
-			.then(response => resultFn(response.data))
+function doChat(chat, text, resultFn) {
+	// send text
+	VUiPage.$http.post('_ask', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, prompt: text, chatId: chat.id }))
+			.then(response => {
+					chat.chatting = false;
+					chat.messages.push({text:response.data, type:'system'});
+					resultFn(response.data);
+				})
 			.catch(error => {
 				console.log("error : " + error);
 				// nope, only for demo
