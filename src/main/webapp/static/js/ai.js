@@ -79,9 +79,9 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 	
 	VUiPage.vueData.receivingCalls = [];
 	VUiPage.vueData.chats=[
-		{ messages: [], persona: { code: 'MAR', name: 'Marie', avatar: 'https://cdn.quasar.dev/img/avatar6.jpg', welcome: 'Bonjour, je suis Marie, chef comptable, comment puis-je vous aider ?' }},
+		{ messages: [], persona: { code: 'MAR', name: 'Marie', avatar: 'https://cdn.quasar.dev/img/avatar2.jpg', welcome: 'Bonjour, je suis Marie, chef comptable, comment puis-je vous aider ?' }},
 		{ messages: [], persona: { code: 'DAN', name: 'Daniel', avatar: 'https://cdn.quasar.dev/img/avatar4.jpg', welcome: 'Bonjour, je suis Daniel, directeur de projets, je vous écoute.' }},
-		{ messages: [], persona: { code: "ISA", name: "Isabelle", avatar: 'https://cdn.quasar.dev/img/avatar2.jpg', welcome: 'Bonjour, je suis Isabelle, architecte en informatique, comment puis-je vous aider ?' }},
+		{ messages: [], persona: { code: "ISA", name: "Isabelle", avatar: 'https://cdn.quasar.dev/img/avatar6.jpg', welcome: 'Bonjour, je suis Isabelle, architecte en informatique, comment puis-je vous aider ?' }},
 		{ messages: [], persona: { code: 'JUL', name: 'Julia', avatar: 'https://cdn.quasar.dev/img/avatar3.jpg', welcome: 'Bonjour, je suis Julia, quel est votre question ?' }},
 	];
 	VUiPage.vueData.tab = VUiPage.vueData.chats[0].persona.code;

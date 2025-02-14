@@ -150,7 +150,7 @@
 										<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
 										<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
 										                :sent="msg.type=='user'" :text-html="msg.type!='user'"
-										                :avatar="msg.type=='user' ? 'https://cdn.quasar.dev/img/avatar1.jpg' : chat.persona.avatar"></q-chat-message>
+										                th::avatar="|msg.type=='user' ? '@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo' : chat.persona.avatar|"></q-chat-message>
 										<q-chat-message v-if="chat.chatting" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
 									</q-scroll-area>
 									<div class="row items-end q-col-gutter-sm">
@@ -163,7 +163,7 @@
 								                                                } );
 							                                             chat.prompt='';"></q-input>
 			                            <div class="q-mb-sm">
-											<q-btn round icon="delete" @click="chat.messages=[]" text-color="red"></q-btn>
+											<q-btn round icon="delete" @click="chat.messages=[]; chat.id=null;" text-color="red"></q-btn>
 			                            </div>
 									</div>
 								</div>
