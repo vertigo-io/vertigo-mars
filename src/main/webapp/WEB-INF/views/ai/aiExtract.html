@@ -8,6 +8,15 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
 	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
 	<style>
+		h1 {
+		    font-size: 1.4rem !important;
+		    font-weight: bold !important;
+		    line-height: 1.1rem !important;
+		}
+		h2 {
+		    font-size: 1.3rem !important;
+		    line-height: 1.1rem !important;
+		}
 		h3 {
 		    font-size: 1.2rem !important;
 		    line-height: 1.1rem !important;
@@ -20,6 +29,10 @@
 		table {
 		  width: 100%;
 		  border-collapse: collapse;
+		}
+		
+		code {
+			text-wrap: auto;
 		}
 	</style>
 </head>
@@ -127,32 +140,36 @@
 					
 					<q-separator vertical></q-separator>
 					
-					<q-tab-panels v-model="vueData.tab"
-								  animated transition-prev="jump-down" transition-next="jump-up"
-								  class="col-grow">
-						<q-tab-panel v-for="(chat, chatIdx) in vueData.chats" :name="chat.persona.code">
-							<q-scroll-area ref="scroller" class="q-pr-md" style="height: calc(90vh - 300px);">
-								<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
-								<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
-								                :sent="msg.type=='user'" :text-html="msg.type!='user'"
-								                :avatar="msg.type=='user' ? 'https://cdn.quasar.dev/img/avatar1.jpg' : chat.persona.avatar"></q-chat-message>
-								<q-chat-message v-if="chat.chatting" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
-							</q-scroll-area>
-							<div class="row items-end q-col-gutter-sm">
-								<q-input filled v-model="chat.prompt" placeholder="Entrez un message" ref="input"
-								         :disable="chat.chatting" :loading="chat.chatting"
-								         class="q-mt-md col-grow"
-								         @keydown.enter.prevent="VUiExtensions.methods.chat(chatIdx, chat.prompt, vueData.aiFileResponses.map(f => f.fileUri),
-						                                              r => {
-						                                                $nextTick(() => {$refs.input[chatIdx].focus();});
-						                                                } );
-					                                             chat.prompt='';"></q-input>
-	                            <div class="q-mb-sm">
-									<q-btn round icon="delete" @click="chat.messages=[]" text-color="red"></q-btn>
-	                            </div>
-							</div>
-						</q-tab-panel>
-	          		</q-tab-panels>
+					<div class="col-grow q-mx-auto" style="max-width: 850px;">
+						<q-tab-panels v-model="vueData.tab"
+									  animated transition-prev="jump-down" transition-next="jump-up"
+									  class="full-height bg-grey-2">
+							<q-tab-panel v-for="(chat, chatIdx) in vueData.chats" :name="chat.persona.code">
+								<div class="column full-height">
+									<q-scroll-area ref="scroller" class="q-pr-md col-grow" @vue:mounted="scrollToBottom($refs.scroller[0])">
+										<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
+										<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
+										                :sent="msg.type=='user'" :text-html="msg.type!='user'"
+										                :avatar="msg.type=='user' ? 'https://cdn.quasar.dev/img/avatar1.jpg' : chat.persona.avatar"></q-chat-message>
+										<q-chat-message v-if="chat.chatting" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
+									</q-scroll-area>
+									<div class="row items-end q-col-gutter-sm">
+										<q-input filled v-model="chat.prompt" placeholder="Entrez un message" ref="input"
+										         :disable="chat.chatting" :loading="chat.chatting"
+										         class="q-mt-md col-grow"
+										         @keydown.enter.prevent="VUiExtensions.methods.chat(chatIdx, chat.prompt, vueData.aiFileResponses.map(f => f.fileUri),
+								                                              r => {
+								                                                $nextTick(() => {$refs.input[0].focus();});
+								                                                } );
+							                                             chat.prompt='';"></q-input>
+			                            <div class="q-mb-sm">
+											<q-btn round icon="delete" @click="chat.messages=[]" text-color="red"></q-btn>
+			                            </div>
+									</div>
+								</div>
+							</q-tab-panel>
+		          		</q-tab-panels>
+		          	</div>
 	          	</div>
 			</vu:block>
 		</template>

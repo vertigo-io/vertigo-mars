@@ -86,18 +86,15 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 	];
 	VUiPage.vueData.tab = VUiPage.vueData.chats[0].persona.code;
 	
-	VUiPage.$watch('vueData.chats',
-		(newValue, oldValue) => {
-			VUiPage.$nextTick(() => {
-				const scrollHeight = VUiPage.$refs.scroller[0].$el.children[0].children[0].scrollHeight; // workaround
-				VUiPage.$refs.scroller[0].setScrollPosition('vertical',scrollHeight, 400);
-				//VUiPage.$refs.scroller[0].setScrollPercentage('vertical',1);
-			});
-		},
-		{ deep: true }
-    );
-			
 });
+
+VUiExtensions.methods.scrollToBottom = function(scroller) {
+	VUiPage.$nextTick(() => {
+		const scrollHeight = scroller.$el.children[0].children[0].scrollHeight; // workaround
+		scroller.setScrollPosition('vertical',scrollHeight, 400);
+		//scroller.setScrollPercentage('vertical',1);
+	});
+}
 
 VUiExtensions.methods.analyzeTransportText = function(text) {
 	const newCard = { loading: true, text: text };
@@ -181,6 +178,7 @@ VUiExtensions.methods.chat = function(chatIdx, text, files, resultFn) {
 	let chat = VUiPage.vueData.chats[chatIdx];
 	chat.chatting = true;
 	chat.messages.push({text:text, type:'user'});
+	VUiExtensions.methods.scrollToBottom(VUiPage.$refs.scroller[0]);
 	
 	// init chat if needed
 	if (chat.id == null) {
@@ -206,6 +204,7 @@ function doChat(chat, text, resultFn) {
 					chat.chatting = false;
 					chat.messages.push({text:response.data, type:'system'});
 					resultFn(response.data);
+					VUiExtensions.methods.scrollToBottom(VUiPage.$refs.scroller[0]);
 				})
 			.catch(error => {
 				console.log("error : " + error);
