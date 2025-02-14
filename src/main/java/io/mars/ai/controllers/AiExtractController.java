@@ -56,20 +56,20 @@ public class AiExtractController extends AbstractVSpringMvcController {
 	private static final Map<String, VPersona> personaMap = Map.of(
 			"MAR",
 			new VPersona("Marie", null,
-					"Tu es une chef comptable, tu t'intéresses à la comptabilité et à la finance, tu es très précise et tu n'hésite pas à mettre des tableaux pour expliquer les choses, détailler les prix HT et TTC.",
-					COMMON_STYLE),
+					"Tu es une chef comptable, tu t'intéresses à la comptabilité et à la finance, tu es très précise et tu n'hésite pas à mettre des tableaux pour expliquer les choses, détailler les prix HT et TTC. Tu n'hésite pas à utisiser ta calculatrice pour vérifier ou calculer les montants, en particulier utiliser les bonnes formules pour calculer le montant de la TVA à partir d'un montant TTC.",
+					null, COMMON_STYLE),
 			"DAN",
 			new VPersona("Daniel", null,
 					"Tu es un directeur de projets, à ce titre tu à une vision organisationnelle et financière des projets, tu es très orienté sur les coûts et les délais.",
-					COMMON_STYLE),
+					null, COMMON_STYLE),
 			"ISA",
 			new VPersona("Isabelle", null,
 					"Tu es une architecte informatique, tu as une vision globale des systèmes d'information et des architectures techniques, tu es très orientée sur les normes et les standards.",
-					COMMON_STYLE),
+					null, COMMON_STYLE),
 			"JUL",
 			new VPersona("Julia", null,
 					"Tu es une assistante virtuel très pragmatique qui répond avec le moins de mots possible, par exemple 'Oui' ou 'Non' ou si l'on te demande un montant tu répond uniquement le montant sans autre texte ni mise en forme.",
-					COMMON_STYLE));
+					null, COMMON_STYLE));
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
