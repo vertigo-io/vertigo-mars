@@ -43,7 +43,7 @@
 			<q-item tag="a" href="#infos">Informations</q-item>
 			<q-item tag="a" href="#timeline">Timeline</q-item>
 			<q-item tag="a" href="#map">Map</q-item>
-			<q-item tag="a" href="#ask">Ask</q-item>
+			<q-item tag="a" href="#chat">Chat</q-item>
 		</template>
 	</section>
 	<section layout:fragment="content">
@@ -125,17 +125,25 @@
 					</v-map>
 				</div>
 			</vu:block>
-			<vu:block id="ask" title="Ask a question on documents">
-				<div class="row" style="height: calc(90vh - 200px);">
+			<vu:block id="chat" title="Chat (with documents)">
+				<div class="row no-wrap" style="height: calc(90vh - 200px);">
 					<q-tabs
-					  style="width: 10%"
+					  style="width: 15%;"
+					  :style="{minWidth: $q.screen.gt.md ? '240px' : $q.screen.gt.sm ? '195px' : '100px'}"
 					  v-model="vueData.tab"
 					  vertical
 					  class="text-grey"
 					  active-color="primary"
 					  indicator-color="primary"
+					  inline-label
 					>
-						<q-tab v-for="chat in vueData.chats" :name="chat.persona.code" :label="chat.persona.name"></q-tab>
+						<q-tab v-for="chat in vueData.chats" :name="chat.persona.code" content-class="full-width" no-caps>
+							<q-avatar v-if="$q.screen.gt.md"><img :src="chat.persona.avatar" alt="avatar"/></q-avatar>
+							<div class="col-grow">
+								<div class="text-uppercase">{{ chat.persona.name }}</div>
+								<div v-if="$q.screen.gt.sm" class="text-caption">{{ chat.persona.description }}</div>
+							</div>
+						</q-tab>
 					</q-tabs>
 					
 					<q-separator vertical></q-separator>
@@ -162,6 +170,7 @@
 								                                                $nextTick(() => {$refs.input[0].focus();});
 								                                                } );
 							                                             chat.prompt='';"></q-input>
+							                                             
 			                            <div class="q-mb-sm">
 											<q-btn round icon="delete" @click="chat.messages=[]; chat.id=null;" text-color="red"></q-btn>
 			                            </div>
