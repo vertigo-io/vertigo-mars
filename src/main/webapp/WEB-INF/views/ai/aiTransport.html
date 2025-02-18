@@ -78,10 +78,10 @@
 	                  	</q-card-section>
 	                <q-separator></q-separator>
 	           		<q-card-section>
-	                       <v-map style="width:100%; height: 300px;" :id="'map_ol' + Math.round(Math.random() * 10000000)" initial-zoom-level="15">
+	                    <v-map tabindex="1"style="width:100%; height: 300px;" :id="'map_ol' + Math.round(Math.random() * 10000000)" initial-zoom-level="15">
 							<v-map-layer marker-color="#027BE3" :object="item" field="gps" ></v-map-layer>
 						</v-map>
-	                   </q-card-section>
+	                </q-card-section>
 	            	
 				</template>
 			</vu:cards>
