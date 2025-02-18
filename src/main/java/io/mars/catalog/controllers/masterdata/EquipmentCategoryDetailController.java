@@ -44,7 +44,7 @@ public class EquipmentCategoryDetailController extends AbstractVSpringMvcControl
 
 		easyformsController.initContext(viewContext,
 				Optional.ofNullable(equipmentCategory.easyForm().getUID()),
-				Map.of("user", SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson())); // init easyforms context
+				Map.of("connectedUser", SecurityUtil.<MarsUserSession>getUserSession().getLoggedPerson())); // init easyforms context
 	}
 
 	@PostMapping("/_edit")
