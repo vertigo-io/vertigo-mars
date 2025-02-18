@@ -37,15 +37,6 @@
 	</style>
 </head>
 <body>
-	<section layout:fragment="content-nav">
-		<q-item tag="a" href="#files">Files</q-item>
-		<template v-if="vueData.aiFileResponses.length > 0">
-			<q-item tag="a" href="#infos">Informations</q-item>
-			<q-item tag="a" href="#timeline">Timeline</q-item>
-			<q-item tag="a" href="#map">Map</q-item>
-			<q-item tag="a" href="#chat">Chat</q-item>
-		</template>
-	</section>
 	<section layout:fragment="content">
 		<vu:block id="files" title="Files" th:with="viewMode='edit'">
 			<div class="row">
@@ -53,135 +44,146 @@
 					<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUris" multiple componentId="aiFileUpload"/>
 				</div>
 			</div>
-        </vu:block>			
-		<template v-if="vueData.aiFileResponses.length > 0">
-			<vu:block id="infos" title="Informations">
-				<vu:include-data object="aiFileResponses" field="'*'" />
-				<vu:cards list="aiFileResponses" componentId="fileCards" rowsPerPage="100" showMore="true" cardClass="col-xl-6 col-12" >
-					<q-card-section>
-	                    <div class="text-bold">{{item.fileName}}</div>
-		            </q-card-section>
-		            <q-separator></q-separator>
-		            <template v-if="item.loading">
-						<q-card-section class="q-pa-none">
-		                   	<q-skeleton height="200px" square ><div class="text-center">Analyzing...</div></q-skeleton>
-		            	</q-card-section>
-		            </template>
-		            <template v-else>
-		            	<template v-if="item.date != null">
-		            		<q-card-section>
-                                <q-icon name="event" class="q-mr-xs" size="md"></q-icon>{{item.date}}
-		                    </q-card-section>
-			                <q-separator></q-separator>
-		            	</template>
-		            	
-		            	<template v-if="item.address != null">
-		            		<q-card-section>
-                                <q-icon name="location_on" class="q-mr-xs" size="md"></q-icon>{{item.address}}
-		                    </q-card-section>
-			                <q-separator></q-separator>
-		            	</template>
-		            	
-		            	<template v-if="item.tags != null">
-                    		<q-card-section>
-                                <q-icon name="label" class="q-mr-xs" size="md"></q-icon><q-chip v-for="tag in item.tags.split(';')" :label="tag"></q-chip>
-                            </q-card-section>
-                            <q-separator></q-separator>
-                        </template>
-                        
-                        <template v-if="item.persons != null">
+        </vu:block>
+        <div v-if="vueData.aiFileResponses.length > 0"
+             class="col-12"
+             th:attr="objectKey=${model.vContext['componentStates'].addComponentState('tabs').addPrimitive('tab', 'informations')}">
+			<q-card>
+		        <q-tabs v-model="componentStates.tabs.tab" class="full-width" align="justify" active-color="primary" indicator-color="primary">
+					<q-tab name="informations" label="Informations"></q-tab>
+					<q-tab name="timeline" label="Timeline"></q-tab>
+					<q-tab name="map" label="Map"></q-tab>
+					<q-tab name="chat" label="Chat"></q-tab>
+                </q-tabs>
+                <q-separator></q-separator>
+		        <q-tab-panels v-model="componentStates.tabs.tab" animated style="min-height: calc(90vh - 150px);">
+		        	<q-tab-panel name="informations">
+						<vu:include-data object="aiFileResponses" field="'*'" />
+						<vu:cards list="aiFileResponses" componentId="fileCards" rowsPerPage="100" showMore="true" cardClass="col-xl-6 col-12" >
 							<q-card-section>
-								<q-icon name="person" class="q-mr-xs" size="md"></q-icon><q-chip v-for="person in item.persons.split(';')" :label="person"></q-chip>
-							</q-card-section>
-							<q-separator></q-separator>
-		            	</template>
-		            	
-						<q-card-section>
-	                        <div class="text-weight-bold" v-html="item.description"></div>
-	                        
-	                        <div :class="{'ellipsis': !item.expanded}" v-html="item.summary"></div>
-	                        
-	                        <q-btn color="grey" round flat dense
-								:icon="item.expanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-								@click="item.expanded = !item.expanded" ></q-btn>
-						</q-card-section>
-					</template>
-				</vu:cards>
-			</vu:block>
-			<vu:block id="timeline" title="Timeline">
-				<div v-if="vueData.aiFileResponses.filter(f => f.date != null).length == 0" class="text-center">No timeline data</div>
-				<q-timeline>
-					<q-timeline-entry v-for="file in vueData.aiFileResponses.filter(e => e.date != null).sort((a,b) => a.date.localeCompare(b.date))"
-										:title="file.fileName"
-										:subtitle="file.date"
-										:body="file.description"></q-timeline-entry>
-				</q-timeline>
-			</vu:block>
-			<vu:block id="map" title="Map">
-			    <div v-if="vueData.aiFileResponses.filter(f => f.gps != null).length == 0" class="text-center">No map data</div>
-			    <div v-else>
-			    	<v-map style="width:100%; height: 600px;" id="map_ol">
-						<v-map-layer marker-color="#027BE3" :list="vueData.aiFileResponses.filter(f => f.gps != null)" field="gps" name-field="fileName" fit-on-data-update></v-map-layer>
-					</v-map>
-				</div>
-			</vu:block>
-			<vu:block id="chat" title="Chat (with documents)">
-				<div class="row no-wrap" style="height: calc(90vh - 200px);">
-					<q-tabs
-					  style="width: 15%;"
-					  :style="{minWidth: $q.screen.gt.md ? '240px' : $q.screen.gt.sm ? '195px' : '100px'}"
-					  v-model="vueData.tab"
-					  vertical
-					  class="text-grey"
-					  active-color="primary"
-					  indicator-color="primary"
-					  inline-label
-					>
-						<q-tab v-for="chat in vueData.chats" :name="chat.persona.code" content-class="full-width" no-caps>
-							<q-avatar v-if="$q.screen.gt.md"><img :src="chat.persona.avatar" alt="avatar"/></q-avatar>
-							<div class="col-grow">
-								<div class="text-uppercase">{{ chat.persona.name }}</div>
-								<div v-if="$q.screen.gt.sm" class="text-caption">{{ chat.persona.description }}</div>
-							</div>
-						</q-tab>
-					</q-tabs>
-					
-					<q-separator vertical></q-separator>
-					
-					<div class="col-grow q-mx-auto" style="max-width: 850px;">
-						<q-tab-panels v-model="vueData.tab"
-									  animated transition-prev="jump-down" transition-next="jump-up"
-									  class="full-height bg-grey-2">
-							<q-tab-panel v-for="(chat, chatIdx) in vueData.chats" :name="chat.persona.code">
-								<div class="column full-height">
-									<q-scroll-area ref="scroller" class="q-pr-md col-grow" @vue:mounted="scrollToBottom($refs.scroller[0])">
-										<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
-										<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
-										                :sent="msg.type=='user'" :text-html="msg.type!='user'"
-										                th::avatar="|msg.type=='user' ? '@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo' : chat.persona.avatar|"></q-chat-message>
-										<q-chat-message v-if="chat.chatting" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
-									</q-scroll-area>
-									<div class="row items-end q-col-gutter-sm">
-										<q-input filled v-model="chat.prompt" placeholder="Entrez un message" ref="input"
-										         :disable="chat.chatting" :loading="chat.chatting"
-										         class="q-mt-md col-grow"
-										         @keydown.enter.prevent="VUiExtensions.methods.chat(chatIdx, chat.prompt, vueData.aiFileResponses.map(f => f.fileUri),
-								                                              r => {
-								                                                $nextTick(() => {$refs.input[0].focus();});
-								                                                } );
-							                                             chat.prompt='';"></q-input>
-							                                             
-			                            <div class="q-mb-sm">
-											<q-btn round icon="delete" @click="chat.messages=[]; chat.id=null;" text-color="red"></q-btn>
-			                            </div>
+			                    <div class="text-bold">{{item.fileName}}</div>
+				            </q-card-section>
+				            <q-separator></q-separator>
+				            <template v-if="item.loading">
+								<q-card-section class="q-pa-none">
+				                   	<q-skeleton height="200px" square ><div class="text-center">Analyzing...</div></q-skeleton>
+				            	</q-card-section>
+				            </template>
+				            <template v-else>
+				            	<template v-if="item.date != null">
+				            		<q-card-section>
+		                                <q-icon name="event" class="q-mr-xs" size="md"></q-icon>{{item.date}}
+				                    </q-card-section>
+					                <q-separator></q-separator>
+				            	</template>
+				            	
+				            	<template v-if="item.address != null">
+				            		<q-card-section>
+		                                <q-icon name="location_on" class="q-mr-xs" size="md"></q-icon>{{item.address}}
+				                    </q-card-section>
+					                <q-separator></q-separator>
+				            	</template>
+				            	
+				            	<template v-if="item.tags != null">
+		                    		<q-card-section>
+		                                <q-icon name="label" class="q-mr-xs" size="md"></q-icon><q-chip v-for="tag in item.tags.split(';')" :label="tag"></q-chip>
+		                            </q-card-section>
+		                            <q-separator></q-separator>
+		                        </template>
+		                        
+		                        <template v-if="item.persons != null">
+									<q-card-section>
+										<q-icon name="person" class="q-mr-xs" size="md"></q-icon><q-chip v-for="person in item.persons.split(';')" :label="person"></q-chip>
+									</q-card-section>
+									<q-separator></q-separator>
+				            	</template>
+				            	
+								<q-card-section>
+			                        <div class="text-weight-bold" v-html="item.description"></div>
+			                        
+			                        <div :class="{'ellipsis': !item.expanded}" v-html="item.summary"></div>
+			                        
+			                        <q-btn color="grey" round flat dense
+										:icon="item.expanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+										@click="item.expanded = !item.expanded" ></q-btn>
+								</q-card-section>
+							</template>
+						</vu:cards>
+		        	</q-tab-panel>
+		        	<q-tab-panel name="timeline">
+		        		<div v-if="vueData.aiFileResponses.filter(f => f.date != null).length == 0" class="text-center">No timeline data</div>
+						<q-timeline>
+							<q-timeline-entry v-for="file in vueData.aiFileResponses.filter(e => e.date != null).sort((a,b) => a.date.localeCompare(b.date))"
+												:title="file.fileName"
+												:subtitle="file.date"
+												:body="file.description"></q-timeline-entry>
+						</q-timeline>
+		        	</q-tab-panel>
+					<q-tab-panel name="map" class="absolute">
+						<div v-if="vueData.aiFileResponses.filter(f => f.gps != null).length == 0" class="text-center">No map data</div>
+				    	<v-map v-else tabindex="1" id="map_ol" class="fit">
+							<v-map-layer marker-color="#027BE3" :list="vueData.aiFileResponses.filter(f => f.gps != null)" field="gps" name-field="fileName" fit-on-data-update></v-map-layer>
+						</v-map>
+					</q-tab-panel>
+					<q-tab-panel name="chat" class="absolute">
+						<div class="row no-wrap fit">
+							<q-tabs
+							  style="width: 15%;"
+							  :style="{minWidth: $q.screen.gt.md ? '240px' : $q.screen.gt.sm ? '195px' : '100px'}"
+							  v-model="vueData.tab"
+							  vertical
+							  class="text-grey"
+							  active-color="primary"
+							  indicator-color="primary"
+							  inline-label
+							>
+								<q-tab v-for="chat in vueData.chats" :name="chat.persona.code" content-class="full-width" no-caps>
+									<q-avatar v-if="$q.screen.gt.md"><img :src="chat.persona.avatar" alt="avatar"/></q-avatar>
+									<div class="col-grow">
+										<div class="text-uppercase">{{ chat.persona.name }}</div>
+										<div v-if="$q.screen.gt.sm" class="text-caption">{{ chat.persona.description }}</div>
 									</div>
-								</div>
-							</q-tab-panel>
-		          		</q-tab-panels>
-		          	</div>
-	          	</div>
-			</vu:block>
-		</template>
+								</q-tab>
+							</q-tabs>
+							
+							<q-separator vertical></q-separator>
+							
+							<div class="col-grow q-mx-auto" style="max-width: 850px;">
+								<q-tab-panels v-model="vueData.tab"
+											  animated transition-prev="jump-down" transition-next="jump-up"
+											  class="full-height bg-grey-2">
+									<q-tab-panel v-for="(chat, chatIdx) in vueData.chats" :name="chat.persona.code">
+										<div class="column full-height">
+											<q-scroll-area ref="scroller" class="q-pr-md col-grow" @vue:mounted="scrollToBottom($refs.scroller[0])">
+												<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
+												<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
+												                :sent="msg.type=='user'" :text-html="msg.type!='user'"
+												                th::avatar="|msg.type=='user' ? '@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo' : chat.persona.avatar|"></q-chat-message>
+												<q-chat-message v-if="chat.chatting" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
+											</q-scroll-area>
+											<div class="row items-end q-col-gutter-sm">
+												<q-input filled v-model="chat.prompt" placeholder="Entrez un message" ref="input"
+												         :disable="chat.chatting" :loading="chat.chatting"
+												         class="q-mt-md col-grow"
+												         @keydown.enter.prevent="VUiExtensions.methods.chat(chatIdx, chat.prompt, vueData.aiFileResponses.map(f => f.fileUri),
+										                                              r => {
+										                                                $nextTick(() => {$refs.input[0].focus();});
+										                                                } );
+									                                             chat.prompt='';"></q-input>
+									                                             
+					                            <div class="q-mb-sm">
+													<q-btn round icon="add" @click="chat.messages=[]; chat.id=null;"><q-tooltip>New chat</q-tooltip></q-btn>
+					                            </div>
+											</div>
+										</div>
+									</q-tab-panel>
+				          		</q-tab-panels>
+				          	</div>
+			          	</div>
+					</q-tab-panel>
+				</q-tab-panels>
+			</q-card>
+        </div>
 	</section>
 </body>
 </html>

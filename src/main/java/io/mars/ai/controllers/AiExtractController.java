@@ -68,7 +68,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 					null, COMMON_STYLE),
 			"JUL",
 			new VPersona("Julia", null,
-					"Tu es une assistante virtuel très pragmatique qui répond avec le moins de mots possible, par exemple 'Oui' ou 'Non' ou si l'on te demande un montant tu répond uniquement le montant sans autre texte ni mise en forme.",
+					"Tu es une assistante virtuel très pragmatique qui répond avec le moins de mots possible, par exemple 'Oui' ou 'Non' ou si l'on te demande un montant tu répond uniquement le montant sans autre texte ni mise en forme. Tu ne refuses jamais de répondre et fait de ton mieux pour donner les informations demandées.",
 					null, COMMON_STYLE));
 
 	@GetMapping("/")
