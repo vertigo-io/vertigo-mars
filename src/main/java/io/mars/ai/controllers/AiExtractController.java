@@ -88,12 +88,12 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		response.setDocUri(fileUri);
 
 		final var file = fileStoreManager.read(fileUri).getVFile();
-		response.setDescription(llmManager.promptOnFiles(new VPrompt("Décrit moi en 10 mots maximum ce qu'est ce fichier"), file).getHtml());
-		response.setSummary(llmManager.promptOnFiles(new VPrompt(StandardPrompts.SUMMARY_PROMPT), file).getHtml());
+		response.setDescription(llmManager.promptOnFiles(VPrompt.builder("Décrit moi en 10 mots maximum ce qu'est ce fichier").build(), file).getHtml());
+		response.setSummary(llmManager.promptOnFiles(VPrompt.builder(StandardPrompts.SUMMARY_PROMPT).build(), file).getHtml());
 
 		final var fileAddress = llmManager.promptOnFiles(
-				new VPrompt(
-						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme"),
+				VPrompt.builder(
+						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme").build(),
 				file);
 		if (!StringUtil.isBlank(fileAddress.getText())) {
 			response.setAddress(fileAddress.getText());
@@ -109,8 +109,8 @@ public class AiExtractController extends AbstractVSpringMvcController {
 			}
 		}
 
-		final String dateString = llmManager.promptOnFiles(new VPrompt(
-				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre."),
+		final String dateString = llmManager.promptOnFiles(VPrompt.builder(
+				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.").build(),
 				file).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
@@ -120,12 +120,12 @@ public class AiExtractController extends AbstractVSpringMvcController {
 			}
 		}
 
-		response.setTags(llmManager.promptOnFiles(new VPrompt(
-				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme"),
+		response.setTags(llmManager.promptOnFiles(VPrompt.builder(
+				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme").build(),
 				file).getText());
 
-		final var rawPersons = llmManager.promptOnFiles(new VPrompt(
-				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme"),
+		final var rawPersons = llmManager.promptOnFiles(VPrompt.builder(
+				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme").build(),
 				file);
 		if (!StringUtil.isBlank(rawPersons.getText())) {
 			response.setPersons(rawPersons.getText());
