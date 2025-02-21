@@ -18,6 +18,25 @@
 			<vu:search resultKey="equipments" searchUrl="@{/basemanagement/equipments/_search}" collectionComponentId="equipmentsTable">
 				<div class="row q-col-gutter-md">
 					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount.toLocaleString()}} Equipments</div>
+					<div class="col-shrink">
+						<q-btn icon="mdi-brain" color="primary" @click="vueData.aiSearch = ''; $refs.aiSearch.show()" ></q-btn>
+						<q-dialog ref="aiSearch">
+							<q-card style="min-width: 350px">
+								<q-card-section>
+									<div class="text-h6">What do you search for ?</div>
+								</q-card-section>
+								
+								<q-card-section class="q-pt-none">
+									<q-input dense v-model="vueData.aiSearch" autofocus @keyup.enter="httpPostAjax('_searchAi', {'search': vueData.aiSearch}, {onSuccess: () => $refs.aiSearch.hide()})" />
+								</q-card-section>
+								
+								<q-card-actions align="right" class="text-primary">
+									<q-btn flat label="Cancel" v-close-popup ></q-btn>
+									<q-btn label="Search with AI" color="primary" :loading="isPendingAction('_searchAi')" ref="aiSearchBtn" @click="httpPostAjax('_searchAi', {'search': vueData.aiSearch}, {onSuccess: () => $refs.aiSearch.hide()})"></q-btn>
+								</q-card-actions>
+							</q-card>
+						</q-dialog>
+					</div>
 					<div class="col-md col-sm-12">
 						<vu:include-data object="criteria" field="criteria" modifiable/>
 						<q-input autofocus placeholder="Type, Name..." v-model="vueData.criteria.criteria" @update:model-value="search('equipments')" :debounce="300"  outlined bg-color="white" dense >

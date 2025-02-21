@@ -16,6 +16,9 @@ import io.mars.basemanagement.domain.GeoSearchEquipmentCriteria;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.domain.DtDefinitions.EquipmentIndexFields;
 import io.vertigo.account.authorization.annotations.Secured;
+import io.vertigo.ai.impl.llm.FacetPromptUtil;
+import io.vertigo.ai.impl.llm.FacetPromptUtil.FacetPromptResult;
+import io.vertigo.ai.llm.LlmManager;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -38,34 +41,57 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 	@Inject
 	private EquipmentServices equipmentServices;
 
+	@Inject
+	private LlmManager llmManager;
+
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext, @RequestParam("criteria") final Optional<String> optCriteria, @RequestParam("renderer") final Optional<String> optRenderer) {
 		final GeoSearchEquipmentCriteria geoCriteria = new GeoSearchEquipmentCriteria();
-		geoCriteria.setCriteria(optCriteria.orElse(""));
+		final SelectedFacetValues selectedFacets;
+		if (optCriteria.isPresent()) {
+			final FacetPromptResult aiCriteria = doAiSearch(optCriteria.get());
+			geoCriteria.setCriteria(aiCriteria.criteria());
+			selectedFacets = aiCriteria.selectedFacetValues();
+		} else {
+			selectedFacets = SelectedFacetValues.empty().build();
+		}
+
+		if (geoCriteria.getCriteria() == null) {
+			geoCriteria.setCriteria("");
+		}
 
 		viewContext
 				.publishDto(criteriaKey, geoCriteria)
 				.publishRef(listRenderer, optRenderer.orElse("table"));
+
 		final String listRendererValue = viewContext.getString(listRenderer);
 		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
-			case "table" -> equipmentServices.searchEquipments(geoCriteria.getCriteria(), SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
-			case "map" -> equipmentServices.searchGeoClusterEquipments(geoCriteria, SelectedFacetValues.empty().build(), DtListState.of(3));
+			case "table" -> equipmentServices.searchEquipments(geoCriteria.getCriteria(), selectedFacets, DtListState.defaultOf(Equipment.class));
+			case "map" -> equipmentServices.searchGeoClusterEquipments(geoCriteria, selectedFacets, DtListState.of(3));
 			default -> throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
 		};
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 
 	}
 
-	@PostMapping("/_search")
-	public ViewContext doSearch(
+	@PostMapping("/_searchAi")
+	public ViewContext doSearchAi(
 			final ViewContext viewContext,
-			@ViewAttribute("criteria") final GeoSearchEquipmentCriteria criteria,
-			@ViewAttribute("equipments") final SelectedFacetValues selectedFacetValues,
+			@RequestParam("search") final String search,
 			final DtListState dtListState) {
+
+		final FacetPromptResult aiCriteria = doAiSearch(search);
+		final var geoCriteria = new GeoSearchEquipmentCriteria();
+		geoCriteria.setCriteria(aiCriteria.criteria());
+
+		if (geoCriteria.getCriteria() == null) {
+			geoCriteria.setCriteria("");
+		}
+
 		final String listRendererValue = viewContext.getString(listRenderer);
 		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
-			case "table" -> equipmentServices.searchEquipments(Optional.ofNullable(criteria.getCriteria()).orElse(""), selectedFacetValues, dtListState);
-			case "map" -> equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(3));
+			case "table" -> equipmentServices.searchEquipments(geoCriteria.getCriteria(), aiCriteria.selectedFacetValues(), dtListState);
+			case "map" -> equipmentServices.searchGeoClusterEquipments(geoCriteria, aiCriteria.selectedFacetValues(), DtListState.of(250));
 			default -> throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
 		};
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
@@ -86,6 +112,16 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 		};
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 		return viewContext;
+	}
+
+	private FacetPromptResult doAiSearch(final String criteria) {
+		// empty search to list all facet values as input for the LLM
+		final var emptySearch = equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
+
+		return llmManager.ask(FacetPromptUtil.createFacetPrompt(criteria == null ? "" : criteria, emptySearch,
+				Optional.of(
+						"Put in 'criteria', only the name of the equipment if the user asked for one. Dont put any type or category or date. Beware that the user may talk another language, don't put the category name whatever the language is, eg dont put 'batiment' as the 'building' category exists. Dont select tags if not explicitly asked.")),
+				FacetPromptResult.class);
 	}
 
 }
