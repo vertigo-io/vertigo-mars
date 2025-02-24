@@ -28,6 +28,11 @@ img {
 	color: inherit;
 }
 
+
+.facet-select {
+	width: 100%;
+}
+
 /* table */
 
 .q-table__title, .q-card__section h1, .q-card__section.text-h6 {
