@@ -96,6 +96,11 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 			@RequestParam("search") final String search,
 			final DtListState dtListState) {
 
+		// example of search :
+		// - les batiments / les véhicules de 2015 / buildings of 2020
+		// - esa satellite 655 /  cnsa satellite S-E-655 / les mines et drones cnsa de 2012
+		// - production d'énergie / ce qui produit de l'énergie / ce qui produit de l'électricité
+
 		final FacetPromptResult aiCriteria = doAiSearch(search);
 		final var geoCriteria = new GeoSearchEquipmentCriteria();
 		geoCriteria.setCriteria(aiCriteria.criteria());
@@ -136,7 +141,11 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 
 		return llmManager.ask(FacetPromptUtil.createFacetPrompt(criteria == null ? "" : criteria, emptySearch,
 				Optional.of(
-						"Put in 'criteria', only the name of the equipment if the user asked for one. Dont put any type or category or date. Beware that the user may talk another language, don't put the category name whatever the language is, eg dont put 'batiment' as the 'building' category exists. Dont select tags if not explicitly asked.")),
+						"""
+								For date facet (FctEquipmentPurchaseDate), select only if the user is asking for a date criteria in a 4 digits form.
+								Select tags only if the user is asking specifically for them or if the term exists only in the tags.
+								Put strictly in 'criteria' the equipment reference in the form 'A-A-123', or '123'. Don't put anything else and put null if nothing correpsond. Example, if user ask for 'satellites from 2020' you should select the year 2020 in the date facet and put null in the criteria and if he ask for 'satellite 145' you should put '145' in the criteria and null in the date facet.
+								""")),
 				FacetPromptResult.class);
 	}
 
