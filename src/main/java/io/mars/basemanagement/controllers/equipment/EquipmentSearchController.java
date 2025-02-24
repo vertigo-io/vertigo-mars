@@ -74,6 +74,22 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 
 	}
 
+	@PostMapping("/_search")
+	public ViewContext doSearch(
+			final ViewContext viewContext,
+			@ViewAttribute("criteria") final GeoSearchEquipmentCriteria criteria,
+			@ViewAttribute("equipments") final SelectedFacetValues selectedFacetValues,
+			final DtListState dtListState) {
+		final String listRendererValue = viewContext.getString(listRenderer);
+		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
+			case "table" -> equipmentServices.searchEquipments(Optional.ofNullable(criteria.getCriteria()).orElse(""), selectedFacetValues, dtListState);
+			case "map" -> equipmentServices.searchGeoClusterEquipments(criteria, selectedFacetValues, DtListState.of(3));
+			default -> throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
+		};
+		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
+		return viewContext;
+	}
+
 	@PostMapping("/_searchAi")
 	public ViewContext doSearchAi(
 			final ViewContext viewContext,
