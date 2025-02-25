@@ -12,6 +12,9 @@
 		<Logger name="page" level="info" additivity="false">
 	      <AppenderRef ref="Console"/>
 	    </Logger>
+		<Logger name="llm" level="info" additivity="false">
+	      <AppenderRef ref="Console"/>
+	    </Logger>
 		<Logger name="tasks" level="info" additivity="false" >
 		  <ContextMapFilter onMatch="DENY" onMismatch="ACCEPT" >
 		  	<KeyValuePair key="module" value="orchestra"/>
