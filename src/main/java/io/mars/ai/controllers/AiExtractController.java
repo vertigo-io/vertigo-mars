@@ -1,8 +1,11 @@
 package io.mars.ai.controllers;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -12,15 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import io.mars.ai.domain.AiQuery;
 import io.mars.ai.domain.AiResponse;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.ai.impl.llm.StandardPrompts;
 import io.vertigo.ai.llm.LlmManager;
+import io.vertigo.ai.llm.model.VLlmMessageStreamConfig;
 import io.vertigo.ai.llm.model.VPersona;
 import io.vertigo.ai.llm.model.VPrompt;
 import io.vertigo.ai.llm.model.VPromptContext;
+import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datastore.filestore.FileStoreManager;
@@ -93,7 +99,8 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 		final var fileAddress = llmManager.askOnFiles(
 				VPrompt.builder(
-						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme").build(),
+						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme")
+						.build(),
 				file);
 		if (!StringUtil.isBlank(fileAddress.getText())) {
 			response.setAddress(fileAddress.getText());
@@ -110,7 +117,8 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		}
 
 		final String dateString = llmManager.askOnFiles(VPrompt.builder(
-				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.").build(),
+				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.")
+				.build(),
 				file).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
@@ -121,11 +129,13 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		}
 
 		response.setTags(llmManager.askOnFiles(VPrompt.builder(
-				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme").build(),
+				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme")
+				.build(),
 				file).getText());
 
 		final var rawPersons = llmManager.askOnFiles(VPrompt.builder(
-				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme").build(),
+				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme")
+				.build(),
 				file);
 		if (!StringUtil.isBlank(rawPersons.getText())) {
 			response.setPersons(rawPersons.getText());
@@ -153,8 +163,40 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 	@PostMapping("/_ask")
 	@ResponseBody
-	public String doExtract(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final Long chatId) {
-		return llmManager.getChat(chatId).chat(instructions).getHtml();
+	public String doChat(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final Long chatId) {
+		return llmManager.getChat(chatId).chat(instructions).message().getHtml();
+	}
+
+	@GetMapping("/_askStream")
+	public SseEmitter doChatStream(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final Long chatId) {
+		//
+		final SseEmitter emitter = new SseEmitter();
+		final ExecutorService sseMvcExecutor = Executors.newSingleThreadExecutor();
+		sseMvcExecutor.execute(() -> {
+			try {
+				llmManager.getChat(chatId).chatStream(instructions, VLlmMessageStreamConfig.builder()
+						.withPartialMessageHandler(chatMessage -> {
+							try {
+								emitter.send(Map.of("message", chatMessage.message().getHtml()));
+							} catch (final IOException e) {
+								throw WrappedException.wrap(e);
+							}
+						})
+						.withMessageHandler(chatMessage -> {
+							try {
+								emitter.send(Map.of("message", chatMessage.message().getHtml(), "sources", chatMessage.message().getSources(), "end", true));
+								emitter.complete();
+							} catch (final IOException e) {
+								throw WrappedException.wrap(e);
+							}
+						})
+						.build());
+			} catch (final Exception e) {
+				emitter.completeWithError(e);
+			}
+
+		});
+		return emitter;
 	}
 
 }
