@@ -2,8 +2,8 @@ console.log("starting AI");
 
 
 window.addEventListener('vui-after-page-mounted', function(event) {
-    VUiPage.$watch('vueData.aiQuery.docUris',
-        (newValue, oldValue) => {
+	VUiPage.$watch('vueData.aiQuery.docUris',
+		(newValue, oldValue) => {
 			// we read from component to have file names without asking serverside
 			const files = VUiPage.$refs.aiFileUpload.files;
 			
@@ -36,10 +36,10 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 					VUiPage.vueData.aiFileResponses.splice(VUiPage.vueData.aiFileResponses.indexOf(card), 1);
 				}
 			}
-        });
+		});
 		
 		VUiPage.$watch('vueData.aiQuery.docUri',
-		        (newValue, oldValue) => {
+				(newValue, oldValue) => {
 					// we read from component to have file names without asking serverside
 					const files = VUiPage.$refs.aiFileUploadOrdo.files;
 					
@@ -70,7 +70,7 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 							VUiPage.vueData.aiFileResponses.splice(VUiPage.vueData.aiFileResponses.indexOf(card), 1);
 						}
 					}
-		        });
+				});
 
 
 	function getCardByUri(uri) {
@@ -84,6 +84,7 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 		{ messages: [], persona: { code: "ISA", name: "Isabelle", description: "Architecte Informatique", avatar: 'https://cdn.quasar.dev/img/avatar6.jpg', welcome: "Bonjour, je m'appelle  Isabelle, architecte en informatique, comment puis-je vous aider ?" }},
 		{ messages: [], persona: { code: 'JUL', name: 'Julia', description: "Laconique", avatar: 'https://cdn.quasar.dev/img/avatar3.jpg', welcome: "Bonjour, je m'appelle  Julia, quel est votre question ?" }},
 	];
+	VUiPage.vueData.chatStreaming = true;
 	VUiPage.vueData.tab = VUiPage.vueData.chats[0].persona.code;
 	
 });
@@ -177,6 +178,7 @@ function addWord(obj, texts, index) {
 VUiExtensions.methods.chat = function(chatIdx, text, files, resultFn) {
 	let chat = VUiPage.vueData.chats[chatIdx];
 	chat.chatting = true;
+	chat.chattingDisplay = true;
 	chat.messages.push({text:text, type:'user'});
 	VUiExtensions.methods.scrollToBottom(VUiPage.$refs.scroller[0]);
 	
@@ -185,14 +187,22 @@ VUiExtensions.methods.chat = function(chatIdx, text, files, resultFn) {
 		VUiPage.$http.post('_initChat', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, fileUris: files, persona: chat.persona.code }))
 			.then(response => {
 					chat.id = response.data.id;
-					doChat(chat, text, resultFn);
+					if (VUiPage.vueData.chatStreaming) {
+						doChatStream(chat, text, resultFn);
+					} else {
+						doChat(chat, text, resultFn);
+				    }
 				})
 			.catch(error => {
 				console.log("error : " + error);
 				// nope, only for demo
 			});
 	} else {
-		doChat(chat, text, resultFn);
+		if (VUiPage.vueData.chatStreaming) {
+			doChatStream(chat, text, resultFn);
+		} else {
+			doChat(chat, text, resultFn);
+		}
 	}
 		
 }
@@ -202,12 +212,53 @@ function doChat(chat, text, resultFn) {
 	VUiPage.$http.post('_ask', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, prompt: text, chatId: chat.id }))
 			.then(response => {
 					chat.chatting = false;
+					chat.chattingDisplay = false;
 					chat.messages.push({text:response.data, type:'system'});
 					resultFn(response.data);
 					VUiExtensions.methods.scrollToBottom(VUiPage.$refs.scroller[0]);
 				})
 			.catch(error => {
+				chat.chatting = false;
+				chat.chattingDisplay = false;
 				console.log("error : " + error);
 				// nope, only for demo
 			});
 }
+
+
+function doChatStream(chat, text, resultFn) {
+	const evtSource = new EventSource("_askStream?" + new URLSearchParams({prompt: text, chatId: chat.id }).toString(), {withCredentials:true});
+	evtSource.onopen = function(event) {
+		chat.messages.push({text:"", type:'system'});		
+	}
+	evtSource.onmessage = function(event) {
+		chat.chattingDisplay = false;
+		const data = JSON.parse(event.data);
+		chat.messages[chat.messages.length-1].text = data.message;
+		VUiExtensions.methods.scrollToBottom(VUiPage.$refs.scroller[0]);
+		if (data.end) {
+			chat.chatting = false;
+			resultFn(data.message);
+			evtSource.close();
+		}
+	}
+	evtSource.onerror = function(event) {
+		console.log("EventSource error", event);
+		chat.chatting = false;
+		evtSource.close();
+	}
+}
+
+
+// detect pseudo KonamiCode (only arrows) to enable features (like streaming checkbox in chat)
+let lastKeys = [];
+document.addEventListener('keyup', (e) => {
+	lastKeys.push(e.key);
+	if (lastKeys.length > 8) {
+		lastKeys.shift();
+	}
+	if (lastKeys.join('') === 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRight') {
+		VUiPage.vueData.aiAdmin = !VUiPage.vueData.aiAdmin;
+		console.log("AI Admin mode : " + VUiPage.vueData.aiAdmin);
+	}
+});

@@ -45,7 +45,7 @@
 				</div>
 			</div>
         </vu:block>
-        <div v-if="vueData.aiFileResponses.length > 0"
+        <div v-if="vueData.aiFileResponses.length > 0 || vueData.aiAdmin"
              class="col-12"
              th:attr="objectKey=${model.vContext['componentStates'].addComponentState('tabs').addPrimitive('tab', 'informations')}">
 			<q-card>
@@ -159,7 +159,7 @@
 												<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
 												                :sent="msg.type=='user'" :text-html="msg.type!='user'"
 												                th::avatar="|msg.type=='user' ? '@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo' : chat.persona.avatar|"></q-chat-message>
-												<q-chat-message v-if="chat.chatting" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
+												<q-chat-message v-if="chat.chattingDisplay" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
 											</q-scroll-area>
 											<div class="row items-end q-col-gutter-sm">
 												<q-input filled v-model="chat.prompt" placeholder="Entrez un message" ref="input"
@@ -175,6 +175,9 @@
 													<q-btn round icon="add" @click="chat.messages=[]; chat.id=null;"><q-tooltip>New chat</q-tooltip></q-btn>
 					                            </div>
 											</div>
+				                            <div v-if="vueData.aiAdmin">
+				                            	<q-checkbox left-label v-model="vueData.chatStreaming" label="Stream" />
+				                            </div>
 										</div>
 									</q-tab-panel>
 				          		</q-tab-panels>

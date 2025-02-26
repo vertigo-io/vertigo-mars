@@ -23,6 +23,7 @@
 	<filter>
 		<filter-name>Character Encoding Filter</filter-name>
 		<filter-class>io.vertigo.vega.impl.servlet.filter.SetCharsetEncodingFilter</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>charset</param-name>
 			<param-value>UTF-8</param-value>
@@ -41,6 +42,7 @@
 		</description>
 		<filter-name>client-no-cache</filter-name>
 		<filter-class>io.vertigo.vega.impl.servlet.filter.CacheControlFilter</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>Cache-Control</param-name>
 			<param-value>no-cache</param-value>
@@ -94,6 +96,7 @@
 		</description>
 		<filter-name>Security Filter</filter-name>
 		<filter-class>io.vertigo.vega.impl.servlet.filter.SecurityFilter</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>url-no-authentification</param-name>
 			<param-value>/login;/login/*</param-value>
