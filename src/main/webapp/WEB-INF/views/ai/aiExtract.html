@@ -158,7 +158,16 @@
 												<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
 												<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
 												                :sent="msg.type=='user'" :text-html="msg.type!='user'"
-												                th::avatar="|msg.type=='user' ? '@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo' : chat.persona.avatar|"></q-chat-message>
+												                th::avatar="|msg.type=='user' ? '@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo' : chat.persona.avatar|">
+													<template v-slot:stamp v-if="vueData.aiAdmin && msg.sources && msg.sources.length > 0">
+														<span>
+															Sources
+															<q-tooltip anchor="bottom start" self="top start">
+																<div v-for="source in msg.sources">{{ source }}</div>
+															</q-tooltip>
+														</span>
+													</template>
+												</q-chat-message>
 												<q-chat-message v-if="chat.chattingDisplay" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
 											</q-scroll-area>
 											<div class="row items-end q-col-gutter-sm">

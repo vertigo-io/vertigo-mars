@@ -238,6 +238,7 @@ function doChatStream(chat, text, resultFn) {
 		VUiExtensions.methods.scrollToBottom(VUiPage.$refs.scroller[0]);
 		if (data.end) {
 			chat.chatting = false;
+			chat.messages[chat.messages.length-1].sources = data.sources;
 			resultFn(data.message);
 			evtSource.close();
 		}
