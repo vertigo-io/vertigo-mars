@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -163,39 +162,31 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 	@PostMapping("/_ask")
 	@ResponseBody
-	public String doChat(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final Long chatId) {
+	public String doChat(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final UUID chatId) {
 		return llmManager.getChat(chatId).chat(instructions).message().getHtml();
 	}
 
 	@GetMapping("/_askStream")
-	public SseEmitter doChatStream(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final Long chatId) {
-		//
+	public SseEmitter doChatStream(@RequestParam("prompt") final String instructions, @RequestParam("chatId") final UUID chatId) {
 		final SseEmitter emitter = new SseEmitter();
-		final ExecutorService sseMvcExecutor = Executors.newSingleThreadExecutor();
-		sseMvcExecutor.execute(() -> {
-			try {
-				llmManager.getChat(chatId).chatStream(instructions, VLlmMessageStreamConfig.builder()
-						.withPartialMessageHandler(chatMessage -> {
-							try {
-								emitter.send(Map.of("message", chatMessage.message().getHtml()));
-							} catch (final IOException e) {
-								throw WrappedException.wrap(e);
-							}
-						})
-						.withMessageHandler(chatMessage -> {
-							try {
-								emitter.send(Map.of("message", chatMessage.message().getHtml(), "sources", chatMessage.message().getSources(), "end", true));
-								emitter.complete();
-							} catch (final IOException e) {
-								throw WrappedException.wrap(e);
-							}
-						})
-						.build());
-			} catch (final Exception e) {
-				emitter.completeWithError(e);
-			}
-
-		});
+		llmManager.getChat(chatId).chatStream(instructions, VLlmMessageStreamConfig.builder()
+				.withPartialMessageHandler(chatMessage -> {
+					try {
+						emitter.send(Map.of("message", chatMessage.message().getHtml()));
+					} catch (final IOException e) {
+						throw WrappedException.wrap(e);
+					}
+				})
+				.withMessageHandler(chatMessage -> {
+					try {
+						emitter.send(Map.of("message", chatMessage.message().getHtml(), "sources", chatMessage.message().getSources(), "end", true));
+						emitter.complete();
+					} catch (final IOException e) {
+						throw WrappedException.wrap(e);
+					}
+				})
+				.withErrorHandler(emitter::completeWithError)
+				.build());
 		return emitter;
 	}
 
