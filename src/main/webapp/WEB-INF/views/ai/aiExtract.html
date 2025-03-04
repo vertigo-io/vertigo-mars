@@ -70,6 +70,13 @@
 				            	</q-card-section>
 				            </template>
 				            <template v-else>
+				            	<template v-if="item.error != null">
+				            		<q-card-section>
+		                                <i>{{item.error}}</i>
+				                    </q-card-section>
+					                <q-separator></q-separator>
+				            	</template>
+				            	
 				            	<template v-if="item.date != null">
 				            		<q-card-section>
 		                                <q-icon name="event" class="q-mr-xs" size="md"></q-icon>{{item.date}}
@@ -98,7 +105,7 @@
 									<q-separator></q-separator>
 				            	</template>
 				            	
-								<q-card-section>
+								<q-card-section v-if="item.description != null">
 			                        <div class="text-weight-bold" v-html="item.description"></div>
 			                        
 			                        <div :class="{'ellipsis': !item.expanded}" v-html="item.summary"></div>

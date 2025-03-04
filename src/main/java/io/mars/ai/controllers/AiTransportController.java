@@ -55,24 +55,27 @@ public class AiTransportController extends AbstractVSpringMvcController {
 		final var response = new AiResponse();
 		response.setName("TI_" + "%04d".formatted(RANDOM.nextInt(10000)));
 
-		response.setDescription(llmManager.askOnFiles(VPrompt.builder(
+		response.setDescription(llmManager.ask(VPrompt.builder(
 				prePrompt + "Décrit moi en 10 mots maximum la raison de l'appel. N'ajoute pas de détail non précisé, par exemple si le type de vehicule n'est pas précisé, ne le donne pas.").build())
 				.getText());
 
-		response.setPersons(llmManager.askOnFiles(VPrompt.builder(
+		response.setPersons(llmManager.ask(VPrompt.builder(
 				prePrompt
-						+ "Donne moi la référence du vehicule ou du conducteur. Une référence est sous la forme XXX_1234 (des majuscules, un underscore et des chiffres). Répond uniquement la référence sans autre texte ni mise en forme").build())
+						+ "Donne moi la référence du vehicule ou du conducteur. Une référence est sous la forme XXX_1234 (des majuscules, un underscore et des chiffres). Répond uniquement la référence sans autre texte ni mise en forme")
+				.build())
 				.getText());
 
-		response.setCategory(llmManager.askOnFiles(VPrompt.builder(prePrompt +
-				"A quelle catégorie correspond ce texte parmi PANNE, SIGNALISATION, BOUCHON, DEVIATION. Exemple, un clognotant en passe sera une PANNE. Répond uniquement ce mot en majuscule sans autre texte ni mise en forme").build())
+		response.setCategory(llmManager.ask(VPrompt.builder(prePrompt +
+				"A quelle catégorie correspond ce texte parmi PANNE, SIGNALISATION, BOUCHON, DEVIATION. Exemple, un clognotant en passe sera une PANNE. Répond uniquement ce mot en majuscule sans autre texte ni mise en forme")
+				.build())
 				.getText());
 
-		response.setTags(llmManager.askOnFiles(VPrompt.builder(prePrompt +
-				"Quel est le niveau d'urgence de la demande parmi 'URGENT', 'ELEVE', 'NORMAL', 'FAIBLE'. Par exemple une panne sera urgente si elle immobilise le vehicule et normale sinon tandi qu'un défaut de signalisation sur la route sera faiblement urgent. Les bouchons ont une priorité ELEVE. Répond uniquement un des mots suivants 'URGENT', 'ELEVE', 'NORMAL', 'FAIBLE', en majuscule, sans lettre supplémentaire, sans accents et sans autre texte ni mise en forme").build())
+		response.setTags(llmManager.ask(VPrompt.builder(prePrompt +
+				"Quel est le niveau d'urgence de la demande parmi 'URGENT', 'ELEVE', 'NORMAL', 'FAIBLE'. Par exemple une panne sera urgente si elle immobilise le vehicule et normale sinon tandi qu'un défaut de signalisation sur la route sera faiblement urgent. Les bouchons ont une priorité ELEVE. Répond uniquement un des mots suivants 'URGENT', 'ELEVE', 'NORMAL', 'FAIBLE', en majuscule, sans lettre supplémentaire, sans accents et sans autre texte ni mise en forme")
+				.build())
 				.getText());
 
-		response.setAddress(llmManager.askOnFiles(VPrompt.builder(prePrompt +
+		response.setAddress(llmManager.ask(VPrompt.builder(prePrompt +
 				"Quel est le lieux de l'événement ? Répond uniquement le lieux sans autre texte ni mise en forme. Si aucun lieu n'est précisé,répond 'Centre de maintenance des véhicules'.").build())
 				.getText());
 

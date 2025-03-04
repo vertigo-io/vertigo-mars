@@ -3,9 +3,9 @@ boot:
   params:
     locales: fr_FR, en_US
   plugins:
-    - io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin: {}
-    - io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin: {}
-    - io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin: {}
+    - io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin:
+    - io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin:
+    - io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin:
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
         __flags__: ["ethereum"]
         url: "${boot.walletParamsUrl}"
@@ -15,7 +15,7 @@ boot:
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
         __flags__: ["home"]
         url: ${user.home}\mars\marsconf\marsApiKeys.properties
-    - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin: {}
+    - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin:
     - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
         __flags__: ["klee"]
         hostName: ${boot.analyticsHost}
@@ -258,6 +258,14 @@ modules:
     plugins:
       - io.vertigo.ai.llm.plugin.lc4j.Lc4jPlugin:
           apiKey: ${openAiApiKey}
+      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jClasspathEmbeddingPlugin:
+#      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jOpenAiEmbeddingPlugin:
+#          apiKey: ${openAiApiKey}
+      - io.vertigo.ai.llm.plugin.lc4j.rag.storage.Lc4jPgVectorStoragePlugin:
+          __flags__: ["pgvector"]
+          source: java:/comp/env/jdbc/DataSourceHomePg
+          createTable: true
+          dropTableFirst: true
   
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:

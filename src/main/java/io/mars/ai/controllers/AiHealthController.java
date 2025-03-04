@@ -2,7 +2,6 @@ package io.mars.ai.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.inject.Inject;
@@ -19,10 +18,10 @@ import io.mars.ai.domain.AiResponse;
 import io.mars.support.smarttypes.GeoPoint;
 import io.vertigo.ai.llm.LlmManager;
 import io.vertigo.ai.llm.model.VPrompt;
+import io.vertigo.ai.llm.model.rag.VLlmDocument;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datastore.filestore.FileStoreManager;
-import io.vertigo.datastore.filestore.model.FileInfo;
 import io.vertigo.datastore.filestore.model.FileInfoURI;
 import io.vertigo.geo.geocoder.GeoCoderManager;
 import io.vertigo.geo.geocoder.GeoLocation;
@@ -67,15 +66,17 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		final var response = new AiResponse();
 		response.setDocUri(fileUri);
 
-		final var file = fileStoreManager.read(fileUri).getVFile();
+		final var file = fileStoreManager.read(fileUri);
+		final var docSource = llmManager.getTemporaryDocumentSource();
+		docSource.addDocument(new VLlmDocument(file));
 
 		response.setName(llmManager
-				.askOnFiles(VPrompt.builder("Donne moi le nom du médicament en français, traduit le si nécessaire. Répond uniquement son nom sans autre texte ni formatage").build(), file)
+				.askOnFiles(VPrompt.builder("Donne moi le nom du médicament en français, traduit le si nécessaire. Répond uniquement son nom sans autre texte ni formatage").build(), docSource)
 				.getText());
-		response.setSummary(llmManager.askOnFiles(VPrompt.builder("A quoi sert ce médicament ? Répond uniquement en français.").build(), file).getHtml());
-		response.setDescription(llmManager.askOnFiles(VPrompt.builder("Quelle est la posologie du médicament ? Répond uniquement en français.").build(), file).getHtml());
-		response.setDescription2(llmManager.askOnFiles(VPrompt.builder("Quels sont ses effets indésirables ? Répond uniquement en français.").build(), file).getHtml());
-		response.setDescription3(llmManager.askOnFiles(VPrompt.builder("Quels sont ses contres indications ? Répond uniquement en français.").build(), file).getHtml());
+		response.setSummary(llmManager.askOnFiles(VPrompt.builder("A quoi sert ce médicament ? Répond uniquement en français.").build(), docSource).getHtml());
+		response.setDescription(llmManager.askOnFiles(VPrompt.builder("Quelle est la posologie du médicament ? Répond uniquement en français.").build(), docSource).getHtml());
+		response.setDescription2(llmManager.askOnFiles(VPrompt.builder("Quels sont ses effets indésirables ? Répond uniquement en français.").build(), docSource).getHtml());
+		response.setDescription3(llmManager.askOnFiles(VPrompt.builder("Quels sont ses contres indications ? Répond uniquement en français.").build(), docSource).getHtml());
 
 		return jsonEngine.toJson(response);
 	}
@@ -87,21 +88,26 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		response.setDocUri(fileUri);
 
 		// Ordo only
-		final var file = fileStoreManager.read(fileUri).getVFile();
+		final var file = fileStoreManager.read(fileUri);
+		final var docSource = llmManager.getTemporaryDocumentSource();
+		docSource.addDocument(new VLlmDocument(file));
+
 		response.setName(
-				llmManager.askOnFiles(VPrompt.builder("Quel est le nom/prénom/titre du médecin. Répond uniquement sous la forme 'Dr. Jean DUPONT' sans autre texte ni formatage").build(), file)
+				llmManager.askOnFiles(VPrompt.builder("Quel est le nom/prénom/titre du médecin. Répond uniquement sous la forme 'Dr. Jean DUPONT' sans autre texte ni formatage").build(), docSource)
 						.getText());
-		response.setCategory(llmManager.askOnFiles(VPrompt.builder("Quel est le numéro RPPS du médecin ? Répond uniquement le numéro sans autre texte ni formatage").build(), file).getText());
-		response.setPersons(llmManager.askOnFiles(VPrompt.builder("Quel est le nom du patient ? Répond uniquement son nom sans autre texte ni formatage").build(), file).getText());
+		response.setCategory(llmManager.askOnFiles(VPrompt.builder("Quel est le numéro RPPS du médecin ? Répond uniquement le numéro sans autre texte ni formatage").build(), docSource).getText());
+		response.setPersons(llmManager.askOnFiles(VPrompt.builder("Quel est le nom du patient ? Répond uniquement son nom sans autre texte ni formatage").build(), docSource).getText());
 		response.setTags(llmManager.askOnFiles(
 				VPrompt.builder(
-						"Donne moi la liste de médicaments prescrits, donne moi la molécule active et ajoute entre parenthèse le nom du médicament prescrit. Répond sous la forme 'Molecule 1 (Medicament1);Molecule 2 (Medicament2);Molecule 3 (Medicament3);...' sans autre texte ni mise en forme").build(),
-				file).getText());
+						"Donne moi la liste de médicaments prescrits, donne moi la molécule active et ajoute entre parenthèse le nom du médicament prescrit. Répond sous la forme 'Molecule 1 (Medicament1);Molecule 2 (Medicament2);Molecule 3 (Medicament3);...' sans autre texte ni mise en forme")
+						.build(),
+				docSource).getText());
 
 		final var fileAddress = llmManager.askOnFiles(
 				VPrompt.builder(
-						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme").build(),
-				file);
+						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme")
+						.build(),
+				docSource);
 		if (!StringUtil.isBlank(fileAddress.getText())) {
 			response.setAddress(fileAddress.getText());
 
@@ -116,8 +122,9 @@ public class AiHealthController extends AbstractVSpringMvcController {
 			}
 		}
 		final String dateString = llmManager.askOnFiles(VPrompt.builder(
-				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-03 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme").build(),
-				file).getText();
+				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-03 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme")
+				.build(),
+				docSource).getText();
 		if (!StringUtil.isBlank(dateString) && !"NA".equals(dateString)) {
 			try {
 				response.setDate(LocalDate.parse(dateString));
@@ -127,11 +134,11 @@ public class AiHealthController extends AbstractVSpringMvcController {
 		}
 
 		// all docs
-		final var files = Stream.concat(Stream.of(fileUri), fileUris.stream())
+		final var docSourceAll = llmManager.getTemporaryDocumentSource();
+		Stream.concat(Stream.of(fileUri), fileUris.stream())
 				.map(fileStoreManager::read)
-				.map(FileInfo::getVFile)
-				.collect(Collectors.toList());
-		files.add(file);
+				.map(VLlmDocument::new)
+				.forEach(docSourceAll::addDocument);
 
 		response.setSummary(llmManager.askOnFiles(VPrompt.builder(
 				"""
@@ -147,32 +154,33 @@ public class AiHealthController extends AbstractVSpringMvcController {
 						Soir :
 						- tous les médicaments du soir
 						- ...
-						""").build(),
-				file).getHtml());
+						""")
+				.build(),
+				docSource).getHtml());
 
-		final var effetsIndesirables = llmManager.askOnFiles(VPrompt.builder("Quels sont les principaux effets indésirables les plus courant des médicaments de l'ordonnance ?").build(), files);
+		final var effetsIndesirables = llmManager.askOnFiles(VPrompt.builder("Quels sont les principaux effets indésirables les plus courant des médicaments de l'ordonnance ?").build(), docSourceAll);
 		final var effetsIndesirablesHtml = new StringBuilder(effetsIndesirables.getHtml());
 		if (!effetsIndesirables.getSources().isEmpty()) {
 			effetsIndesirablesHtml.append("<hr class=\"q-separator q-separator--horizontal q-mb-sm\"><p><strong class=\"text-deep-purple\">> Sources :</strong></p><ul>");
 			for (final var source : effetsIndesirables.getSources()) {
 				effetsIndesirablesHtml
-				.append("<li>")
-				.append(source)
-				.append("</li>");
+						.append("<li>")
+						.append(source)
+						.append("</li>");
 			}
 			effetsIndesirablesHtml.append("</ul>");
 		}
 		response.setDescription(effetsIndesirablesHtml.toString());
 
-		final var contreIndications = llmManager.askOnFiles(VPrompt.builder("Quels sont les principales contre-indications des médicaments de l'ordonnance ?").build(), files);
+		final var contreIndications = llmManager.askOnFiles(VPrompt.builder("Quels sont les principales contre-indications des médicaments de l'ordonnance ?").build(), docSourceAll);
 		final var contreIndicationsHtml = new StringBuilder(contreIndications.getHtml());
 		if (!contreIndications.getSources().isEmpty()) {
 			contreIndicationsHtml.append("<hr class=\"q-separator q-separator--horizontal q-mb-sm\"><p><strong class=\"text-deep-purple\">> Sources :</strong></p><ul>");
 			for (final var source : contreIndications.getSources()) {
 				contreIndicationsHtml
-				.append("<li>")
-				.append(source)
-				.append("</li>");
+						.append("<li>")
+						.append(source)
+						.append("</li>");
 			}
 			contreIndicationsHtml.append("</ul>");
 		}
