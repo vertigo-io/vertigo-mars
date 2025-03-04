@@ -23,7 +23,8 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 						.catch(error => {
 							const card = VUiPage.vueData.aiFileResponses[index];
 							card.loading = false;
-							card.error = error;
+							card.error = error.response.data.globalErrors.join(' ');
+							VUiPage.uiMessageStack = {}; // clear error messages stack, keep only flash message
 						});
 
 				}
