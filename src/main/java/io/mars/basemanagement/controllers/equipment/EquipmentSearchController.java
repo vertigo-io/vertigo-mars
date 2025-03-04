@@ -99,7 +99,7 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 		// example of search :
 		// - les batiments / les véhicules de 2015 / buildings of 2020
 		// - esa satellite 655 /  cnsa satellite S-E-655 / les mines et drones cnsa de 2012
-		// - production d'énergie / ce qui produit de l'énergie / ce qui produit de l'électricité
+		// - les centrales / production d'énergie / ce qui produit de l'électricité
 
 		final FacetPromptResult aiCriteria = doAiSearch(search);
 		final var criteria = new GeoSearchEquipmentCriteria();
@@ -128,9 +128,9 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 		return llmManager.ask(FacetPromptUtil.createFacetPrompt(criteria == null ? "" : criteria, emptySearch,
 				Optional.of(
 						"""
-								For date facet (FctEquipmentPurchaseDate), select only if the user is asking for a date criteria in a 4 digits form.
-								Select tags only if the user is asking specifically for them or if the term exists only in the tags.
-								Put strictly in 'criteria' the equipment reference in the form 'A-A-123', or '123'. Don't put anything else and put null if nothing correpsond. Example, if user ask for 'satellites from 2020' you should select the year 2020 in the date facet and put null in the criteria and if he ask for 'satellite 145' you should put '145' in the criteria and null in the date facet.
+								- For date facets (`FctEquipmentPurchaseDate`), select a value only if the user explicitly mentions a four-digit year.
+								- Tags should only be selected if the user explicitly refers to them or if the term exists exclusively in the tag list.
+								- Put strictly in 'criteria' the equipment reference in the form 'A-A-123', or '123'. Don't put anything else and put null if nothing correpsond. Example, if user ask for 'satellites from 2020' you should select the year 2020 in the date facet and put null in the criteria and if he ask for 'satellite 145' you should put '145' in the criteria and null in the date facet.
 								""")),
 				FacetPromptResult.class);
 	}
