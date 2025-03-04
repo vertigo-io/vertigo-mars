@@ -21,7 +21,6 @@ import io.mars.ai.domain.AiResponse;
 import io.mars.support.MarsUserSession;
 import io.mars.support.smarttypes.GeoPoint;
 import io.mars.support.util.SecurityUtil;
-import io.vertigo.ai.impl.llm.StandardPrompts;
 import io.vertigo.ai.llm.LlmManager;
 import io.vertigo.ai.llm.model.VLlmMessageStreamConfig;
 import io.vertigo.ai.llm.model.VPersona;
@@ -99,7 +98,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		docSource.addDocument(new VLlmDocument(file));
 
 		response.setDescription(llmManager.askOnFiles(VPrompt.builder("Décrit moi en 10 mots maximum ce qu'est ce fichier").build(), docSource).getHtml());
-		response.setSummary(llmManager.askOnFiles(VPrompt.builder(StandardPrompts.SUMMARY_PROMPT).build(), docSource).getHtml());
+		response.setSummary(llmManager.askOnFiles(VPrompt.builder("Décrit moi sans détail et en 60 mots max le contenu").build(), docSource).getHtml());
 
 		final var fileAddress = llmManager.askOnFiles(
 				VPrompt.builder(
