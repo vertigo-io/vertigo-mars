@@ -27,6 +27,9 @@
 	    <Logger name="search" level="info" additivity="false" >
 	      <AppenderRef ref="Console"/>
 	    </Logger>
+	    <Logger name="io.vertigo" level="warn" additivity="false">
+	      <AppenderRef ref="Console"/>
+	    </Logger>
 	    <Logger name="io.vertigo.studio.tools.VertigoStudioMda" level="info" additivity="false">
 	      <AppenderRef ref="Console"/>
 	    </Logger>
