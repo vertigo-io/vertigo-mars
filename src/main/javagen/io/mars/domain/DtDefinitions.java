@@ -17,6 +17,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	 * Enumération des DtDefinitions.
 	 */
 	public enum Definitions {
+		/** Objet de données AiDocumentInfo. */
+		AiDocumentInfo(io.mars.ai.domain.AiDocumentInfo.class),
 		/** Objet de données AiQuery. */
 		AiQuery(io.mars.ai.domain.AiQuery.class),
 		/** Objet de données AiResponse. */
@@ -102,6 +104,23 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 			return clazz;
 		}
 	}
+
+	/**
+	 * Enumération des champs de AiDocumentInfo.
+	 */
+	public enum AiDocumentInfoFields implements DataFieldName<io.mars.ai.domain.AiDocumentInfo> {
+		/** Propriété 'File'. */
+		docUri,
+		/** Propriété 'File name'. */
+		fileName,
+		/** Propriété 'Chunk count'. */
+		chunkCount,
+		/** Propriété 'Score'. */
+		scorePercent,
+		/** Propriété 'Text fragments'. */
+		textFragments,
+		/** Propriété 'Scores'. */
+		fragmentsScores	}
 
 	/**
 	 * Enumération des champs de AiQuery.

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import io.mars.ai.domain.AiQuery;
 import io.mars.ai.domain.AiResponse;
+import io.mars.ai.services.AiServices;
 import io.mars.support.MarsUserSession;
 import io.mars.support.smarttypes.GeoPoint;
 import io.mars.support.util.SecurityUtil;
@@ -47,6 +48,9 @@ public class AiExtractController extends AbstractVSpringMvcController {
 	private JsonEngine jsonEngine;
 
 	@Inject
+	private AiServices aiServices;
+
+	@Inject
 	private FileStoreManager fileStoreManager;
 	@Inject
 	private LlmManager llmManager;
@@ -56,26 +60,6 @@ public class AiExtractController extends AbstractVSpringMvcController {
 
 	private static final ViewContextKey<AiQuery> aiQueryKey = ViewContextKey.of("aiQuery");
 	private static final ViewContextKey<AiResponse> aiFileResponsesKey = ViewContextKey.of("aiFileResponses");
-
-	private static final String COMMON_STYLE = "la réponse ne doit comporter que du markdown, il ne faut pas écrire de formules en LaTeX par exemple. Quand un montant est présent sans précisions, il s'agit d'un montant TTC.";
-
-	private static final Map<String, VPersona> personaMap = Map.of(
-			"MAR",
-			new VPersona("Marie", null,
-					"Tu es une chef comptable, tu t'intéresses à la comptabilité et à la finance, tu es très précise et tu n'hésite pas à mettre des tableaux pour expliquer les choses, détailler les prix HT et TTC. Tu n'hésite pas à utisiser ta calculatrice pour vérifier ou calculer les montants, en particulier utiliser les bonnes formules pour calculer le montant de la TVA à partir d'un montant TTC.",
-					null, COMMON_STYLE),
-			"DAN",
-			new VPersona("Daniel", null,
-					"Tu es un directeur de projets, à ce titre tu à une vision organisationnelle et financière des projets, tu es très orienté sur les coûts et les délais.",
-					null, COMMON_STYLE),
-			"ISA",
-			new VPersona("Isabelle", null,
-					"Tu es une architecte informatique, tu as une vision globale des systèmes d'information et des architectures techniques, tu es très orientée sur les normes et les standards.",
-					null, COMMON_STYLE),
-			"JUL",
-			new VPersona("Julia", null,
-					"Tu es une assistante virtuel très pragmatique qui répond avec le moins de mots possible, par exemple 'Oui' ou 'Non' ou si l'on te demande un montant tu répond uniquement le montant sans autre texte ni mise en forme. Tu ne refuses jamais de répondre et fait de ton mieux pour donner les informations demandées.",
-					null, COMMON_STYLE));
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
@@ -97,10 +81,10 @@ public class AiExtractController extends AbstractVSpringMvcController {
 		final var docSource = llmManager.getTemporaryDocumentSource();
 		docSource.addDocument(new VLlmDocument(file));
 
-		response.setDescription(llmManager.askOnFiles(VPrompt.builder("Décrit moi en 10 mots maximum ce qu'est ce fichier").build(), docSource).getHtml());
-		response.setSummary(llmManager.askOnFiles(VPrompt.builder("Décrit moi sans détail et en 60 mots max le contenu").build(), docSource).getHtml());
+		response.setDescription(llmManager.askOnAllFiles(VPrompt.builder("Décrit moi en 10 mots maximum ce qu'est ce fichier").build(), docSource).getHtml());
+		response.setSummary(llmManager.askOnAllFiles(VPrompt.builder("Décrit moi sans détail et en 60 mots max le contenu").build(), docSource).getHtml());
 
-		final var fileAddress = llmManager.askOnFiles(
+		final var fileAddress = llmManager.askOnAllFiles(
 				VPrompt.builder(
 						"Quelle est l'adresse postale principale du document (pas d'adresse web) ? répond uniquement l'adresse avec des caractères romain (traduit en français si ce n'est pas le cas) sans autre texte ni mise en forme. Répond uniquement sur le format suivant : '123 rue du Soleil 75000 Paris', si aucune adresse ne correspond à ce format, ne rien répondre, sans autre texte ni mise en forme")
 						.build(),
@@ -119,7 +103,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 			}
 		}
 
-		final String dateString = llmManager.askOnFiles(VPrompt.builder(
+		final String dateString = llmManager.askOnAllFiles(VPrompt.builder(
 				"Quelle est la date d'effet du document ? répond sous la forme 2007-12-23 sans aucun autre texte. Si aucune date n'est précisée dans le document ou que cela n'est pas clair, répondre 'NA' sans autre texte ni mise en forme. Si il est précisé un mois, donne le premier jour du mois. Si il est précisé un trimestre, donne le premier jour du trimestre.")
 				.build(),
 				docSource).getText();
@@ -131,12 +115,12 @@ public class AiExtractController extends AbstractVSpringMvcController {
 			}
 		}
 
-		response.setTags(llmManager.askOnFiles(VPrompt.builder(
+		response.setTags(llmManager.askOnAllFiles(VPrompt.builder(
 				"Donne moi entre 1 et 3 tags décrivant le mieux la nature du fichier. Un tag est un mot générique et unique en camelCase qualifiant la nature du fichier et non son contenu. Répond sous la forme 'tag1;tag2;tag3' sans autre texte ni mise en forme")
 				.build(),
 				docSource).getText());
 
-		final var rawPersons = llmManager.askOnFiles(VPrompt.builder(
+		final var rawPersons = llmManager.askOnAllFiles(VPrompt.builder(
 				"Donne moi la liste des personnes physiques citées dans le fichier. Répond sous la forme 'NOM Prénom;NOM Prénom;NOM Prénom' sans autre texte ni mise en forme. Si aucune personne n'est citée, ne rien répondre, sans autre texte ni mise en forme")
 				.build(),
 				docSource);
@@ -151,7 +135,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 	@ResponseBody
 	public String initChat(@RequestParam("fileUris") final List<FileInfoURI> fileUris, @RequestParam("persona") final String personaCode) {
 		final VPromptContext context = new VPromptContext();
-		final var persona = personaMap.get(personaCode);
+		final var persona = aiServices.getPersona(personaCode);
 		if (persona != null) {
 			context.setPersona(persona);
 		}
@@ -163,7 +147,7 @@ public class AiExtractController extends AbstractVSpringMvcController {
 				.map(fileStoreManager::read)
 				.forEach(file -> docSource.addDocument(new VLlmDocument(file)));
 
-		return "{\"id\":\"" + llmManager.initChat(docSource, context).getId() + "\"}"; // String because Java Long is too big for javascript numbers
+		return "{\"id\":\"" + llmManager.initChatOnAllFiles(context, docSource).getId() + "\"}"; // String because Java Long is too big for javascript numbers
 	}
 
 	@PostMapping("/_ask")
