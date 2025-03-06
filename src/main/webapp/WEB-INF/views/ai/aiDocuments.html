@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:vu="https://vertigo.io/thymeleaf/vertigo-ui" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{templates/mmcDetailLayout}">
+<head>
+<title>AI</title>
+	<script th:src="@{/static/js/ai.js}"></script>
+	<!-- maps -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+	<style>
+		.chat h1 {
+		    font-size: 1.4rem !important;
+		    font-weight: bold !important;
+		    line-height: 1.1rem !important;
+		}
+		.chat h2 {
+		    font-size: 1.3rem !important;
+		    line-height: 1.1rem !important;
+		}
+		.chat h3 {
+		    font-size: 1.2rem !important;
+		    line-height: 1.1rem !important;
+		}
+		.chat table, .chat td, .chat  th {
+		  border: 1px solid;
+		  padding: 5px;
+		}
+		
+		.chat table {
+		  width: 100%;
+		  border-collapse: collapse;
+		}
+		
+		.chat code {
+			text-wrap: auto;
+		}
+	</style>
+</head>
+<body>
+	<section layout:fragment="content">
+		<th:block th:if="${!model.isEnabled}">
+			<div class="q-ml-md text-body1">Document module is disabled because PgVector is not configured.</div>
+		</th:block>
+		<th:block th:if="${model.isEnabled}">
+			<vu:include-data object="documentInfoList" field="docUri" />
+			<vu:table title="Indexed documents" list="documentInfoList" componentId="docList">
+				<vu:slot name="top_right_slot">
+					<q-btn class="fab-block" round flat color="primary" icon="chat" aria-label="Chat" title="Chat with all documents" @click="console.log('chat')"></q-btn>
+					<q-btn class="fab-block" round flat color="primary" icon="search" aria-label="Search" title="Search" @click="vueData.aiDocument.prompt = ''; vueData.documentSearchInfoList = []; $refs.search.show()"></q-btn>
+					<q-btn class="fab-block" round flat color="primary" icon="add" aria-label="Add file" title="Add file" @click="componentStates.addFiles = []; vueData.aiDocument.docUris = []; $refs.addFiles.show()"></q-btn>
+				</vu:slot>
+				<vu:slot name="actions_slot">
+					<q-btn icon="chat" round flat color="primary" title="Chat with this document" aria-label="Chat with this document" @click="console.log('chat')"></q-btn>
+					<q-btn icon="delete" round flat color="primary" title="Delete" aria-label="Delete" @click="httpPostAjax('_delete', {'fileUri':props.row.docUri})"></q-btn>
+				</vu:slot>
+						
+				<vu:column field="fileName" />
+				<vu:column field="chunkCount" />
+			</vu:table>
+			
+			<q-dialog ref="search">
+				<q-card class="column" style="width: 60vw; min-width: 500px; max-width: unset; min-height: 60vh">
+					<q-card-section>
+						<div class="text-h6">What do you search for ?</div>
+					</q-card-section>
+					
+					<q-card-section class="q-pt-none">
+						<q-input dense v-model="vueData.aiDocument.prompt" autofocus
+						        @keyup.enter="httpPostAjax('_search', {'query': vueData.aiDocument.prompt})"
+						        :loading="isPendingAction('_search')"
+						         />
+					</q-card-section>
+					
+					<q-card-section class="col-grow">
+						<vu:include-data object="documentSearchInfoList" field="textFragments" />
+						<vu:include-data object="documentSearchInfoList" field="fragmentsScores" />
+						<vu:table list="documentSearchInfoList" componentId="docSearchList">
+						    <vu:slot name="actions_slot">
+						    	<q-btn class="fab-block" round flat color="primary" icon="info" title="Display text" @click="componentStates.textInfoPage = 1; componentStates.textInfo = {'text': props.row.textFragments, 'score': props.row.fragmentsScores}; $refs.textDetail.show()"></q-btn>
+						    </vu:slot>
+                            <vu:column field="fileName" />
+                            <vu:column field="scorePercent">
+                            	{{ props.row.scorePercent }} %
+                            </vu:column>
+                            <vu:column field="chunkCount" />
+                        </vu:table>
+                        
+                        <q-dialog ref="textDetail" full-width full-height>
+                        	<q-card class="column full-height">
+                        		<q-card-section class="col-grow">
+                        			<q-scroll-area class="fit">
+                       					<pre class="q-pa-md" style="white-space: pre-wrap;">{{ componentStates.textInfo.text[componentStates.textInfoPage-1] }}</pre>
+                       				</q-scroll-area>
+                       			</q-card-section>
+                       			<q-card-actions align="center" class="text-primary">
+                       				{{ componentStates.textInfo.score[componentStates.textInfoPage-1] }} %
+                       				<q-space></q-space>
+	                       			<q-pagination
+									      v-model="componentStates.textInfoPage"
+									      :max="componentStates.textInfo.text.length"
+									      input></q-pagination>
+									<q-space></q-space>
+									<q-btn flat label="Close" v-close-popup ></q-btn>
+								</q-card-actions>
+                       		</q-card>
+                        </q-dialog>
+                        
+					</q-card-section>
+					
+					<q-card-actions align="right" class="text-primary">
+						<q-btn flat label="Close" v-close-popup ></q-btn>
+					</q-card-actions>
+				</q-card>
+			</q-dialog>
+			
+			<q-dialog ref="addFiles"
+					  th:attr="objectKey=${model.vContext['componentStates'].addComponentState('addFiles').addList('files')}">
+				<q-card style="width: 60vw; min-width: 500px; max-width: unset; min-height: 50vh">
+					<q-card-section>
+						<div class="text-h6">Add files into the document store</div>
+					</q-card-section>
+					
+					<q-card-section class="q-pt-none">
+						<div class="col-xl-6 col-12">
+							<vu:fileupload th:url="'@{/commons/upload}'" object="aiDocument" field="docUris" multiple componentId="aiFileUpload"
+										   :class="{'hidden' : componentStates.addFiles.length > 0}"/>
+							<div v-for="f in componentStates.addFiles">
+                                <span v-if="f.loading" style="width: 40px; display: inline-block;"><q-spinner-dots size="2rem" ></q-spinner-dots></span>
+                                <span v-if="!f.loading && !f.error" style="width: 40px; display: inline-block;"><q-icon name="check" size="2rem" color="green"></q-icon></span>
+                                <span v-if="!f.loading && f.error" style="width: 40px; display: inline-block;"><q-icon name="error" size="2rem" color="red"><q-tooltip>{{f.error}}</q-tooltip></q-icon></span>
+                                <span>{{f.fileName}}</span>
+                            </div>
+						</div>
+					</q-card-section>
+				</q-card>
+			</q-dialog>
+			
+			<q-dialog ref="chat">
+				<q-card class="column" style="width: 60vw; min-width: 500px; max-width: unset; min-height: 60vh">
+					<q-card-section>
+						<div class="text-h6">What do you search for ?</div>
+					</q-card-section>
+					
+					<q-card-section class="q-pt-none">
+						<q-input dense v-model="vueData.aiDocument.prompt" autofocus
+						        @keyup.enter="httpPostAjax('_search', {'query': vueData.aiDocument.prompt})"
+						        :loading="isPendingAction('_search')"
+						         />
+					</q-card-section>
+					
+					<q-card-section class="col-grow">
+                        
+                        
+					</q-card-section>
+					
+					<q-card-actions align="right" class="text-primary">
+						<q-btn flat label="Close" v-close-popup ></q-btn>
+					</q-card-actions>
+				</q-card>
+			</q-dialog>
+		</th:block>
+	</section>
+</body>
+</html>

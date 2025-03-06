@@ -258,14 +258,14 @@ modules:
     plugins:
       - io.vertigo.ai.llm.plugin.lc4j.Lc4jPlugin:
           apiKey: ${openAiApiKey}
-      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jClasspathEmbeddingPlugin:
-#      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jOpenAiEmbeddingPlugin:
-#          apiKey: ${openAiApiKey}
+#      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jClasspathEmbeddingPlugin:
+      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jOpenAiEmbeddingPlugin:
+          apiKey: ${openAiApiKey}
       - io.vertigo.ai.llm.plugin.lc4j.rag.storage.Lc4jPgVectorStoragePlugin:
           __flags__: ["pgvector"]
           source: java:/comp/env/jdbc/DataSourceHomePg
           createTable: true
-          dropTableFirst: true
+#          dropTableFirst: true
   
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:

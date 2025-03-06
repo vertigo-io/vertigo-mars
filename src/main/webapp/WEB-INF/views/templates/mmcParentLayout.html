@@ -203,6 +203,12 @@
                           </q-item-section>
                           <q-item-section>Health</q-item-section>
                         </q-item>
+                        <q-item tag="a" th:href="@{/ai/documents/}" th:class="${model.requestURI.startsWith('__@{/ai/documents}__') ? 'active':''}" >
+                          <q-item-section avatar>
+                          	<q-icon name="mdi-file-document" title="Documents" size="md"></q-icon>
+                          </q-item-section>
+                          <q-item-section>Documents</q-item-section>
+                        </q-item>
 				    </div>
 				    
 				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>

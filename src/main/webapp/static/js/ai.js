@@ -78,8 +78,51 @@ window.addEventListener('vui-after-page-mounted', function(event) {
 		return VUiPage.vueData.aiFileResponses.find(card => card.fileUri === uri);	
 	}
 	
+	VUiPage.$watch('vueData.aiDocument.docUris',
+		(newValue, oldValue) => {
+			if (newValue.length === 0) return;
+			
+			// we read from component to have file names without asking serverside
+			const files = VUiPage.$refs.aiFileUpload.files;
+			
+			// do analyze if needed
+			for (const file of files) {
+				const uri = file.fileUri;
+				const isNew = !VUiPage.componentStates.addFiles.find(f => f.fileUri === uri);
+				if (isNew) {
+					console.log("Indexing " + uri);
+					const newFile = { fileUri: uri, fileName: file.name, loading: true };
+					const index = VUiPage.componentStates.addFiles.push(newFile) - 1;
+										
+					VUiPage.$http.post('_index', VUiPage.objectToFormData({ CTX: VUiPage.vueData.CTX, fileUri: uri }))
+						.then(response => {
+							VUiPage.componentStates.addFiles[index] = {...response.data, ...VUiPage.componentStates.addFiles[index]};
+							VUiPage.componentStates.addFiles[index].loading = false;
+							
+							if (files.length === VUiPage.componentStates.addFiles.filter(f => f.loading === false).length) {
+								// all files indexed
+								VUiPage.httpPostAjax('_refresh', {}, {
+									onSuccess : function() {
+										setTimeout(() => VUiPage.$refs.addFiles.hide(), 1000);
+									}
+								});
+							}
+						})
+						.catch(error => {
+							const file = VUiPage.componentStates.addFiles[index];
+							file.loading = false;
+							file.error = error.response.data.globalErrors.join(' ');
+							VUiPage.uiMessageStack = {}; // clear error messages stack, keep only flash message
+						});
+
+				}
+			}
+			
+		});
+		
 	VUiPage.vueData.receivingCalls = [];
 	VUiPage.vueData.chats=[
+		{ messages: [], persona: { code: 'STE', name: 'Stéphane', description: "Assistant", avatar: 'https://cdn.quasar.dev/img/avatar1.jpg', welcome: "Bonjour, je m'appelle Stéphane, votre assistant virtuel, comment puis-je vous aider ?" }},
 		{ messages: [], persona: { code: 'MAR', name: 'Marie', description: "Comptable", avatar: 'https://cdn.quasar.dev/img/avatar2.jpg', welcome: "Bonjour, je m'appelle Marie, chef comptable, comment puis-je vous aider ?" }},
 		{ messages: [], persona: { code: 'DAN', name: 'Daniel', description: "Directeur de projets", avatar: 'https://cdn.quasar.dev/img/avatar4.jpg', welcome: "Bonjour, je m'appelle Daniel, directeur de projets, je vous écoute." }},
 		{ messages: [], persona: { code: "ISA", name: "Isabelle", description: "Architecte Informatique", avatar: 'https://cdn.quasar.dev/img/avatar6.jpg', welcome: "Bonjour, je m'appelle  Isabelle, architecte en informatique, comment puis-je vous aider ?" }},

@@ -24,3 +24,11 @@ create DtDefinition DtAiResponse {
 	field category 		{domain: DoLabel 	 	label: "Category" 		cardinality:"1"}
 }
 
+create DtDefinition DtAiDocumentInfo {
+	field docUri  		{domain: DoFileInfoURI 	label: "File" 			cardinality:"1"}
+	field fileName 		{domain: DoText			label: "File name" 		cardinality:"1"}
+	field chunkCount 	{domain: DoCount		label: "Chunk count" 	cardinality:"1"}
+	field scorePercent	{domain: DoCount		label: "Score" 			cardinality:"1"}
+	field textFragments	{domain: DoText			label: "Text fragments" cardinality:"*"}
+	field fragmentsScores	{domain: DoCount	label: "Scores" 		cardinality:"*"}
+}

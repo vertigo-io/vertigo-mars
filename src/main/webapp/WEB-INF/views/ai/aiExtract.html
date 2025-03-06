@@ -8,30 +8,30 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.min.css" type="text/css"/>
 	<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
 	<style>
-		h1 {
+		.chat h1 {
 		    font-size: 1.4rem !important;
 		    font-weight: bold !important;
 		    line-height: 1.1rem !important;
 		}
-		h2 {
+		.chat h2 {
 		    font-size: 1.3rem !important;
 		    line-height: 1.1rem !important;
 		}
-		h3 {
+		.chat h3 {
 		    font-size: 1.2rem !important;
 		    line-height: 1.1rem !important;
 		}
-		table, td, th {
+		.chat table, .chat td, .chat th {
 		  border: 1px solid;
 		  padding: 5px;
 		}
 		
-		table {
+		.chat table {
 		  width: 100%;
 		  border-collapse: collapse;
 		}
 		
-		code {
+		.chat code {
 			text-wrap: auto;
 		}
 	</style>
@@ -160,7 +160,7 @@
 											  animated transition-prev="jump-down" transition-next="jump-up"
 											  class="full-height bg-grey-2">
 									<q-tab-panel v-for="(chat, chatIdx) in vueData.chats" :name="chat.persona.code">
-										<div class="column full-height">
+										<div class="column full-height chat">
 											<q-scroll-area ref="scroller" class="q-pr-md col-grow" @vue:mounted="scrollToBottom($refs.scroller[0])">
 												<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
 												<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
@@ -175,7 +175,7 @@
 														</span>
 													</template>
 												</q-chat-message>
-												<q-chat-message v-if="chat.chattingDisplay" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" /></q-chat-message>
+												<q-chat-message v-if="chat.chattingDisplay" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" ></q-spinner-dots></q-chat-message>
 											</q-scroll-area>
 											<div class="row items-end q-col-gutter-sm">
 												<q-input filled v-model="chat.prompt" placeholder="Entrez un message" ref="input"
@@ -192,7 +192,7 @@
 					                            </div>
 											</div>
 				                            <div v-if="vueData.aiAdmin">
-				                            	<q-checkbox left-label v-model="vueData.chatStreaming" label="Stream" />
+				                            	<q-checkbox left-label v-model="vueData.chatStreaming" label="Stream"></q-checkbox>
 				                            </div>
 										</div>
 									</q-tab-panel>
