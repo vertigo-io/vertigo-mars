@@ -45,12 +45,12 @@
 			<vu:include-data object="documentInfoList" field="docUri" />
 			<vu:table title="Indexed documents" list="documentInfoList" componentId="docList">
 				<vu:slot name="top_right_slot">
-					<q-btn class="fab-block" round flat color="primary" icon="chat" aria-label="Chat" title="Chat with all documents" @click="console.log('chat')"></q-btn>
+					<q-btn class="fab-block" round flat color="primary" icon="chat" aria-label="Chat" title="Chat with all documents" @click="componentStates.fileUri=null; resetChats(); $refs.chat.show()"></q-btn>
 					<q-btn class="fab-block" round flat color="primary" icon="search" aria-label="Search" title="Search" @click="vueData.aiDocument.prompt = ''; vueData.documentSearchInfoList = []; $refs.search.show()"></q-btn>
 					<q-btn class="fab-block" round flat color="primary" icon="add" aria-label="Add file" title="Add file" @click="componentStates.addFiles = []; vueData.aiDocument.docUris = []; $refs.addFiles.show()"></q-btn>
 				</vu:slot>
 				<vu:slot name="actions_slot">
-					<q-btn icon="chat" round flat color="primary" title="Chat with this document" aria-label="Chat with this document" @click="console.log('chat')"></q-btn>
+					<q-btn icon="chat" round flat color="primary" title="Chat with this document" aria-label="Chat with this document" @click="componentStates.fileUri=props.row.docUri; resetChats(); $refs.chat.show()"></q-btn>
 					<q-btn icon="delete" round flat color="primary" title="Delete" aria-label="Delete" @click="httpPostAjax('_delete', {'fileUri':props.row.docUri})"></q-btn>
 				</vu:slot>
 						
@@ -65,10 +65,18 @@
 					</q-card-section>
 					
 					<q-card-section class="q-pt-none">
-						<q-input dense v-model="vueData.aiDocument.prompt" autofocus
-						        @keyup.enter="httpPostAjax('_search', {'query': vueData.aiDocument.prompt})"
+						<q-input  v-model="vueData.aiDocument.prompt" autofocus placeholder="Type your research here"
+						        @keyup.enter="documentSearch"
 						        :loading="isPendingAction('_search')"
-						         />
+						         ></q-input>
+						<div v-if="vueData.aiAdmin" class="row q-gutter-md">
+							<q-input style="width: 120px;" placeholder="100" label="Max results" type="number" min="1"
+							         v-model="vueData.aiDocument.maxChunks"
+							         @keyup.enter="documentSearch" ></q-input>
+							<q-input style="width: 120px;" placeholder="70" label="Min score" type="number" min="1" max="100"
+							         v-model="vueData.aiDocument.minScore"
+							         @keyup.enter="documentSearch" ></q-input>
+						</div>
 					</q-card-section>
 					
 					<q-card-section class="col-grow">
@@ -137,25 +145,75 @@
 			
 			<q-dialog ref="chat">
 				<q-card class="column" style="width: 60vw; min-width: 500px; max-width: unset; min-height: 60vh">
-					<q-card-section>
-						<div class="text-h6">What do you search for ?</div>
+					<q-card-section class="col-grow row no-wrap fit">
+						<q-tabs
+						  style="width: 15%;"
+						  :style="{minWidth: $q.screen.gt.md ? '240px' : $q.screen.gt.sm ? '195px' : '100px'}"
+						  v-model="vueData.tab"
+						  vertical
+						  class="text-grey"
+						  active-color="primary"
+						  indicator-color="primary"
+						  inline-label
+						>
+							<q-tab v-for="chat in vueData.chats" :name="chat.persona.code" content-class="full-width" no-caps>
+								<q-avatar v-if="$q.screen.gt.md"><img :src="chat.persona.avatar" alt="avatar"/></q-avatar>
+								<div class="col-grow">
+									<div class="text-uppercase">{{ chat.persona.name }}</div>
+									<div v-if="$q.screen.gt.sm" class="text-caption">{{ chat.persona.description }}</div>
+								</div>
+							</q-tab>
+						</q-tabs>
+						
+						<q-separator vertical></q-separator>
+						
+						<div class="col-grow q-mx-auto" style="max-width: 850px;">
+							<q-tab-panels v-model="vueData.tab"
+										  animated transition-prev="jump-down" transition-next="jump-up"
+										  class="full-height bg-grey-2">
+								<q-tab-panel v-for="(chat, chatIdx) in vueData.chats" :name="chat.persona.code">
+									<div class="column full-height chat">
+										<q-scroll-area ref="scroller" class="q-pr-md col-grow" @vue:mounted="scrollToBottom($refs.scroller[0])">
+											<q-chat-message :text="[chat.persona.welcome]" :avatar="chat.persona.avatar"></q-chat-message>
+											<q-chat-message v-for="msg in chat.messages" :text="[msg.text]"
+											                :sent="msg.type=='user'" :text-html="msg.type!='user'"
+											                th::avatar="|msg.type=='user' ? '@{/api/x/accounts/api/}'+vueData.connectedUser.personId+'/photo' : chat.persona.avatar|">
+												<template v-slot:stamp v-if="vueData.aiAdmin && msg.sources && msg.sources.length > 0">
+													<span>
+														Sources
+														<q-tooltip anchor="bottom start" self="top start">
+															<div v-for="source in msg.sources">{{ source }}</div>
+														</q-tooltip>
+													</span>
+												</template>
+											</q-chat-message>
+											<q-chat-message v-if="chat.chattingDisplay" :avatar="chat.persona.avatar"><q-spinner-dots size="2rem" ></q-spinner-dots></q-chat-message>
+										</q-scroll-area>
+										<div class="row items-end q-col-gutter-sm">
+											<q-input filled v-model="chat.prompt" placeholder="Entrez un message" ref="input"
+											         :disable="chat.chatting" :loading="chat.chatting"
+											         class="q-mt-md col-grow"
+											         @keydown.enter.prevent="VUiExtensions.methods.chat(chatIdx, chat.prompt, [componentStates.fileUri],
+									                                              r => {
+									                                                $nextTick(() => {$refs.input[0].focus();});
+									                                                } );
+								                                             chat.prompt='';"></q-input>
+								                                             
+				                            <div class="q-mb-sm">
+												<q-btn round icon="add" @click="chat.messages=[]; chat.id=null; chat.chatting=false; chat.chattingDisplay=false"><q-tooltip>New chat</q-tooltip></q-btn>
+				                            </div>
+										</div>
+			                            <div v-if="vueData.aiAdmin">
+			                            	<q-checkbox left-label v-model="vueData.chatStreaming" label="Stream"></q-checkbox>
+			                            </div>
+									</div>
+								</q-tab-panel>
+			          		</q-tab-panels>
+			          	</div>
+			          	<div>
+							<q-btn flat round icon="close" v-close-popup ></q-btn>
+			          	</div>
 					</q-card-section>
-					
-					<q-card-section class="q-pt-none">
-						<q-input dense v-model="vueData.aiDocument.prompt" autofocus
-						        @keyup.enter="httpPostAjax('_search', {'query': vueData.aiDocument.prompt})"
-						        :loading="isPendingAction('_search')"
-						         />
-					</q-card-section>
-					
-					<q-card-section class="col-grow">
-                        
-                        
-					</q-card-section>
-					
-					<q-card-actions align="right" class="text-primary">
-						<q-btn flat label="Close" v-close-popup ></q-btn>
-					</q-card-actions>
 				</q-card>
 			</q-dialog>
 		</th:block>

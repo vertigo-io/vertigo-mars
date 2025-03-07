@@ -1,6 +1,7 @@
 package io.mars.ai.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -91,8 +92,11 @@ public class AiDocumentsController extends AbstractVSpringMvcController {
 	}
 
 	@PostMapping("/_search")
-	public ViewContext doSearch(final ViewContext viewContext, @RequestParam("query") final String query) {
-		viewContext.publishDtList(documentSearchInfoListKey, aiServices.searchDocument(query));
+	public ViewContext doSearch(final ViewContext viewContext,
+			@RequestParam("query") final String query,
+			@RequestParam("maxChunks") final Optional<Integer> maxChunks,
+			@RequestParam("minScore") final Optional<Double> minScore) {
+		viewContext.publishDtList(documentSearchInfoListKey, aiServices.searchDocument(query, maxChunks, minScore));
 
 		return viewContext;
 	}
@@ -114,7 +118,7 @@ public class AiDocumentsController extends AbstractVSpringMvcController {
 
 	@PostMapping("/_initChat")
 	@ResponseBody
-	public String initChat(@RequestParam("fileUri") final Optional<FileInfoURI> fileUriOpt) {
+	public String initChat(@RequestParam("fileUris") final List<FileInfoURI> fileUris) {
 		final VPromptContext context = new VPromptContext();
 		context.setPersona(PERSONA);
 
@@ -124,10 +128,10 @@ public class AiDocumentsController extends AbstractVSpringMvcController {
 		final var docSource = llmManager.getPersistedDocumentSource();
 
 		LlmChat chat;
-		if (fileUriOpt.isPresent()) {
-			chat = llmManager.initChatOnSpecificFiles(context, docSource, fileUriOpt.get());
-		} else {
+		if (fileUris.isEmpty()) {
 			chat = llmManager.initChatOnAllFiles(context, docSource);
+		} else {
+			chat = llmManager.initChatOnSpecificFiles(context, docSource, fileUris.toArray(FileInfoURI[]::new));
 		}
 		return "{\"id\":\"" + chat.getId() + "\"}"; // String because Java Long is too big for javascript numbers
 	}

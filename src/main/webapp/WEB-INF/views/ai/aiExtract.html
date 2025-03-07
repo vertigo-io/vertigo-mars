@@ -188,7 +188,7 @@
 									                                             chat.prompt='';"></q-input>
 									                                             
 					                            <div class="q-mb-sm">
-													<q-btn round icon="add" @click="chat.messages=[]; chat.id=null;"><q-tooltip>New chat</q-tooltip></q-btn>
+													<q-btn round icon="add" @click="chat.messages=[]; chat.id=null; chat.chatting=false; chat.chattingDisplay=false"><q-tooltip>New chat</q-tooltip></q-btn>
 					                            </div>
 											</div>
 				                            <div v-if="vueData.aiAdmin">
