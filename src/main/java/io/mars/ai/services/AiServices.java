@@ -3,6 +3,7 @@ package io.mars.ai.services;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -70,9 +71,9 @@ public class AiServices implements Component {
 		docSource.removeDocument(fileUri);
 	}
 
-	public DtList<AiDocumentInfo> searchDocument(final String query) {
+	public DtList<AiDocumentInfo> searchDocument(final String query, final Optional<Integer> maxChunks, final Optional<Double> minScore) {
 		final var docMap = new LinkedHashMap<String, AiDocumentInfo>(); // LinkedHashMap to preserve document order by pertinence
-		llmManager.getPersistedDocumentSource().search(query, Map.of(), 100, 0.7d).forEach(r -> {
+		llmManager.getPersistedDocumentSource().search(query, Map.of(), maxChunks.orElse(100), minScore.orElse(0.7d)).forEach(r -> {
 			final AiDocumentInfo curentDoc = docMap.computeIfAbsent(r.document().fileInfo().getURI().toURN(), k -> {
 				final var newDoc = new AiDocumentInfo();
 				newDoc.setDocUri(r.document().fileInfo().getURI());

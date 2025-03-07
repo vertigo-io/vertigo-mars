@@ -218,6 +218,23 @@ function addWord(obj, texts, index) {
 	}
 }
 
+VUiExtensions.methods.documentSearch = function() {
+	if (this.vueData.aiDocument.prompt === '') return;
+	
+	const maxChunks = this.vueData.aiAdmin ? this.vueData.aiDocument.maxChunks || null : null;
+	const minScore = this.vueData.aiAdmin ? this.vueData.aiDocument.minScore/100 || null: null;
+	
+	this.httpPostAjax('_search', {'query': this.vueData.aiDocument.prompt, 'maxChunks': maxChunks, 'minScore': minScore});
+}
+
+VUiExtensions.methods.resetChats = function() {
+	for (const chat of this.vueData.chats) {
+		chat.messages = [];
+		chat.id = null;
+		chat.chatting = false;
+		chat.chattingDisplay = false;
+	}
+}
 
 VUiExtensions.methods.chat = function(chatIdx, text, files, resultFn) {
 	let chat = VUiPage.vueData.chats[chatIdx];
