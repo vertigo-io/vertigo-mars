@@ -128,7 +128,7 @@
 		        	</q-tab-panel>
 					<q-tab-panel name="map" class="absolute">
 						<div v-if="vueData.aiFileResponses.filter(f => f.gps != null).length == 0" class="text-center">No map data</div>
-				    	<v-map v-else tabindex="1" id="map_ol" class="fit">
+				    	<v-map v-else tabindex="1" id="map_ol" style="height: calc(90vh - 182px);">
 							<v-map-layer marker-color="#027BE3" :list="vueData.aiFileResponses.filter(f => f.gps != null)" field="gps" name-field="fileName" fit-on-data-update></v-map-layer>
 						</v-map>
 					</q-tab-panel>
