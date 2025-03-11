@@ -65,10 +65,16 @@
 					</q-card-section>
 					
 					<q-card-section class="q-pt-none">
-						<q-input  v-model="vueData.aiDocument.prompt" autofocus placeholder="Type your research here"
-						        @keyup.enter="documentSearch"
-						        :loading="isPendingAction('_search')"
-						         ></q-input>
+						<div class="row q-gutter-md">
+							<q-btn v-if="isSpeechSupported()" icon="mic" color="primary" @click="startSpeech(t => vueData.aiDocument.prompt = t, documentSearch);" ></q-btn>
+							
+							<q-input class="col-grow" autofocus placeholder="Type your research here"
+							        v-model="vueData.aiDocument.prompt" 
+							        @keyup.enter="documentSearch"
+							        :loading="isPendingAction('_search')"
+							         ></q-input>
+						</div>
+						         
 						<div v-if="vueData.aiAdmin" class="row q-gutter-md">
 							<q-input style="width: 120px;" placeholder="100" label="Max results" type="number" min="1"
 							         v-model="vueData.aiDocument.maxChunks"

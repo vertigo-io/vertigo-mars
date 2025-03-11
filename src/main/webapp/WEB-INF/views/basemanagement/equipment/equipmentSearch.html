@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="https://unpkg.com/ol-geocoder@4.3.1/dist/ol-geocoder.min.css" type="text/css"/>
 		<script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
 	    <script src="https://unpkg.com/ol-geocoder@4.3.1/dist/ol-geocoder.js"></script>
+    	<script th:src="@{/static/js/ai.js}"></script>
 	</head>
 	
 	<body>
@@ -19,8 +20,8 @@
 				<div class="row q-col-gutter-md">
 					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount.toLocaleString()}} Equipments</div>
 					<div class="col-shrink">
-						<q-btn icon="mdi-brain" color="primary" @click="vueData.aiSearch = ''; $refs.aiSearch.show()" ></q-btn>
-						<q-dialog ref="aiSearch">
+						<q-btn :icon="isSpeechSupported() ? 'mic':'mdi-brain'" color="primary" @click="vueData.aiSearch = ''; $refs.aiSearch.show(); startSpeech(t => vueData.aiSearch = t, ()=> httpPostAjax('_searchAi', {'search': vueData.aiSearch}, {onSuccess: () => $refs.aiSearch.hide()}));" ></q-btn>
+						<q-dialog ref="aiSearch" @hide="stopSpeech()">
 							<q-card style="min-width: 350px">
 								<q-card-section>
 									<div class="text-h6">What do you search for ?</div>

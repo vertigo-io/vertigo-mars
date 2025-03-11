@@ -98,7 +98,7 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 
 		// example of search :
 		// - les batiments / les véhicules de 2015 / buildings of 2020
-		// - esa satellite 655 /  cnsa satellite S-E-655 / les mines et drones cnsa de 2012
+		// - esa satellite 655 / esa satellite S-E-655 / le satellite de la cnsa de référence 128 / les mines et drones cnsa de 2012
 		// - les centrales / production d'énergie / ce qui produit de l'électricité
 
 		final FacetPromptResult aiCriteria = doAiSearch(search);

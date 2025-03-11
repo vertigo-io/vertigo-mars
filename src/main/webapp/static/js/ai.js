@@ -311,6 +311,51 @@ function doChatStream(chat, text, resultFn) {
 	}
 }
 
+// AI Speech to text
+let recognition;
+
+VUiExtensions.methods.isSpeechSupported= function() {
+	return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+}
+function getNewSpeechRecognition() {
+	if ('SpeechRecognition' in window) {
+		return new SpeechRecognition();
+	} else if ('webkitSpeechRecognition' in window) {
+		return new webkitSpeechRecognition();
+	}
+	return null;
+}
+
+VUiExtensions.methods.startSpeech = function(textFn, resultFn) {
+	if (!this.isSpeechSupported()) return;
+	
+	recognition = getNewSpeechRecognition();
+	recognition.continuous = false; // stop when user stop talking
+	recognition.interimResults = true; // display interim results
+	recognition.lang = 'fr-FR'; // demo is in french
+	
+	recognition.onresult = function(event) {
+		let transcript = '';
+		for (let i = event.resultIndex; i < event.results.length; i++) {
+			transcript += event.results[i][0].transcript;
+		}
+		textFn(transcript);
+	}
+	
+	recognition.onspeechend = function() {
+		recognition.stop();
+		resultFn();
+	}
+	
+	recognition.start();
+}
+
+VUiExtensions.methods.stopSpeech = function() {
+	if (!this.isSpeechSupported()) return;
+	recognition.stop();
+}
+	
+
 
 // detect pseudo KonamiCode (only arrows) to enable features (like streaming checkbox in chat)
 let lastKeys = [];
