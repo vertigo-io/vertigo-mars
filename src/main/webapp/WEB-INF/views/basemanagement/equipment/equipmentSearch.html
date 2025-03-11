@@ -20,7 +20,7 @@
 				<div class="row q-col-gutter-md">
 					<div class="m-title text-h6 self-center" style="flex-basis: 300px;">{{vueData.equipments_totalcount.toLocaleString()}} Equipments</div>
 					<div class="col-shrink">
-						<q-btn :icon="isSpeechSupported() ? 'mic':'mdi-brain'" color="primary" @click="vueData.aiSearch = ''; $refs.aiSearch.show(); startSpeech(t => vueData.aiSearch = t, ()=> httpPostAjax('_searchAi', {'search': vueData.aiSearch}, {onSuccess: () => $refs.aiSearch.hide()}));" ></q-btn>
+						<q-btn :icon="isSpeechSupported() ? 'mic':'mdi-brain'" color="primary" @click="vueData.aiSearch = ''; $refs.aiSearch.show(); startSpeech(t => vueData.aiSearch = t, equipmentAiSearch);" ></q-btn>
 						<q-dialog ref="aiSearch" @hide="stopSpeech()">
 							<q-card style="min-width: 350px">
 								<q-card-section>
@@ -28,12 +28,12 @@
 								</q-card-section>
 								
 								<q-card-section class="q-pt-none">
-									<q-input dense v-model="vueData.aiSearch" autofocus @keyup.enter="httpPostAjax('_searchAi', {'search': vueData.aiSearch}, {onSuccess: () => $refs.aiSearch.hide()})" />
+									<q-input dense v-model="vueData.aiSearch" autofocus @keyup.enter="equipmentAiSearch" />
 								</q-card-section>
 								
 								<q-card-actions align="right" class="text-primary">
 									<q-btn flat label="Cancel" v-close-popup ></q-btn>
-									<q-btn label="Search with AI" color="primary" :loading="isPendingAction('_searchAi')" ref="aiSearchBtn" @click="httpPostAjax('_searchAi', {'search': vueData.aiSearch}, {onSuccess: () => $refs.aiSearch.hide()})"></q-btn>
+									<q-btn label="Search with AI" color="primary" :loading="isPendingAction('_searchAi')" ref="aiSearchBtn" @click="equipmentAiSearch"></q-btn>
 								</q-card-actions>
 							</q-card>
 						</q-dialog>

@@ -355,7 +355,9 @@ VUiExtensions.methods.stopSpeech = function() {
 	recognition.stop();
 }
 	
-
+VUiExtensions.methods.equipmentAiSearch = function() {
+	this.httpPostAjax('_searchAi', {'search': this.vueData.aiSearch}, {onSuccess: () => this.$refs.aiSearch.hide()});	
+}
 
 // detect pseudo KonamiCode (only arrows) to enable features (like streaming checkbox in chat)
 let lastKeys = [];
