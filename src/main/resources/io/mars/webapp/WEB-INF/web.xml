@@ -15,10 +15,20 @@
 		<param-name>boot.applicationConfiguration</param-name>
 		<param-value>/mars.yaml</param-value>
 	</context-param>
-	<context-param>
-		<param-name>boot.activeFlags</param-name>
-		<param-value>home</param-value>
-	</context-param>
+    <context-param>
+        <param-name>org.eclipse.jetty.servlet.SessionIdPathParameterName</param-name>
+        <param-value>none</param-value>
+    </context-param>
+    <!-- no directory listing -->
+    <context-param>
+        <param-name>org.eclipse.jetty.servlet.Default.dirAllowed</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <!-- prevent Locking of static files on windows -->
+    <context-param>
+        <param-name>org.eclipse.jetty.servlet.Default.useFileMappedBuffer</param-name>
+        <param-value>false</param-value>
+    </context-param>
 
 	<filter>
 		<filter-name>Character Encoding Filter</filter-name>
@@ -168,8 +178,6 @@
 	
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
-		<url-pattern>/</url-pattern>
-		<url-pattern>/index.html</url-pattern>
 		<url-pattern>/static/*</url-pattern>
 	</servlet-mapping>
 

@@ -6,6 +6,8 @@ boot:
     - io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin:
     - io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin:
     - io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin:
+    - io.vertigo.core.plugins.param.env.EnvParamPlugin:
+    - io.vertigo.core.plugins.param.env.SystemPropertyParamPlugin:
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
         __flags__: ["ethereum"]
         url: "${boot.walletParamsUrl}"
@@ -89,13 +91,36 @@ modules:
       - timeseries.fake:
           __flags__: ["home"]
       - sql.datasource:
-          __flags__: ["klee"]
+          __flags__: ["klee && tomcat"]
           classname: io.vertigo.database.impl.sql.vendor.postgresql.PostgreSqlDataBase
           source: java:/comp/env/jdbc/DataSource
+      - sql.c3p0:
+          __flags__: ["klee && !tomcat"]
+          dataBaseClass: io.vertigo.database.impl.sql.vendor.postgresql.PostgreSqlDataBase
+          jdbcDriver: org.postgresql.Driver
+          jdbcUrl: ${DB_URL}
+          minPoolSize: ${DB_MIN_POOL_SIZE}
+          maxPoolSize: ${DB_MAX_POOL_SIZE}
       - sql.datasource:
-          __flags__: ["home"]
+          __flags__: ["home && tomcat"]
           classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           source: java:/comp/env/jdbc/DataSourceHome
+      - sql.c3p0:
+          __flags__: ["home && !tomcat"]
+          dataBaseClass: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
+          jdbcDriver: org.h2.Driver
+          jdbcUrl: jdbc:h2:~/marsdb/mars;MODE=PostgreSQL;AUTO_SERVER=TRUE
+      - sql.datasource:
+          __flags__: ["home && pgvector && tomcat"]
+          name: pgVector
+          classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
+          source: java:/comp/env/jdbc/DataSourceHomePg
+      - sql.c3p0:
+          __flags__: ["home && pgvector && !tomcat"]
+          name: pgVector
+          dataBaseClass: io.vertigo.database.impl.sql.vendor.postgresql.PostgreSqlDataBase
+          jdbcDriver: org.postgresql.Driver
+          jdbcUrl: jdbc:postgresql://localhost:5432/mars?user=mars&password=mars
       - migration.liquibase:
           masterFile: /liquibase/master.xml
   io.vertigo.datamodel.DataModelFeatures:
@@ -263,7 +288,7 @@ modules:
           apiKey: ${openAiApiKey}
       - io.vertigo.ai.llm.plugin.lc4j.rag.storage.Lc4jPgVectorStoragePlugin:
           __flags__: ["pgvector"]
-          source: java:/comp/env/jdbc/DataSourceHomePg
+          dataSpace: pgVector
           createTable: true
 #          dropTableFirst: true
   

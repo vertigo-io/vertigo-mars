@@ -30,9 +30,9 @@ public class ThemeManager implements Component, Activeable {
 
 		// Load theme properties file
 		final Properties prop = new Properties();
-		try (var is = ThemeManager.class.getClassLoader().getResourceAsStream("../../static/theme/" + themeName + "/theme.properties")) {
+		try (var is = ThemeManager.class.getClassLoader().getResourceAsStream("io/mars/webapp/static/theme/" + themeName + "/theme.properties")) {
 			prop.load(is);
-		} catch (final IOException e) {
+		} catch (final IOException | NullPointerException e) {
 			throw new VSystemException("Theme '{0}' not found", themeName);
 		}
 
