@@ -60,7 +60,7 @@ public class EquipmentCategoryDetailController extends AbstractVSpringMvcControl
 
 	@PostMapping("/_save")
 	public String doSave(final ViewContext viewContext, @ViewAttribute("category") final EquipmentCategory category) {
-		equipmentCategoryServices.saveEquipmentCategory(category, () -> easyformsController.save(viewContext));
+		equipmentCategoryServices.saveEquipmentCategory(category, easyformsController.readEasyForm(viewContext));
 		return "redirect:/catalog/masterdata/equipmentCategory/" + category.getEquipmentCategoryId();
 	}
 

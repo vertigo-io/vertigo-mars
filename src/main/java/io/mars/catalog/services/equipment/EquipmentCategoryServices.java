@@ -2,8 +2,6 @@ package io.mars.catalog.services.equipment;
 
 import javax.inject.Inject;
 
-import org.codehaus.commons.compiler.util.Producer;
-
 import io.mars.authorization.SecuredEntities;
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.catalog.dao.EquipmentCategoryDAO;
@@ -14,6 +12,8 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.datamodel.criteria.Criterions;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datamodel.data.model.DtListState;
+import io.vertigo.easyforms.designer.services.EasyFormsDesignerServices;
+import io.vertigo.easyforms.domain.EasyForm;
 
 @Transactional
 public class EquipmentCategoryServices implements Component {
@@ -21,13 +21,16 @@ public class EquipmentCategoryServices implements Component {
 	@Inject
 	private EquipmentCategoryDAO equipmentCategoryDAO;
 
+	@Inject
+	private EasyFormsDesignerServices easyFormsDesignerServices;
+
 	public EquipmentCategory getEquipmentCategoryFromId(final Long equipmentCategoryId) {
 		return equipmentCategoryDAO.get(equipmentCategoryId);
 	}
 
-	public void saveEquipmentCategory(final EquipmentCategory equipmentCategory, final Producer<Long> mfoSaver) {
-		final Long efoId = mfoSaver.produce();
-		equipmentCategory.setEfoId(efoId);
+	public void saveEquipmentCategory(final EquipmentCategory equipmentCategory, final EasyForm easyForm) {
+		final EasyForm easyFormSaved = easyFormsDesignerServices.saveForm(easyForm);
+		equipmentCategory.easyForm().set(easyFormSaved);
 		equipmentCategoryDAO.save(equipmentCategory);
 	}
 
