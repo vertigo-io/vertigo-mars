@@ -4,7 +4,7 @@
 
 	<groupId>io.vertigo</groupId>
 	<artifactId>mars</artifactId>
-	<version>4.3.0-SNAPSHOT</version>
+	<version>4.3.0</version>
 	<packaging>war</packaging>
 	<name>mars</name>
 
@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<maven.test.error.ignore>true</maven.test.error.ignore>
-		<vertigo.version>4.3.0-SNAPSHOT</vertigo.version>
+		<vertigo.version>4.3.0</vertigo.version>
 	</properties>
 
 
@@ -98,6 +98,11 @@
 			<artifactId>vertigo-ai-langchain4j</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>2.9.1</version> <!-- force version for langchain4j (revert vertigo dependency-management) -->
+        </dependency>
 
 		<dependency>
 			<groupId>io.vertigo</groupId>
@@ -220,7 +225,7 @@
 		<!-- Search -->
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
-			<artifactId>transport</artifactId> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<artifactId>x-pack-transport</artifactId> <!-- required by ESEmbeddedSearchServicesPlugin -->
 		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
