@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<maven.test.error.ignore>true</maven.test.error.ignore>
-		<vertigo.version>3.5.0</vertigo.version>
+		<vertigo.version>4.3.0</vertigo.version>
 	</properties>
 	
 	
@@ -182,12 +182,12 @@
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>transport</artifactId>
-			<version>7.17.6</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<version>7.17.25</version> <!-- required by ESEmbeddedSearchServicesPlugin -->
 		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>elasticsearch-rest-high-level-client</artifactId>
-			<version>7.17.6</version> <!-- REstHighLevelElasticSearchConnector -->
+			<version>7.17.25</version> <!-- REstHighLevelElasticSearchConnector -->
 		</dependency>
 		<dependency>
 			<groupId>org.codelibs.elasticsearch.module</groupId>
