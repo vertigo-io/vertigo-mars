@@ -59,12 +59,12 @@
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-vega</artifactId>
-			<version>${vertigo.version}</version>
+			<version>4.3.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-ui</artifactId>
-			<version>${vertigo.version}</version>
+			<version>4.3.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>io.vertigo</groupId>
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-easyforms</artifactId>
-			<version>${vertigo.version}</version>
+			<version>4.3.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>io.vertigo</groupId>

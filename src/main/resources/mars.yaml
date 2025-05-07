@@ -204,6 +204,8 @@ modules:
         - webservices.rateLimiting:
             limitValue: 600
         - webservices.security:
+        - webservices.catalog:
+        - webservices.healthcheck:
         - webservices.swagger:
         - authentication.oidc:
              __flags__: ["keycloak"]
