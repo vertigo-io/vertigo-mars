@@ -33,7 +33,11 @@ public class ThemeManager implements Component, Activeable {
 		try (var is = ThemeManager.class.getClassLoader().getResourceAsStream("io/mars/webapp/static/theme/" + themeName + "/theme.properties")) {
 			prop.load(is);
 		} catch (final IOException | NullPointerException e) {
-			throw new VSystemException("Theme '{0}' not found", themeName);
+			try (var is = ThemeManager.class.getClassLoader().getResourceAsStream("../../static/theme/" + themeName + "/theme.properties")) {
+				prop.load(is);
+			} catch (final IOException | NullPointerException e2) {
+				throw new VSystemException("Theme '{0}' not found", themeName);
+			}
 		}
 
 		prop.forEach((k, v) -> addPropertiesToMap((String) k, (String) v, themeProperties));

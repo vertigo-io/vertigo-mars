@@ -10,3 +10,4 @@ mvn-release.txt
 *.class
 .factorypath
 .vscode/
+/dependency-reduced-pom.xml
