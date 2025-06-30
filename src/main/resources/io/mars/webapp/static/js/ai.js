@@ -336,15 +336,17 @@ VUiExtensions.methods.startSpeech = function(textFn, resultFn) {
 	
 	recognition.onresult = function(event) {
 		let transcript = '';
+		let isFinal;
 		for (let i = event.resultIndex; i < event.results.length; i++) {
 			transcript += event.results[i][0].transcript;
+			isFinal = event.results[i].isFinal;
 		}
 		textFn(transcript);
-	}
-	
-	recognition.onspeechend = function() {
-		recognition.stop();
-		resultFn();
+		if (isFinal) {
+			// on mobile, recognition.onspeechend is called before the last onresult, so we can't use it to post the result
+			recognition.stop();
+			resultFn();
+		}
 	}
 	
 	recognition.start();
