@@ -4,7 +4,7 @@
 
 	<groupId>io.vertigo</groupId>
 	<artifactId>mars</artifactId>
-	<version>4.3.1</version>
+	<version>4.3.2-SNAPSHOT</version>
 	<packaging>${packaging.type}</packaging>
 	<name>mars</name>
 
@@ -14,8 +14,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<maven.test.error.ignore>true</maven.test.error.ignore>
-		<vertigo.version>4.3.1</vertigo.version>
-		<vertigo-ai.version>4.3.1-SNAPSHOT</vertigo-ai.version>
+		<vertigo.version>4.3.2-SNAPSHOT</vertigo.version>
+		<vertigo-ai.version>4.3.2-SNAPSHOT</vertigo-ai.version>
 	</properties>
 
 
@@ -96,7 +96,7 @@
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-easyforms</artifactId>
-			<version>${vertigo.version}</version>
+			<version>4.3.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>io.vertigo</groupId>
