@@ -1,4 +1,6 @@
 ---
+node:
+  appName: mars
 boot:
   params:
     locales: fr_FR, en_US
@@ -20,7 +22,7 @@ boot:
     - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin:
     - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
         __flags__: ["klee"]
-        hostName: ${boot.analyticsHost}
+        hostNameParam: analyticsHost
         port: ${boot.portParam}
         jsonLayout: false
         compressOutputStream: false
@@ -134,12 +136,7 @@ modules:
       - entitystore.sql:
       - entitystore.sql:
           dataSpace: orchestra
-      - filestore.db:
-          __flags__: ["klee"]
-          storeDtName: DtMediaFileInfo
-          fileInfoClass: io.mars.support.fileinfo.FileInfoStd 
       - filestore.filesystem:
-          __flags__: ["home"]
           storeDtName: DtMediaFileInfo
           path: ${user.home}/marsFiles/
           fileInfoClass: io.mars.support.fileinfo.FileInfoStd
@@ -250,7 +247,7 @@ modules:
   io.vertigo.dashboard.DashboardFeatures:
     features:
       - analytics:
-          appName: mars-analytics
+          appName: mars
   io.vertigo.audit.AuditFeatures:
     features:
       - ledger:

@@ -6,7 +6,8 @@
 		driverClassName="org.postgresql.Driver"
 		url="jdbc:postgresql://mars.dev.klee.lan.net:5432/mars"
 		username="mars"
-		password="mars" />
+		password="mars"
+		connectionProperties="quoteReturningIdentifiers=false" />
 				
 	<Resource name="jdbc/DataSourceHomePg"
 		auth="SERVLET"
@@ -14,7 +15,8 @@
 		driverClassName="org.postgresql.Driver"
 		url="jdbc:postgresql://localhost:5432/mars"
 		username="mars"
-		password="mars" />
+		password="mars" 
+		 connectionProperties="quoteReturningIdentifiers=false"/>
 		
 	<Resource name="jdbc/DataSourceHome"
 		auth="SERVLET"
@@ -28,7 +30,7 @@
 	<Parameter name="boot.activeFlags" value="home;tomcat" override="false"/>
 	<Parameter name="boot.apiKeysUrl" value="w:\\Digital Factory\\02 - Solutions\\Vertigo\\apiKeys\\marsApiKeys.properties" override="false"/>
 	<Parameter name="boot.walletParamsUrl" value="W:\\Digital Factory\\02 - Solutions\\Vertigo\\Blockchain\\accounts\\marsWalletAccount.properties" override="false"/>
-	<Parameter name="boot.analyticsHost" value="mars.dev.klee.lan.net" override="false"/>
+	<Parameter name="analyticsHost" value="mars.dev.klee.lan.net" override="false"/>
 	<Parameter name="redisHost" value="mars.dev.klee.lan.net" override="false"/>
 	<Parameter name="influxdbHost" value="http://mars.dev.klee.lan.net:8086" override="false"/>
 	<Parameter name="influxdbToken" value="CZGelEOQ9SwDUVrB6IL6hFAXCjev5pyDDN7ESYtvajWu3ck_wnCrIp94hs4vOLt9vSgXGT6BJ6kAr6UsJ9FaCQ==" override="false"></Parameter>

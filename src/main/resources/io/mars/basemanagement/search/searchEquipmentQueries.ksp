@@ -9,12 +9,12 @@ create IndexDefinition IdxEquipment {
 
 create FacetDefinition FctEquipmentEquipmentTypeName {
 	dtDefinition:DtEquipmentIndex, fieldName:"equipmentTypeName", label:"Equipment Type",
-	multiselectable: "true"
+	multiSelectable: "true"
 }
 
 create FacetDefinition FctEquipmentEquipmentTags {
     dtDefinition:DtEquipmentIndex, fieldName:"tags", label:"Equipment Tags"
-    multiselectable: "true"
+    multiSelectable: "true"
 } 
 
 create FacetDefinition FctEquipmentEquipmentCategoryName {

@@ -469,9 +469,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Modification Date'. */
 		lastModified,
 		/** Propriété 'path'. */
-		filePath,
-		/** Propriété 'data'. */
-		fileData	}
+		filePath	}
 
 	/**
 	 * Enumération des champs de Mission.
