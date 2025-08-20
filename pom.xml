@@ -155,7 +155,7 @@
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>5.10</version>
+			<version>5.12.0</version>
 		</dependency>
 
 		<dependency>
@@ -351,17 +351,14 @@
 									</filters>
 									<transformers>
 										<!-- add Main-Class to manifest file -->
-										<transformer
-											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+										<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 											<mainClass>io.mars.support.boot.BootMars</mainClass>
 										</transformer>
-										<transformer
-											implementation="org.apache.maven.plugins.shade.resource.GroovyResourceTransformer">
+										<transformer implementation="org.apache.maven.plugins.shade.resource.GroovyResourceTransformer">
 											<extModuleName>the-aggregated-module</extModuleName>
 											<extModuleVersion>1.0.0</extModuleVersion>
 										</transformer>
-										<transformer
-											implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+										<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 									</transformers>
 									<shadedArtifactAttached>false</shadedArtifactAttached>
 								</configuration>
