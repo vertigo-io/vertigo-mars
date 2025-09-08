@@ -111,7 +111,8 @@
 					style="width: 50vw; object-fit: contain;" />
 			</q-dialog>
 			<div th:if="${#lists.isEmpty(model.basePictures)}">No pictures for this base</div>
-			<vu:fileupload th:if="${model.modeEdit}" float-label="Add new pictures here" th:url="'@{/commons/upload}'" key="baseTmpPictureUris" fileInfoKey="storedFiles" multiple />
+			<vu:fileupload th:if="${model.modeEdit}" float-label="Add new pictures here" th:url="'@{/commons/upload}'" key="baseTmpPictureUris" fileInfoKey="storedFiles"
+			 multiple accept=".bmp, .jpg, .jpeg, .png" maxFileSize="5" />
 		</vu:block>
 		<vu:block id="financial" title="Financial value">
 			<vu:grid cols="2">

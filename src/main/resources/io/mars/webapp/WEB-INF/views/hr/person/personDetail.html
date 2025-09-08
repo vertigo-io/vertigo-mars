@@ -52,7 +52,7 @@
 						<vu:chips-autocomplete object="person" field="tags" list="tags" staticData="true"/>
 						<vu:select-multiple object="personInput" field="groups" list="groups" labelField="name" layout="horizontal"/>
 						<vu:label-edit object="person" field="picturefileId" th:if="${viewMode=='edit'}"  >
-							<vu:fileupload th:url="'@{/commons/upload}'" key="personPictureUri" th:with="object=null, field=null"/>
+							<vu:fileupload th:url="'@{/commons/upload}'" maxFileSize="2" accept=".png, .jpg, .jpeg" key="personPictureUri" th:with="object=null, field=null"/>
 						</vu:label-edit>
 					</vu:grid>
 				</vu:block>
