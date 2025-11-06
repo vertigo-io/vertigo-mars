@@ -15,7 +15,6 @@
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<maven.test.error.ignore>true</maven.test.error.ignore>
 		<vertigo.version>4.3.3-SNAPSHOT</vertigo.version>
-		<vertigo-ai.version>4.3.2-SNAPSHOT</vertigo-ai.version>
 	</properties>
 
 
@@ -45,7 +44,7 @@
 			<dependency>
 				<groupId>io.vertigo</groupId>
 				<artifactId>vertigo-ai-langchain4j</artifactId>
-				<version>${vertigo-ai.version}</version>
+				<version>${vertigo.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -108,7 +107,7 @@
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-ai-langchain4j</artifactId>
-			<version>${vertigo-ai.version}</version>
+			<version>${vertigo.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tika</groupId>
