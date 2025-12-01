@@ -87,19 +87,19 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 			throw new VUserException("Login or Password invalid");
 		}
 		final var account = loggedAccount.get();
-		final var person = personServices.getLoggedPerson(Long.valueOf(account.getId()));
+		final var person = personServices.getLoggedPerson(Long.valueOf(account.id()));
 		final var availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);
 		changeProfile(availableProfiles.get(0).getMissionId());
 
 		sendNotificationToAll(Notification.builder()
-				.withSender(account.getDisplayName())
+				.withSender(account.displayName())
 				.withTitle("New login")
-				.withContent("User " + account.getDisplayName() + " just login")
+				.withContent("User " + account.displayName() + " just login")
 				.withTTLInSeconds(600)
 				.withType("MARS-LOGIN") // should prefix by app, in case of multi-apps notifications
-				.withTargetUrl("/mars/hr/person/" + account.getId())
+				.withTargetUrl("/mars/hr/person/" + account.id())
 				.build());
 
 	}
@@ -111,7 +111,7 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 		final var loggedAccount = authenticationManager.login(new UsernameAuthenticationToken(email)).orElseGet(
 				() -> {
 					// auto provisionning an account when using keycloak
-					final Person newPerson = personServices.initPerson();
+					final var newPerson = personServices.initPerson();
 					newPerson.setDateHired(LocalDate.now());
 					newPerson.setEmail(email);
 					newPerson.setFirstName(firstName);
@@ -120,7 +120,7 @@ public class LoginServices implements OIDCAppLoginHandler, Component {
 					return authenticationManager.login(new UsernameAuthenticationToken(email)).get();
 
 				});
-		final var person = personServices.getLoggedPerson(Long.valueOf(loggedAccount.getId()));
+		final var person = personServices.getLoggedPerson(Long.valueOf(loggedAccount.id()));
 		final var availableProfiles = missionServices.getMissionsByPersonId(person.getPersonId());
 		getUserSession().setLoggedPerson(person);
 		getUserSession().setAvailableProfiles(availableProfiles);

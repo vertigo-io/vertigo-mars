@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.social.handle.HandleManager;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
@@ -26,16 +25,13 @@ public class WebHandlesController extends AbstractVSpringMvcController {
 				.isNotBlank(definitionName)
 				.isNotBlank(code);
 		//---
-		final String handle = definitionName + "/" + code;
-		final UID uid = handleManager.getHandleByCode(handle).getUid();
-		switch (uid.getDefinition().getName()) {
-			case "DtBase":
-				return "redirect:/basemanagement/base/information/" + uid.getId();
-			case "DtEquipment":
-				return "redirect:/basemanagement/equipment/" + uid.getId();
-			default:
-				throw new VSystemException("handle {0} is not linkable to a web resource", handle);
-		}
+		final var handle = definitionName + "/" + code;
+		final var uid = handleManager.getHandleByCode(handle).uid();
+		return switch (uid.getDefinition().getName()) {
+			case "DtBase" -> "redirect:/basemanagement/base/information/" + uid.getId();
+			case "DtEquipment" -> "redirect:/basemanagement/equipment/" + uid.getId();
+			default -> throw new VSystemException("handle {0} is not linkable to a web resource", handle);
+		};
 
 	}
 

@@ -23,8 +23,8 @@ public class HrCommands implements Component {
 			description = "Find the manager of a base",
 			questions = { "Who is the manager of base {0}" })
 	public CommandResponse<Optional<Person>> findBaseManager(final GenericUID<Base> baseUID) {
-		final Long baseId = (Long) baseUID.getId();
-		final Optional<Person> managerOpt = missionServices.getBaseManager(baseId);
+		final var baseId = (Long) baseUID.id();
+		final var managerOpt = missionServices.getBaseManager(baseId);
 		return CommandResponse.<Optional<Person>> builder()
 				.withStatus(CommandResponseStatus.OK)
 				.withDisplay(managerOpt.isPresent() ? "Manager is " + managerOpt.get().getFullName() : "There is no manager")
