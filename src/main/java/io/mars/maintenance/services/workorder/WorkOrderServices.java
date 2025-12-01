@@ -2,7 +2,7 @@ package io.mars.maintenance.services.workorder;
 
 import java.time.LocalDate;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.domain.DtDefinitions.WorkOrderFields;
 import io.mars.maintenance.dao.WorkOrderDAO;

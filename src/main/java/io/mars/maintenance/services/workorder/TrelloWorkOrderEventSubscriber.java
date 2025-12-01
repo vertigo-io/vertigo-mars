@@ -1,6 +1,6 @@
 package io.mars.maintenance.services.workorder;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.maintenance.domain.WorkOrder;
 import io.vertigo.commons.eventbus.EventBusSubscribed;

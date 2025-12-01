@@ -2,7 +2,7 @@ package io.mars.maintenance.services.ticket;
 
 import java.time.format.DateTimeFormatter;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.hr.services.person.PersonServices;
 import io.mars.maintenance.domain.Ticket;

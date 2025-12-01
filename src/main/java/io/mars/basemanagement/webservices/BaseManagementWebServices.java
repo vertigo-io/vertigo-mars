@@ -3,7 +3,7 @@ package io.mars.basemanagement.webservices;
 import java.util.Collections;
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.BaseIndex;

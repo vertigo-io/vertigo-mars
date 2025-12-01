@@ -12,7 +12,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.vertigo.commons.command.CommandManager;
 import io.vertigo.commons.command.CommandResponse;

@@ -2,7 +2,7 @@ package io.mars.hr.commands;
 
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.domain.Base;
 import io.mars.hr.domain.Person;

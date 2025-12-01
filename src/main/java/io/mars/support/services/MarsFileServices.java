@@ -1,6 +1,6 @@
 package io.mars.support.services;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.support.fileinfo.FileInfoTmp;
 import io.vertigo.commons.transaction.Transactional;

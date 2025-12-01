@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.zip.ZipInputStream;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.catalog.services.supplier.SupplierServices;
 import io.vertigo.core.lang.Assertion;

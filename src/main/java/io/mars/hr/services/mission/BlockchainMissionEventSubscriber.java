@@ -1,6 +1,6 @@
 package io.mars.hr.services.mission;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.domain.Base;
 import io.mars.basemanagement.domain.Business;

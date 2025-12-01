@@ -1,6 +1,6 @@
 package io.mars.common.dao.tools.file;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datastore.entitystore.EntityStoreManager;

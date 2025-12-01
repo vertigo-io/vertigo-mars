@@ -1,6 +1,6 @@
 package io.mars.basemanagement.services.business;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.dao.BusinessDAO;
 import io.mars.basemanagement.domain.Business;

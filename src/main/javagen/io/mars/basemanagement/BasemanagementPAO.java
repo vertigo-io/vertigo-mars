@@ -1,6 +1,6 @@
 package io.mars.basemanagement;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.vertigo.core.node.Node;
 import io.vertigo.core.lang.Assertion;

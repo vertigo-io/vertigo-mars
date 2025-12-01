@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.ai.domain.AiDocumentInfo;
 import io.mars.support.fileinfo.FileInfoStd;

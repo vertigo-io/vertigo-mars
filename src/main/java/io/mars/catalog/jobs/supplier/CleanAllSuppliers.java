@@ -1,6 +1,6 @@
 package io.mars.catalog.jobs.supplier;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.catalog.services.supplier.SupplierServices;
 import io.vertigo.orchestra.impl.services.execution.AbstractActivityEngine;

@@ -2,7 +2,7 @@ package io.mars.hr.services.mission;
 
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.hr.HrPAO;
 import io.mars.hr.dao.MissionDAO;

@@ -1,6 +1,6 @@
 package io.mars.support.boot;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.jobs.DecommissionEquipmentActivityEngine;
 import io.mars.basemanagement.jobs.DecommissioningReportActivityEngine;

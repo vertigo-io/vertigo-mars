@@ -1,6 +1,6 @@
 package io.mars.basemanagement.datageneration;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.dao.BusinessDAO;
 import io.mars.basemanagement.dao.GeosectorDAO;

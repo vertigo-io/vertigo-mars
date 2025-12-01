@@ -3,7 +3,7 @@ package io.mars.basemanagement.search;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.domain.Equipment;
 import io.mars.basemanagement.domain.EquipmentIndex;

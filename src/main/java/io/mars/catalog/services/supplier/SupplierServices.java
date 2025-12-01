@@ -3,7 +3,7 @@ package io.mars.catalog.services.supplier;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.catalog.domain.Supplier;
 import io.mars.catalog.search.SupplierSearchClient;

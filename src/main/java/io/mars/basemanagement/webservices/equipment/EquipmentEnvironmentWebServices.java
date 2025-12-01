@@ -20,7 +20,7 @@ package io.mars.basemanagement.webservices.equipment;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.services.equipment.EquipmentEnvironmentServices;
 import io.vertigo.core.lang.Assertion;

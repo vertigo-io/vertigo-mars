@@ -1,6 +1,6 @@
 package io.mars.basemanagement.commands;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.services.equipment.EquipmentEnvironmentServices;
 import io.vertigo.commons.command.Command;

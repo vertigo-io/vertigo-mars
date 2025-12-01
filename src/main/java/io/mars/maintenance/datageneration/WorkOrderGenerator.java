@@ -3,7 +3,7 @@ package io.mars.maintenance.datageneration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.datageneration.DataGenerator;
 import io.mars.maintenance.dao.WorkOrderDAO;

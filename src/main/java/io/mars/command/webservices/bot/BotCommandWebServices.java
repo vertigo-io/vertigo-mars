@@ -1,6 +1,6 @@
 package io.mars.command.webservices.bot;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.command.services.bot.generation.BotCommandGenerationServices;
 import io.vertigo.vega.webservice.WebServices;

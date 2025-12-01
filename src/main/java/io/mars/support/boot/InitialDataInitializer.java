@@ -21,7 +21,7 @@
  */
 package io.mars.support.boot;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.datageneration.DataGenerator;
 import io.vertigo.core.node.component.ComponentInitializer;

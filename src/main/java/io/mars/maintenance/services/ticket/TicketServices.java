@@ -2,7 +2,7 @@ package io.mars.maintenance.services.ticket;
 
 import java.time.LocalDate;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.authorization.SecuredEntities;
 import io.mars.basemanagement.domain.Equipment;

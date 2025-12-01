@@ -3,7 +3,7 @@ package io.mars.basemanagement.services.equipment;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.services.equipment.iot.InputEvent;
 import io.vertigo.commons.eventbus.EventBusManager;

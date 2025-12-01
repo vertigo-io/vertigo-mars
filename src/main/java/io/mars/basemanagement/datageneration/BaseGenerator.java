@@ -3,7 +3,7 @@ package io.mars.basemanagement.datageneration;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.BasemanagementPAO;
 import io.mars.basemanagement.dao.BaseDAO;

@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.time.Instant;
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.catalog.domain.Supplier;
 import io.mars.catalog.services.supplier.SupplierServices;

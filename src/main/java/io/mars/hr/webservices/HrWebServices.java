@@ -1,6 +1,6 @@
 package io.mars.hr.webservices;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.hr.domain.Person;
 import io.mars.hr.services.person.PersonServices;

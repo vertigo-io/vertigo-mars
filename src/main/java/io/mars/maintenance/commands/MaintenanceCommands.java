@@ -1,6 +1,6 @@
 package io.mars.maintenance.commands;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.maintenance.domain.Ticket;
 import io.mars.maintenance.services.ticket.TicketServices;

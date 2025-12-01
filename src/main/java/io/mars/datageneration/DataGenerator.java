@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.basemanagement.datageneration.BaseGenerator;
 import io.mars.basemanagement.datageneration.EquipmentGenerator;

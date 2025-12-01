@@ -3,7 +3,7 @@
  */
 package io.mars.support.boot;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.support.easyforms.MarsEasyFormsResources;
 import io.vertigo.core.locale.LocaleManager;

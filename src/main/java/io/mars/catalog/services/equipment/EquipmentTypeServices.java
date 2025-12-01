@@ -1,6 +1,6 @@
 package io.mars.catalog.services.equipment;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.catalog.dao.EquipmentTypeDAO;
 import io.mars.catalog.domain.EquipmentType;

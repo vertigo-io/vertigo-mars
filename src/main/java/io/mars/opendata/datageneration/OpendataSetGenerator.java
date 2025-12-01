@@ -1,6 +1,6 @@
 package io.mars.opendata.datageneration;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.opendata.dao.OpendataSetDAO;
 import io.mars.opendata.domain.OpendataSet;

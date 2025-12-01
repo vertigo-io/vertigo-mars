@@ -1,6 +1,6 @@
 package io.mars.catalog.dao;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.Node;

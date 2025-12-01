@@ -3,7 +3,7 @@ package io.mars.basemanagement.services.equipment;
 import java.time.Instant;
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.mars.authorization.SecuredEntities;
 import io.mars.basemanagement.BasemanagementPAO;
