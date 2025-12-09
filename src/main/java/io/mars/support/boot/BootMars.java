@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -20,9 +21,9 @@ public final class BootMars {
 	private static final Logger LOG = LogManager.getLogger(BootMars.class);
 
 	public static void loadClasspathFileProperties(final String file) {
-		try (InputStream input = openInputStream(file)) {
+		try (var input = openInputStream(file)) {
 
-			final Properties prop = new Properties();
+			final var prop = new Properties();
 			prop.load(input);
 			prop.forEach((k, v) -> System.setProperty((String) k, (String) v));
 		} catch (final Exception e) {
@@ -31,7 +32,7 @@ public final class BootMars {
 	}
 
 	private static InputStream openInputStream(final String file) throws IOException {
-		final InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(file);
+		final var is = Thread.currentThread().getContextClassLoader().getResourceAsStream(file);
 		if (is != null) {
 			return is;
 		}
@@ -79,7 +80,7 @@ public final class BootMars {
 			}
 		}
 		// port
-		final String paramPort = getFromParamOrEnv("EXPOSED_PORT");
+		final var paramPort = getFromParamOrEnv("EXPOSED_PORT");
 		if (!StringUtil.isBlank(paramPort)) {
 			jettyBootParamsBuilder.withPort(Integer.parseInt(paramPort));
 		}
@@ -89,22 +90,36 @@ public final class BootMars {
 		}
 
 		// worker name
-		final String nodeName = getFromParamOrEnv("NODE_NAME");
+		final var nodeName = getFromParamOrEnv("NODE_NAME");
 		if (!StringUtil.isBlank(nodeName)) {
 			jettyBootParamsBuilder.withJettyNodeName(nodeName);
 		}
 
+		// multipart
+
+		final var maxFileSize = getIntFromParamOrEnv("MAX_FILE_SIZE").orElse(5); // default to 5 Mo, maxFileSize the maximum size allowed for uploaded files
+		final var maxRequestSize = getIntFromParamOrEnv("MAX_REQUEST_SIZE").orElse(maxFileSize); // default to maxFileSize, maxRequestSize the maximum size allowed for multipart/form-data requests
+		final var fileSizeThreshold = getIntFromParamOrEnv("FILE_SIZE_MEMORY_THRESHOLD").orElse(1); // default to 1 Mo fileSizeThreshold the size threshold after which files will be written to disk
+		jettyBootParamsBuilder
+				.withMaxPartSize(maxFileSize)
+				.withMaxRequestSize(maxRequestSize)
+				.withMaxPartSizeInMemory(fileSizeThreshold);
+
 		// start Jetty
-		JettyBoot.startServer(jettyBootParamsBuilder.build(), (context) -> {
-			final var multipartConfigInjectionHandler = new MultipartConfigInjectionHandler();
-			multipartConfigInjectionHandler.setHandler(context);
-			return List.of(multipartConfigInjectionHandler);
-		});
+		JettyBoot.startServer(jettyBootParamsBuilder.build(), context -> List.of());
 
 	}
 
+	private static OptionalInt getIntFromParamOrEnv(final String paramName) {
+		final var value = getFromParamOrEnv(paramName);
+		if (value != null) {
+			return OptionalInt.of(Integer.parseInt(value));
+		}
+		return OptionalInt.empty();
+	}
+
 	private static String getFromParamOrEnv(final String paramName) {
-		final String envValue = System.getProperty(paramName);
+		final var envValue = System.getProperty(paramName);
 		if (envValue != null) {
 			return envValue;
 		}
