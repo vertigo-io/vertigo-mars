@@ -12,8 +12,6 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import jakarta.inject.Inject;
-
 import io.vertigo.commons.command.CommandManager;
 import io.vertigo.commons.command.CommandResponse;
 import io.vertigo.commons.command.definitions.CommandDefinition;
@@ -24,9 +22,9 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.datafactory.collections.CollectionsManager;
 import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.datamodel.data.definitions.DataField;
+import io.vertigo.datamodel.data.model.DataObject;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datamodel.data.model.DtListURIForMasterData;
-import io.vertigo.datamodel.data.model.DataObject;
 import io.vertigo.datamodel.data.model.Entity;
 import io.vertigo.datamodel.data.util.DataModelUtil;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
@@ -38,6 +36,7 @@ import io.vertigo.vega.webservice.stereotype.POST;
 import io.vertigo.vega.webservice.stereotype.PathPrefix;
 import io.vertigo.vega.webservice.stereotype.QueryParam;
 import io.vertigo.vega.webservice.stereotype.SessionLess;
+import jakarta.inject.Inject;
 
 @PathPrefix("/vertigo/commands")
 public class CommandWebServices implements WebServices {
@@ -164,7 +163,7 @@ public class CommandWebServices implements WebServices {
 
 		final Collection<DataField> searchedFields = Collections.singletonList(labelDataField);
 		final DtList<Entity> results;
-		try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) { //Open a transaction because all fields are indexed. If there is a MDL it was load too.
+		try (final VTransactionWritable _ = transactionManager.createCurrentTransaction()) { //Open a transaction because all fields are indexed. If there is a MDL it was load too.
 			final DtList dtList = entityStoreManager.findAll(dtListURIForMasterData);
 			final UnaryOperator<DtList<DataObject>> fullTextFilter = collectionsManager.createIndexDtListFunctionBuilder()
 					.filter(terms != null ? terms : "", 20, searchedFields)

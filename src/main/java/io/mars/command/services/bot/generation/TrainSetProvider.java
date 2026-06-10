@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jakarta.inject.Inject;
-
 import io.mars.command.services.bot.generation.TrainingConfiguration.CommandParamTrainingConfiguration;
 import io.vertigo.commons.command.definitions.CommandDefinition;
 import io.vertigo.commons.transaction.VTransactionManager;
@@ -19,6 +17,7 @@ import io.vertigo.datamodel.data.definitions.DataAccessor;
 import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.datamodel.data.model.DtListState;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
+import jakarta.inject.Inject;
 
 public class TrainSetProvider implements Component {
 
@@ -72,7 +71,7 @@ public class TrainSetProvider implements Component {
 
 		switch (commandParamTrainingConfiguration.getType()) {
 			case "fromDb":
-				try (final VTransactionWritable transaction = transactionManager.createCurrentTransaction()) {
+				try (final VTransactionWritable _ = transactionManager.createCurrentTransaction()) {
 					final DataDefinition dtDefinition = Node.getNode().getDefinitionSpace().resolve(commandParamTrainingConfiguration.getDtDefinition(), DataDefinition.class);
 					final DataAccessor dtFieldDataAccessor = dtDefinition.getField(commandParamTrainingConfiguration.getDataField()).getDataAccessor();
 					return entityStoreManager.find(dtDefinition, Criterions.alwaysTrue(), DtListState.of(commandParamTrainingConfiguration.getLimit()))

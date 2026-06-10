@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import jakarta.inject.Inject;
-
 import io.mars.basemanagement.datageneration.BaseGenerator;
 import io.mars.basemanagement.datageneration.EquipmentGenerator;
 import io.mars.basemanagement.datageneration.ReferenceDataGenerator;
@@ -26,6 +24,7 @@ import io.vertigo.core.node.component.Component;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.datamodel.data.util.DataModelUtil;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
+import jakarta.inject.Inject;
 
 public class DataGenerator implements Component {
 
@@ -68,7 +67,7 @@ public class DataGenerator implements Component {
 
 	public void generateInitialData() {
 		final int baseCount;
-		try (VTransactionWritable transaction = transactionManager.createCurrentTransaction()) {
+		try (VTransactionWritable _ = transactionManager.createCurrentTransaction()) {
 			baseCount = entityStoreManager.count(DataModelUtil.findDataDefinition(Base.class));
 		}
 
