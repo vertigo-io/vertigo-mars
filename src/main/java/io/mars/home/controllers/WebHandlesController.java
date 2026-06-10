@@ -26,7 +26,7 @@ public class WebHandlesController extends AbstractVSpringMvcController {
 				.isNotBlank(code);
 		//---
 		final var handle = definitionName + "/" + code;
-		final UID uid = handleManager.getHandleByCode(handle).getUid();
+		final UID uid = handleManager.getHandleByCode(handle).uid();
 		return switch (uid.getDefinition().getName()) {
 			case "DtBase" -> "redirect:/basemanagement/base/information/" + uid.getId();
 			case "DtEquipment" -> "redirect:/basemanagement/equipment/" + uid.getId();
