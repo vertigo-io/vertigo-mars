@@ -117,12 +117,6 @@
 										</q-btn>
 									</div>
 									<div class="col-6" >
-										<q-btn type="a" href="https://aframe.io/examples/showcase/a-blast/" target="_blank" class="full-width" style="height:68px">
-											<div class="column items-center">
-												<div class="col-12"><img th:src="@{/static/img/logo_aframe.png}" height="36" alt="logo A-Frame"/></div>
-												<div class="col-12">VR</div>
-											</div>
-										</q-btn>
 									</div>
 								</div>
 							</q-menu>
@@ -289,12 +283,6 @@
 				          </q-item-section>
 				          <q-item-section>Share</q-item-section>
 				        </q-item>
-				        <q-item tag="a" th:href="@{/environment/}">
-				          <q-item-section avatar>
-				          	<q-icon name="fas fa-cloud-sun" title="Environment"></q-icon>
-				          </q-item-section>
-				          <q-item-section>Environment</q-item-section>
-				        </q-item>
 				        <q-item tag="a" th:href="@{/dashboard/modules/vertigo-ui}" target="_blank">
 				          <q-item-section avatar>
 				          	<q-icon name="fas fa-chart-bar"></q-icon>
@@ -308,15 +296,6 @@
 				    
 		       	    <q-item-label header>Marketplace</q-item-label>
 		       	    
-		       	    <!-- 
-			        <q-item tag="a" th:href="@{/digitaltrust/}">
-			          <q-item-section avatar>
-			          	<q-icon name="fas fa-award" title="Digital Trust"></q-icon>
-			          </q-item-section>
-			          <q-item-section>Digital Trust</q-item-section>
-			          <q-item-section side><q-chip color="primary" text-color="white" dense square class="q-mr-xs">Blockchain</q-chip></q-item-section>
-			        </q-item>
-			         -->
 				    
 			        <q-item tag="a" th:href="@{/extensionsStore/}" th:class="${model.requestURI.startsWith('__@{/extensionsStore/}__') ? 'active':''}">
 			          <q-item-section avatar>

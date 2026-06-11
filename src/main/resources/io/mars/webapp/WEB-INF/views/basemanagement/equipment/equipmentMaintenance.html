@@ -24,9 +24,6 @@
 				<div layout:fragment="content-header-tabs">
 					<vu:button-link flat label="Information" url="@{/basemanagement/equipment/} + ${model.equipment.equipmentId}"/>
 					<vu:button-link class="active" flat label="Maintenance" url="@{/basemanagement/equipment/maintenance/} + ${model.equipment.equipmentId}"/>
-					<vu:button-link flat label="Environment" url="@{/basemanagement/equipment/environment/} + ${model.equipment.equipmentId}"/>
-					<vu:button-link flat label="VR View" url="@{/basemanagement/equipment/vr/} + ${model.equipment.equipmentId}"/>
-					<vu:button-link flat label="Spare Parts" url="@{/basemanagement/equipment/spare/} + ${model.equipment.equipmentId}"/>
 					<vu:button-link flat label="Survey" url="@{/basemanagement/equipment/__${model.equipment.equipmentId}__/surveys/}"/>
 				</div>
 		</section>

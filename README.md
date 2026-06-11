@@ -8,8 +8,6 @@ Secrets and API keys are not committed to this repository, so you have to create
 Here is a template property file :
 
 ```properties
-iftttApiUrl=http://localhost
-iftttApiKey=0
 openAiApiKey=demo
 ```
 
