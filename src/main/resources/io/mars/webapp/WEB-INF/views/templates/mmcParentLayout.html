@@ -167,14 +167,6 @@
 				           <q-item-label>Accounts</q-item-label>
 				          </q-item-section>
 				        </q-item>
-				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}">
-				          <q-item-section avatar>
-				          	<q-icon name="o_group" title="Teams" size="md"></q-icon>
-				          </q-item-section>
-				          <q-item-section>
-				           <q-item-label>Teams</q-item-label>
-				          </q-item-section>
-				        </q-item>
 				    </div>
 				    
 				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
