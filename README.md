@@ -8,7 +8,6 @@ Secrets and API keys are not committed to this repository, so you have to create
 Here is a template property file :
 
 ```properties
-openAiApiKey=demo
 ```
 
 To boot the server, you can use Tomcat or boot directly from `BootMarsDev`, which uses an embedded Jetty server.
