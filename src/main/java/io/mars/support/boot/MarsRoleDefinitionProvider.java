@@ -29,15 +29,15 @@ public final class MarsRoleDefinitionProvider implements SimpleDefinitionProvide
 						EquipmentAuthorizations.AtzEquipment$writeAll, EquipmentAuthorizations.AtzEquipment$editTickets,
 						BaseAuthorizations.AtzBase$admin, BaseAuthorizations.AtzBase$addEquiAdm),
 				createRole(RoleEnum.manager,
-						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzAdmMasterData, GlobalAuthorizations.AtzViewAcademy,
+						GlobalAuthorizations.AtzAdmMissions, GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzAdmMasterData,
 						EquipmentAuthorizations.AtzEquipment$readConf, EquipmentAuthorizations.AtzEquipment$write, EquipmentAuthorizations.AtzEquipment$editTickets,
 						BaseAuthorizations.AtzBase$write, BaseAuthorizations.AtzBase$readConf, BaseAuthorizations.AtzBase$addEqui),
 				createRole(RoleEnum.engineer,
-						GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
+						GlobalAuthorizations.AtzViewBases,
 						EquipmentAuthorizations.AtzEquipment$write, EquipmentAuthorizations.AtzEquipment$editTickets,
 						BaseAuthorizations.AtzBase$read, BaseAuthorizations.AtzBase$addEqui),
 				createRole(RoleEnum.trainee,
-						GlobalAuthorizations.AtzViewBases, GlobalAuthorizations.AtzViewAcademy,
+						GlobalAuthorizations.AtzViewBases,
 						EquipmentAuthorizations.AtzEquipment$read, EquipmentAuthorizations.AtzEquipment$readTickets,
 						BaseAuthorizations.AtzBase$read));
 	}

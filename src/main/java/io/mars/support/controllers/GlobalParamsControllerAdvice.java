@@ -43,7 +43,6 @@ public final class GlobalParamsControllerAdvice {
 	@ModelAttribute
 	public void initContext(final ViewContext viewContext, final HttpServletRequest request) {
 		viewContext.publishRef(() -> "theme", (Serializable) themeManager.getProperties());
-		viewContext.publishRef(() -> "chatbotUrl", paramManager.getParam("chatbotUrl").getValueAsString());
 		viewContext.publishRef(() -> "apiManagementUrl", paramManager.getParam("apiManagementUrl").getValueAsString());
 		viewContext.publishRef(() -> "requestURI", request.getRequestURI());
 	}
