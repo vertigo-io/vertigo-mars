@@ -11,14 +11,11 @@ boot:
     - io.vertigo.core.plugins.param.env.EnvParamPlugin:
     - io.vertigo.core.plugins.param.env.SystemPropertyParamPlugin:
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
-        __flags__: ["ethereum"]
-        url: "${boot.walletParamsUrl}"
-    - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
         __flags__: ["klee"]
         url: "${boot.apiKeysUrl}"
     - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
         __flags__: ["home"]
-        url: ${user.home}\mars\marsconf\marsApiKeys.properties
+        url: ${user.home}/mars/marsconf/marsApiKeys.properties
     - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin:
     - io.vertigo.core.plugins.analytics.log.SocketLoggerAnalyticsConnectorPlugin:
         __flags__: ["klee"]
@@ -55,15 +52,6 @@ modules:
           __flags__: ["klee"]
           servers.names: ${esHost}
           ssl: false
-  io.vertigo.connectors.mqtt.MqttFeatures:
-    __flags__: ["klee"]
-    features:
-      - mosquitto:
-          name: Subscriber
-          host: ${mosquittoHost}
-      - mosquitto:
-          name: Publisher
-          host: ${mosquittoHost}
   io.vertigo.connectors.javalin.JavalinFeatures:
     features:
       - standalone:
@@ -111,18 +99,7 @@ modules:
           __flags__: ["home && !tomcat"]
           dataBaseClass: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           jdbcDriver: org.h2.Driver
-          jdbcUrl: jdbc:h2:~/marsdb/mars;MODE=PostgreSQL;AUTO_SERVER=TRUE
-      - sql.datasource:
-          __flags__: ["home && pgvector && tomcat"]
-          name: pgVector
-          classname: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
-          source: java:/comp/env/jdbc/DataSourceHomePg
-      - sql.c3p0:
-          __flags__: ["home && pgvector && !tomcat"]
-          name: pgVector
-          dataBaseClass: io.vertigo.database.impl.sql.vendor.postgresql.PostgreSqlDataBase
-          jdbcDriver: org.postgresql.Driver
-          jdbcUrl: jdbc:postgresql://localhost:5432/mars?user=mars&password=mars
+          jdbcUrl: jdbc:h2:mem:database;MODE=PostgreSQL
       - migration.liquibase:
           masterFile: /liquibase/master.xml
   io.vertigo.datamodel.DataModelFeatures:
@@ -248,26 +225,6 @@ modules:
     features:
       - analytics:
           appName: mars
-  io.vertigo.audit.AuditFeatures:
-    features:
-      - ledger:
-    featuresConfig:
-      - ledger.ethereum:
-          __flags__: ["ethereum"]
-          urlRpcEthNode: ${ledgerHost}
-          myAccountName: ${myAccountName}
-          myPublicAddr: ${myPublicAddr}
-          defaultDestAccountName: ${myAccountName}
-          defaultDestPublicAddr: ${myPublicAddr}
-          walletPassword: ${walletPassword}
-          walletPath: ${walletPath}
-      - ledger.fake:
-          __flags__: ["!ethereum"]
-  io.vertigo.connectors.ifttt.IftttFeatures:
-    features:
-      - ifttt:
-          baseUrl: ${iftttApiUrl}
-          apiKey: ${iftttApiKey}
   
   io.vertigo.easyforms.EasyFormsFeatures:
     features:
@@ -276,20 +233,6 @@ modules:
           filestore.tmp: temp
           filestore.persist: main
   
-  io.vertigo.ai.AiFeatures:
-    features:
-      - llm:
-    plugins:
-      - io.vertigo.ai.llm.plugin.lc4j.Lc4jPlugin:
-          apiKey: ${openAiApiKey}
-#      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jClasspathEmbeddingPlugin:
-      - io.vertigo.ai.llm.plugin.lc4j.rag.embedding.Lc4jOpenAiEmbeddingPlugin:
-          apiKey: ${openAiApiKey}
-      - io.vertigo.ai.llm.plugin.lc4j.rag.storage.Lc4jPgVectorStoragePlugin:
-          __flags__: ["pgvector"]
-          dataSpace: pgVector
-          createTable: true
-#          dropTableFirst: true
   
   io.mars.support.SupportFeatures:
   io.mars.catalog.CatalogFeatures:
@@ -299,19 +242,14 @@ modules:
   io.mars.basemanagement.BasemanagementFeatures:
     features:
       - auth:
-      - mqtt:
-          __flags__: ["klee"]
-  io.mars.ai.AiFeatures:
   io.mars.maintenance.MaintenanceFeatures:
   io.mars.opendata.OpendataFeatures:
-  io.mars.job.JobFeatures:
   io.mars.datageneration.DataGenerationFeatures:
     features:
       - datageneration:
           initialEquipmentUnits: 1500
           dataset: neutral
   io.mars.home.HomeFeatures:
-  io.mars.command.CommandFeatures:
 initializers:
   - io.mars.support.boot.InitialDataInitializer:
   - io.mars.support.boot.I18nResourcesInitializer:

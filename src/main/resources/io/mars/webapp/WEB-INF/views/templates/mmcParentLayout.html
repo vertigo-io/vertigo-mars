@@ -15,12 +15,6 @@
   	<link rel="stylesheet" th:href="@{/static/theme/__${model.theme.name}__/css/theme.css}"/>
 	<link rel="icon" th:href="@{/static/img/favicon.ico}"/>
    	<script th:src="@{/static/js/mars.js}"></script>
-   	<!-- 
-	<script th:src="@{/static/chatbot/shepherd.min.js}"></script>
-	<script th:src="@{/static/chatbot/chatbot.js}"></script>
-   	<link  th:href="@{/static/chatbot/chatbot.css}" rel="stylesheet"/>
-	<link  th:href="@{/static/chatbot/shepherd.css}" rel="stylesheet"/>
-	 -->
 </head>
 
 <body class="mat desktop no-touch platform-mat">
@@ -39,7 +33,6 @@
 					</div>
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="col">
-<!-- 						<v-commands class="gt-md" v-if="$q.platform.is.desktop" th:base-url="@{/}" ></v-commands>  -->
 						<q-input th:attr="objectKey=${model.vContext['componentStates'].addComponentState('search').addPrimitive('criteria','')}"
 								autofocus placeholder="Search" v-model="componentStates.search.criteria" outlined bg-color="white" dense style="transition: var(--q-transition-duration)" :style="componentStates.search.criteria.length > 0 ? 'max-width: 800px;' : 'max-width: 320px'"
 								th:@keydown.enter="|componentStates.search.criteria.length > 0 ? goTo('@{/basemanagement/equipments/?criteria=}'+componentStates.search.criteria):''|" >
@@ -79,14 +72,6 @@
 											<div class="column items-center col-12">
 												<div class="col-12"><q-icon size="36px" name="fab fa-slack" ></q-icon></div>
 												<div class="col-12">Slack</div>
-											</div>
-										</q-btn>
-									</div>
-									<div class="col-6" th:if="${authz.hasAuthorization('ViewAcademy')}">
-										<q-btn type="a" href="https://kleeacademy.360learning.com/" target="_blank" class="full-width" style="height:68px">
-											<div class="column items-center">
-												<div class="col-12"><img th:src="@{/static/img/logo_360Learning.png}" class="full-width" alt="logo 360 learning"/></div>
-												<div class="col-12">Academy</div>
 											</div>
 										</q-btn>
 									</div>
@@ -168,46 +153,10 @@
 				        </q-item>
 				    </div>
 				    
-				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
 				    
-			       	<div>
-			       	    <q-item-label header>AI center<span class="q-pl-md" style="font-size: 14px; color: red;">NEW</span></q-item-label>
-			       	    
-				        <q-item tag="a" th:href="@{/ai/extract/}" th:class="${model.requestURI.startsWith('__@{/ai/extract}__') ? 'active':''}" >
-				          <q-item-section avatar>
-				          	<q-icon name="mdi-brain" title="AI" size="md"></q-icon>
-				          </q-item-section>
-				          <q-item-section>File analysis</q-item-section>
-				        </q-item>
-                        <q-item tag="a" th:href="@{/ai/energy/}" th:class="${model.requestURI.startsWith('__@{/ai/energy}__') ? 'active':''}" >
-                          <q-item-section avatar>
-                          	<q-icon name="mdi-flash" title="Energy" size="md"></q-icon>
-                          </q-item-section>
-                          <q-item-section>Energy</q-item-section>
-                        </q-item>
-                        <q-item tag="a" th:href="@{/ai/transport/}" th:class="${model.requestURI.startsWith('__@{/ai/transport}__') ? 'active':''}" >
-                          <q-item-section avatar>
-                          	<q-icon name="mdi-train-car" title="Transport" size="md"></q-icon>
-                          </q-item-section>
-                          <q-item-section>Transport</q-item-section>
-                        </q-item>
-				        <q-item tag="a" th:href="@{/ai/health/}" th:class="${model.requestURI.startsWith('__@{/ai/health}__') ? 'active':''}" >
-                          <q-item-section avatar>
-                          	<q-icon name="mdi-heart-pulse" title="Health" size="md"></q-icon>
-                          </q-item-section>
-                          <q-item-section>Health</q-item-section>
-                        </q-item>
-                        <q-item tag="a" th:href="@{/ai/documents/}" th:class="${model.requestURI.startsWith('__@{/ai/documents}__') ? 'active':''}" >
-                          <q-item-section avatar>
-                          	<q-icon name="mdi-file-document" title="Documents" size="md"></q-icon>
-                          </q-item-section>
-                          <q-item-section>Documents</q-item-section>
-                        </q-item>
-				    </div>
+				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers')}"></q-separator>
 				    
-				    <q-separator th::dark="${model.theme.menu.dark}" th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}"></q-separator>
-				    
-			       	<div th:if="${authz.hasAuthorization('AdmUsers','ViewAcademy')}">
+			       	<div th:if="${authz.hasAuthorization('AdmUsers')}">
 			       	 	<q-item-label header>Users</q-item-label>
 			       	 	
 				        <q-item th:if="${authz.hasAuthorization('AdmUsers')}" tag="a" th:href="@{/hr/persons/}" th:class="${model.requestURI.startsWith('__@{/hr/person}__') ? 'active':''}">
@@ -225,12 +174,6 @@
 				          <q-item-section>
 				           <q-item-label>Teams</q-item-label>
 				          </q-item-section>
-				        </q-item>
-				        <q-item th:if="${authz.hasAuthorization('ViewAcademy')}" tag="a" th:href="@{/academy/}" th:class="${model.requestURI.startsWith('__@{/academy/}__') ? 'active':''}">
-				          <q-item-section avatar>
-				          	<q-icon name="fas fa-graduation-cap"></q-icon>
-				          </q-item-section>
-				          <q-item-section>Academy</q-item-section>
 				        </q-item>
 				    </div>
 				    
@@ -267,12 +210,6 @@
 				          	<q-item-label caption>Tickets, Work Orders</q-item-label>
 				          </q-item-section>
 				        </q-item>
-				        <q-item tag="a" th:href="@{/jobs/}" th:class="${model.requestURI.startsWith('__@{/jobs/}__') ? 'active':''}">
-				          <q-item-section avatar>
-				          	<q-icon name="o_task" title="Jobs" size="md"></q-icon>
-				          </q-item-section>
-				          <q-item-section>Jobs</q-item-section>
-				        </q-item>
 				    </div>
 				    <!-- 
 				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
@@ -292,27 +229,6 @@
 				    </component>
 				     -->
 				     
-				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
-				    
-		       	    <q-item-label header>Marketplace</q-item-label>
-		       	    
-				    
-			        <q-item tag="a" th:href="@{/extensionsStore/}" th:class="${model.requestURI.startsWith('__@{/extensionsStore/}__') ? 'active':''}">
-			          <q-item-section avatar>
-			          	<q-icon name="mdi-puzzle-outline" title="Extensions Store" size="md"></q-icon>
-			          </q-item-section>
-			          <q-item-section>Extensions Store</q-item-section>
-			        </q-item>
-			        
-			        <!-- Youtube integration
-			        <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
-			        <q-item tag="a" th:href="@{/spiders/}">
-			          <q-item-section avatar>
-			          	<q-icon name="fas fa-spider" title="Spiders"></q-icon>
-			          </q-item-section>
-			          <q-item-section>Spiders</q-item-section>
-			        </q-item>
-			        -->
 			        <q-item v-if="componentStates.navDrawer.mini" clickable
 							@click="componentStates.navDrawer.mini = false; $event.view.window.localStorage.miniMenu = 'false'" title="Expand menu">
 							<q-item-section avatar>
