@@ -16,9 +16,6 @@ import io.mars.basemanagement.domain.GeoSearchEquipmentCriteria;
 import io.mars.basemanagement.services.equipment.EquipmentServices;
 import io.mars.domain.DtDefinitions.EquipmentIndexFields;
 import io.vertigo.account.authorization.annotations.Secured;
-import io.vertigo.ai.impl.llm.FacetPromptUtil;
-import io.vertigo.ai.impl.llm.FacetPromptUtil.FacetPromptResult;
-import io.vertigo.ai.llm.LlmManager;
 import io.vertigo.core.lang.VUserException;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -41,20 +38,11 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 	@Inject
 	private EquipmentServices equipmentServices;
 
-	@Inject
-	private LlmManager llmManager;
-
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext, @RequestParam("criteria") final Optional<String> optCriteria, @RequestParam("renderer") final Optional<String> optRenderer) {
 		final GeoSearchEquipmentCriteria geoCriteria = new GeoSearchEquipmentCriteria();
-		final SelectedFacetValues selectedFacets;
-		if (optCriteria.isPresent()) {
-			final FacetPromptResult aiCriteria = doAiSearch(optCriteria.get());
-			geoCriteria.setCriteria(aiCriteria.criteria());
-			selectedFacets = aiCriteria.selectedFacetValues();
-		} else {
-			selectedFacets = SelectedFacetValues.empty().build();
-		}
+		optCriteria.ifPresent(geoCriteria::setCriteria);
+		final SelectedFacetValues selectedFacets = SelectedFacetValues.empty().build();
 
 		if (geoCriteria.getCriteria() == null) {
 			geoCriteria.setCriteria("");
@@ -88,51 +76,6 @@ public class EquipmentSearchController extends AbstractVSpringMvcController {
 		};
 		viewContext.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey);
 		return viewContext;
-	}
-
-	@PostMapping("/_searchAi")
-	public ViewContext doSearchAi(
-			final ViewContext viewContext,
-			@RequestParam("search") final String search,
-			final DtListState dtListState) {
-
-		// example of search :
-		// - les batiments / les véhicules de 2015 / buildings of 2020
-		// - esa satellite 655 / esa satellite S-E-655 / le satellite de la cnsa de référence 128 / les mines et drones cnsa de 2012
-		// - les centrales / production d'énergie / ce qui produit de l'électricité
-
-		final FacetPromptResult aiCriteria = doAiSearch(search);
-		final var criteria = new GeoSearchEquipmentCriteria();
-		criteria.setCriteria(aiCriteria.criteria());
-
-		if (criteria.getCriteria() == null) {
-			criteria.setCriteria("");
-		}
-
-		final String listRendererValue = viewContext.getString(listRenderer);
-		final FacetedQueryResult<EquipmentIndex, SearchQuery> facetedQueryResult = switch (listRendererValue) {
-			case "table" -> equipmentServices.searchEquipments(criteria.getCriteria(), aiCriteria.selectedFacetValues(), dtListState);
-			case "map" -> equipmentServices.searchGeoClusterEquipments(criteria, aiCriteria.selectedFacetValues(), DtListState.of(3));
-			default -> throw new VUserException("Unsupported list renderer ({0})", listRendererValue);
-		};
-		viewContext
-				.publishFacetedQueryResult(equipments, EquipmentIndexFields.equipmentId, facetedQueryResult, criteriaKey)
-				.publishDto(criteriaKey, criteria);
-		return viewContext;
-	}
-
-	private FacetPromptResult doAiSearch(final String criteria) {
-		// empty search to list all facet values as input for the LLM
-		final var emptySearch = equipmentServices.searchEquipments("", SelectedFacetValues.empty().build(), DtListState.defaultOf(Equipment.class));
-
-		return llmManager.ask(FacetPromptUtil.createFacetPrompt(criteria == null ? "" : criteria, emptySearch,
-				Optional.of(
-						"""
-								- For date facets (`FctEquipmentPurchaseDate`), select a value only if the user explicitly mentions a four-digit year.
-								- Tags should only be selected if the user explicitly refers to them or if the term exists exclusively in the tag list.
-								- Put strictly in 'criteria' the equipment reference in the form 'A-A-123', or '123'. Don't put anything else and put null if nothing correpsond. Example, if user ask for 'satellites from 2020' you should select the year 2020 in the date facet and put null in the criteria and if he ask for 'satellite 145' you should put '145' in the criteria and null in the date facet.
-								""")),
-				FacetPromptResult.class);
 	}
 
 }
