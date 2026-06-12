@@ -17,12 +17,6 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	 * Enumération des DtDefinitions.
 	 */
 	public enum Definitions {
-		/** Objet de données AiDocumentInfo. */
-		AiDocumentInfo(io.mars.ai.domain.AiDocumentInfo.class),
-		/** Objet de données AiQuery. */
-		AiQuery(io.mars.ai.domain.AiQuery.class),
-		/** Objet de données AiResponse. */
-		AiResponse(io.mars.ai.domain.AiResponse.class),
 		/** Objet de données Base. */
 		Base(io.mars.basemanagement.domain.Base.class),
 		/** Objet de données BaseIndex. */
@@ -104,69 +98,6 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 			return clazz;
 		}
 	}
-
-	/**
-	 * Enumération des champs de AiDocumentInfo.
-	 */
-	public enum AiDocumentInfoFields implements DataFieldName<io.mars.ai.domain.AiDocumentInfo> {
-		/** Propriété 'File'. */
-		docUri,
-		/** Propriété 'File name'. */
-		fileName,
-		/** Propriété 'Chunk count'. */
-		chunkCount,
-		/** Propriété 'Score'. */
-		scorePercent,
-		/** Propriété 'Text fragments'. */
-		textFragments,
-		/** Propriété 'Scores'. */
-		fragmentsScores	}
-
-	/**
-	 * Enumération des champs de AiQuery.
-	 */
-	public enum AiQueryFields implements DataFieldName<io.mars.ai.domain.AiQuery> {
-		/** Propriété 'Files'. */
-		docUris,
-		/** Propriété 'File'. */
-		docUri,
-		/** Propriété 'Prompt'. */
-		prompt	}
-
-	/**
-	 * Enumération des champs de AiResponse.
-	 */
-	public enum AiResponseFields implements DataFieldName<io.mars.ai.domain.AiResponse> {
-		/** Propriété 'File'. */
-		docUri,
-		/** Propriété 'Is loading'. */
-		loading,
-		/** Propriété 'File name'. */
-		fileName,
-		/** Propriété 'Name'. */
-		name,
-		/** Propriété 'Description'. */
-		description,
-		/** Propriété 'Description 2'. */
-		description2,
-		/** Propriété 'Description 3'. */
-		description3,
-		/** Propriété 'Summary'. */
-		summary,
-		/** Propriété 'Address'. */
-		address,
-		/** Propriété 'GPS'. */
-		gps,
-		/** Propriété 'Date'. */
-		date,
-		/** Propriété 'Date 2'. */
-		date2,
-		/** Propriété 'Tags'. */
-		tags,
-		/** Propriété 'Persons'. */
-		persons,
-		/** Propriété 'Category'. */
-		category	}
 
 	/**
 	 * Enumération des champs de Base.

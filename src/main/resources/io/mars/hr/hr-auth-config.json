@@ -1,8 +1,5 @@
 {
 	"globalAuthorizations": [{
-        "name": "ViewAcademy",
-        "label": "Academy access"
-    }, {
 		"name": "AdmUsers",
 		"label": "Users administration"
 	}, {
