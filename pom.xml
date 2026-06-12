@@ -41,13 +41,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
-				<groupId>io.vertigo</groupId>
-				<artifactId>vertigo-ai-langchain4j</artifactId>
-				<version>${vertigo.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -99,24 +92,6 @@
 			<artifactId>vertigo-easyforms</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-ai-langchain4j</artifactId>
-			<version>${vertigo.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tika</groupId>
-			<artifactId>tika-core</artifactId>
-			<version>2.9.1</version> <!-- force version for langchain4j (revert vertigo dependency-management) -->
-		</dependency>
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-open-ai</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-pgvector</artifactId>
-        </dependency>
 
 		<dependency>
 			<groupId>io.vertigo</groupId>
