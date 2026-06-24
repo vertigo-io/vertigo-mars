@@ -42,7 +42,7 @@ modules:
           host: ${influxdbHost}
           token: ${influxdbToken}
           org: vertigo
-  io.vertigo.connectors.elasticsearch.ElasticSearchFeatures:
+  io.vertigo.connectors.elasticsearch_7_17.ElasticSearchFeatures:
     features:
       - embeddedServer:
           __flags__: ["home"]
@@ -55,6 +55,7 @@ modules:
           __flags__: ["klee"]
           servers.names: ${esHost}
           ssl: false
+      
   io.vertigo.connectors.mqtt.MqttFeatures:
     __flags__: ["klee"]
     features:
@@ -160,7 +161,8 @@ modules:
       - search:
     featuresConfig:
       - collections.luceneIndex:
-      - search.elasticsearch.restHL:
+    plugins:
+      - io.vertigo.datafactory.plugins.search.elasticsearch_7_17.rest.RestHLClientESSearchServicesPlugin:
           envIndexPrefix: mars
           rowsPerQuery: 50
           config.file: search/elasticsearch.yml

@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<maven.test.error.ignore>true</maven.test.error.ignore>
-		<vertigo.version>4.3.3-SNAPSHOT</vertigo.version>
+		<vertigo.version>4.4.0-SNAPSHOT</vertigo.version>
 	</properties>
 
 
@@ -34,6 +34,13 @@
 	
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>io.vertigo</groupId>
+				<artifactId>vertigo-geo</artifactId>
+				<version>${vertigo.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>io.vertigo</groupId>
 				<artifactId>vertigo-ui</artifactId>
@@ -143,9 +150,10 @@
 			<artifactId>vertigo-ifttt-connector</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-elasticsearch-connector</artifactId>
+			<artifactId>vertigo-datafactory-plugin-elasticsearch_7_17</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
 
