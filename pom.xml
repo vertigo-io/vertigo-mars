@@ -262,7 +262,12 @@
 					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-annotations</artifactId>
 				</dependency>
-				
+				<dependency>
+					<!-- JSP engine for the embedded Jetty (web.xml error pages are JSP) -->
+					<groupId>org.eclipse.jetty.ee10</groupId>
+					<artifactId>jetty-ee10-apache-jsp</artifactId>
+				</dependency>
+
 				<dependency>
 					<groupId>com.mchange</groupId>
 					<artifactId>c3p0</artifactId>
