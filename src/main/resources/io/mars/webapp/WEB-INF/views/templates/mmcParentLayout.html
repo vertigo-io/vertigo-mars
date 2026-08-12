@@ -202,25 +202,9 @@
 				          	<q-item-label caption>Tickets, Work Orders</q-item-label>
 				          </q-item-section>
 				        </q-item>
-				    </div>
-				    <!-- 
-				    <q-separator th::dark="${model.theme.menu.dark}"></q-separator>
-				    <component :is="componentStates.navDrawer.mini ? 'div' : 'q-expansion-item'"  label="Data Hub" default-opened >
-				        <q-item tag="a" th:href="@{/share/}">
-				          <q-item-section avatar>
-				          	<q-icon name="fas fa-share-alt" title="Share"></q-icon>
-				          </q-item-section>
-				          <q-item-section>Share</q-item-section>
-				        </q-item>
-				        <q-item tag="a" th:href="@{/dashboard/modules/vertigo-ui}" target="_blank">
-				          <q-item-section avatar>
-				          	<q-icon name="fas fa-chart-bar"></q-icon>
-				          </q-item-section>
-				          <q-item-section>Analytics</q-item-section>
-				        </q-item>
-				    </component>
-				     -->
-				     
+				</div>
+			        
+
 			        <q-item v-if="componentStates.navDrawer.mini" clickable
 							@click="componentStates.navDrawer.mini = false; $event.view.window.localStorage.miniMenu = 'false'" title="Expand menu">
 							<q-item-section avatar>

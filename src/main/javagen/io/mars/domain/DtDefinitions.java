@@ -59,10 +59,6 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		Mission(io.mars.hr.domain.Mission.class),
 		/** Objet de données MissionDisplay. */
 		MissionDisplay(io.mars.hr.domain.MissionDisplay.class),
-		/** Objet de données OpendataSet. */
-		OpendataSet(io.mars.opendata.domain.OpendataSet.class),
-		/** Objet de données OpendataSetStatus. */
-		OpendataSetStatus(io.mars.opendata.domain.OpendataSetStatus.class),
 		/** Objet de données Person. */
 		Person(io.mars.hr.domain.Person.class),
 		/** Objet de données PersonInput. */
@@ -431,36 +427,6 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		baseName,
 		/** Propriété 'Business'. */
 		businessName	}
-
-	/**
-	 * Enumération des champs de OpendataSet.
-	 */
-	public enum OpendataSetFields implements DataFieldName<io.mars.opendata.domain.OpendataSet> {
-		/** Propriété 'Id'. */
-		odsId,
-		/** Propriété 'Code'. */
-		code,
-		/** Propriété 'Title'. */
-		title,
-		/** Propriété 'Description'. */
-		description,
-		/** Propriété 'Service Endpoint URL'. */
-		endPointUrl,
-		/** Propriété 'Picture'. */
-		picturefileId,
-		/** Propriété 'Tags'. */
-		tags,
-		/** Propriété 'Opendata Set Status'. */
-		opendataSetStatusId	}
-
-	/**
-	 * Enumération des champs de OpendataSetStatus.
-	 */
-	public enum OpendataSetStatusFields implements DataFieldName<io.mars.opendata.domain.OpendataSetStatus> {
-		/** Propriété 'Id'. */
-		opendataSetStatusId,
-		/** Propriété 'Status Label'. */
-		label	}
 
 	/**
 	 * Enumération des champs de Person.

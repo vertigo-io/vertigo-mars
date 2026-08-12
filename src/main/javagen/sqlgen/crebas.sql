@@ -28,9 +28,6 @@ drop table IF EXISTS MEDIA_FILE_INFO cascade;
 drop sequence IF EXISTS SEQ_MEDIA_FILE_INFO;
 drop table IF EXISTS MISSION cascade;
 drop sequence IF EXISTS SEQ_MISSION;
-drop table IF EXISTS OPENDATA_SET cascade;
-drop sequence IF EXISTS SEQ_OPENDATA_SET;
-drop table IF EXISTS OPENDATA_SET_STATUS cascade;
 drop table IF EXISTS PERSON cascade;
 drop sequence IF EXISTS SEQ_PERSON;
 drop table IF EXISTS PICTURE cascade;
@@ -85,10 +82,6 @@ create sequence SEQ_MEDIA_FILE_INFO
 
 create sequence SEQ_MISSION
 	start with 1000 cache 1; 
-
-create sequence SEQ_OPENDATA_SET
-	start with 1000 cache 1; 
-
 
 create sequence SEQ_PERSON
 	start with 1000 cache 1; 
@@ -453,62 +446,6 @@ comment on column MISSION.BUSINESS_ID is
 
 comment on column MISSION.ROLE_ID is
 'Role';
-
--- ============================================================
---   Table : OPENDATA_SET                                        
--- ============================================================
-create table OPENDATA_SET
-(
-    ODS_ID      	 NUMERIC     	not null,
-    CODE        	 VARCHAR(100)	not null,
-    TITLE       	 VARCHAR(100)	not null,
-    DESCRIPTION 	 VARCHAR(350)	,
-    END_POINT_URL	 TEXT        	,
-    PICTUREFILE_ID	 NUMERIC     	,
-    TAGS        	 TEXT        	,
-    OPENDATA_SET_STATUS_ID	 VARCHAR(100)	,
-    constraint PK_OPENDATA_SET primary key (ODS_ID)
-);
-
-comment on column OPENDATA_SET.ODS_ID is
-'Id';
-
-comment on column OPENDATA_SET.CODE is
-'Code';
-
-comment on column OPENDATA_SET.TITLE is
-'Title';
-
-comment on column OPENDATA_SET.DESCRIPTION is
-'Description';
-
-comment on column OPENDATA_SET.END_POINT_URL is
-'Service Endpoint URL';
-
-comment on column OPENDATA_SET.PICTUREFILE_ID is
-'Picture';
-
-comment on column OPENDATA_SET.TAGS is
-'Tags';
-
-comment on column OPENDATA_SET.OPENDATA_SET_STATUS_ID is
-'Opendata Set Status';
-
--- ============================================================
---   Table : OPENDATA_SET_STATUS                                        
--- ============================================================
-create table OPENDATA_SET_STATUS
-(
-    OPENDATA_SET_STATUS_ID	 VARCHAR(100)	not null,
-    LABEL       	 VARCHAR(100)	,
-    constraint PK_OPENDATA_SET_STATUS primary key (OPENDATA_SET_STATUS_ID)
-);
-
-comment on column OPENDATA_SET_STATUS.OPENDATA_SET_STATUS_ID is
-'Id';
-
-comment on column OPENDATA_SET_STATUS.LABEL is
-'Status Label';
 
 -- ============================================================
 --   Table : PERSON                                        
@@ -902,12 +839,6 @@ alter table MISSION
 	references ROLE (ROLE_ID);
 
 create index A_MISSION_ROLE_ROLE_FK on MISSION (ROLE_ID asc);
-
-alter table OPENDATA_SET
-	add constraint FK_A_OPENDATA_SET_OPENDATA_SET_STATUS_OPENDATA_SET_STATUS foreign key (OPENDATA_SET_STATUS_ID)
-	references OPENDATA_SET_STATUS (OPENDATA_SET_STATUS_ID);
-
-create index A_OPENDATA_SET_OPENDATA_SET_STATUS_OPENDATA_SET_STATUS_FK on OPENDATA_SET (OPENDATA_SET_STATUS_ID asc);
 
 alter table PERSON
 	add constraint FK_A_PERSON_GROUPS_GROUPS foreign key (GROUP_ID)

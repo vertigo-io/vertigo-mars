@@ -16,8 +16,8 @@ import io.mars.basemanagement.datageneration.ReferenceDataGenerator;
 import io.mars.basemanagement.domain.Base;
 import io.mars.hr.datageneration.PersonGenerator;
 import io.mars.maintenance.datageneration.TicketGenerator;
-import io.mars.opendata.datageneration.OpendataSetGenerator;
 import io.vertigo.commons.transaction.VTransactionManager;
+
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.component.Component;
@@ -45,10 +45,8 @@ public class DataGenerator implements Component {
 	@Inject
 	private ReferenceDataGenerator referenceDataGenerator;
 	@Inject
-	private OpendataSetGenerator opendataSetGenerator;
-
-	@Inject
 	private EntityStoreManager entityStoreManager;
+
 	@Inject
 	private VTransactionManager transactionManager;
 
@@ -76,13 +74,8 @@ public class DataGenerator implements Component {
 			final List<Base> bases = generateInitialBases();
 			generateInitialEquipments(bases);
 			generateInitialPersons(bases);
-			generateInitialOpendataSets();
 			generatePastData(ZonedDateTime.of(LocalDate.of(2018, 11, 19), LocalTime.of(0, 0), ZoneOffset.UTC).toInstant(), Instant.now());
 		}
-	}
-
-	private void generateInitialOpendataSets() {
-		opendataSetGenerator.createInitialOpendataSetsFromCSV(resourceRoot + "opendataSets.csv");
 	}
 
 	private void generateInitialEquipments(final List<Base> bases) {

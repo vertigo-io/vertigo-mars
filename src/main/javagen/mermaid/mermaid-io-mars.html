@@ -235,7 +235,6 @@
 					  </p>
 					  <ul class="menu-list">
 							<li><a @click="changeActivePanel('common')">common</a></li>
-							<li><a @click="changeActivePanel('opendata')">opendata</a></li>
 							<li><a @click="changeActivePanel('catalog')">catalog</a></li>
 							<li><a @click="changeActivePanel('hr')">hr</a></li>
 							<li><a @click="changeActivePanel('maintenance')">maintenance</a></li>
@@ -260,23 +259,6 @@ class MediaFileInfo:::entity {
 		+Long length
 		+java.time.Instant lastModified
 		+String filePath
-}
-				`
-			graphData.opendata = `classDiagram
-class OpendataSet:::entity {
-		+Long odsId
-		+String code
-		+String title
-		+String description
-		+String endPointUrl
-		+Long picturefileId
-		+String tags
-		+String opendataSetStatusId
-}
-OpendataSet "*" --> "0..1" OpendataSetStatus : OpendataSetStatus
-class OpendataSetStatus:::dtStaticMasterData {
-		+String opendataSetStatusId
-		+String label
 }
 				`
 			graphData.catalog = `classDiagram
