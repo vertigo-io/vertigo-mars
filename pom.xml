@@ -180,35 +180,28 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-analyzers-common</artifactId>
+			<artifactId>lucene-analysis-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queryparser</artifactId>
 		</dependency>
 
-		<!-- Search -->
+		<!-- Search (ES 9) -->
 		<dependency>
-			<groupId>org.elasticsearch.client</groupId>
-			<artifactId>x-pack-transport</artifactId> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<groupId>co.elastic.clients</groupId>
+			<artifactId>elasticsearch-java</artifactId> <!-- RestElasticSearchConnector / RestClientESSearchServicesPlugin -->
 		</dependency>
 		<dependency>
-			<groupId>org.elasticsearch.client</groupId>
-			<artifactId>elasticsearch-rest-high-level-client</artifactId> <!-- REstHighLevelElasticSearchConnector -->
-		</dependency>
-		<dependency>
-			<groupId>org.codelibs.elasticsearch.module</groupId>
-			<artifactId>analysis-common</artifactId> <!-- required by ESEmbeddedSearchServicesPlugin -->
-		</dependency>
-		<dependency>
-			<groupId>org.codelibs.elasticsearch.module</groupId>
-			<artifactId>mapper-extras</artifactId> <!-- required by ESEmbeddedSearchServicesPlugin -->
+			<groupId>org.testcontainers</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<scope>test</scope> <!-- required by EmbeddedSearchServicesPlugin -->
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.18.3</version>
+			<!-- version managed by vertigo-ui pom import (jackson-bom) -->
 		</dependency>
 
 	</dependencies>

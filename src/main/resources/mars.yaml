@@ -41,14 +41,14 @@ modules:
           org: vertigo
   io.vertigo.connectors.elasticsearch.ElasticSearchFeatures:
     features:
-      - embeddedServer:
-          __flags__: ["home"]
-          home: search/
-      - restHL:
+      # embeddedServer (v5) uses testcontainers : requires a reachable docker daemon (docker.host param or DOCKER_HOST env)
+      #- embeddedServer:
+      #    __flags__: ["home"]
+      - rest:
           __flags__: ["home"]
           servers.names: "localhost:9200"
           ssl: false
-      - restHL:
+      - rest:
           __flags__: ["klee"]
           servers.names: ${esHost}
           ssl: false
@@ -137,10 +137,10 @@ modules:
       - search:
     featuresConfig:
       - collections.luceneIndex:
-      - search.elasticsearch.restHL:
+      - search.elasticsearch.rest:
           envIndexPrefix: mars
           rowsPerQuery: 50
-          config.file: search/elasticsearch.yml
+          config.file: search/elasticsearch.json
   io.vertigo.account.AccountFeatures:
     features:
       - security:
@@ -243,8 +243,8 @@ modules:
     features:
       - auth:
   io.mars.maintenance.MaintenanceFeatures:
-  io.mars.opendata.OpendataFeatures:
   io.mars.datageneration.DataGenerationFeatures:
+
     features:
       - datageneration:
           initialEquipmentUnits: 1500
