@@ -1,0 +1,26 @@
+# Dev infrastructure for mars in 'home' mode (BootMarsDev) :
+# vertigo 5 dropped the in-JVM embedded ElasticSearch (ES 9 can't run embedded), so an ES server is needed.
+#
+# Usage :
+#   docker compose -f docker-compose.dev.yml up -d
+# or on Windows with docker inside WSL :
+#   wsl docker compose -f docker-compose.dev.yml up -d
+#
+# Then run io.mars.support.boot.BootMarsDev as usual.
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.4.3
+    container_name: mars-es9
+    environment:
+      - discovery.type=single-node
+      - cluster.name=mars
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ports:
+      - "127.0.0.1:9200:9200"
+    volumes:
+      - mars-es-data:/usr/share/elasticsearch/data
+    restart: unless-stopped
+
+volumes:
+  mars-es-data:
