@@ -32,7 +32,7 @@
 					  icon="cloud_upload"
 					  :done="componentStates.stepper.step > 1"
 					>
-						<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUris" multiple componentId="aiFileUpload"/>
+						<vu:fileupload url="@{/commons/upload}" object="aiQuery" field="docUris" multiple componentId="aiFileUpload"/>
 						
 						<div class="q-mt-md" v-if="vueData.aiFileResponses.length > 0">
 							<vu:block title="Notices">
@@ -96,7 +96,7 @@
 					  icon="cloud_upload"
 					  :done="componentStates.stepper.step > 2"
 					>
-						<vu:fileupload th:url="'@{/commons/upload}'" object="aiQuery" field="docUri" componentId="aiFileUploadOrdo"/>
+						<vu:fileupload url="@{/commons/upload}" object="aiQuery" field="docUri" componentId="aiFileUploadOrdo"/>
 					  
 						<div class="q-mt-md" v-if="vueData.aiOrdoResponse.loading != null">
 						  	<vu:block title="Informations">

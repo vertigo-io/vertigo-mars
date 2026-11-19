@@ -50,7 +50,7 @@
 						<vu:text-field object="opendataSet" field="code" />
 						<vu:chips-autocomplete object="opendataSet" field="tags" list="tags" staticData="true"/>
 						<vu:label-edit object="opendataSet" field="picturefileId" th:if="${viewMode=='edit'}"  >
-							<vu:fileupload th:url="'@{/commons/upload}'" key="opendataSetTmpPictureUri" />
+							<vu:fileupload url="@{/commons/upload}" key="opendataSetTmpPictureUri" />
 						</vu:label-edit>
 					</vu:grid>
 					<div class="row justify-end">

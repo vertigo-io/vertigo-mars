@@ -136,7 +136,7 @@
 					
 					<q-card-section class="q-pt-none">
 						<div class="col-xl-6 col-12">
-							<vu:fileupload th:url="'@{/commons/upload}'" object="aiDocument" field="docUris" multiple componentId="aiFileUpload"
+							<vu:fileupload url="@{/commons/upload}" object="aiDocument" field="docUris" multiple componentId="aiFileUpload"
 										   :class="{'hidden' : componentStates.addFiles.length > 0}"/>
 							<div v-for="f in componentStates.addFiles">
                                 <span v-if="f.loading" style="width: 40px; display: inline-block;"><q-spinner-dots size="2rem" ></q-spinner-dots></span>
